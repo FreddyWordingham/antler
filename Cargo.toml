@@ -16,11 +16,15 @@ arctk-proc = "0.1.*"
 arctk-attr = "0.1.*"
 # arctk-attr = { path = "../arctk-attr" }
 # arctk-proc = { path = "../arctk-proc" }
-arctk = "0.9.7"
+arctk = "0.9.*"
+# arctk = { path = "../arctk" }
 
 nalgebra = "0.22.*"
 palette = "0.5.*"
 serde = { version = "1.0.*", features = ["derive"] }
+rand = "0.7.*"
+rayon = "1.4.*"
+num_cpus = "1.13.*"
 
 [profile.dev]
 # Development profile: "cargo build".
