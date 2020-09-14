@@ -18,8 +18,6 @@ pub struct CameraBuilder {
     pos: Pos3,
     /// Target position [m].
     tar: Pos3,
-    /// Optional depth-of-field samples and maximum angular sample [deg].
-    dof: Option<(i32, f64)>,
     /// Optional targeting swivel adjustment [deg].
     swivel: Option<[f64; 2]>,
     /// Horizontal field of view [deg].
@@ -37,12 +35,7 @@ impl Build for CameraBuilder {
 
     #[inline]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
-        let dof = if let Some((samples, angle)) = self.dof {
-            Some((samples, angle.to_radians()))
-        } else {
-            None
-        };
-        let focus = Focus::new(self.pos, self.tar, dof);
+        let focus = Focus::new(self.pos, self.tar);
 
         let swivel = if let Some(s) = self.swivel {
             s

@@ -20,6 +20,7 @@
     clippy::indexing_slicing,
     clippy::integer_arithmetic,
     clippy::integer_division,
+    clippy::module_name_repetitions,
     clippy::modulo_arithmetic,
     clippy::panic,
     clippy::print_stdout,

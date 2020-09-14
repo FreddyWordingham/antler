@@ -64,14 +64,8 @@ impl Camera {
     /// Generate a new observation ray.
     #[inline]
     #[must_use]
-    pub fn gen_ray(
-        &self,
-        pixel: [usize; 2],
-        offset: f64,
-        sub_sample: i32,
-        depth_sample: i32,
-    ) -> Ray {
-        let mut ray = self.focus.observation_ray(offset, depth_sample);
+    pub fn gen_ray(&self, pixel: [usize; 2], sub_sample: i32) -> Ray {
+        let mut ray = self.focus.observation_ray();
 
         let fov = self.lens.fov();
         let delta = fov / (self.sensor.res().0 - 1) as f64;

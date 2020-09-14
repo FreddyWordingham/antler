@@ -16,33 +16,33 @@ use std::{
     sync::{Arc, Mutex},
 };
 
-// /// Render an image as fast as possible.
-// /// # Errors
-// /// if a mutex unwrapping failed or
-// /// an arc unwrapping failed.
-// #[inline]
-// pub fn multi_thread<T: Display + Ord + Sync>(
-//     scene: &Scene<T>,
-//     shader: &Shader,
-// ) -> Result<Data, Error> {
-//     let num_pixels = shader.cam().sensor().num_pixels();
-//     let pb = ProgressBar::new("Rendering", num_pixels as u64);
-//     let pb = Arc::new(Mutex::new(pb));
+/// Render an image as fast as possible.
+/// # Errors
+/// if a mutex unwrapping failed or
+/// an arc unwrapping failed.
+#[inline]
+pub fn multi_thread<T: Display + Ord + Sync>(
+    scene: &Scene<T>,
+    shader: &Shader,
+) -> Result<Data, Error> {
+    let num_pixels = shader.cam().sensor().num_pixels();
+    let pb = ProgressBar::new("Rendering", num_pixels as u64);
+    let pb = Arc::new(Mutex::new(pb));
 
-//     let threads: Vec<_> = (0..num_cpus::get()).collect();
-//     let mut out: Vec<_> = threads
-//         .par_iter()
-//         .map(|_id| run_thread(&Arc::clone(&pb), scene, shader))
-//         .collect();
-//     pb.lock()?.finish_with_message("Render complete.");
+    let threads: Vec<_> = (0..num_cpus::get()).collect();
+    let mut out: Vec<_> = threads
+        .par_iter()
+        .map(|_id| run_thread(&Arc::clone(&pb), scene, shader))
+        .collect();
+    pb.lock()?.finish_with_message("Render complete.");
 
-//     let mut data = out.pop().expect("No data received.");
-//     while let Some(o) = out.pop() {
-//         data += &o;
-//     }
+    let mut data = out.pop().ok_or("No data received.")??;
+    while let Some(o) = out.pop() {
+        data += &o?;
+    }
 
-//     Ok(data)
-// }
+    Ok(data)
+}
 
 /// Render an image using a single thread.
 #[inline]
