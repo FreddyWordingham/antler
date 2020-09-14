@@ -1,5 +1,6 @@
 //! Rendering engine binary.
 
+use antler::input::Settings;
 use arctk::{
     args,
     err::Error,
@@ -24,8 +25,8 @@ type Key = String;
 struct Parameters {
     /// Adaptive mesh settings.
     tree: TreeBuilder,
-    // /// Render runtime settings.
-    // sett: render::Settings,
+    /// Render runtime settings.
+    sett: Settings,
     /// Surfaces map.
     surfs: Set<Key, MeshBuilder>,
     // /// Attributes map.
