@@ -1,6 +1,9 @@
 //! Rendering engine binary.
 
-use antler::input::Settings;
+use antler::{
+    input::{Settings, ShaderBuilder},
+    parts::Attributes,
+};
 use arctk::{
     args,
     err::Error,
@@ -29,12 +32,12 @@ struct Parameters {
     sett: Settings,
     /// Surfaces map.
     surfs: Set<Key, MeshBuilder>,
-    // /// Attributes map.
-    // attrs: Set<render::Attributes>,
+    /// Attributes map.
+    attrs: Set<Key, Attributes>,
     /// Colour map.
     cols: Set<Key, GradientBuilder>,
-    // /// Shader.
-    // shader: render::ShaderBuilder,
+    /// Shader.
+    shader: ShaderBuilder,
 }
 
 fn main() {
