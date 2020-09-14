@@ -1,4 +1,4 @@
-//! Input sub-module.
+//! Input.
 
 // pub mod scene;
 pub mod settings;
