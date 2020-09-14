@@ -13,7 +13,7 @@ pub fn visibility<T: Display + Ord>(scene: &Scene<T>, mut trace: Tracer, mut vis
     debug_assert!(vis <= 1.0);
 
     let bump_dist = scene.sett.bump_dist();
-    let visibility_dist = scene.sett.visibility_dist();
+    let visibility_dist = scene.sett.vis_dist();
 
     while let Some(hit) = scene.tree.observe(
         trace.ray().clone(),
