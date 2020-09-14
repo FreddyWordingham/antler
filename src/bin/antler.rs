@@ -3,6 +3,9 @@
 use arctk::{
     args,
     err::Error,
+    geom::{MeshBuilder, TreeBuilder},
+    img::GradientBuilder,
+    ord::Set,
     util::{banner, dir, exec},
 };
 use arctk_attr::input;
@@ -11,6 +14,26 @@ use std::{
     env::current_dir,
     path::{Path, PathBuf},
 };
+
+/// Key type.
+type Key = String;
+
+/// Input parameters.
+#[input]
+struct Parameters {
+    /// Adaptive mesh settings.
+    tree: TreeBuilder,
+    // /// Render runtime settings.
+    // sett: render::Settings,
+    /// Surfaces map.
+    surfs: Set<Key, MeshBuilder>,
+    // /// Attributes map.
+    // attrs: Set<render::Attributes>,
+    /// Colour map.
+    cols: Set<Key, GradientBuilder>,
+    // /// Shader.
+    // shader: render::ShaderBuilder,
+}
 
 fn main() {
     banner::title("RENDER").expect("Failed to print title.");
