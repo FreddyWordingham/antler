@@ -3,6 +3,7 @@
 use arctk::{
     args,
     err::Error,
+    file::Load,
     geom::{MeshBuilder, TreeBuilder},
     img::GradientBuilder,
     ord::Set,
@@ -38,19 +39,20 @@ struct Parameters {
 fn main() {
     banner::title("RENDER").expect("Failed to print title.");
     let (params_path, in_dir, out_dir) = init();
+    let params = input(&in_dir, &params_path);
 }
 
 /// Initialise the command line arguments and directories.
 fn init() -> (PathBuf, PathBuf, PathBuf) {
-    banner::section("Initialisation").expect("Failed to print title.");
-    banner::sub_section("Command line arguments").expect("Failed to print title.");
+    banner::section("Initialisation").expect("Failed to print section heading.");
+    banner::sub_section("Command line arguments").expect("Failed to print sub-section heading.");
     args!(bin_path: PathBuf;
         params_path: PathBuf
     );
     println!("{:>32} : {}", "binary path", bin_path.display());
     println!("{:>32} : {}", "parameters path", params_path.display());
 
-    banner::sub_section("Directories").expect("Failed to print title.");
+    banner::sub_section("Directories").expect("Failed to print sub-section heading.");
     let cwd = current_dir().expect("Failed to determine current working directory.");
     let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
         .expect("Failed to initialise directories.");
@@ -58,4 +60,13 @@ fn init() -> (PathBuf, PathBuf, PathBuf) {
     println!("{:>32} : {}", "output directory", out_dir.display());
 
     (params_path, in_dir, out_dir)
+}
+
+/// Load the input files.
+fn input(in_dir: &Path, params_path: &Path) -> Parameters {
+    banner::section("Input").expect("Failed to print section heading.");
+    banner::sub_section("Parameters").expect("Failed to print sub-section heading.");
+    let path = in_dir.join(params_path);
+
+    Parameters::load(&path).expect("Failed to load parameters file.")
 }
