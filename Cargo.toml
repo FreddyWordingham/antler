@@ -12,8 +12,10 @@ license = "MIT OR Apache-2.0"
 documentation = "https://docs.rs/antler"
 
 [dependencies]
+arctk-attr = "0.1.*"
 arctk = "0.9.*"
 # arctk = { path = "../arctk" }
+palette = "0.5.*"
 
 [profile.dev]
 # Development profile: "cargo build".
