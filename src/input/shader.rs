@@ -6,7 +6,7 @@ pub mod shadow;
 
 pub use self::{light::*, samples::*, shadow::*};
 
-use crate::render::Camera;
+use crate::parts::Camera;
 use arctk::access;
 
 /// Conglomerate lighting and shadowing settings.
