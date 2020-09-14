@@ -1,9 +1,9 @@
 //! Camera focus implementation.
 
 use arctk::{
-    access, clone,
+    access,
     geom::{Orient, Ray},
-    math::{rand_circle_point, Dir3, Pos3},
+    math::{Dir3, Pos3},
 };
 
 /// Focus structure.
@@ -23,8 +23,6 @@ impl Focus {
     #[inline]
     #[must_use]
     pub fn new(pos: Pos3, tar: Pos3) -> Self {
-        let tar_dist = nalgebra::distance(&pos, &tar);
-
         Self {
             orient: Orient::new(Ray::new(pos, Dir3::new_normalize(tar - pos))),
             tar,

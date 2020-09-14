@@ -8,10 +8,9 @@ use crate::{
 };
 use arctk::{err::Error, tools::ProgressBar};
 use palette::LinSrgba;
-use rand::{thread_rng, Rng};
+use rand::thread_rng;
 use rayon::prelude::*;
 use std::{
-    f64::consts::PI,
     fmt::Display,
     sync::{Arc, Mutex},
 };

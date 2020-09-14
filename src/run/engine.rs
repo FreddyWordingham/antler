@@ -1,13 +1,7 @@
 //! Engine sampling function.
 
-use crate::{
-    input::Shader,
-    output::Sample,
-    parts::Scene,
-    parts::{Attributes, Tracer},
-};
-use arctk::{geom::Hit, math::Dir3, phys::Crossing};
-use palette::{Gradient, LinSrgba};
+use crate::{input::Shader, output::Sample, parts::Scene, parts::Tracer};
+use palette::LinSrgba;
 use rand::rngs::ThreadRng;
 use std::fmt::Display;
 
@@ -15,10 +9,10 @@ use std::fmt::Display;
 #[inline]
 #[must_use]
 pub fn paint<T: Display + Ord>(
-    mut rng: &mut ThreadRng,
-    scene: &Scene<T>,
-    shader: &Shader,
-    mut trace: Tracer,
+    mut _rng: &mut ThreadRng,
+    _scene: &Scene<T>,
+    _shader: &Shader,
+    mut _trace: Tracer,
 ) -> Sample {
     Sample::new(LinSrgba::default())
 }
