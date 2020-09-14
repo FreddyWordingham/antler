@@ -2,8 +2,8 @@
 
 use antler::{
     input::{Settings, Shader, ShaderBuilder},
-    parts::Attributes,
-    run::{multi_thread, Scene},
+    parts::{Attributes, Scene},
+    // run::{multi_thread, Scene},
 };
 use arctk::{
     args,
@@ -48,9 +48,9 @@ fn main() {
     let tree = grow(tree_sett, &surfs);
     let input = Scene::new(&tree, &render_sett, &surfs, &attrs, &cols);
     banner::section("Rendering").expect("Failed to print section heading.");
-    let output = multi_thread(&input, &shader).expect("Failed to perform rendering.");
-    banner::section("Saving").expect("Failed to print section heading.");
-    output.save(&out_dir).expect("Failed to save output data.");
+    // let output = multi_thread(&input, &shader).expect("Failed to perform rendering.");
+    // banner::section("Saving").expect("Failed to print section heading.");
+    // output.save(&out_dir).expect("Failed to save output data.");
     banner::section("Finished").expect("Failed to print section heading.");
 }
 
