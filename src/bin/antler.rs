@@ -1,19 +1,17 @@
 //! Rendering engine binary.
 
 use antler::{
-    input::Scene,
     input::{Settings, Shader, ShaderBuilder},
     parts::Attributes,
+    run::Scene,
 };
 use arctk::{
     args,
-    err::Error,
     file::{Build, Load},
-    geom::Tree,
-    geom::{Mesh, MeshBuilder, TreeBuilder},
+    geom::{Mesh, MeshBuilder, Tree, TreeBuilder},
     img::GradientBuilder,
     ord::Set,
-    util::{banner, dir, exec, gradient},
+    util::{banner, dir, gradient},
 };
 use arctk_attr::input;
 use palette::{Gradient, LinSrgba};
@@ -44,11 +42,11 @@ struct Parameters {
 
 fn main() {
     banner::title("RENDER").expect("Failed to print title.");
-    let (params_path, in_dir, out_dir) = init();
+    let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, render_sett, surfs, attrs, cols, shader) = build(&in_dir, params);
+    let (tree_sett, render_sett, surfs, attrs, cols, _shader) = build(&in_dir, params);
     let tree = grow(tree_sett, &surfs);
-    let input = Scene::new(&tree, &render_sett, &surfs, &attrs, &cols);
+    let _input = Scene::new(&tree, &render_sett, &surfs, &attrs, &cols);
 }
 
 /// Initialise the command line arguments and directories.

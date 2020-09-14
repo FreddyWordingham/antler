@@ -1,8 +1,10 @@
 //! Rendering simulation input structure.
 
 use crate::{input::Settings, parts::Attributes};
-use arctk::geom::{Mesh, Tree};
-use arctk::ord::Set;
+use arctk::{
+    geom::{Mesh, Tree},
+    ord::Set,
+};
 use palette::{Gradient, LinSrgba};
 
 /// Rendering main input structure.
