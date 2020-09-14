@@ -16,8 +16,8 @@ arctk-proc = "0.1.*"
 arctk-attr = "0.1.*"
 # arctk-attr = { path = "../arctk-attr" }
 # arctk-proc = { path = "../arctk-proc" }
-arctk = "0.9.*"
-# arctk = { path = "../arctk" }
+# arctk = "0.9.*"
+arctk = { path = "../arctk" }
 
 nalgebra = "0.22.*"
 palette = "0.5.*"

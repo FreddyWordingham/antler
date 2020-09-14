@@ -7,6 +7,7 @@ use rand::{thread_rng, Rng};
 use rayon::prelude::*;
 use std::{
     f64::consts::PI,
+    fmt::Display,
     sync::{Arc, Mutex},
 };
 
@@ -18,7 +19,10 @@ use std::{
 #[allow(clippy::expect_used)]
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn multi_thread<T: Ord>(scene: &Scene<T>, shader: &Shader) -> Result<Data, Error> {
+pub fn multi_thread<T: Display + Ord + Sync>(
+    scene: &Scene<T>,
+    shader: &Shader,
+) -> Result<Data, Error> {
     let num_pixels = shader.cam().sensor().num_pixels();
     let pb = ProgressBar::new("Rendering", num_pixels as u64);
     let pb = Arc::new(Mutex::new(pb));
@@ -44,7 +48,7 @@ pub fn multi_thread<T: Ord>(scene: &Scene<T>, shader: &Shader) -> Result<Data, E
 #[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
-pub fn single_thread<T: Ord>(scene: &Scene<T>, shader: &Shader) -> Data {
+pub fn single_thread<T: Display + Ord>(scene: &Scene<T>, shader: &Shader) -> Data {
     let num_pixels = shader.cam().sensor().num_pixels();
     let pb = ProgressBar::new("Rendering", num_pixels as u64);
     let pb = Arc::new(Mutex::new(pb));
@@ -58,7 +62,11 @@ pub fn single_thread<T: Ord>(scene: &Scene<T>, shader: &Shader) -> Data {
 #[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
-fn run_thread<T: Ord>(pb: &Arc<Mutex<ProgressBar>>, scene: &Scene<T>, shader: &Shader) -> Data {
+fn run_thread<T: Display + Ord>(
+    pb: &Arc<Mutex<ProgressBar>>,
+    scene: &Scene<T>,
+    shader: &Shader,
+) -> Data {
     let w = shader.cam().sensor().res().0 as usize;
     let h = shader.cam().sensor().res().1 as usize;
 
