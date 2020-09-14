@@ -3,7 +3,6 @@
 use antler::{
     input::{Settings, Shader, ShaderBuilder},
     parts::{Attributes, Scene},
-    // run::{multi_thread, Scene},
 };
 use arctk::{
     args,
