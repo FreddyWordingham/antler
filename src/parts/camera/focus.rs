@@ -3,8 +3,7 @@
 use arctk::{
     access, clone,
     geom::{Orient, Ray},
-    math::rand_circle_point,
-    math::{Dir3, Pos3},
+    math::{rand_circle_point, Dir3, Pos3},
 };
 
 /// Focus structure.

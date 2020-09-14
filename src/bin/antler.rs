@@ -1,17 +1,17 @@
 //! Rendering engine binary.
 
 use antler::{
-    input::{Settings, ShaderBuilder},
+    input::{Settings, Shader, ShaderBuilder},
     parts::Attributes,
 };
 use arctk::{
     args,
     err::Error,
-    file::Load,
-    geom::{MeshBuilder, TreeBuilder},
+    file::{Build, Load},
+    geom::{Mesh, MeshBuilder, TreeBuilder},
     img::GradientBuilder,
     ord::Set,
-    util::{banner, dir, exec},
+    util::{banner, dir, exec, gradient},
 };
 use arctk_attr::input;
 use palette::{Gradient, LinSrgba};
@@ -44,6 +44,7 @@ fn main() {
     banner::title("RENDER").expect("Failed to print title.");
     let (params_path, in_dir, out_dir) = init();
     let params = input(&in_dir, &params_path);
+    let (tree_sett, render_sett, surfs, attrs, cols, shader) = build(&in_dir, params);
 }
 
 /// Initialise the command line arguments and directories.
@@ -73,4 +74,60 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
     let path = in_dir.join(params_path);
 
     Parameters::load(&path).expect("Failed to load parameters file.")
+}
+
+/// Build instances.
+#[allow(clippy::type_complexity)]
+fn build(
+    in_dir: &Path,
+    params: Parameters,
+) -> (
+    TreeBuilder,
+    Settings,
+    Set<Key, Mesh>,
+    Set<Key, Attributes>,
+    Set<Key, Gradient<LinSrgba>>,
+    Shader,
+) {
+    banner::section("Building").expect("Failed to print section heading.");
+    banner::sub_section("Adaptive Tree Settings").expect("Failed to print sub-section heading.");
+    let tree_sett = params.tree;
+    // println!("{:>32} : {}", "Tree settings", tree_sett);
+
+    banner::sub_section("Render Settings").expect("Failed to print sub-section heading.");
+    let render_sett = params.sett;
+    // println!("{:>32} : {}", "Render settings", render_sett);
+
+    banner::sub_section("Surfaces").expect("Failed to print sub-section heading.");
+    let surfs = params
+        .surfs
+        .build(in_dir)
+        .expect("Unable to build surfaces.");
+    // println!("{:>32} : {}", "Surfaces", surfs);
+
+    banner::sub_section("Attributes").expect("Failed to print sub-section heading.");
+    let attrs = params.attrs;
+    // println!("{:>32} : {}", "Attributes", attrs);
+
+    banner::sub_section("Colours").expect("Failed to print sub-section heading.");
+    let cols = params
+        .cols
+        .build(in_dir)
+        .expect("Unable to build colour gradients.");
+    for (group, grad) in cols.map() {
+        println!(
+            "{:>32} : {}",
+            &format!("[{}]", group),
+            gradient::to_string(&grad, 32)
+        );
+    }
+
+    banner::sub_section("Shaders").expect("Failed to print sub-section heading.");
+    let shader = params
+        .shader
+        .build(in_dir)
+        .expect("Unable to build scenes.");
+    // println!("{:>32} : {}", "Main image", shader);
+
+    (tree_sett, render_sett, surfs, attrs, cols, shader)
 }

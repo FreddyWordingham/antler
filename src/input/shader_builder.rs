@@ -1,7 +1,9 @@
 //! Shader form.
 
-use crate::input::{Light, Samples, Shader, Shadow};
-use crate::parts::CameraBuilder;
+use crate::{
+    input::{Light, Samples, Shader, Shadow},
+    parts::CameraBuilder,
+};
 use arctk::{access, err::Error, file::Build};
 use arctk_attr::input;
 use std::path::Path;
