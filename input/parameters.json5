@@ -16,7 +16,7 @@
         hair    : [['objs/dino/hair.obj'],  null],
         tail    : [['objs/dino/tail.obj'],  null],
         base    : [['objs/util/base.obj'],  null],
-        box     : [['objs/util/box.obj'],   null],
+        // box     : [['objs/util/box.obj'],   null],
     },
     attrs: {
         // fans: { Mirror: {abs: 0.8} },
