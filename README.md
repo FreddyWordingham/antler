@@ -1,2 +1,2 @@
-# antler
+# ANTLER
 Antler rendering engine
