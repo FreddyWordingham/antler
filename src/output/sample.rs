@@ -1,4 +1,4 @@
-//! Render sampling information structure.
+//! Render sampling information.
 
 use palette::LinSrgba;
 

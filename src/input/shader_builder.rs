@@ -8,7 +8,7 @@ use arctk::{access, err::Error, file::Build};
 use arctk_attr::input;
 use std::path::Path;
 
-/// Loadable light and shadow settings.
+/// Shader settings.
 #[input]
 pub struct ShaderBuilder {
     /// Sky builder.

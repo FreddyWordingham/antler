@@ -15,7 +15,7 @@
         fans    : [['objs/dino/fans.obj'],  null],
         hair    : [['objs/dino/hair.obj'],  null],
         tail    : [['objs/dino/tail.obj'],  null],
-        base    : [['objs/util/base.obj'],  null],
+        // base    : [['objs/util/base.obj'],  null],
         // box     : [['objs/util/box.obj'],   null],
     },
     attrs: {
@@ -33,14 +33,14 @@
     },
     shader: {
         cam: {
-            pos     : [-2,-3,1],
-            tar     : [0,-0.8,0.43],
+            pos     : [-20,0,20],
+            tar     : [0,0,0.5],
             // dof     : [17, 0.1],
-            swivel  : [-7, 0],
-            hr_fov  : 30.0,
+            swivel  : [0, 0],
+            hr_fov  : 4.5,
             aspect  : "Square",
             // ss_power: 1,
-            hr_res  : 512
+            hr_res  : 1024
         },
         samples: {
             // ambient_occlusion   : 64,

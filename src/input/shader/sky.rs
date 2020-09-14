@@ -6,7 +6,7 @@ use arctk::{access, clone, math::Pos3};
 pub struct Sky {
     /// Sky brightness fraction.
     brightness: f64,
-    /// Sun position when calculating direct shadows [m].
+    /// Sun position when calculating sun shadows [m].
     sun_pos: Pos3,
     /// Sun angular radius when calculating soft shadows [rad].
     sun_rad: f64,

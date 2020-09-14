@@ -10,7 +10,7 @@ use std::path::Path;
 pub struct SkyBuilder {
     /// Sky brightness fraction.
     brightness: f64,
-    /// Sun position when calculating direct shadows [m].
+    /// Sun position when calculating sun shadows [m].
     sun_pos: Pos3,
     /// Sun angular radius when calculating soft shadows [deg].
     sun_rad: f64,
