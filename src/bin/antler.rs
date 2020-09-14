@@ -1,3 +1,5 @@
+use arctk::util::banner;
+
 fn main() {
-    println!("Hello, world!");
+    banner::title("RENDER").expect("Failed to print title.");
 }
