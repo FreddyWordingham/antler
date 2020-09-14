@@ -1,4 +1,4 @@
-//! Viewing.
+//! Illumination calculation.
 
 pub mod light;
 pub mod shadow;
