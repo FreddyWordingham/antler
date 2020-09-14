@@ -1,6 +1,7 @@
 //! Rendering engine binary.
 
 use antler::{
+    input::Scene,
     input::{Settings, Shader, ShaderBuilder},
     parts::Attributes,
 };
@@ -8,6 +9,7 @@ use arctk::{
     args,
     err::Error,
     file::{Build, Load},
+    geom::Tree,
     geom::{Mesh, MeshBuilder, TreeBuilder},
     img::GradientBuilder,
     ord::Set,
@@ -45,6 +47,8 @@ fn main() {
     let (params_path, in_dir, out_dir) = init();
     let params = input(&in_dir, &params_path);
     let (tree_sett, render_sett, surfs, attrs, cols, shader) = build(&in_dir, params);
+    let tree = grow(tree_sett, &surfs);
+    let input = Scene::new(&tree, &render_sett, &surfs, &attrs, &cols);
 }
 
 /// Initialise the command line arguments and directories.
@@ -130,4 +134,15 @@ fn build(
     // println!("{:>32} : {}", "Main image", shader);
 
     (tree_sett, render_sett, surfs, attrs, cols, shader)
+}
+
+/// Grow domains.
+fn grow<'a>(tree: TreeBuilder, surfs: &'a Set<Key, Mesh>) -> Tree<'a, &Key> {
+    banner::section("Growing").expect("Failed to print section heading.");
+
+    banner::sub_section("Adaptive Tree").expect("Failed to print sub-section heading.");
+    let tree = tree.build(&surfs);
+    // println!("{:>32} : {}", "Adaptive tree", &tree);
+
+    tree
 }
