@@ -36,7 +36,6 @@
         cam: {
             pos     : [-20,0,20],
             tar     : [0,0,0.5],
-            // dof     : [17, 0.1],
             swivel  : [0, 0],
             hr_fov  : 4.5,
             aspect  : "Square",

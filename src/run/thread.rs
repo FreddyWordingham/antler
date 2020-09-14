@@ -18,7 +18,8 @@ use std::{
 /// Render an image as fast as possible.
 /// # Errors
 /// if a mutex unwrapping failed or
-/// an arc unwrapping failed.
+/// an arc unwrapping failed or
+/// if the progress bar can not be locked inside a running thread.
 #[inline]
 pub fn multi_thread<T: Display + Ord + Sync>(
     scene: &Scene<T>,
@@ -44,6 +45,8 @@ pub fn multi_thread<T: Display + Ord + Sync>(
 }
 
 /// Render an image using a single thread.
+/// # Errors
+/// if the progress bar can not be locked
 #[inline]
 pub fn single_thread<T: Display + Ord>(scene: &Scene<T>, shader: &Shader) -> Result<Data, Error> {
     let num_pixels = shader.cam().sensor().num_pixels();
@@ -54,6 +57,8 @@ pub fn single_thread<T: Display + Ord>(scene: &Scene<T>, shader: &Shader) -> Res
 }
 
 /// Render pixels using a single thread.
+/// # Errors
+/// if the progress bar can not be locked
 #[inline]
 fn run_thread<T: Display + Ord>(
     pb: &Arc<Mutex<ProgressBar>>,
@@ -66,7 +71,7 @@ fn run_thread<T: Display + Ord>(
     let super_samples = shader.cam().sensor().super_samples();
     let h_res = shader.cam().sensor().res().0;
 
-    let weight = 1.0 / super_samples as f64;
+    let weight = 1.0 / f64::from(super_samples);
 
     let mut rng = thread_rng();
 
@@ -84,8 +89,8 @@ fn run_thread<T: Display + Ord>(
             for sub_sample in 0..super_samples {
                 let ray = shader.cam().gen_ray(pixel, sub_sample);
 
-                let sample = paint(&mut rng, scene, shader, Tracer::new(ray));
-                total_col += sample.col * weight as f32;
+                let col = paint(&mut rng, scene, shader, Tracer::new(ray));
+                total_col += col * weight as f32;
             }
 
             data.img.pixels_mut()[pixel] = total_col;
