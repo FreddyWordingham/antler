@@ -12,19 +12,15 @@ license = "MIT OR Apache-2.0"
 documentation = "https://docs.rs/antler"
 
 [dependencies]
-arctk-proc = "0.1.*"
+arctk = "0.9.*"
 arctk-attr = "0.1.*"
-# arctk-attr = { path = "../arctk-attr" }
-# arctk-proc = { path = "../arctk-proc" }
-# arctk = "0.9.*"
-arctk = { path = "../arctk" }
-
+arctk-proc = "0.1.*"
 nalgebra = "0.22.*"
+num_cpus = "1.13.*"
 palette = "0.5.*"
-serde = { version = "1.0.*", features = ["derive"] }
 rand = "0.7.*"
 rayon = "1.4.*"
-num_cpus = "1.13.*"
+serde = { version = "1.0.*", features = ["derive"] }
 
 [profile.dev]
 # Development profile: "cargo build".
