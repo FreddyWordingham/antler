@@ -93,8 +93,7 @@ fn run_thread<T: Display + Ord>(
                 total_col += col * weight as f32;
             }
 
-            data.img.pixels_mut()[pixel] = total_col;
-            println!("{}", data.img.pixels_mut()[pixel].alpha);
+            data.img.pixels_mut()[pixel] += total_col;
         }
     }
 

@@ -39,8 +39,8 @@
             swivel  : [0, 0],
             hr_fov  : 4.5,
             aspect  : "Square",
-            // ss_power: 8,
-            hr_res  : 1024
+            ss_power: 4,
+            hr_res  : 128
         },
         samples: {
             // ambient_occlusion   : 64,
