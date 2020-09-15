@@ -1,7 +1,7 @@
 [package]
 authors = ["Freddy Wordingham <fjmw201@exeter.ac.uk>"]
 name = "antler"
-version = "0.2.0"
+version = "0.2.1"
 description = "Antler rendering engine."
 repository = "https://github.com/FreddyWordingham/antler"
 readme = "README.md"
@@ -12,12 +12,12 @@ license = "MIT OR Apache-2.0"
 documentation = "https://docs.rs/antler"
 
 [dependencies]
-arctk = { path = "../arctk" }
-arctk-attr = { path = "../arctk-attr" }
-arctk-proc = { path = "../arctk-proc" }
-# arctk = "0.9.*"
-# arctk-attr = "0.1.*"
-# arctk-proc = "0.1.*"
+# arctk = { path = "../arctk" }
+# arctk-attr = { path = "../arctk-attr" }
+# arctk-proc = { path = "../arctk-proc" }
+arctk = "0.9.*"
+arctk-attr = "0.1.*"
+arctk-proc = "0.1.*"
 nalgebra = "0.22.*"
 num_cpus = "1.13.*"
 palette = "0.5.*"
