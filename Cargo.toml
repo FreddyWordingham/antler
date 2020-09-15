@@ -1,7 +1,7 @@
 [package]
 authors = ["Freddy Wordingham <fjmw201@exeter.ac.uk>"]
 name = "antler"
-version = "0.2.3"
+version = "0.3.0"
 description = "Antler rendering engine."
 repository = "https://github.com/FreddyWordingham/antler"
 readme = "README.md"
