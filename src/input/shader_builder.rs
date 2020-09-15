@@ -1,9 +1,6 @@
 //! Shader form.
 
-use crate::{
-    input::{Light, Samples, Shader, Shadow, SkyBuilder},
-    parts::CameraBuilder,
-};
+use crate::input::{Light, Samples, Shader, Shadow, SkyBuilder};
 use arctk::{access, err::Error, file::Build};
 use arctk_attr::input;
 use std::path::Path;
@@ -19,8 +16,6 @@ pub struct ShaderBuilder {
     light: Light,
     /// Shadowing settings.
     shadow: Shadow,
-    /// Camera builder.
-    cam: CameraBuilder,
 }
 
 impl ShaderBuilder {
@@ -28,24 +23,16 @@ impl ShaderBuilder {
     access!(samples, Samples);
     access!(light, Light);
     access!(shadow, Shadow);
-    access!(cam, CameraBuilder);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(
-        sky: SkyBuilder,
-        samples: Samples,
-        light: Light,
-        shadow: Shadow,
-        cam: CameraBuilder,
-    ) -> Self {
+    pub const fn new(sky: SkyBuilder, samples: Samples, light: Light, shadow: Shadow) -> Self {
         Self {
             sky,
             samples,
             light,
             shadow,
-            cam,
         }
     }
 }
@@ -60,7 +47,6 @@ impl Build for ShaderBuilder {
             self.samples,
             self.light,
             self.shadow,
-            self.cam.build(in_dir)?,
         ))
     }
 }

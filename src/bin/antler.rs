@@ -2,7 +2,7 @@
 
 use antler::{
     input::{Settings, Shader, ShaderBuilder},
-    parts::{Attributes, Scene},
+    parts::{Attributes, Camera, CameraBuilder, Scene},
     run::multi_thread,
 };
 use arctk::{
@@ -38,17 +38,19 @@ struct Parameters {
     cols: Set<Key, GradientBuilder>,
     /// Shader.
     shader: ShaderBuilder,
+    /// Camera.
+    cam: CameraBuilder,
 }
 
 fn main() {
     banner::title("RENDER").expect("Failed to print title.");
     let (params_path, in_dir, out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, render_sett, surfs, attrs, cols, shader) = build(&in_dir, params);
+    let (tree_sett, render_sett, surfs, attrs, cols, shader, cam) = build(&in_dir, params);
     let tree = grow(tree_sett, &surfs);
     let input = Scene::new(&tree, &render_sett, &surfs, &attrs, &cols);
     banner::section("Rendering").expect("Failed to print section heading.");
-    let output = multi_thread(&input, &shader).expect("Failed to perform rendering.");
+    let output = multi_thread(&input, &shader, &cam).expect("Failed to perform rendering.");
     banner::section("Saving").expect("Failed to print section heading.");
     output.save(&out_dir).expect("Failed to save output data.");
     banner::section("Finished").expect("Failed to print section heading.");
@@ -95,6 +97,7 @@ fn build(
     Set<Key, Attributes>,
     Set<Key, Gradient<LinSrgba>>,
     Shader,
+    Camera,
 ) {
     banner::section("Building").expect("Failed to print section heading.");
     banner::sub_section("Adaptive Tree Settings").expect("Failed to print sub-section heading.");
@@ -107,7 +110,7 @@ fn build(
     let surfs = params
         .surfs
         .build(in_dir)
-        .expect("Unable to build surfaces.");
+        .expect("Failed to build surfaces.");
 
     banner::sub_section("Attributes").expect("Failed to print sub-section heading.");
     let attrs = params.attrs;
@@ -116,7 +119,7 @@ fn build(
     let cols = params
         .cols
         .build(in_dir)
-        .expect("Unable to build colour gradients.");
+        .expect("Failed to build colour gradients.");
     for (group, grad) in cols.map() {
         println!(
             "{:>32} : {}",
@@ -125,13 +128,19 @@ fn build(
         );
     }
 
-    banner::sub_section("Shaders").expect("Failed to print sub-section heading.");
+    banner::sub_section("Shader").expect("Failed to print sub-section heading.");
     let shader = params
         .shader
         .build(in_dir)
-        .expect("Unable to build scenes.");
+        .expect("Failed to build shader.");
 
-    (tree_sett, render_sett, surfs, attrs, cols, shader)
+    banner::sub_section("Camera").expect("Failed to print sub-section heading.");
+    let cam = params
+        .cam
+        .build(in_dir)
+        .expect("Failed to build build camera.");
+
+    (tree_sett, render_sett, surfs, attrs, cols, shader, cam)
 }
 
 /// Grow domains.

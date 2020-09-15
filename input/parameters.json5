@@ -33,15 +33,6 @@
         box     : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff', '#51dab6ff', '#556b2fff', '#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],
     },
     shader: {
-        cam: {
-            pos     : [-20,0,20],
-            tar     : [0,0,0.5],
-            swivel  : [0, 0],
-            hr_fov  : 4.5,
-            aspect  : "Square",
-            ss_power: 4,
-            hr_res  : 128
-        },
         samples: {
             // ambient_occlusion   : 64,
             // soft_shadows        : 17
@@ -63,5 +54,14 @@
             direct  : 0.7,
             ao_pow  : 2
         }
+    },
+    cam: {
+        pos     : [-20,0,20],
+        tar     : [0,0,0.5],
+        swivel  : [0, 0],
+        hr_fov  : 4.5,
+        aspect  : "Square",
+        ss_power: 4,
+        hr_res  : 128
     }
 }

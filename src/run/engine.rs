@@ -3,7 +3,7 @@
 use crate::{
     illumination::{light, shadow},
     input::Shader,
-    parts::{Attributes, Scene, Tracer},
+    parts::{Attributes, Camera, Scene, Tracer},
 };
 use arctk::{geom::Hit, math::Dir3, phys::Crossing};
 use palette::{Gradient, LinSrgba};
@@ -17,6 +17,7 @@ pub fn paint<T: Display + Ord>(
     mut rng: &mut ThreadRng,
     scene: &Scene<T>,
     shader: &Shader,
+    cam: &Camera,
     mut trace: Tracer,
 ) -> LinSrgba {
     debug_assert!(trace.weight() > 0.0);
@@ -41,14 +42,14 @@ pub fn paint<T: Display + Ord>(
                     Attributes::Luminous { mult } => {
                         trace.travel(hit.dist());
                         let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
-                        col += colour(&mut rng, scene, shader, &trace, &hit, &sun_dir)
+                        col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
                             * (mult * trace.weight()) as f32;
                         break;
                     }
                     Attributes::Transparent { abs } => {
                         trace.travel(hit.dist());
                         let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
-                        col += colour(&mut rng, scene, shader, &trace, &hit, &sun_dir)
+                        col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
                             * (*abs * trace.weight()) as f32;
                         *trace.weight_mut() *= 1.0 - *abs;
                         trace.travel(bump_dist);
@@ -56,7 +57,7 @@ pub fn paint<T: Display + Ord>(
                     Attributes::Mirror { abs } => {
                         trace.travel(hit.dist());
                         let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
-                        col += colour(&mut rng, scene, shader, &trace, &hit, &sun_dir)
+                        col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
                             * (*abs * trace.weight()) as f32;
                         *trace.weight_mut() *= 1.0 - *abs;
                         trace.set_dir(Crossing::calc_ref_dir(trace.dir(), hit.side().norm()));
@@ -69,7 +70,7 @@ pub fn paint<T: Display + Ord>(
                     } => {
                         trace.travel(hit.dist());
                         let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
-                        col += colour(&mut rng, scene, shader, &trace, &hit, &sun_dir)
+                        col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
                             * (*abs * trace.weight()) as f32;
 
                         let (n_curr, n_next) = if hit.side().is_inside() {
@@ -87,7 +88,7 @@ pub fn paint<T: Display + Ord>(
                             trans.set_dir(*trans_dir);
                             trans.travel(bump_dist);
 
-                            col += paint(&mut rng, scene, shader, trans);
+                            col += paint(&mut rng, scene, shader, cam, trans);
                         }
 
                         // Reflection ray.
@@ -99,8 +100,8 @@ pub fn paint<T: Display + Ord>(
             } else {
                 trace.travel(hit.dist());
                 let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
-                col +=
-                    colour(&mut rng, scene, shader, &trace, &hit, &sun_dir) * trace.weight() as f32;
+                col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
+                    * trace.weight() as f32;
                 break;
             }
         } else {
@@ -118,11 +119,12 @@ fn colour<T: Display + Ord>(
     rng: &mut ThreadRng,
     scene: &Scene<T>,
     shader: &Shader,
+    cam: &Camera,
     trace: &Tracer,
     hit: &Hit<&T>,
     sun_dir: &Dir3,
 ) -> LinSrgba {
-    let light = light(shader, trace.ray(), hit);
+    let light = light(shader, cam, trace.ray(), hit);
     let shadow = shadow(scene, shader, trace.ray(), hit, rng);
 
     let x = hit.side().norm().dot(sun_dir).abs();

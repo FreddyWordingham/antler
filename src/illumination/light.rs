@@ -1,6 +1,6 @@
 //! Lighting calculation.
 
-use crate::input::Shader;
+use crate::{input::Shader, parts::Camera};
 use arctk::{
     geom::{Hit, Ray},
     math::Dir3,
@@ -10,9 +10,9 @@ use arctk::{
 /// Calculate the lighting factor.
 #[inline]
 #[must_use]
-pub fn light<T>(shader: &Shader, ray: &Ray, hit: &Hit<T>) -> f64 {
+pub fn light<T>(shader: &Shader, cam: &Camera, ray: &Ray, hit: &Hit<T>) -> f64 {
     let light_dir = Dir3::new_normalize(shader.sky().sun_pos() - ray.pos());
-    let view_dir = Dir3::new_normalize(shader.cam().focus().orient().pos() - ray.pos());
+    let view_dir = Dir3::new_normalize(cam.focus().orient().pos() - ray.pos());
     let ref_dir = Crossing::calc_ref_dir(ray.dir(), hit.side().norm());
 
     let mut ambient = 1.0;

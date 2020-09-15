@@ -3,7 +3,7 @@
 use crate::{
     input::Shader,
     output::Data,
-    parts::{Scene, Tracer},
+    parts::{Camera, Scene, Tracer},
     run::engine::paint,
 };
 use arctk::{err::Error, tools::ProgressBar};
@@ -24,15 +24,16 @@ use std::{
 pub fn multi_thread<T: Display + Ord + Sync>(
     scene: &Scene<T>,
     shader: &Shader,
+    cam: &Camera,
 ) -> Result<Data, Error> {
-    let num_pixels = shader.cam().sensor().num_pixels();
+    let num_pixels = cam.sensor().num_pixels();
     let pb = ProgressBar::new("Rendering", num_pixels as u64);
     let pb = Arc::new(Mutex::new(pb));
 
     let threads: Vec<_> = (0..num_cpus::get()).collect();
     let mut out: Vec<_> = threads
         .par_iter()
-        .map(|_id| run_thread(&Arc::clone(&pb), scene, shader))
+        .map(|_id| run_thread(&Arc::clone(&pb), scene, shader, cam))
         .collect();
     pb.lock()?.finish_with_message("Render complete.");
 
@@ -48,12 +49,16 @@ pub fn multi_thread<T: Display + Ord + Sync>(
 /// # Errors
 /// if the progress bar can not be locked
 #[inline]
-pub fn single_thread<T: Display + Ord>(scene: &Scene<T>, shader: &Shader) -> Result<Data, Error> {
-    let num_pixels = shader.cam().sensor().num_pixels();
+pub fn single_thread<T: Display + Ord>(
+    scene: &Scene<T>,
+    shader: &Shader,
+    cam: &Camera,
+) -> Result<Data, Error> {
+    let num_pixels = cam.sensor().num_pixels();
     let pb = ProgressBar::new("Rendering", num_pixels as u64);
     let pb = Arc::new(Mutex::new(pb));
 
-    run_thread(&pb, scene, shader)
+    run_thread(&pb, scene, shader, cam)
 }
 
 /// Render pixels using a single thread.
@@ -64,12 +69,13 @@ fn run_thread<T: Display + Ord>(
     pb: &Arc<Mutex<ProgressBar>>,
     scene: &Scene<T>,
     shader: &Shader,
+    cam: &Camera,
 ) -> Result<Data, Error> {
-    let w = shader.cam().sensor().res().0 as usize;
-    let h = shader.cam().sensor().res().1 as usize;
+    let w = cam.sensor().res().0 as usize;
+    let h = cam.sensor().res().1 as usize;
 
-    let super_samples = shader.cam().sensor().super_samples();
-    let h_res = shader.cam().sensor().res().0;
+    let super_samples = cam.sensor().super_samples();
+    let h_res = cam.sensor().res().0;
 
     let weight = 1.0 / f64::from(super_samples);
 
@@ -87,9 +93,9 @@ fn run_thread<T: Display + Ord>(
 
             let mut total_col = LinSrgba::new(0.0, 0.0, 0.0, 0.0);
             for sub_sample in 0..super_samples {
-                let ray = shader.cam().gen_ray(pixel, sub_sample);
+                let ray = cam.gen_ray(pixel, sub_sample);
 
-                let col = paint(&mut rng, scene, shader, Tracer::new(ray));
+                let col = paint(&mut rng, scene, shader, cam, Tracer::new(ray));
                 total_col += col * weight as f32;
             }
 
