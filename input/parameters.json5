@@ -1,7 +1,7 @@
 {
     tree: {
         tar_tris: 5,
-        max_depth: 6,
+        max_depth: 8,
         padding: 0.01
     },
     sett: {
@@ -56,12 +56,13 @@
         }
     },
     cam: {
-        pos     : [-20,0,30],
+        pos     : [-2,-2,0.5],
         tar     : [0,0,0.5],
         swivel  : [0, 0],
-        lens    : { Perspective: {fov: 100}},
+        // lens    : { Perspective: {fov: 35.0}},
+        lens    : { Orthographic: {field: 2.0}},
         aspect  : "Square",
-        // ss_power: 2,
-        hr_res  : 1000
+        ss_power: 4,
+        hr_res  : 4000
     }
 }

@@ -66,8 +66,7 @@ impl Camera {
     #[inline]
     #[must_use]
     pub fn gen_ray(&self, pixel: [usize; 2], sub_sample: i32) -> Ray {
-        let mut ray = Ray::new(*self.focus.orient().pos(), *self.forward());
-        // let mut ray = self.focus.observation_ray();
+        let mut ray = self.focus.observation_ray();
 
         match self.lens {
             Lens::Perspective { fov } => {
@@ -101,8 +100,8 @@ impl Camera {
                 let sx = sub_sample % ss;
                 let sy = sub_sample / ss;
 
-                let dx = dw * ((pixel[X] * ss as usize) + sx as usize) as f64;
-                let dy = dh * ((pixel[Y] * ss as usize) + sy as usize) as f64;
+                let dx = (dw * ((pixel[X] * ss as usize) + sx as usize) as f64) - (w / 2.0);
+                let dy = (dh * ((pixel[Y] * ss as usize) + sy as usize) as f64) - (h / 2.0);
 
                 *ray.pos_mut() += (dx * self.right().as_ref()) + (dy * self.up().as_ref());
             }
