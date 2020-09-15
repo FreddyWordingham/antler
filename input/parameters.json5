@@ -56,12 +56,12 @@
         }
     },
     cam: {
-        pos     : [-20,0,20],
+        pos     : [-2,0,3],
         tar     : [0,0,0.5],
         swivel  : [0, 0],
-        hr_fov  : 4.5,
+        hr_fov  : 45.0,
         aspect  : "Square",
-        ss_power: 4,
-        hr_res  : 128
+        // ss_power: 2,
+        hr_res  : 1000
     }
 }
