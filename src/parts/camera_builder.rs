@@ -12,8 +12,6 @@ pub struct CameraBuilder {
     pos: Pos3,
     /// Target position [m].
     tar: Pos3,
-    /// Optional targeting swivel adjustment [deg].
-    swivel: Option<[f64; 2]>,
     /// Horizontal field of view [deg].
     hr_fov: f64,
     /// Aspect ratio.
