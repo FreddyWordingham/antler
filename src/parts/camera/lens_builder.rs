@@ -1,10 +1,11 @@
 //! Camera lens implementation.
 
 use arctk::{err::Error, file::Build};
+use arctk_attr::input;
 use std::path::Path;
 
 /// Lens structure.
-#[derive(Debug)]
+#[input]
 pub enum LensBuilder {
     /// Perspective projection.
     Perspective {

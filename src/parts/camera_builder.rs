@@ -1,6 +1,6 @@
 //! Camera-builder implementation.
 
-use crate::parts::{Focus, Lens, Sensor};
+use crate::parts::{Focus, LensBuilder, Sensor};
 use arctk::{err::Error, file::Build, img::AspectRatio, math::Pos3};
 use arctk_attr::input;
 use std::path::Path;
@@ -14,6 +14,8 @@ pub struct CameraBuilder {
     tar: Pos3,
     /// Horizontal field of view [deg].
     hr_fov: f64,
+    /// Lens choice.
+    lens: LensBuilder,
     /// Aspect ratio.
     aspect: AspectRatio,
     /// Horizontal pixel resolution.
@@ -26,10 +28,9 @@ impl Build for CameraBuilder {
     type Inst = crate::parts::Camera;
 
     #[inline]
-    fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
+    fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         let focus = Focus::new(self.pos, self.tar);
-
-        let lens = Lens::new_perspective(self.hr_fov.to_radians());
+        let lens = self.lens.build(in_dir)?;
         let sensor = Sensor::new(&self.aspect, self.hr_res, self.ss_power);
 
         Ok(Self::Inst::new(focus, lens, sensor))
