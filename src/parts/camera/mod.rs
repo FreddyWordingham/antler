@@ -90,7 +90,7 @@ impl Camera {
             }
             Lens::Orthographic { field } => {
                 let w = field;
-                let h = (field * self.sensor.res().0 as f64) / self.sensor.res().1 as f64;
+                let h = (field * self.sensor.res().1 as f64) / self.sensor.res().0 as f64;
 
                 let ss = self.sensor.super_sample_power().unwrap_or(1);
 

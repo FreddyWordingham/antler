@@ -2,7 +2,7 @@
 
 use antler::{
     input::{Settings, Shader, ShaderBuilder},
-    parts::{Attributes, Camera, CameraBuilder, Scene},
+    parts::{Attributes, Camera,CameraBuilder, Scene},
     run::multi_thread,
 };
 use arctk::{

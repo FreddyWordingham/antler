@@ -62,7 +62,7 @@
         // lens    : { Perspective: {fov: 35.0}},
         lens    : { Orthographic: {field: 2.0}},
         aspect  : "Square",
-        ss_power: 4,
-        hr_res  : 4000
+        ss_power: ,
+        hr_res  : 128
     }
 }
