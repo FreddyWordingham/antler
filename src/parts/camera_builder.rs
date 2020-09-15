@@ -12,8 +12,6 @@ pub struct CameraBuilder {
     pos: Pos3,
     /// Target position [m].
     tar: Pos3,
-    /// Horizontal field of view [deg].
-    hr_fov: f64,
     /// Lens choice.
     lens: LensBuilder,
     /// Aspect ratio.
