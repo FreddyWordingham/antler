@@ -25,7 +25,7 @@ pub struct CameraBuilder {
 }
 
 impl Build for CameraBuilder {
-    type Inst = super::Camera;
+    type Inst = crate::parts::Camera;
 
     #[inline]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {

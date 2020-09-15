@@ -2,9 +2,10 @@
 
 pub mod focus;
 pub mod lens;
+pub mod lens_builder;
 pub mod sensor;
 
-pub use self::{focus::*, lens::*, sensor::*};
+pub use self::{focus::*, lens::*, lens_builder::*, sensor::*};
 
 use arctk::{
     access,
@@ -86,6 +87,23 @@ impl Camera {
                 *ray.dir_mut() = Rot3::from_axis_angle(&self.focus.orient().down(), theta)
                     * Rot3::from_axis_angle(self.focus.orient().right(), phi)
                     * ray.dir();
+            }
+            Lens::Orthographic { field } => {
+                let w = field;
+                let h = (field * self.sensor.res().0 as f64) / self.sensor.res().1 as f64;
+
+                let ss = self.sensor.super_sample_power().unwrap_or(1);
+
+                let dw = w / ((self.sensor.res().0 * ss as u64) - 1) as f64;
+                let dh = h / ((self.sensor.res().1 * ss as u64) - 1) as f64;
+
+                let sx = sub_sample % ss;
+                let sy = sub_sample / ss;
+
+                let dx = dw * ((pixel[X] * ss as usize) + sx as usize) as f64;
+                let dy = dh * ((pixel[Y] * ss as usize) + sy as usize) as f64;
+
+                *ray.pos_mut() += (dx * self.right().as_ref()) + (dy * self.up().as_ref())
             }
         }
 
