@@ -67,27 +67,27 @@ impl Camera {
     pub fn gen_ray(&self, pixel: [usize; 2], sub_sample: i32) -> Ray {
         let mut ray = self.focus.observation_ray();
 
-        let fov = self.lens.fov();
-        let delta = fov / (self.sensor.res().0 - 1) as f64;
+        match self.lens {
+            Lens::Perspective { fov } => {
+                let delta = fov / (self.sensor.res().0 - 1) as f64;
 
-        let mut theta = ((pixel[X] as f64) * delta) - (fov * 0.5);
-        let mut phi = ((pixel[Y] as f64) * delta)
-            - (fov * 0.5 * (self.sensor.res().1 as f64 / self.sensor.res().0 as f64));
+                let mut theta = ((pixel[X] as f64) * delta) - (fov * 0.5);
+                let mut phi = ((pixel[Y] as f64) * delta)
+                    - (fov * 0.5 * (self.sensor.res().1 as f64 / self.sensor.res().0 as f64));
 
-        if let Some(super_sample_power) = self.sensor.super_sample_power() {
-            let sub_delta = delta / f64::from(super_sample_power);
-            let sx = f64::from(sub_sample % super_sample_power) + 0.5;
-            let sy = f64::from(sub_sample / super_sample_power) + 0.5;
-            theta += (sub_delta * (0.5 + sx)) - (delta * 0.5);
-            phi += (sub_delta * (0.5 + sy)) - (delta * 0.5);
+                if let Some(super_sample_power) = self.sensor.super_sample_power() {
+                    let sub_delta = delta / f64::from(super_sample_power);
+                    let sx = f64::from(sub_sample % super_sample_power) + 0.5;
+                    let sy = f64::from(sub_sample / super_sample_power) + 0.5;
+                    theta += (sub_delta * (0.5 + sx)) - (delta * 0.5);
+                    phi += (sub_delta * (0.5 + sy)) - (delta * 0.5);
+                }
+
+                *ray.dir_mut() = Rot3::from_axis_angle(&self.focus.orient().down(), theta)
+                    * Rot3::from_axis_angle(self.focus.orient().right(), phi)
+                    * ray.dir();
+            }
         }
-
-        theta += self.lens.swivel()[X];
-        phi += self.lens.swivel()[Y];
-
-        *ray.dir_mut() = Rot3::from_axis_angle(&self.focus.orient().down(), theta)
-            * Rot3::from_axis_angle(self.focus.orient().right(), phi)
-            * ray.dir();
 
         ray
     }

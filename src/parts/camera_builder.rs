@@ -42,10 +42,7 @@ impl Build for CameraBuilder {
         } else {
             [0.0, 0.0]
         };
-        let lens = Lens::new(
-            [swivel[X].to_radians(), swivel[Y].to_radians()],
-            self.hr_fov.to_radians(),
-        );
+        let lens = Lens::new_perspective(self.hr_fov.to_radians());
         let sensor = Sensor::new(&self.aspect, self.hr_res, self.ss_power);
 
         Ok(Self::Inst::new(focus, lens, sensor))
