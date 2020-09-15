@@ -1,7 +1,5 @@
 //! Camera lens implementation.
 
-use arctk::clone;
-
 /// Lens structure.
 #[derive(Debug)]
 pub enum Lens {

@@ -1,13 +1,7 @@
 //! Camera-builder implementation.
 
 use crate::parts::{Focus, Lens, Sensor};
-use arctk::{
-    err::Error,
-    file::Build,
-    img::AspectRatio,
-    math::Pos3,
-    ord::{X, Y},
-};
+use arctk::{err::Error, file::Build, img::AspectRatio, math::Pos3};
 use arctk_attr::input;
 use std::path::Path;
 
@@ -37,11 +31,6 @@ impl Build for CameraBuilder {
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
         let focus = Focus::new(self.pos, self.tar);
 
-        let swivel = if let Some(s) = self.swivel {
-            s
-        } else {
-            [0.0, 0.0]
-        };
         let lens = Lens::new_perspective(self.hr_fov.to_radians());
         let sensor = Sensor::new(&self.aspect, self.hr_res, self.ss_power);
 
