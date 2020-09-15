@@ -99,22 +99,18 @@ fn build(
     banner::section("Building").expect("Failed to print section heading.");
     banner::sub_section("Adaptive Tree Settings").expect("Failed to print sub-section heading.");
     let tree_sett = params.tree;
-    // println!("{:>32} : {}", "Tree settings", tree_sett);
 
     banner::sub_section("Render Settings").expect("Failed to print sub-section heading.");
     let render_sett = params.sett;
-    // println!("{:>32} : {}", "Render settings", render_sett);
 
     banner::sub_section("Surfaces").expect("Failed to print sub-section heading.");
     let surfs = params
         .surfs
         .build(in_dir)
         .expect("Unable to build surfaces.");
-    // println!("{:>32} : {}", "Surfaces", surfs);
 
     banner::sub_section("Attributes").expect("Failed to print sub-section heading.");
     let attrs = params.attrs;
-    // println!("{:>32} : {}", "Attributes", attrs);
 
     banner::sub_section("Colours").expect("Failed to print sub-section heading.");
     let cols = params
@@ -134,7 +130,6 @@ fn build(
         .shader
         .build(in_dir)
         .expect("Unable to build scenes.");
-    // println!("{:>32} : {}", "Main image", shader);
 
     (tree_sett, render_sett, surfs, attrs, cols, shader)
 }
@@ -145,7 +140,6 @@ fn grow<'a>(tree: TreeBuilder, surfs: &'a Set<Key, Mesh>) -> Tree<'a, &Key> {
 
     banner::sub_section("Adaptive Tree").expect("Failed to print sub-section heading.");
     let tree = tree.build(&surfs);
-    // println!("{:>32} : {}", "Adaptive tree", &tree);
 
     tree
 }
