@@ -40,21 +40,21 @@ impl Camera {
         }
     }
 
-    /// Quickly view the camera's forward direction.
+    /// Reference the forward direction.
     #[inline]
     #[must_use]
     pub const fn forward(&self) -> &Dir3 {
         self.focus.orient().forward()
     }
 
-    /// Quickly view the camera's upwards direction.
+    /// Reference the upwards direction.
     #[inline]
     #[must_use]
     pub const fn up(&self) -> &Dir3 {
         self.focus.orient().up()
     }
 
-    /// Quickly view the camera's right direction.
+    /// Reference the right direction.
     #[inline]
     #[must_use]
     pub const fn right(&self) -> &Dir3 {
