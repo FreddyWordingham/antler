@@ -25,7 +25,7 @@ impl Build for LensBuilder {
     #[inline]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
         Ok(match self {
-            Self::Perspective { fov } => Self::Inst::new_perspective(fov.to_degrees()),
+            Self::Perspective { fov } => Self::Inst::new_perspective(fov.to_radians()),
             Self::Orthographic { field } => Self::Inst::new_orthographic(field),
         })
     }

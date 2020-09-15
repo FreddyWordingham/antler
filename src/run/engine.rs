@@ -23,6 +23,10 @@ pub fn paint<T: Display + Ord>(
     debug_assert!(trace.weight() > 0.0);
     debug_assert!(trace.weight() <= 1.0);
 
+    if trace.weight() > 0.99999 {
+        println!("{:?}", trace.dir());
+    }
+
     // Convenience.
     let bump_dist = scene.sett.bump_dist();
     let sun_pos = shader.sky().sun_pos();
