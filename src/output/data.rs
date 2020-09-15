@@ -6,6 +6,7 @@ use arctk::{
     img::Image,
     ord::{X, Y},
 };
+use palette::LinSrgba;
 use std::{ops::AddAssign, path::Path};
 
 /// Rendering output.
@@ -23,7 +24,7 @@ impl Data {
         debug_assert!(res[Y] > 0);
 
         Self {
-            img: Image::new(res),
+            img: Image::new(res, LinSrgba::new(0.0, 0.0, 0.0, 0.0)),
         }
     }
 }

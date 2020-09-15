@@ -27,7 +27,7 @@ pub fn paint<T: Display + Ord>(
     let sun_pos = shader.sky().sun_pos();
 
     // Tracked items.
-    let mut col = LinSrgba::default();
+    let mut col = LinSrgba::new(0.0, 0.0, 0.0, 0.0);
 
     // Event loop.
     loop {

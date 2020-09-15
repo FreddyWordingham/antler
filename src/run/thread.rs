@@ -85,7 +85,7 @@ fn run_thread<T: Display + Ord>(
         for p in start..end {
             let pixel = [(p % h_res) as usize, (p / h_res) as usize];
 
-            let mut total_col = LinSrgba::default();
+            let mut total_col = LinSrgba::new(0.0, 0.0, 0.0, 0.0);
             for sub_sample in 0..super_samples {
                 let ray = shader.cam().gen_ray(pixel, sub_sample);
 
@@ -94,6 +94,7 @@ fn run_thread<T: Display + Ord>(
             }
 
             data.img.pixels_mut()[pixel] = total_col;
+            println!("{}", data.img.pixels_mut()[pixel].alpha);
         }
     }
 
