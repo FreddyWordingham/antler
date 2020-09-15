@@ -5,8 +5,9 @@ use arctk::clone;
 /// Lens structure.
 #[derive(Debug)]
 pub enum Lens {
+    /// Perspective projection.
     Perspective {
-        /// Field of view [rad].
+        /// Horizontal field-of-view [rad].
         fov: f64,
     },
 }
