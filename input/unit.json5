@@ -59,9 +59,10 @@
         pos     : [-20.0, 0.0, 20.0],
         tar     : [0.0, 0.0, 1.0],
         // lens    : { Perspective: {fov: 35.0}},
-        lens    : { Orthographic: {field: 2.0}},
+        lens    : { Orthographic: {field: 2.4}},
         aspect  : { Custom: [2.0, 2.82842712]},
         ss_power: 2,
-        hr_res  : 512
-    }
+        hr_res  : 128
+    },
+    num_pics: 64
 }

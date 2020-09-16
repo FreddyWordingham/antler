@@ -2,7 +2,7 @@
 
 use antler::{
     input::{Settings, Shader, ShaderBuilder},
-    parts::{Attributes, Camera,CameraBuilder, Scene},
+    parts::{Attributes, Camera, CameraBuilder, Scene},
     run::multi_thread,
 };
 use arctk::{
@@ -52,7 +52,10 @@ fn main() {
     banner::section("Rendering").expect("Failed to print section heading.");
     let output = multi_thread(&input, &shader, &cam).expect("Failed to perform rendering.");
     banner::section("Saving").expect("Failed to print section heading.");
-    output.save(&out_dir).expect("Failed to save output data.");
+    output
+        .img
+        .save(&out_dir)
+        .expect("Failed to save output data.");
     banner::section("Finished").expect("Failed to print section heading.");
 }
 

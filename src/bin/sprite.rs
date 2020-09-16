@@ -16,6 +16,7 @@ use arctk::{
 };
 use arctk_attr::input;
 use palette::{Gradient, LinSrgba};
+use std::f64::consts::PI;
 use std::{
     env::current_dir,
     path::{Path, PathBuf},
@@ -41,31 +42,41 @@ struct Parameters {
     shader: ShaderBuilder,
     /// Camera.
     cam: CameraBuilder,
+    /// Number of pictures to take.
+    num_pics: i32,
 }
 
 fn main() {
     banner::title("SPRITE").expect("Failed to print title.");
     let (params_path, in_dir, out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, render_sett, surfs, attrs, cols, shader, mut cam) = build(&in_dir, params);
+    let (tree_sett, render_sett, surfs, attrs, cols, mut shader, mut cam, num_pics) =
+        build(&in_dir, params);
     let tree = grow(tree_sett, &surfs);
     let input = Scene::new(&tree, &render_sett, &surfs, &attrs, &cols);
+
     banner::section("Rendering").expect("Failed to print section heading.");
-    let output = multi_thread(&input, &shader, &cam).expect("Failed to perform rendering.");
-    banner::section("Saving").expect("Failed to print section heading.");
-    output.save(&out_dir).expect("Failed to save output data.");
-    {
-        // *shader.sky_mut().sun_pos_mut() = Pos3::new(
-        //     shader.sky().sun_pos().y,
-        //     -shader.sky().sun_pos().x,
-        //     shader.sky().sun_pos().z,
-        // );
-        let old_pos = *cam.focus().orient().pos();
-        cam.set_pos(Pos3::new(old_pos.y, old_pos.x, old_pos.z));
-        banner::section("Rendering").expect("Failed to print section heading.");
+    let delta = (2.0 * PI) / num_pics as f64;
+    for n in 0..num_pics {
         let output = multi_thread(&input, &shader, &cam).expect("Failed to perform rendering.");
-        banner::section("Saving").expect("Failed to print section heading.");
-        output.save(&out_dir).expect("Failed to save output data.");
+        output
+            .img
+            .save(&out_dir.join(format!("img_{}.png", n)))
+            .expect("Failed to save output data.");
+
+        let sun_pos = *shader.sky_mut().sun_pos();
+        *shader.sky_mut().sun_pos_mut() = Pos3::new(
+            (sun_pos.x * delta.cos()) - (sun_pos.y * delta.sin()),
+            (sun_pos.x * delta.sin()) + (sun_pos.y * delta.cos()),
+            shader.sky().sun_pos().z,
+        );
+
+        let cam_pos = *cam.focus().orient().pos();
+        cam.set_pos(Pos3::new(
+            (cam_pos.x * delta.cos()) - (cam_pos.y * delta.sin()),
+            (cam_pos.x * delta.sin()) + (cam_pos.y * delta.cos()),
+            cam_pos.z,
+        ));
     }
     banner::section("Finished").expect("Failed to print section heading.");
 }
@@ -112,6 +123,7 @@ fn build(
     Set<Key, Gradient<LinSrgba>>,
     Shader,
     Camera,
+    i32,
 ) {
     banner::section("Building").expect("Failed to print section heading.");
     banner::sub_section("Adaptive Tree Settings").expect("Failed to print sub-section heading.");
@@ -154,7 +166,19 @@ fn build(
         .build(in_dir)
         .expect("Failed to build build camera.");
 
-    (tree_sett, render_sett, surfs, attrs, cols, shader, cam)
+    banner::sub_section("Details").expect("Failed to print sub-section heading.");
+    let num_pics = params.num_pics;
+
+    (
+        tree_sett,
+        render_sett,
+        surfs,
+        attrs,
+        cols,
+        shader,
+        cam,
+        num_pics,
+    )
 }
 
 /// Grow domains.
