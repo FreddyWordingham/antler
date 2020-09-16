@@ -29,7 +29,7 @@ impl Focus {
         }
     }
 
-    /// Calculate the nth depth-of-field observation ray.
+    /// Create a direct observation ray.
     #[inline]
     #[must_use]
     pub fn observation_ray(&self) -> Ray {

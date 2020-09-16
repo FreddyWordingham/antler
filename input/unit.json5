@@ -11,11 +11,11 @@
         min_weight  : 0.1
     },
     surfs: {
-        unit    : [['objs/util/unit.obj'],  null],
-        // bulk    : [['objs/shatter/bulk.obj'],  null],
-        // core    : [['objs/shatter/core.obj'],  null],
-        // gems    : [['objs/shatter/gems.obj'],  null],
-        // vein    : [['objs/shatter/vein.obj'],  null]
+        // unit    : [['objs/util/unit.obj'],  null],
+        bulk    : [['objs/shatter/bulk.obj'],  null],
+        core    : [['objs/shatter/core.obj'],  null],
+        gems    : [['objs/shatter/gems.obj'],  null],
+        vein    : [['objs/shatter/vein.obj'],  null]
     },
     attrs: {
         // gems: { Mirror: {abs: 0.3} },

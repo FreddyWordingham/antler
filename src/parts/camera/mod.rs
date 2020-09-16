@@ -10,7 +10,7 @@ pub use self::{focus::*, lens::*, lens_builder::*, sensor::*};
 use arctk::{
     access,
     geom::Ray,
-    math::{Dir3, Rot3},
+    math::{Dir3, Pos3, Rot3},
     ord::{X, Y},
 };
 
@@ -60,6 +60,18 @@ impl Camera {
     #[must_use]
     pub const fn right(&self) -> &Dir3 {
         self.focus.orient().right()
+    }
+
+    /// Set a new camera position.
+    #[inline]
+    pub fn set_pos(&mut self, pos: Pos3) {
+        self.focus = Focus::new(pos, *self.focus.tar());
+    }
+
+    /// Set a new target position.
+    #[inline]
+    pub fn set_tar(&mut self, tar: Pos3) {
+        self.focus = Focus::new(*self.focus.orient().pos(), tar);
     }
 
     /// Generate a new observation ray.

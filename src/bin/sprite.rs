@@ -47,30 +47,26 @@ fn main() {
     banner::title("SPRITE").expect("Failed to print title.");
     let (params_path, in_dir, out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, render_sett, surfs, attrs, cols, mut shader, mut cam) = build(&in_dir, params);
+    let (tree_sett, render_sett, surfs, attrs, cols, shader, mut cam) = build(&in_dir, params);
     let tree = grow(tree_sett, &surfs);
     let input = Scene::new(&tree, &render_sett, &surfs, &attrs, &cols);
     banner::section("Rendering").expect("Failed to print section heading.");
     let output = multi_thread(&input, &shader, &cam).expect("Failed to perform rendering.");
     banner::section("Saving").expect("Failed to print section heading.");
     output.save(&out_dir).expect("Failed to save output data.");
-    // {
-    //     // *shader.sky_mut().sun_pos_mut() = Pos3::new(
-    //     //     shader.sky().sun_pos().y,
-    //     //     -shader.sky().sun_pos().x,
-    //     //     shader.sky().sun_pos().z,
-    //     // );
-    //     *cam.focus_mut().orient_mut().pos_mut() = Pos3::new(
-    //         cam.focus().orient().pos().y,
-    //         -cam.focus().orient().pos().x,
-    //         cam.focus().orient().pos().z,
-    //     );
-    //     cam.focus_mut().orient_mut().re_orientate();
-    //     banner::section("Rendering").expect("Failed to print section heading.");
-    //     let output = multi_thread(&input, &shader, &cam).expect("Failed to perform rendering.");
-    //     banner::section("Saving").expect("Failed to print section heading.");
-    //     output.save(&out_dir).expect("Failed to save output data.");
-    // }
+    {
+        // *shader.sky_mut().sun_pos_mut() = Pos3::new(
+        //     shader.sky().sun_pos().y,
+        //     -shader.sky().sun_pos().x,
+        //     shader.sky().sun_pos().z,
+        // );
+        let old_pos = *cam.focus().orient().pos();
+        cam.set_pos(Pos3::new(old_pos.y, old_pos.x, old_pos.z));
+        banner::section("Rendering").expect("Failed to print section heading.");
+        let output = multi_thread(&input, &shader, &cam).expect("Failed to perform rendering.");
+        banner::section("Saving").expect("Failed to print section heading.");
+        output.save(&out_dir).expect("Failed to save output data.");
+    }
     banner::section("Finished").expect("Failed to print section heading.");
 }
 
