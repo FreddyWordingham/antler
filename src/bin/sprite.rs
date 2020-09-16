@@ -47,15 +47,17 @@ struct Parameters {
 }
 
 fn main() {
-    banner::title("SPRITE").expect("Failed to print title.");
-    let (params_path, in_dir, out_dir) = init();
-    let params = input(&in_dir, &params_path);
+    let term_width = arctk::util::term::width().unwrap_or(80);
+
+    banner::title("SPRITE", term_width);
+    let (params_path, in_dir, out_dir) = init(term_width);
+    let params = input(term_width, &in_dir, &params_path);
     let (tree_sett, render_sett, surfs, attrs, cols, mut shader, mut cam, num_pics) =
-        build(&in_dir, params);
-    let tree = grow(tree_sett, &surfs);
+        build(term_width, &in_dir, params);
+    let tree = grow(term_width, tree_sett, &surfs);
     let input = Scene::new(&tree, &render_sett, &surfs, &attrs, &cols);
 
-    banner::section("Rendering").expect("Failed to print section heading.");
+    banner::section("Rendering", term_width);
     let delta = (2.0 * PI) / num_pics as f64;
     for n in 0..num_pics {
         let output = multi_thread(&input, &shader, &cam).expect("Failed to perform rendering.");
@@ -78,20 +80,20 @@ fn main() {
             cam_pos.z,
         ));
     }
-    banner::section("Finished").expect("Failed to print section heading.");
+    banner::section("Finished", term_width);
 }
 
 /// Initialise the command line arguments and directories.
-fn init() -> (PathBuf, PathBuf, PathBuf) {
-    banner::section("Initialisation").expect("Failed to print section heading.");
-    banner::sub_section("Command line arguments").expect("Failed to print sub-section heading.");
+fn init(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
+    banner::section("Initialisation", term_width);
+    banner::sub_section("Command line arguments", term_width);
     args!(bin_path: PathBuf;
         params_path: PathBuf
     );
     println!("{:>32} : {}", "binary path", bin_path.display());
     println!("{:>32} : {}", "parameters path", params_path.display());
 
-    banner::sub_section("Directories").expect("Failed to print sub-section heading.");
+    banner::sub_section("Directories", term_width);
     let cwd = current_dir().expect("Failed to determine current working directory.");
     let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
         .expect("Failed to initialise directories.");
@@ -102,9 +104,9 @@ fn init() -> (PathBuf, PathBuf, PathBuf) {
 }
 
 /// Load the input files.
-fn input(in_dir: &Path, params_path: &Path) -> Parameters {
-    banner::section("Input").expect("Failed to print section heading.");
-    banner::sub_section("Parameters").expect("Failed to print sub-section heading.");
+fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
+    banner::section("Input", term_width);
+    banner::sub_section("Parameters", term_width);
     let path = in_dir.join(params_path);
 
     Parameters::load(&path).expect("Failed to load parameters file.")
@@ -113,6 +115,7 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
 /// Build instances.
 #[allow(clippy::type_complexity)]
 fn build(
+    term_width: usize,
     in_dir: &Path,
     params: Parameters,
 ) -> (
@@ -125,23 +128,23 @@ fn build(
     Camera,
     i32,
 ) {
-    banner::section("Building").expect("Failed to print section heading.");
-    banner::sub_section("Adaptive Tree Settings").expect("Failed to print sub-section heading.");
+    banner::section("Building", term_width);
+    banner::sub_section("Adaptive Tree Settings", term_width);
     let tree_sett = params.tree;
 
-    banner::sub_section("Render Settings").expect("Failed to print sub-section heading.");
+    banner::sub_section("Render Settings", term_width);
     let render_sett = params.sett;
 
-    banner::sub_section("Surfaces").expect("Failed to print sub-section heading.");
+    banner::sub_section("Surfaces", term_width);
     let surfs = params
         .surfs
         .build(in_dir)
         .expect("Failed to build surfaces.");
 
-    banner::sub_section("Attributes").expect("Failed to print sub-section heading.");
+    banner::sub_section("Attributes", term_width);
     let attrs = params.attrs;
 
-    banner::sub_section("Colours").expect("Failed to print sub-section heading.");
+    banner::sub_section("Colours", term_width);
     let cols = params
         .cols
         .build(in_dir)
@@ -154,19 +157,19 @@ fn build(
         );
     }
 
-    banner::sub_section("Shader").expect("Failed to print sub-section heading.");
+    banner::sub_section("Shader", term_width);
     let shader = params
         .shader
         .build(in_dir)
         .expect("Failed to build shader.");
 
-    banner::sub_section("Camera").expect("Failed to print sub-section heading.");
+    banner::sub_section("Camera", term_width);
     let cam = params
         .cam
         .build(in_dir)
         .expect("Failed to build build camera.");
 
-    banner::sub_section("Details").expect("Failed to print sub-section heading.");
+    banner::sub_section("Details", term_width);
     let num_pics = params.num_pics;
 
     (
@@ -182,10 +185,10 @@ fn build(
 }
 
 /// Grow domains.
-fn grow<'a>(tree: TreeBuilder, surfs: &'a Set<Key, Mesh>) -> Tree<'a, &Key> {
-    banner::section("Growing").expect("Failed to print section heading.");
+fn grow<'a>(term_width: usize, tree: TreeBuilder, surfs: &'a Set<Key, Mesh>) -> Tree<'a, &Key> {
+    banner::section("Growing", term_width);
 
-    banner::sub_section("Adaptive Tree").expect("Failed to print sub-section heading.");
+    banner::sub_section("Adaptive Tree", term_width);
     let tree = tree.build(&surfs);
 
     tree

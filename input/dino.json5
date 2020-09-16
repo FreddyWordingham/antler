@@ -7,7 +7,7 @@
     sett: {
         bump_dist   : 1e-6,
         vis_dist    : 1e1,
-        block_size  : 1000,
+        block_size  : 100,
         min_weight  : 0.1
     },
     surfs: {
@@ -34,8 +34,8 @@
     },
     shader: {
         samples: {
-            // ambient_occlusion   : 64,
-            // soft_shadows        : 17
+            ambient_occlusion   : 17,
+            soft_shadows        : 7
         },
         sky: {
             brightness  : 0.7,
@@ -56,13 +56,14 @@
         }
     },
     cam: {
-        pos     : [-2,-2,0.5],
-        tar     : [0,0,0.5],
-        swivel  : [0, 0],
+        pos     : [-20.0, 0.0, 20.0],
+        tar     : [0.0, 0.0, 0.0],
         // lens    : { Perspective: {fov: 35.0}},
         lens    : { Orthographic: {field: 2.0}},
+        // aspect  : { Custom: [2.0, 2.82842712]},
         aspect  : "Square",
-        ss_power: ,
+        ss_power: 3,
         hr_res  : 128
-    }
+    },
+    num_pics: 16
 }
