@@ -7,13 +7,13 @@
     sett: {
         bump_dist   : 1e-6,
         vis_dist    : 1e1,
-        block_size  : 100,
+        block_size  : 10,
         min_weight  : 0.1
     },
     surfs: {
         grd     : [['objs/blocks/floor.obj'],   {rot:[0.01,0.01,0.01]}],
-        lrg     : [['objs/blocks/a_1.obj'],     {rot:[0.01,0.01,0.01]}],
-        sml     : [['objs/blocks/b_1.obj'],     {rot:[0.01,0.01,0.01]}]
+        lrg     : [['objs/blocks/a_3.obj'],     {rot:[0.01,0.01,0.01]}],
+        sml     : [['objs/blocks/b_3.obj'],     {rot:[0.01,0.01,0.01]}]
     },
     attrs: {
         // gems: { Mirror: {abs: 0.3} },
@@ -27,13 +27,13 @@
     },
     shader: {
         samples: {
-            ambient_occlusion   : 17,
-            soft_shadows        : 7
+            ambient_occlusion   : 127,
+            soft_shadows        : 31
         },
         sky: {
             brightness  : 0.7,
             sun_pos     : [-10.0, -15.0, 20.0],
-            sun_rad     : 10,
+            sun_rad     : 30,
             segments    : [32,32]
         },
         light: {
@@ -50,13 +50,13 @@
     },
     cam: {
         pos     : [-20.0, 0.0, 20.0],
-        tar     : [0.0, 0.0, 1.0],
+        tar     : [0.0, 0.0, 4.0],
         // lens    : { Perspective: {fov: 35.0}},
-        lens    : { Orthographic: {field: 2.0}},
-        aspect  : { Custom: [1024,1450]},
+        lens    : { Orthographic: {field: 1.99}},
+        aspect  : { Custom: [64,182]},
         // aspect  : "Square",
-        // ss_power: 3,
-        hr_res  : 1024
+        ss_power: 3,
+        hr_res  : 64
     },
-    num_pics: 16
+    num_pics: 4
 }
