@@ -16,7 +16,7 @@ pub struct Focus {
 }
 
 impl Focus {
-    access!(orient, Orient);
+    access!(orient, orient_mut, Orient);
     access!(tar, Pos3);
 
     /// Construct a new instance.

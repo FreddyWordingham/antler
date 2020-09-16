@@ -26,7 +26,7 @@ pub struct Camera {
 }
 
 impl Camera {
-    access!(focus, Focus);
+    access!(focus, focus_mut, Focus);
     access!(lens, Lens);
     access!(sensor, Sensor);
 

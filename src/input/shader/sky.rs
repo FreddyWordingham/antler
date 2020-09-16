@@ -14,7 +14,7 @@ pub struct Sky {
 
 impl Sky {
     clone!(brightness, f64);
-    access!(sun_pos, Pos3);
+    access!(sun_pos, sun_pos_mut, Pos3);
     clone!(sun_rad, f64);
 
     /// Construct a new instance.

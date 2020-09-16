@@ -23,7 +23,7 @@ pub struct Shader {
 }
 
 impl Shader {
-    access!(sky, Sky);
+    access!(sky, sky_mut, Sky);
     access!(samples, Samples);
     access!(light, Light);
     access!(shadow, Shadow);
