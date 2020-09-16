@@ -54,7 +54,7 @@ fn main() {
     banner::section("Saving").expect("Failed to print section heading.");
     output
         .img
-        .save(&out_dir)
+        .save(&out_dir.join("render.png"))
         .expect("Failed to save output data.");
     banner::section("Finished").expect("Failed to print section heading.");
 }
