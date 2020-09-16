@@ -34,8 +34,8 @@
     },
     shader: {
         samples: {
-            // ambient_occlusion   : 64,
-            // soft_shadows        : 17
+            ambient_occlusion   : 64,
+            soft_shadows        : 17
         },
         sky: {
             brightness  : 0.7,
@@ -62,7 +62,7 @@
         lens    : { Orthographic: {field: 2.4}},
         aspect  : { Custom: [2.0, 2.82842712]},
         ss_power: 2,
-        hr_res  : 128
+        hr_res  : 1024
     },
     num_pics: 64
 }
