@@ -1,0 +1,64 @@
+{
+    tree: {
+        tar_tris: 5,
+        max_depth: 6,
+        padding: 0.01
+    },
+    sett: {
+        bump_dist   : 1e-6,
+        vis_dist    : 1e1,
+        block_size  : 10,
+        min_weight  : 0.1
+    },
+    surfs: {
+        // grd     : [['objs/blocks/floor.obj'],   {rot:[0.01,0.01,0.01]}],
+        grd     : [['../../wonder/res/objs/floors/empty.obj'],     {rot:[0.01,0.01,0.01]}],
+        // explode : [['../../wonder/res/objs/floors/explode_1.obj'],     {rot:[0.01,0.01,0.01]}],
+        // explode : [['../../wonder/res/objs/floors/explode_2.obj'],     {rot:[0.01,0.01,0.01]}],
+        explode : [['../../wonder/res/objs/floors/explode_3.obj'],     {rot:[0.01,0.01,0.01]}]
+    },
+    attrs: {
+        // gems: { Mirror: {abs: 0.3} },
+        gems: { Refractive: {abs:0.1, inside: 1.3, outside: 1.0} },
+        vein: { Refractive: {abs:0.1, inside: 1.3, outside: 1.0} }
+    },
+    cols: {
+        grd     : ['#ff4700ff'],
+        explode  : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
+        // bits_1  : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff', '#51dab6ff', '#556b2fff', '#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],
+    },
+    shader: {
+        samples: {
+            ambient_occlusion   : 127,
+            soft_shadows        : 31
+        },
+        sky: {
+            brightness  : 0.7,
+            sun_pos     : [-10.0, -15.0, 20.0],
+            sun_rad     : 30,
+            segments    : [32,32]
+        },
+        light: {
+            ambient : 0.1,
+            diffuse : 0.7,
+            specular: 0.2,
+            spec_pow: 8
+        },
+        shadow: {
+            ambient : 0.3,
+            direct  : 0.7,
+            ao_pow  : 2
+        }
+    },
+    cam: {
+        pos     : [-20.0, 0.0, 24.0],
+        tar     : [0.0, 0.0, 4.0],
+        // lens    : { Perspective: {fov: 35.0}},
+        lens    : { Orthographic: {field: 1.98}},
+        aspect  : { Custom: [64,230]},
+        // aspect  : "Square",
+        ss_power: 4,
+        hr_res  : 64
+    },
+    num_pics: 4
+}

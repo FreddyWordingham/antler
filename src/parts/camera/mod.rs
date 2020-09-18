@@ -104,7 +104,7 @@ impl Camera {
                 let w = field;
                 let h = (field * self.sensor.res().1 as f64) / self.sensor.res().0 as f64;
 
-                let ss = self.sensor.super_sample_power().unwrap_or(1);
+                let ss = self.sensor.super_samples();
 
                 let dw = w / ((self.sensor.res().0 * ss as u64) - 1) as f64;
                 let dh = h / ((self.sensor.res().1 * ss as u64) - 1) as f64;

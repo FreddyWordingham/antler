@@ -30,11 +30,11 @@ struct Parameters {
     tree: TreeBuilder,
     /// Render runtime settings.
     sett: Settings,
-    /// Surfaces map.
+    /// Surfaces set.
     surfs: Set<Key, MeshBuilder>,
-    /// Attributes map.
+    /// Attributes set.
     attrs: Set<Key, Attributes>,
-    /// Colour map.
+    /// Colour set.
     cols: Set<Key, GradientBuilder>,
     /// Shader.
     shader: ShaderBuilder,
