@@ -10,6 +10,7 @@ use arctk::{
     file::{Build, Load, Redirect, Save},
     geom::{Mesh, MeshBuilder, Tree, TreeBuilder},
     img::GradientBuilder,
+    math::Pos3,
     ord::Set,
     util::{banner, dir, gradient},
 };
@@ -17,6 +18,7 @@ use arctk_attr::input;
 use palette::{Gradient, LinSrgba};
 use std::{
     env::current_dir,
+    f64::consts::PI,
     path::{Path, PathBuf},
 };
 
@@ -42,6 +44,8 @@ struct Parameters {
     cam: Redirect<CameraBuilder>,
     /// Pixel update size.
     update_size: u64,
+    /// Number of pictures to take.
+    num_pics: u64,
 }
 
 fn main() {
@@ -50,18 +54,31 @@ fn main() {
     banner::title("RENDER - WINDOW", term_width);
     let (params_path, in_dir, out_dir) = init(term_width);
     let params = input(term_width, &in_dir, &params_path);
-    let (tree_sett, render_sett, surfs, attrs, cols, shader, cam, update_size) =
+    let num_pics = params.num_pics;
+    let (tree_sett, render_sett, surfs, attrs, cols, shader, mut cam, update_size) =
         build(term_width, &in_dir, params);
     let tree = grow(term_width, tree_sett, &surfs);
     let input = Scene::new(&tree, &render_sett, &surfs, &attrs, &cols);
     banner::section("Rendering", term_width);
-    let output =
-        window_thread(update_size, &input, &shader, &cam).expect("Failed to perform rendering.");
-    banner::section("Saving", term_width);
-    output
-        .img
-        .save(&out_dir.join("render.png"))
-        .expect("Failed to save output data.");
+
+    let delta = (2.0 * PI) / num_pics as f64;
+    for n in 0..num_pics {
+        let output = window_thread(update_size, &input, &shader, &cam)
+            .expect("Failed to perform rendering.");
+        output
+            .img
+            .save(&out_dir.join(&format!("render_{:03}.png", n)))
+            .expect("Failed to save output data.");
+
+        let cam_pos = *cam.focus().orient().pos();
+        cam.set_pos(Pos3::new(
+            (cam_pos.x * delta.cos()) - (cam_pos.y * delta.sin()),
+            (cam_pos.x * delta.sin()) + (cam_pos.y * delta.cos()),
+            cam_pos.z,
+        ));
+        // cam.set_fov(cam.focus().fov());
+    }
+
     banner::section("Finished", term_width);
 }
 
