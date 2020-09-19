@@ -12,7 +12,7 @@ license = "MIT OR Apache-2.0"
 documentation = "https://docs.rs/antler"
 
 [features]
-default = ["window"]
+# default = ["window"]
 window = ["minifb"]
 
 [dependencies]
