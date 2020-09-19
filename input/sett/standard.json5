@@ -1,6 +1,0 @@
-{
-    bump_dist   : 1e-6,
-    vis_dist    : 1e1,
-    block_size  : 1e2,
-    min_weight  : 0.1,
-}
