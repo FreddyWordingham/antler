@@ -10,10 +10,10 @@
     attrs   : { There: 'attrs/haven.json5' },
     cols    : { There: 'cols/haven.json5' },
     cam     : { Here: {
-        pos     : [26.5, -0.5, -2.5],
-        tar     : [0,0,0],
-        lens    : { Perspective: {fov: 45.0} },
-        aspect  : "Square",
+        pos     : [64,64,32],
+        tar     : [0,0,10],
+        lens    : { Perspective: {fov: 25.0} },
+        aspect  : "IPhoneXS",
         // ss_power: 2,
         hr_res  : 1125
     }}

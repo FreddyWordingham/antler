@@ -5,7 +5,7 @@
     },
     sky: {
         brightness  : 0.3,
-        sun_pos     :  [32.0, -16.0, 24.0],
+        sun_pos     :  [22.0, -26.0, 77.0],
         sun_rad     : 10.0
     },
     light: {
