@@ -7,7 +7,7 @@ use antler::{
 };
 use arctk::{
     args,
-    file::{Build, Load, Save},
+    file::{Build, Load, Redirect, Save},
     geom::{Mesh, MeshBuilder, Tree, TreeBuilder},
     img::GradientBuilder,
     ord::Set,
@@ -27,19 +27,19 @@ type Key = String;
 #[input]
 struct Parameters {
     /// Adaptive mesh settings.
-    tree: TreeBuilder,
+    tree: Redirect<TreeBuilder>,
     /// Render runtime settings.
-    sett: Settings,
+    sett: Redirect<Settings>,
     /// Surfaces set.
-    surfs: Set<Key, MeshBuilder>,
+    surfs: Redirect<Set<Key, MeshBuilder>>,
     /// Attributes set.
-    attrs: Set<Key, Attributes>,
+    attrs: Redirect<Set<Key, Attributes>>,
     /// Colour set.
-    cols: Set<Key, GradientBuilder>,
+    cols: Redirect<Set<Key, GradientBuilder>>,
     /// Shader.
-    shader: ShaderBuilder,
+    shader: Redirect<ShaderBuilder>,
     /// Camera.
-    cam: CameraBuilder,
+    cam: Redirect<CameraBuilder>,
 }
 
 fn main() {
@@ -108,25 +108,38 @@ fn build(
 ) {
     banner::section("Building", term_width);
     banner::sub_section("Adaptive Tree Settings", term_width);
-    let tree_sett = params.tree;
+    let tree_sett = params
+        .tree
+        .build(in_dir)
+        .expect("Failed to redirect adaptive tree settings.");
 
     banner::sub_section("Render Settings", term_width);
-    let render_sett = params.sett;
+    let render_sett = params
+        .sett
+        .build(in_dir)
+        .expect("Failed to redirect render settings.");
 
     banner::sub_section("Surfaces", term_width);
     let surfs = params
         .surfs
         .build(in_dir)
+        .expect("Failed to redirect surfaces set.")
+        .build(in_dir)
         .expect("Failed to build surfaces.");
 
     banner::sub_section("Attributes", term_width);
-    let attrs = params.attrs;
+    let attrs = params
+        .attrs
+        .build(in_dir)
+        .expect("Failed to redirect attributes set.");
 
     banner::sub_section("Colours", term_width);
     let cols = params
         .cols
         .build(in_dir)
-        .expect("Failed to build colour gradients.");
+        .expect("Failed to redirect colour gradients set.")
+        .build(in_dir)
+        .expect("Failed to build colour gradients set.");
     for (group, grad) in cols.map() {
         println!(
             "{:>32} : {}",
@@ -139,11 +152,15 @@ fn build(
     let shader = params
         .shader
         .build(in_dir)
+        .expect("Failed to redirect shader settings.")
+        .build(in_dir)
         .expect("Failed to build shader.");
 
     banner::sub_section("Camera", term_width);
     let cam = params
         .cam
+        .build(in_dir)
+        .expect("Failed to redirect camera settings.")
         .build(in_dir)
         .expect("Failed to build build camera.");
 
