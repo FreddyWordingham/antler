@@ -76,6 +76,7 @@ fn run_thread<T: Display + Ord>(
 
     let super_samples = cam.sensor().super_samples();
     let h_res = cam.sensor().res().0;
+    let block_size = (scene.sett.block_size() / super_samples as u64).min(1);
 
     let weight = 1.0 / f64::from(super_samples);
 
@@ -84,7 +85,7 @@ fn run_thread<T: Display + Ord>(
     let mut data = Data::new([w, h]);
     while let Some((start, end)) = {
         let mut pb = pb.lock()?;
-        let b = pb.block(scene.sett.block_size());
+        let b = pb.block(block_size);
         std::mem::drop(pb);
         b
     } {
