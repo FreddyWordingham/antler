@@ -5,7 +5,11 @@ use crate::{
     input::Shader,
     parts::{Attributes, Camera, Scene, Tracer},
 };
-use arctk::{geom::Hit, math::Dir3, phys::Crossing};
+use arctk::{
+    geom::{Hit, Ray},
+    math::Dir3,
+    phys::Crossing,
+};
 use palette::{Gradient, LinSrgba};
 use rand::rngs::ThreadRng;
 use std::fmt::Display;
@@ -105,7 +109,7 @@ pub fn paint<T: Display + Ord>(
                 break;
             }
         } else {
-            // col += sky_col(shader, trace.ray(), &scene.cols.map()["sky"]);
+            col += sky_col(cam, trace.ray(), shader.sky().grad());
             break;
         }
     }
@@ -133,4 +137,16 @@ fn colour<T: Display + Ord>(
     let grad = Gradient::new(vec![LinSrgba::default(), base_col]);
 
     grad.get((light * shadow) as f32)
+}
+
+/// Determine the sky colour.
+#[inline]
+#[must_use]
+fn sky_col(
+    cam: &Camera,
+    ray: &Ray,
+    grad: &palette::Gradient<palette::LinSrgba>,
+) -> palette::LinSrgba {
+    let u = (ray.dir().dot(cam.up()) + 1.0).abs();
+    grad.get(u as f32)
 }

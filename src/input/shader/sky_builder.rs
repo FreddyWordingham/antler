@@ -1,7 +1,7 @@
 //! Sky properties.
 
 use crate::input::Sky;
-use arctk::{err::Error, file::Build, math::Pos3};
+use arctk::{err::Error, file::Build, img::GradientBuilder, math::Pos3};
 use arctk_attr::input;
 use std::path::Path;
 
@@ -14,17 +14,20 @@ pub struct SkyBuilder {
     sun_pos: Pos3,
     /// Sun angular radius when calculating soft shadows [deg].
     sun_rad: f64,
+    /// Sky colour gradient.
+    grad: GradientBuilder,
 }
 
 impl Build for SkyBuilder {
     type Inst = Sky;
 
     #[inline]
-    fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
+    fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         Ok(Self::Inst::new(
             self.brightness,
             self.sun_pos,
             self.sun_rad.to_radians(),
+            self.grad.build(in_dir)?,
         ))
     }
 }
