@@ -1,0 +1,20 @@
+{
+    tree: { Here: {
+        tar_tris: 5,
+        max_depth: 8,
+        padding: 0.01
+    }},
+    sett    : { There: 'sett/standard.json5' },
+    shader  : { There: 'shaders/test.json5' },
+    surfs   : { There: 'scenes/haven.json5' },
+    attrs   : { There: 'attrs/haven.json5' },
+    cols    : { There: 'cols/haven.json5' },
+    cam     : { Here: {
+        pos     : [26.5, -0.5, -2.5],
+        tar     : [0,0,0],
+        lens    : { Perspective: {fov: 45.0} },
+        aspect  : "Square",
+        // ss_power: 2,
+        hr_res  : 1125
+    }}
+}

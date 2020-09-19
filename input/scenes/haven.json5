@@ -1,0 +1,25 @@
+{
+    body        : [['objs/haven/dog/body.obj'],  null],
+    butterfly   : [['objs/haven/dog/butterfly.obj'],  null],
+    eyes        : [['objs/haven/dog/eyes.obj'],  null],
+    hair        : [['objs/haven/dog/hair.obj'],  null],
+    nose        : [['objs/haven/dog/nose.obj'],  null],
+    paws        : [['objs/haven/dog/paws.obj'],  null],
+    scarf       : [['objs/haven/dog/scarf.obj'],  null],
+    tail        : [['objs/haven/dog/tail.obj'],  null],
+
+    boulders    : [['objs/haven/landscape/boulders.obj'],  null],
+    domain      : [['objs/haven/landscape/domain.obj'],  null],
+    floor       : [['objs/haven/landscape/floor.obj'],  null],
+    gold        : [['objs/haven/landscape/gold.obj'],  null],
+    rocks       : [['objs/haven/landscape/rocks.obj'],  null],
+    shatter     : [['objs/haven/landscape/shatter.obj'],  null],
+    tree        : [['objs/haven/landscape/tree.obj'],  null],
+    leaves      : [['objs/haven/landscape/leaves.obj'],  null],
+    water       : [['objs/haven/landscape/water.obj'],  null],
+
+    heads       : [['objs/haven/sunflowers/heads.obj'],  null],
+    greens      : [['objs/haven/sunflowers/leaves.obj'],  null],
+    petals      : [['objs/haven/sunflowers/petals.obj'],  null],
+    stems       : [['objs/haven/sunflowers/stems.obj'],  null],
+}
