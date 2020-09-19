@@ -2,7 +2,11 @@
 
 pub mod engine;
 pub mod thread;
+
+#[cfg(feature = "window")]
 pub mod window;
 
-pub use self::thread::*;
+#[cfg(feature = "window")]
 pub use self::window::*;
+
+pub use self::thread::*;
