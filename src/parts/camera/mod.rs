@@ -76,7 +76,7 @@ impl Camera {
 
     /// Set a new lens setup.
     #[inline]
-    pub fn set_len(&mut self, lens: Lens) {
+    pub fn set_lens(&mut self, lens: Lens) {
         self.lens = lens;
     }
 
