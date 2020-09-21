@@ -9,7 +9,7 @@ keywords = ["physics", "mcrt", "rt", "render"]
 categories = ["science", "simulation"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
-documentation = "https://docs.rs/antler"
+documentation = "https://freddywordingham.github.io/antler"
 
 [features]
 default = ["window"]
