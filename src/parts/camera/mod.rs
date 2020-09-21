@@ -74,6 +74,12 @@ impl Camera {
         self.focus = Focus::new(*self.focus.orient().pos(), tar);
     }
 
+    /// Set a new lens setup.
+    #[inline]
+    pub fn set_len(&mut self, lens: Lens) {
+        self.lens = lens;
+    }
+
     /// Generate a new observation ray.
     #[inline]
     #[must_use]
