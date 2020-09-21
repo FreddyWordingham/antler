@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `ansi_rgb` crate."><meta name="keywords" content="rust, rustlang, rust-lang, ansi_rgb"><title>ansi_rgb - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../ansi_rgb/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate ansi_rgb</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all ansi_rgb's items</p></a><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'ansi_rgb', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/ansi_rgb/lib.rs.html#1-83' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>ansi_rgb</a></span></h1><div class='docblock'><p>Colorful console text using <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters">ANSI escape sequences</a>.</p>
+<ul>
+<li>Very simple API</li>
+<li>Full color (using the <a href="https://crates.io/crates/rgb"><code>rgb</code> crate</a>)</li>
+<li>Colors all the <a href="https://doc.rust-lang.org/std/fmt/#formatting-traits">formatting traits</a></li>
+<li><code>no_std</code> compliant</li>
+</ul>
+<h1 id="foreground-colors" class="section-header"><a href="#foreground-colors">Foreground colors</a></h1>
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">ansi_rgb</span>::{ <span class="ident">Foreground</span>, <span class="ident">red</span> };
+
+<span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="string">&quot;Hello, world!&quot;</span>.<span class="ident">fg</span>(<span class="ident">red</span>()));</pre></div>
+<p>Output:</p>
+<p><code style="color: red">Hello, world!</code></p>
+<h1 id="background-colors" class="section-header"><a href="#background-colors">Background colors</a></h1>
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">ansi_rgb</span>::{ <span class="ident">Background</span>, <span class="ident">red</span> };
+
+<span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="string">&quot;Hello, world!&quot;</span>.<span class="ident">bg</span>(<span class="ident">red</span>()));</pre></div>
+<p>Output:</p>
+<p><code style="background: red">Hello, world!</code></p>
+<h1 id="mix-and-match" class="section-header"><a href="#mix-and-match">Mix and match</a></h1>
+<pre><code class="language-toml"># Cargo.toml
+[dependencies]
+rbg = &quot;0.8&quot;
+</code></pre>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">ansi_rgb</span>::{ <span class="ident">Foreground</span>, <span class="ident">Background</span> };
+<span class="kw">use</span> <span class="ident">rgb</span>::<span class="ident">RGB8</span>;
+
+<span class="kw">let</span> <span class="ident">fg</span> <span class="op">=</span> <span class="ident">RGB8</span>::<span class="ident">new</span>(<span class="number">123</span>, <span class="number">231</span>, <span class="number">111</span>);
+<span class="kw">let</span> <span class="ident">bg</span> <span class="op">=</span> <span class="ident">RGB8</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">100</span>, <span class="number">20</span>);
+<span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="string">&quot;Yuck&quot;</span>.<span class="ident">fg</span>(<span class="ident">fg</span>).<span class="ident">bg</span>(<span class="ident">bg</span>));</pre></div>
+<p>Output:</p>
+<p><code style="color: #7BE76F; background: #0A6414">Yuck</code></p>
+<h1 id="anything-formattable" class="section-header"><a href="#anything-formattable">Anything formattable</a></h1>
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">struct</span> <span class="ident">Foo</span>(<span class="ident">i32</span>, <span class="ident">i32</span>);
+
+<span class="kw">let</span> <span class="ident">foo</span> <span class="op">=</span> <span class="ident">Foo</span>(<span class="number">1</span>, <span class="number">2</span>);
+<span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">foo</span>.<span class="ident">fg</span>(<span class="ident">green</span>()));</pre></div>
+<p>Output:</p>
+<p><code style="color: #00FF00">Foo(1, 2)</code></p>
+<h1 id="windows-users" class="section-header"><a href="#windows-users">Windows users</a></h1>
+<p>You need to <a href="https://docs.microsoft.com/en-us/windows/console/console-modes">set your console mode</a>. Otherwise you'll get garbage like this:</p>
+<p><code>�[48;2;159;114;0m �[0m</code></p>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table><tr class='module-item'><td><a class="struct" href="struct.WithBackground.html" title='ansi_rgb::WithBackground struct'>WithBackground</a></td><td class='docblock-short'><p>Something with a background color</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.WithForeground.html" title='ansi_rgb::WithForeground struct'>WithForeground</a></td><td class='docblock-short'><p>Something with a foreground color</p>
+</td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table><tr class='module-item'><td><a class="trait" href="trait.Background.html" title='ansi_rgb::Background trait'>Background</a></td><td class='docblock-short'><p>Adds a background color</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.Foreground.html" title='ansi_rgb::Foreground trait'>Foreground</a></td><td class='docblock-short'><p>Adds a foreground color</p>
+</td></tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table><tr class='module-item'><td><a class="fn" href="fn.black.html" title='ansi_rgb::black fn'>black</a></td><td class='docblock-short'><p>Makes <code style="color: white; background: #000000">black</code></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.blue.html" title='ansi_rgb::blue fn'>blue</a></td><td class='docblock-short'><p>Makes <code style="color: white; background: #0000FF">blue</code></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.blue_magenta.html" title='ansi_rgb::blue_magenta fn'>blue_magenta</a></td><td class='docblock-short'><p>Makes <code style="color: white; background: #8000FF">blue magenta</code></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.cyan.html" title='ansi_rgb::cyan fn'>cyan</a></td><td class='docblock-short'><p>Makes <code style="color: black; background: #00FFFF">cyan</code></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.cyan_blue.html" title='ansi_rgb::cyan_blue fn'>cyan_blue</a></td><td class='docblock-short'><p>Makes <code style="color: white; background: #0080FF">cyan blue</code></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.green.html" title='ansi_rgb::green fn'>green</a></td><td class='docblock-short'><p>Makes <code style="color: black; background: #00FF00">green</code></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.green_cyan.html" title='ansi_rgb::green_cyan fn'>green_cyan</a></td><td class='docblock-short'><p>Makes <code style="color: black; background: #00FF80">green cyan</code></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.magenta.html" title='ansi_rgb::magenta fn'>magenta</a></td><td class='docblock-short'><p>Makes <code style="color: black; background: #FF00FF">magenta</code></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.magenta_pink.html" title='ansi_rgb::magenta_pink fn'>magenta_pink</a></td><td class='docblock-short'><p>Makes <code style="color: black; background: #FF0080">magenta pink</code></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.orange.html" title='ansi_rgb::orange fn'>orange</a></td><td class='docblock-short'><p>Makes <code style="color: black; background: #FF8000">orange</code></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.red.html" title='ansi_rgb::red fn'>red</a></td><td class='docblock-short'><p>Makes <code style="color: black; background: #FF0000">red</code></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.white.html" title='ansi_rgb::white fn'>white</a></td><td class='docblock-short'><p>Makes <code style="color: black; background: #FFFFFF">white</code></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.yellow.html" title='ansi_rgb::yellow fn'>yellow</a></td><td class='docblock-short'><p>Makes <code style="color: black; background: #FFFF00">yellow</code></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.yellow_green.html" title='ansi_rgb::yellow_green fn'>yellow_green</a></td><td class='docblock-short'><p>Makes <code style="color: black; background: #80FF00">yellow green</code></p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "ansi_rgb";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

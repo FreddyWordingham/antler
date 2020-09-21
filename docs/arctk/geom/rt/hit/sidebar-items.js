@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Hit","Hit collision information."]]});

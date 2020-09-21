@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["BLUE","Blue convenience indexing constant."],["GREEN","Green convenience indexing constant."],["RED","Red convenience indexing constant."]],"enum":[["RGB","RGB format."]]});

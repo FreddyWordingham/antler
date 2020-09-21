@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["ALPHA","Greek Alpha convenience indexing constant."],["BETA","Greek Beta convenience indexing constant."],["GAMMA","Greek Gamma convenience indexing constant."]],"enum":[["Greek","Greek letters."]]});

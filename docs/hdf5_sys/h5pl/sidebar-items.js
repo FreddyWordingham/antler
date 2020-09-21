@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["H5PL_ALL_PLUGIN",""],["H5PL_FILTER_PLUGIN",""]],"enum":[["H5PL_type_t",""]],"fn":[["H5PLappend",""],["H5PLget",""],["H5PLget_loading_state",""],["H5PLinsert",""],["H5PLprepend",""],["H5PLremove",""],["H5PLreplace",""],["H5PLset_loading_state",""],["H5PLsize",""]]});

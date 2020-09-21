@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["X","Cartesian X convenience indexing constant."],["Y","Cartesian Y convenience indexing constant."],["Z","Cartesian Z convenience indexing constant."]],"enum":[["Cartesian","Cartesian coordinate system."]]});

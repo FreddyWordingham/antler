@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["as_json","Serialise the type in json format. # Errors if the instance can not be serialised into json or if the file can't be written to."]],"trait":[["Save","Types implementing this trait can be saved to file."]]});

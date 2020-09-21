@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["light","Lighting calculation."],["shadow","Shadowing calculation."],["visibility","Visibility calculation."]]});

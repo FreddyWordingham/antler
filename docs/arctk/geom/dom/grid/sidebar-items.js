@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Grid","Regular Cartesian-grid structure."]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"attr":[["input","Create the attribute macro input."],["load","Create the attribute macro load."],["output","Create the attribute macro output."],["save","Create the attribute macro save."]]});

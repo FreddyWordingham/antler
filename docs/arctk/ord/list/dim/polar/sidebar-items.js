@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Polar","Polar enumeration implementation."]]});

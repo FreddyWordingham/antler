@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["attributes","Surface attributes structure."],["camera","Camera structure."],["camera_builder","Camera-builder implementation."],["scene","Rendering simulation input structure."],["tracer","Tracer structure."]]});

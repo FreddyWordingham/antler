@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Dimension","Represents a netcdf dimension"],["Identifier","Unique identifier for a dimensions in a file. Used when names can not be used directly"]]});

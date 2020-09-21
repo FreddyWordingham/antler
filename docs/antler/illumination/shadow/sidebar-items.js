@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["shadow","Calculate the shadowing factor."]]});

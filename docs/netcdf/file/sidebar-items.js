@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["File","Read only accessible file"],["MutableFile","Mutable access to file"]]});

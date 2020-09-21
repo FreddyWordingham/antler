@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `slice_of_array` crate."><meta name="keywords" content="rust, rustlang, rust-lang, slice_of_array"><title>slice_of_array - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../slice_of_array/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate slice_of_array</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all slice_of_array's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'slice_of_array', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/slice_of_array/lib.rs.html#1-415' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>slice_of_array</a></span></h1><div class='docblock'><p>Extension traits for viewing a slice as a slice of arrays or vice versa.</p>
+<p>Provides the following methods on <code>[T]</code>:</p>
+<ul>
+<li><strong><a href="trait.SliceNestExt.html#tymethod.nest"><code>nest</code></a></strong>: <code>&amp;[T] -&gt; &amp;[[T; n]]</code></li>
+<li><strong><a href="trait.SliceFlatExt.html#tymethod.flat"><code>flat</code></a></strong>: <code>&amp;[[T; n]] -&gt; &amp;[T]</code></li>
+<li><strong><a href="trait.SliceArrayExt.html#tymethod.as_array"><code>as_array</code></a></strong>: <code>&amp;[T] -&gt; &amp;[T; n]</code> (the reverse is
+already provided by a coercion)</li>
+<li><strong><code>nest_mut</code>, <code>flat_mut</code>, <code>as_mut_array</code></strong> for <code>&amp;mut [_]</code>.</li>
+</ul>
+<p>Altogether, these let you swap between arbitrary representations
+of contiguous, <code>T</code>-aligned streams of <code>T</code> data.  For instance,
+to view a <code>[[i32; 6]; 5]</code> as a <code>&amp;[[[i32; 3]; 2]; 5]</code>,
+one could write</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="ident">x</span>.<span class="ident">flat</span>().<span class="ident">nest</span>().<span class="ident">nest</span>().<span class="ident">as_array</span>()</pre></div>
+<p>Type inference generally works quite well, and as long as the
+final shape is unambiguous there is no need to annotate types
+in the middle of the method chain.</p>
+<p>In cases where type inference is unable to determine the target
+array size, one can use a turbofish: e.g .<code>x.nest::&lt;[_; 3]&gt;()</code>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> ::<span class="ident">slice_of_array</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+
+<span class="kw">let</span> <span class="ident">vec</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[[<span class="number">2i32</span>, <span class="number">2</span>, <span class="number">2</span>], [<span class="number">7</span>, <span class="number">7</span>, <span class="number">7</span>], [<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>], [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]];
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">vec</span>.<span class="ident">flat</span>(), <span class="kw-2">&amp;</span>[<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">7</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]);
+
+<span class="comment">// note: this requires an annotation only due to polymorphism in PartialEq</span>
+<span class="kw">let</span> <span class="ident">slc</span> <span class="op">=</span> <span class="ident">vec</span>.<span class="ident">nest</span>::<span class="op">&lt;</span>[<span class="kw">_</span>; <span class="number">2</span>]<span class="op">&gt;</span>();
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">slc</span>, <span class="kw-2">&amp;</span>[[[<span class="number">2i32</span>, <span class="number">2</span>, <span class="number">2</span>], [<span class="number">7</span>, <span class="number">7</span>, <span class="number">7</span>]], [[ <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>], [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]]]);</pre></div>
+<p><a href="trait.SliceNestExt.html#tymethod.nest"><code>nest</code></a> and <a href="trait.SliceArrayExt.html#tymethod.as_array"><code>as_array</code></a> panic on failure rather than returning options.
+The rationale is that it is believed that these these conversions are
+seldom needed on arbitrary user data which may be the wrong size; rather,
+they are most likely used when bridging the gap between APIs that work
+with flattened slices and APIs that work with slices of arrays.</p>
+<p>Zero-cost conversions in owned data (e.g. between <code>Vec&lt;T&gt;</code>
+and <code>Vec&lt;[T; n]&gt;</code>) are not provided, and are probably impossible
+in consideration of e.g. custom allocators. If you need to
+convert between such types, you can use these traits in tandem
+with <code>&lt;[T]&gt;::to_vec</code> to perform a copy:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">vec</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[[<span class="number">2i32</span>, <span class="number">2</span>, <span class="number">2</span>], [<span class="number">7</span>, <span class="number">7</span>, <span class="number">7</span>]];
+
+<span class="comment">// copying into a Vec&lt;i32&gt;</span>
+<span class="kw">let</span> <span class="ident">flattened</span> <span class="op">=</span> <span class="ident">vec</span>.<span class="ident">flat</span>().<span class="ident">to_vec</span>();
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">flattened</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="number">2i32</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">7</span>, <span class="number">7</span>]);</pre></div>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table><tr class='module-item'><td><a class="mod" href="prelude/index.html" title='slice_of_array::prelude mod'>prelude</a></td><td class='docblock-short'></td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table><tr class='module-item'><td><a class="trait" href="trait.IsSliceomorphic.html" title='slice_of_array::IsSliceomorphic trait'>IsSliceomorphic</a></td><td class='docblock-short'><p>Marker trait used in bounds of <code>Slice{Flat,Nest,Array}Ext</code>.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.SliceArrayExt.html" title='slice_of_array::SliceArrayExt trait'>SliceArrayExt</a></td><td class='docblock-short'><p>Permits viewing a slice as an array.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.SliceFlatExt.html" title='slice_of_array::SliceFlatExt trait'>SliceFlatExt</a></td><td class='docblock-short'><p>Permits viewing a slice of arrays as a flat slice.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.SliceNestExt.html" title='slice_of_array::SliceNestExt trait'>SliceNestExt</a></td><td class='docblock-short'><p>Permits viewing a slice as a slice of arrays.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "slice_of_array";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

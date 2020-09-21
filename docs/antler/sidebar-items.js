@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["illumination","Illumination calculation."],["input","Input."],["output","Output."],["parts","Rendering simulation parts sub-module."],["run","Running."]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Group","Main component of the netcdf format. Holds all variables, attributes, and dimensions. A group can always see the parents items, but a parent can not access a childs items."],["GroupMut","Mutable access to a group"]]});

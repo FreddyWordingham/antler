@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Scan","Hit-scan result enumeration."]]});

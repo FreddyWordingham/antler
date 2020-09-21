@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["cartesian","Cartesian dimensions."],["polar","Plane-polar dimensions."],["spherical","Spherical-polar dimensions."]]});

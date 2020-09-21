@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `number_prefix` crate."><meta name="keywords" content="rust, rustlang, rust-lang, number_prefix"><title>number_prefix - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../number_prefix/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate number_prefix</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all number_prefix's items</p></a><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'number_prefix', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/number_prefix/lib.rs.html#1-429' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>number_prefix</a></span></h1><div class='docblock'><p>This is a library for formatting numbers with numeric prefixes, such as
+turning “3000 metres” into “3 kilometres”, or “8705 bytes” into “8.5 KiB”.</p>
+<h1 id="usage" class="section-header"><a href="#usage">Usage</a></h1>
+<p>The function <a href="enum.NumberPrefix.html#method.decimal"><code>NumberPrefix::decimal</code></a>
+returns either a pair of the resulting number and its prefix, or a
+notice that the number was too small to have any prefix applied to it. For
+example:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">number_prefix</span>::{<span class="ident">NumberPrefix</span>, <span class="ident">Standalone</span>, <span class="ident">Prefixed</span>};
+
+<span class="kw">match</span> <span class="ident">NumberPrefix</span>::<span class="ident">decimal</span>(<span class="number">8542_f32</span>) {
+    <span class="ident">Standalone</span>(<span class="ident">bytes</span>)   <span class="op">=</span><span class="op">&gt;</span> <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;The file is {} bytes in size&quot;</span>, <span class="ident">bytes</span>),
+    <span class="ident">Prefixed</span>(<span class="ident">prefix</span>, <span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;The file is {:.0} {}B in size&quot;</span>, <span class="ident">n</span>, <span class="ident">prefix</span>),
+}</pre></div>
+<p>This will print out <code>&quot;The file is 8.5 kB in size&quot;</code>. The <code>{:.0}</code> part of the
+formatting string tells it to restrict the output to only one decimal place.
+This value is calculated by repeatedly dividing the number by 1000 until it
+becomes less than that, which in this case results in 8.542, which gets
+rounded down. Because only one division had to take place, the function also
+returns the decimal prefix <code>Kilo</code>, which gets converted to its
+internationally-recognised symbol when formatted as a string.</p>
+<p>If the value is too small to have any prefixes applied to it — in this case,
+if it’s under 1000 — then the standalone value will be returned:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">number_prefix</span>::{<span class="ident">NumberPrefix</span>, <span class="ident">Standalone</span>, <span class="ident">Prefixed</span>};
+
+<span class="kw">match</span> <span class="ident">NumberPrefix</span>::<span class="ident">decimal</span>(<span class="number">705_f32</span>) {
+    <span class="ident">Standalone</span>(<span class="ident">bytes</span>)   <span class="op">=</span><span class="op">&gt;</span> <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;The file is {} bytes in size&quot;</span>, <span class="ident">bytes</span>),
+    <span class="ident">Prefixed</span>(<span class="ident">prefix</span>, <span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;The file is {:.0} {}B in size&quot;</span>, <span class="ident">n</span>, <span class="ident">prefix</span>),
+}</pre></div>
+<p>This will print out <code>&quot;The file is 705 bytes in size&quot;</code>, having chosen the
+other path to follow. In this particular example, the user expects different
+formatting for both bytes and kilobytes: while prefixed values are given
+more precision, there’s no point using anything other than whole numbers for
+just byte amounts. This is why the function pays attention to values without
+any prefixes — they often need to be special-cased.</p>
+<h2 id="binary-prefixes" class="section-header"><a href="#binary-prefixes">Binary Prefixes</a></h2>
+<p>This library also allows you to use the <em>binary prefixes</em>, which use the
+number 1024 (2<sup>10</sup>) as the multiplier, rather than the more common 1000
+(10<sup>3</sup>). This uses the
+<a href="enum.NumberPrefix.html#method.binary"><code>NumberPrefix::binary</code></a> function.
+For example:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">number_prefix</span>::{<span class="ident">NumberPrefix</span>, <span class="ident">Standalone</span>, <span class="ident">Prefixed</span>};
+
+<span class="kw">match</span> <span class="ident">NumberPrefix</span>::<span class="ident">binary</span>(<span class="number">8542_f32</span>) {
+    <span class="ident">Standalone</span>(<span class="ident">bytes</span>)   <span class="op">=</span><span class="op">&gt;</span> <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;The file is {} bytes in size&quot;</span>, <span class="ident">bytes</span>),
+    <span class="ident">Prefixed</span>(<span class="ident">prefix</span>, <span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;The file is {:.0} {}B in size&quot;</span>, <span class="ident">n</span>, <span class="ident">prefix</span>),
+}</pre></div>
+<p>This will print out <code>&quot;The file is 8.3 KiB in size&quot;</code>. A kibibyte is slightly
+larger than a kilobyte, so the number is smaller in the result; but other
+than that, it works in exactly the same way, with the binary prefix being
+converted to a symbol automatically.</p>
+<h2 id="which-type-of-prefix-should-i-use" class="section-header"><a href="#which-type-of-prefix-should-i-use">Which type of prefix should I use?</a></h2>
+<p>There is no correct answer this question! Common practice is to use
+the binary prefixes for numbers of <em>bytes</em>, while still using the decimal
+prefixes for everything else. Computers work with powers of two, rather than
+powers of ten, and by using the binary prefixes, you get a more accurate
+representation of the amount of data.</p>
+<h2 id="prefix-names" class="section-header"><a href="#prefix-names">Prefix Names</a></h2>
+<p>If you need to describe your unit in actual words, rather than just with the
+symbol, import the <code>PrefixNames</code> trait, which adds methods to output the
+prefix in a variety of formats. For example:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">number_prefix</span>::{<span class="ident">NumberPrefix</span>, <span class="ident">Standalone</span>, <span class="ident">Prefixed</span>, <span class="ident">PrefixNames</span>};
+
+<span class="kw">match</span> <span class="ident">NumberPrefix</span>::<span class="ident">decimal</span>(<span class="number">8542_f32</span>) {
+    <span class="ident">Standalone</span>(<span class="ident">bytes</span>)   <span class="op">=</span><span class="op">&gt;</span> <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;The file is {} bytes in size&quot;</span>, <span class="ident">bytes</span>),
+    <span class="ident">Prefixed</span>(<span class="ident">prefix</span>, <span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;The file is {:.0} {}bytes in size&quot;</span>, <span class="ident">n</span>, <span class="ident">prefix</span>.<span class="ident">lower</span>()),
+}</pre></div>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
+<table><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Kilo</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Mega</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Giga</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Tera</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Peta</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Exa</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Zetta</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Yotta</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Kibi</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Mibi</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Gibi</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Tebi</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Pebi</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Exbi</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Zebi</a>;</code></td></tr><tr><td><code>pub use Prefix::<a class="enum" href="../number_prefix/enum.Prefix.html" title="enum number_prefix::Prefix">Yobi</a>;</code></td></tr><tr><td><code>pub use NumberPrefix::<a class="enum" href="../number_prefix/enum.NumberPrefix.html" title="enum number_prefix::NumberPrefix">Standalone</a>;</code></td></tr><tr><td><code>pub use NumberPrefix::<a class="enum" href="../number_prefix/enum.NumberPrefix.html" title="enum number_prefix::NumberPrefix">Prefixed</a>;</code></td></tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table><tr class='module-item'><td><a class="enum" href="enum.NumberPrefix.html" title='number_prefix::NumberPrefix enum'>NumberPrefix</a></td><td class='docblock-short'><p>The result of trying to apply a prefix to a floating-point value.</p>
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.Prefix.html" title='number_prefix::Prefix enum'>Prefix</a></td><td class='docblock-short'><p>A numeric prefix, either binary or decimal.</p>
+</td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table><tr class='module-item'><td><a class="trait" href="trait.Amounts.html" title='number_prefix::Amounts trait'>Amounts</a></td><td class='docblock-short'><p>Traits for floating-point values for both the possible multipliers. They
+need to be Copy, have defined 1000 and 1024s, and implement a bunch of
+operators.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.PrefixNames.html" title='number_prefix::PrefixNames trait'>PrefixNames</a></td><td class='docblock-short'><p>Formatting methods for prefix, for when you want to output things other
+than just the short-hand symbols.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "number_prefix";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

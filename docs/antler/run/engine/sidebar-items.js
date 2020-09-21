@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["paint","Sample the scene using the tracer."]]});

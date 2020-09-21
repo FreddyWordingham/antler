@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["minifb"] = [{"text":"impl <a class=\"trait\" href=\"minifb/trait.HasRawWindowHandle.html\" title=\"trait minifb::HasRawWindowHandle\">HasRawWindowHandle</a> for <a class=\"struct\" href=\"minifb/struct.Window.html\" title=\"struct minifb::Window\">Window</a>","synthetic":false,"types":["minifb::Window"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

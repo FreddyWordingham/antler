@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["visibility","Calculate the visibility of a given tracer. Tracer is traced to a maximum of the visibility distance."]]});

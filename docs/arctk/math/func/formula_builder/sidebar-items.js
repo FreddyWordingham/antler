@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["FormulaBuilder","Mathematical formulae accepting a single scalar argument."]]});

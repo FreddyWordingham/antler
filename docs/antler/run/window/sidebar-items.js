@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["components_to_u32","Create a 32 bit colour representation from 8 bit components."],["window_thread","Render an image in a live window. # Errors if a mutex unwrapping failed or an arc unwrapping failed or if the progress bar can not be locked inside a running thread."]]});

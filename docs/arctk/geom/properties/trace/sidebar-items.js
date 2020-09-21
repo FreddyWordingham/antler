@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["Trace","Trace trait implementation. Types implementing this trait can be traced using 'Ray's."]]});

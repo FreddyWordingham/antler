@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["PHI","Spherical-polar phi convenience indexing constant."],["RHO","Spherical-polar and plane-polar rho convenience indexing constant."],["THETA","Spherical-polar and plane-polar theta convenience indexing constant."]],"enum":[["Spherical","Spherical-polar coordinate system."]]});

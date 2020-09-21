@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["H5AC_METADATA_WRITE_STRATEGY__DISTRIBUTED",""],["H5AC_METADATA_WRITE_STRATEGY__PROCESS_0_ONLY",""],["H5AC__CACHE_IMAGE__ENTRY_AGEOUT__MAX",""],["H5AC__CACHE_IMAGE__ENTRY_AGEOUT__NONE",""],["H5AC__CURR_CACHE_CONFIG_VERSION",""],["H5AC__MAX_TRACE_FILE_NAME_LEN",""]],"struct":[["H5AC_cache_config_t",""],["H5AC_cache_image_config_t",""]]});
