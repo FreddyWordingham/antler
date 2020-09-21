@@ -109,7 +109,7 @@ pub fn paint<T: Display + Ord>(
                 break;
             }
         } else {
-            col += sky_col(cam, trace.ray(), shader.sky().grad());
+            col += sky_col(cam, trace.ray(), shader.sky().grad()) * trace.weight() as f32;
             break;
         }
     }
