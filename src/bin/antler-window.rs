@@ -2,15 +2,15 @@
 
 use antler::{
     input::{Settings, Shader, ShaderBuilder},
-    parts::{Attributes, Camera, CameraBuilder, Lens, Scene},
-    run::multi_thread,
+    parts::{Attributes, Camera, CameraBuilder, Scene},
+    run::window_thread,
 };
 use arctk::{
     args,
     file::{Build, Load, Redirect, Save},
     geom::{Mesh, MeshBuilder, Tree, TreeBuilder},
     img::GradientBuilder,
-    // math::Pos3,
+    math::Pos3,
     ord::Set,
     util::{banner, dir, gradient},
 };
@@ -18,7 +18,7 @@ use arctk_attr::input;
 use palette::{Gradient, LinSrgba};
 use std::{
     env::current_dir,
-    // f64::consts::PI,
+    f64::consts::PI,
     path::{Path, PathBuf},
 };
 
@@ -42,6 +42,8 @@ struct Parameters {
     shader: Redirect<ShaderBuilder>,
     /// Camera.
     cam: Redirect<CameraBuilder>,
+    /// Pixel update size.
+    update_size: u64,
     /// Number of pictures to take.
     num_pics: u64,
 }
@@ -49,53 +51,31 @@ struct Parameters {
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
 
-    banner::title("RENDER", term_width);
+    banner::title("RENDER - WINDOW", term_width);
     let (params_path, in_dir, out_dir) = init(term_width);
     let params = input(term_width, &in_dir, &params_path);
     let num_pics = params.num_pics;
-    let (tree_sett, render_sett, surfs, attrs, cols, shader, mut cam) =
+    let (tree_sett, render_sett, surfs, attrs, cols, shader, mut cam, update_size) =
         build(term_width, &in_dir, params);
     let tree = grow(term_width, tree_sett, &surfs);
     let input = Scene::new(&tree, &render_sett, &surfs, &attrs, &cols);
-
-    // banner::section("Rendering", term_width);
-    // let delta = (2.0 * PI) / num_pics as f64;
-    // for n in 0..num_pics {
-    //     let output = multi_thread(&input, &shader, &cam).expect("Failed to perform rendering.");
-    //     output
-    //         .img
-    //         .save(&out_dir.join(&format!("render_{:03}.png", n)))
-    //         .expect("Failed to save output data.");
-
-    //     let cam_pos = *cam.focus().orient().pos();
-    //     cam.set_pos(Pos3::new(
-    //         (cam_pos.x * delta.cos()) - (cam_pos.y * delta.sin()),
-    //         (cam_pos.x * delta.sin()) + (cam_pos.y * delta.cos()),
-    //         cam_pos.z,
-    //     ));
-    // }
-
     banner::section("Rendering", term_width);
 
-    let mut fov = 45.0_f64.to_radians();
-    // let delta = (2.0 * PI) / num_pics as f64;
+    let delta = (2.0 * PI) / num_pics as f64;
     for n in 0..num_pics {
-        cam.set_lens(Lens::new_perspective(fov));
-
-        let output = multi_thread(&input, &shader, &cam).expect("Failed to perform rendering.");
+        let output = window_thread(update_size, &input, &shader, &cam)
+            .expect("Failed to perform rendering.");
         output
             .img
             .save(&out_dir.join(&format!("render_{:03}.png", n)))
             .expect("Failed to save output data.");
 
-        // let cam_pos = *cam.focus().orient().pos();
-        // cam.set_pos(Pos3::new(
-        //     (cam_pos.x * delta.cos()) - (cam_pos.y * delta.sin()),
-        //     (cam_pos.x * delta.sin()) + (cam_pos.y * delta.cos()),
-        //     cam_pos.z,
-        // ));
-
-        fov *= 0.95;
+        let cam_pos = *cam.focus().orient().pos();
+        cam.set_pos(Pos3::new(
+            (cam_pos.x * delta.cos()) - (cam_pos.y * delta.sin()),
+            (cam_pos.x * delta.sin()) + (cam_pos.y * delta.cos()),
+            cam_pos.z,
+        ));
     }
 
     banner::section("Finished", term_width);
@@ -144,6 +124,7 @@ fn build(
     Set<Key, Gradient<LinSrgba>>,
     Shader,
     Camera,
+    u64,
 ) {
     banner::section("Building", term_width);
     banner::sub_section("Adaptive Tree Settings", term_width);
@@ -203,7 +184,19 @@ fn build(
         .build(in_dir)
         .expect("Failed to build build camera.");
 
-    (tree_sett, render_sett, surfs, attrs, cols, shader, cam)
+    banner::sub_section("Update Size", term_width);
+    let update_size = params.update_size;
+
+    (
+        tree_sett,
+        render_sett,
+        surfs,
+        attrs,
+        cols,
+        shader,
+        cam,
+        update_size,
+    )
 }
 
 /// Grow domains.
