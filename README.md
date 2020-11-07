@@ -7,7 +7,7 @@ Antler rendering engine
 
 1) If you don't already have it install Rust: https://www.rust-lang.org/
 2) Install Antler using: cargo install antler
-3) Navigate to parent of input directory (example: git clone https://github.com/FreddyWordingham/worlds)
+3) Navigate to parent of input directory (example: git clone https://github.com/FreddyWordingham/worlds; cd worlds)
 4) Run: antler-window input/parameters.json5
 5) Tinker!
 
