@@ -10,6 +10,7 @@
 )]
 #![allow(
     clippy::as_conversions,
+    clippy::blanket_clippy_restriction_lints,
     clippy::cast_possible_truncation,
     clippy::cast_possible_wrap,
     clippy::cast_precision_loss,
