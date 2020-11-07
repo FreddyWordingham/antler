@@ -9,7 +9,14 @@ Antler rendering engine
 2) Install Antler using: cargo install antler
 3) Navigate to parent of input directory (example: git clone https://github.com/FreddyWordingham/worlds)
 4) Run: antler-window input/parameters.json5
+5) Tinker!
 
+# Documentation
+Binary specific https://freddywordingham.github.io/antler/
+Supporting library specific https://freddywordingham.github.io/arctk/
+
+# Examples
+![image info](https://github.com/FreddyWordingham/antler/blob/master/res/renders/silver.png)
 ![image info](https://github.com/FreddyWordingham/antler/blob/master/res/renders/silver.png)
 ![image info](https://github.com/FreddyWordingham/antler/blob/master/res/renders/wide.png)
 ![image info](https://github.com/FreddyWordingham/antler/blob/master/res/renders/vivid.png)
