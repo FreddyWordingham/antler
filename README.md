@@ -13,15 +13,15 @@ Antler rendering engine
 
 # Documentation
 Binary specific https://freddywordingham.github.io/antler/
-Supporting library specific https://freddywordingham.github.io/arctk/
+Supporting library https://freddywordingham.github.io/arctk/
 
 # Examples
-![image info](https://github.com/FreddyWordingham/antler/blob/master/res/renders/silver.png)
-![image info](https://github.com/FreddyWordingham/antler/blob/master/res/renders/silver.png)
-![image info](https://github.com/FreddyWordingham/antler/blob/master/res/renders/wide.png)
-![image info](https://github.com/FreddyWordingham/antler/blob/master/res/renders/vivid.png)
-![image info](https://github.com/FreddyWordingham/antler/blob/master/res/renders/dinofluff.png)
-![image info](https://github.com/FreddyWordingham/antler/blob/master/res/renders/shatter.png)
-![image info](https://github.com/FreddyWordingham/antler/blob/master/res/renders/triangle.png)
-![image info](https://github.com/FreddyWordingham/antler/blob/master/res/renders/antler.png)
+![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/silver.png)
+![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/silver.png)
+![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/wide.png)
+![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/vivid.png)
+![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/dinofluff.png)
+![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/shatter.png)
+![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/triangle.png)
+![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/antler.png)
 [More renderings here!](https://www.instagram.com/____f.r.e.d.d.y____/)
