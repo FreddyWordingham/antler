@@ -38,7 +38,6 @@ Example parameters.json5:
         hr_res  : 400,                              // Number of horizontal pixels.
     }},
     update_size: 400,                               // Pixels per window refresh.
-    num_pics: 1,                                    // Camera orbits origin.
 }
 ```
 
