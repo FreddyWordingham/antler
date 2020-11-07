@@ -44,7 +44,6 @@ Example parameters.json5:
 
 # Examples
 ![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/silver.png)
-![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/silver.png)
 ![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/wide.png)
 ![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/vivid.png)
 ![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/dinofluff.png)
