@@ -10,7 +10,7 @@ categories = ["science", "simulation"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
 documentation = "https://freddywordingham.github.io/antler"
-exclude = ["docs/"]
+exclude = ["docs/", "res/extra/"]
 
 [features]
 default = ["window"]
