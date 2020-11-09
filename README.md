@@ -1,5 +1,5 @@
 # ANTLER
-Antler rendering engine
+A textureless rendering engine written in Rust.
 
 [![Build Status](https://travis-ci.org/FreddyWordingham/arctk.svg?branch=master)](https://travis-ci.org/FreddyWordingham/arctk)
 
