@@ -11,7 +11,7 @@ use arctk::{
     ord::{BLUE, GREEN, RED},
     tools::{ProgressBar, SilentProgressBar},
 };
-use minifb::{Window, WindowOptions};
+use minifb::{Scale, Window, WindowOptions};
 use palette::{LinSrgba, Pixel};
 use rand::thread_rng;
 use rayon::prelude::*;
@@ -29,6 +29,7 @@ use std::{
 #[inline]
 pub fn window_thread<T: Display + Ord + Sync>(
     update_size: u64,
+    window_scale: Scale,
     scene: &Scene<T>,
     shader: &Shader,
     cam: &Camera,
@@ -47,7 +48,7 @@ pub fn window_thread<T: Display + Ord + Sync>(
         borderless: true,
         title: true,
         resize: false,
-        scale: minifb::Scale::X1,
+        scale: window_scale,
         scale_mode: minifb::ScaleMode::Stretch,
         topmost: true,
         transparency: true,
