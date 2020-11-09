@@ -35,7 +35,7 @@ pub enum Attributes {
 impl Display for Attributes {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
-        let kind = match self {
+        let kind = match *self {
             Self::Luminous { mult } => format!("Luminous: *{}*", mult),
             Self::Transparent { abs } => format!("Transparent: [{}]", abs),
             Self::Mirror { abs } => format!("Mirror: [{}]", abs),

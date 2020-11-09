@@ -42,7 +42,7 @@ pub fn paint<T: Display + Ord>(
 
         if let Some(hit) = scene.tree.observe(trace.ray().clone(), bump_dist, 1_000.0) {
             if let Some(attr) = scene.attrs.map().get(hit.tag()) {
-                match attr {
+                match *attr {
                     Attributes::Luminous { mult } => {
                         trace.travel(hit.dist());
                         let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
@@ -54,16 +54,16 @@ pub fn paint<T: Display + Ord>(
                         trace.travel(hit.dist());
                         let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
                         col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
-                            * (*abs * trace.weight()) as f32;
-                        *trace.weight_mut() *= 1.0 - *abs;
+                            * (abs * trace.weight()) as f32;
+                        *trace.weight_mut() *= 1.0 - abs;
                         trace.travel(bump_dist);
                     }
                     Attributes::Mirror { abs } => {
                         trace.travel(hit.dist());
                         let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
                         col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
-                            * (*abs * trace.weight()) as f32;
-                        *trace.weight_mut() *= 1.0 - *abs;
+                            * (abs * trace.weight()) as f32;
+                        *trace.weight_mut() *= 1.0 - abs;
                         trace.set_dir(Crossing::calc_ref_dir(trace.dir(), hit.side().norm()));
                         trace.travel(bump_dist);
                     }
@@ -75,21 +75,21 @@ pub fn paint<T: Display + Ord>(
                         trace.travel(hit.dist());
                         let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
                         col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
-                            * (*abs * trace.weight()) as f32;
+                            * (abs * trace.weight()) as f32;
 
                         let (n_curr, n_next) = if hit.side().is_inside() {
-                            (*inside, *outside)
+                            (inside, outside)
                         } else {
-                            (*outside, *inside)
+                            (outside, inside)
                         };
                         let crossing =
                             Crossing::new(trace.ray().dir(), hit.side().norm(), n_curr, n_next);
 
                         // Transmission ray.
-                        if let Some(trans_dir) = crossing.trans_dir() {
+                        if let Some(trans_dir) = *crossing.trans_dir() {
                             let mut trans = trace.clone();
                             *trans.weight_mut() *= crossing.trans_prob();
-                            trans.set_dir(*trans_dir);
+                            trans.set_dir(trans_dir);
                             trans.travel(bump_dist);
 
                             col += paint(&mut rng, scene, shader, cam, trans);

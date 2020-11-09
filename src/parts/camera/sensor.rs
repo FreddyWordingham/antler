@@ -38,10 +38,6 @@ impl Sensor {
     #[inline]
     #[must_use]
     pub fn super_samples(&self) -> i32 {
-        if let Some(power) = self.super_sample_power {
-            power.pow(2)
-        } else {
-            1
-        }
+        self.super_sample_power.map_or(1, |power| power * power)
     }
 }

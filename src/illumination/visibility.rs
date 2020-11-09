@@ -22,17 +22,17 @@ pub fn visibility<T: Display + Ord>(scene: &Scene<T>, mut trace: Tracer, mut vis
     ) {
         let tag = hit.tag();
         if let Some(attr) = scene.attrs.map().get(tag) {
-            match attr {
+            match *attr {
                 Attributes::Luminous { mult } => {
                     return mult * vis;
                 }
                 Attributes::Transparent { abs } | Attributes::Refractive { abs, .. } => {
-                    vis *= 1.0 - *abs;
+                    vis *= 1.0 - abs;
                     trace.travel(hit.dist() + bump_dist);
                 }
                 Attributes::Mirror { abs } => {
                     trace.travel(hit.dist());
-                    vis *= 1.0 - *abs;
+                    vis *= 1.0 - abs;
                     trace.set_dir(Crossing::calc_ref_dir(trace.dir(), hit.side().norm()));
                     trace.travel(bump_dist);
                 }
