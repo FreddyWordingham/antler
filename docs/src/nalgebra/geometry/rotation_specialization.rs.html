@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.22.0/src/geometry/rotation_specialization.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>rotation_specialization.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.0/src/geometry/rotation_specialization.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>rotation_specialization.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -917,6 +918,78 @@
 <span id="917">917</span>
 <span id="918">918</span>
 <span id="919">919</span>
+<span id="920">920</span>
+<span id="921">921</span>
+<span id="922">922</span>
+<span id="923">923</span>
+<span id="924">924</span>
+<span id="925">925</span>
+<span id="926">926</span>
+<span id="927">927</span>
+<span id="928">928</span>
+<span id="929">929</span>
+<span id="930">930</span>
+<span id="931">931</span>
+<span id="932">932</span>
+<span id="933">933</span>
+<span id="934">934</span>
+<span id="935">935</span>
+<span id="936">936</span>
+<span id="937">937</span>
+<span id="938">938</span>
+<span id="939">939</span>
+<span id="940">940</span>
+<span id="941">941</span>
+<span id="942">942</span>
+<span id="943">943</span>
+<span id="944">944</span>
+<span id="945">945</span>
+<span id="946">946</span>
+<span id="947">947</span>
+<span id="948">948</span>
+<span id="949">949</span>
+<span id="950">950</span>
+<span id="951">951</span>
+<span id="952">952</span>
+<span id="953">953</span>
+<span id="954">954</span>
+<span id="955">955</span>
+<span id="956">956</span>
+<span id="957">957</span>
+<span id="958">958</span>
+<span id="959">959</span>
+<span id="960">960</span>
+<span id="961">961</span>
+<span id="962">962</span>
+<span id="963">963</span>
+<span id="964">964</span>
+<span id="965">965</span>
+<span id="966">966</span>
+<span id="967">967</span>
+<span id="968">968</span>
+<span id="969">969</span>
+<span id="970">970</span>
+<span id="971">971</span>
+<span id="972">972</span>
+<span id="973">973</span>
+<span id="974">974</span>
+<span id="975">975</span>
+<span id="976">976</span>
+<span id="977">977</span>
+<span id="978">978</span>
+<span id="979">979</span>
+<span id="980">980</span>
+<span id="981">981</span>
+<span id="982">982</span>
+<span id="983">983</span>
+<span id="984">984</span>
+<span id="985">985</span>
+<span id="986">986</span>
+<span id="987">987</span>
+<span id="988">988</span>
+<span id="989">989</span>
+<span id="990">990</span>
+<span id="991">991</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;arbitrary&quot;</span>)]</span>
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::<span class="ident">storage</span>::<span class="ident">Owned</span>;
@@ -954,7 +1027,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_relative_eq!(rot * Point2::new(3.0, 4.0), Point2::new(-4.0, 3.0));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">angle</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">angle</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> (<span class="ident">sia</span>, <span class="ident">coa</span>) <span class="op">=</span> <span class="ident">angle</span>.<span class="ident">simd_sin_cos</span>();
         <span class="self">Self</span>::<span class="ident">from_matrix_unchecked</span>(<span class="ident">Matrix2</span>::<span class="ident">new</span>(<span class="ident">coa</span>, <span class="op">-</span><span class="ident">sia</span>, <span class="ident">sia</span>, <span class="ident">coa</span>))
     }
@@ -965,7 +1038,7 @@
     <span class="doccomment">/// This is generally used in the context of generic programming. Using</span>
     <span class="doccomment">/// the `::new(angle)` method instead is more common.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_scaled_axis</span><span class="op">&lt;</span><span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">axisangle</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U1</span>, <span class="ident">SB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_scaled_axis</span><span class="op">&lt;</span><span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>(<span class="ident">axisangle</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U1</span>, <span class="ident">SB</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">axisangle</span>[<span class="number">0</span>])
     }
 
@@ -974,7 +1047,7 @@
     <span class="doccomment">/// This is an iterative method. See `.from_matrix_eps` to provide mover</span>
     <span class="doccomment">/// convergence parameters and starting solution.</span>
     <span class="doccomment">/// This implements &quot;A Robust Method to Extract the Rotational Part of Deformations&quot; by Müller et al.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_matrix</span>(<span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_matrix</span>(<span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -993,11 +1066,11 @@
     <span class="doccomment">/// * `guess`: an estimate of the solution. Convergence will be significantly faster if an initial solution close</span>
     <span class="doccomment">///           to the actual solution is provided. Can be set to `Rotation2::identity()` if no other</span>
     <span class="doccomment">///           guesses come to mind.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_matrix_eps</span>(<span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">eps</span>: <span class="ident">N</span>, <span class="kw-2">mut</span> <span class="ident">max_iter</span>: <span class="ident">usize</span>, <span class="ident">guess</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_matrix_eps</span>(<span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">eps</span>: <span class="ident">N</span>, <span class="kw-2">mut</span> <span class="ident">max_iter</span>: <span class="ident">usize</span>, <span class="ident">guess</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
-        <span class="kw">if</span> <span class="ident">max_iter</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">max_iter</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="ident">max_iter</span> <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">max_value</span>();
         }
 
@@ -1033,7 +1106,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot.inverse() * b, a);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotation_between</span><span class="op">&lt;</span><span class="ident">SB</span>, <span class="ident">SC</span><span class="op">&gt;</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U2</span>, <span class="ident">SB</span><span class="op">&gt;</span>, <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U2</span>, <span class="ident">SC</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotation_between</span><span class="op">&lt;</span><span class="ident">SB</span>, <span class="ident">SC</span><span class="op">&gt;</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U2</span>, <span class="ident">SB</span><span class="op">&gt;</span>, <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U2</span>, <span class="ident">SC</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U2</span><span class="op">&gt;</span>,
@@ -1061,7 +1134,7 @@
         <span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U2</span>, <span class="ident">SB</span><span class="op">&gt;</span>,
         <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U2</span>, <span class="ident">SC</span><span class="op">&gt;</span>,
         <span class="ident">s</span>: <span class="ident">N</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    ) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U2</span><span class="op">&gt;</span>,
@@ -1080,7 +1153,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot.angle(), 1.78);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">angle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">angle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
         <span class="self">self</span>.<span class="ident">matrix</span>()[(<span class="number">1</span>, <span class="number">0</span>)].<span class="ident">simd_atan2</span>(<span class="self">self</span>.<span class="ident">matrix</span>()[(<span class="number">0</span>, <span class="number">0</span>)])
     }
 
@@ -1095,7 +1168,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot1.angle_to(&amp;rot2), 1.6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">angle_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">angle_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
         <span class="self">self</span>.<span class="ident">rotation_to</span>(<span class="ident">other</span>).<span class="ident">angle</span>()
     }
 
@@ -1115,7 +1188,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot_to.inverse() * rot2, rot1);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotation_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotation_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">other</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">inverse</span>()
     }
 
@@ -1144,7 +1217,7 @@
     <span class="doccomment">/// assert_relative_eq!(pow.angle(), 2.0 * 0.78);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">powf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">powf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">angle</span>() <span class="op">*</span> <span class="ident">n</span>)
     }
 
@@ -1153,19 +1226,44 @@
     <span class="doccomment">/// This is generally used in the context of generic programming. Using</span>
     <span class="doccomment">/// the `.angle()` method instead is more common.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scaled_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">VectorN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U1</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scaled_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">VectorN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U1</span><span class="op">&gt;</span> {
         <span class="ident">Vector1</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">angle</span>())
+    }
+
+    <span class="doccomment">/// Spherical linear interpolation between two rotation matrices.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # #[macro_use] extern crate approx;</span>
+    <span class="doccomment">/// # use nalgebra::geometry::Rotation2;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let rot1 = Rotation2::new(std::f32::consts::FRAC_PI_4);</span>
+    <span class="doccomment">/// let rot2 = Rotation2::new(-std::f32::consts::PI);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let rot = rot1.slerp(&amp;rot2, 1.0 / 3.0);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_relative_eq!(rot.angle(), std::f32::consts::FRAC_PI_2);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slerp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">t</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+    <span class="kw">where</span>
+        <span class="ident">N</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,
+    {
+        <span class="kw">let</span> <span class="ident">c1</span> <span class="op">=</span> <span class="ident">UnitComplex</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="self">self</span>);
+        <span class="kw">let</span> <span class="ident">c2</span> <span class="op">=</span> <span class="ident">UnitComplex</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="ident">other</span>);
+        <span class="ident">c1</span>.<span class="ident">slerp</span>(<span class="kw-2">&amp;</span><span class="ident">c2</span>, <span class="ident">t</span>).<span class="ident">into</span>()
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">Rotation2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Standard</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">Rotation2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Standard</span>
 <span class="kw">where</span>
     <span class="ident">N</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,
     <span class="ident">OpenClosed01</span>: <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
 {
     <span class="doccomment">/// Generate a uniformly distributed random rotation.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sample</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">R</span>: <span class="ident">Rng</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rotation2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">sample</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">R</span>: <span class="ident">Rng</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="ident">Rotation2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
         <span class="ident">Rotation2</span>::<span class="ident">new</span>(<span class="ident">rng</span>.<span class="ident">sample</span>(<span class="ident">OpenClosed01</span>) <span class="op">*</span> <span class="ident">N</span>::<span class="ident">simd_two_pi</span>())
     }
 }
@@ -1177,7 +1275,7 @@
     <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U2</span>, <span class="ident">U2</span><span class="op">&gt;</span>: <span class="ident">Send</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">arbitrary</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">Gen</span><span class="op">&gt;</span>(<span class="ident">g</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">arbitrary</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">Gen</span><span class="op">&gt;</span>(<span class="ident">g</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">G</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">N</span>::<span class="ident">arbitrary</span>(<span class="ident">g</span>))
     }
 }
@@ -1214,7 +1312,7 @@
     <span class="doccomment">/// // A zero vector yields an identity.</span>
     <span class="doccomment">/// assert_eq!(Rotation3::new(Vector3::&lt;f32&gt;::zeros()), Rotation3::identity());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">axisangle</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;&gt;</span>(<span class="ident">axisangle</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">axisangle</span> <span class="op">=</span> <span class="ident">axisangle</span>.<span class="ident">into_owned</span>();
         <span class="kw">let</span> (<span class="ident">axis</span>, <span class="ident">angle</span>) <span class="op">=</span> <span class="ident">Unit</span>::<span class="ident">new_and_get</span>(<span class="ident">axisangle</span>);
         <span class="self">Self</span>::<span class="ident">from_axis_angle</span>(<span class="kw-2">&amp;</span><span class="ident">axis</span>, <span class="ident">angle</span>)
@@ -1225,7 +1323,7 @@
     <span class="doccomment">/// This is an iterative method. See `.from_matrix_eps` to provide mover</span>
     <span class="doccomment">/// convergence parameters and starting solution.</span>
     <span class="doccomment">/// This implements &quot;A Robust Method to Extract the Rotational Part of Deformations&quot; by Müller et al.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_matrix</span>(<span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_matrix</span>(<span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -1244,11 +1342,11 @@
     <span class="doccomment">/// * `guess`: a guess of the solution. Convergence will be significantly faster if an initial solution close</span>
     <span class="doccomment">///           to the actual solution is provided. Can be set to `Rotation3::identity()` if no other</span>
     <span class="doccomment">///           guesses come to mind.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_matrix_eps</span>(<span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">eps</span>: <span class="ident">N</span>, <span class="kw-2">mut</span> <span class="ident">max_iter</span>: <span class="ident">usize</span>, <span class="ident">guess</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_matrix_eps</span>(<span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">eps</span>: <span class="ident">N</span>, <span class="kw-2">mut</span> <span class="ident">max_iter</span>: <span class="ident">usize</span>, <span class="ident">guess</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
-        <span class="kw">if</span> <span class="ident">max_iter</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">max_iter</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="ident">max_iter</span> <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">max_value</span>();
         }
 
@@ -1295,7 +1393,7 @@
     <span class="doccomment">/// // A zero vector yields an identity.</span>
     <span class="doccomment">/// assert_eq!(Rotation3::from_scaled_axis(Vector3::&lt;f32&gt;::zeros()), Rotation3::identity());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_scaled_axis</span><span class="op">&lt;</span><span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">axisangle</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_scaled_axis</span><span class="op">&lt;</span><span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;&gt;</span>(<span class="ident">axisangle</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">axisangle</span>)
     }
 
@@ -1321,12 +1419,12 @@
     <span class="doccomment">/// // A zero vector yields an identity.</span>
     <span class="doccomment">/// assert_eq!(Rotation3::from_scaled_axis(Vector3::&lt;f32&gt;::zeros()), Rotation3::identity());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_axis_angle</span><span class="op">&lt;</span><span class="ident">SB</span><span class="op">&gt;</span>(<span class="ident">axis</span>: <span class="kw-2">&amp;</span><span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">angle</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_axis_angle</span><span class="op">&lt;</span><span class="ident">SB</span><span class="op">&gt;</span>(<span class="ident">axis</span>: <span class="kw-2">&amp;</span><span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;&gt;</span>, <span class="ident">angle</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>,
     {
         <span class="ident">angle</span>.<span class="ident">simd_ne</span>(<span class="ident">N</span>::<span class="ident">zero</span>()).<span class="ident">if_else</span>(
-            <span class="op">|</span><span class="op">|</span> {
+            <span class="op">||</span> {
                 <span class="kw">let</span> <span class="ident">ux</span> <span class="op">=</span> <span class="ident">axis</span>.<span class="ident">as_ref</span>()[<span class="number">0</span>];
                 <span class="kw">let</span> <span class="ident">uy</span> <span class="op">=</span> <span class="ident">axis</span>.<span class="ident">as_ref</span>()[<span class="number">1</span>];
                 <span class="kw">let</span> <span class="ident">uz</span> <span class="op">=</span> <span class="ident">axis</span>.<span class="ident">as_ref</span>()[<span class="number">2</span>];
@@ -1348,7 +1446,7 @@
                     <span class="ident">sqz</span> <span class="op">+</span> (<span class="ident">N</span>::<span class="ident">one</span>() <span class="op">-</span> <span class="ident">sqz</span>) <span class="op">*</span> <span class="ident">cos</span>,
                 ))
             },
-            <span class="op">|</span><span class="op">|</span> <span class="self">Self</span>::<span class="ident">identity</span>(),
+            <span class="op">||</span> <span class="self">Self</span>::<span class="ident">identity</span>(),
         )
     }
 
@@ -1366,7 +1464,7 @@
     <span class="doccomment">/// assert_relative_eq!(euler.1, 0.2, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// assert_relative_eq!(euler.2, 0.3, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_euler_angles</span>(<span class="ident">roll</span>: <span class="ident">N</span>, <span class="ident">pitch</span>: <span class="ident">N</span>, <span class="ident">yaw</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_euler_angles</span>(<span class="ident">roll</span>: <span class="ident">N</span>, <span class="ident">pitch</span>: <span class="ident">N</span>, <span class="ident">yaw</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> (<span class="ident">sr</span>, <span class="ident">cr</span>) <span class="op">=</span> <span class="ident">roll</span>.<span class="ident">simd_sin_cos</span>();
         <span class="kw">let</span> (<span class="ident">sp</span>, <span class="ident">cp</span>) <span class="op">=</span> <span class="ident">pitch</span>.<span class="ident">simd_sin_cos</span>();
         <span class="kw">let</span> (<span class="ident">sy</span>, <span class="ident">cy</span>) <span class="op">=</span> <span class="ident">yaw</span>.<span class="ident">simd_sin_cos</span>();
@@ -1388,7 +1486,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The angles are produced in the form (roll, pitch, yaw).</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;This is renamed to use `.euler_angles()`.&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_euler_angles</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">N</span>, <span class="ident">N</span>, <span class="ident">N</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_euler_angles</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">N</span>, <span class="ident">N</span>, <span class="ident">N</span>)
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -1409,7 +1507,7 @@
     <span class="doccomment">/// assert_relative_eq!(euler.1, 0.2, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// assert_relative_eq!(euler.2, 0.3, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">euler_angles</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">N</span>, <span class="ident">N</span>, <span class="ident">N</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">euler_angles</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">N</span>, <span class="ident">N</span>, <span class="ident">N</span>)
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -1420,7 +1518,7 @@
             <span class="kw">let</span> <span class="ident">roll</span> <span class="op">=</span> (<span class="self">self</span>[(<span class="number">2</span>, <span class="number">1</span>)] <span class="op">/</span> <span class="ident">yaw</span>.<span class="ident">cos</span>()).<span class="ident">atan2</span>(<span class="self">self</span>[(<span class="number">2</span>, <span class="number">2</span>)] <span class="op">/</span> <span class="ident">yaw</span>.<span class="ident">cos</span>());
             <span class="kw">let</span> <span class="ident">pitch</span> <span class="op">=</span> (<span class="self">self</span>[(<span class="number">1</span>, <span class="number">0</span>)] <span class="op">/</span> <span class="ident">yaw</span>.<span class="ident">cos</span>()).<span class="ident">atan2</span>(<span class="self">self</span>[(<span class="number">0</span>, <span class="number">0</span>)] <span class="op">/</span> <span class="ident">yaw</span>.<span class="ident">cos</span>());
             (<span class="ident">roll</span>, <span class="ident">yaw</span>, <span class="ident">pitch</span>)
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>[(<span class="number">2</span>, <span class="number">0</span>)] <span class="op">&lt;</span><span class="op">=</span> <span class="op">-</span><span class="ident">N</span>::<span class="ident">one</span>() {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>[(<span class="number">2</span>, <span class="number">0</span>)] <span class="op">&lt;=</span> <span class="op">-</span><span class="ident">N</span>::<span class="ident">one</span>() {
             (<span class="self">self</span>[(<span class="number">0</span>, <span class="number">1</span>)].<span class="ident">atan2</span>(<span class="self">self</span>[(<span class="number">0</span>, <span class="number">2</span>)]), <span class="ident">N</span>::<span class="ident">frac_pi_2</span>(), <span class="ident">N</span>::<span class="ident">zero</span>())
         } <span class="kw">else</span> {
             (
@@ -1466,7 +1564,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot * Vector3::z(), dir.normalize());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">face_towards</span><span class="op">&lt;</span><span class="ident">SB</span>, <span class="ident">SC</span><span class="op">&gt;</span>(<span class="ident">dir</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>, <span class="ident">up</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SC</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">face_towards</span><span class="op">&lt;</span><span class="ident">SB</span>, <span class="ident">SC</span><span class="op">&gt;</span>(<span class="ident">dir</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>, <span class="ident">up</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SC</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>,
         <span class="ident">SC</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>,
@@ -1482,7 +1580,7 @@
 
     <span class="doccomment">/// Deprecated: Use [Rotation3::face_towards] instead.</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;renamed to `face_towards`&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_observer_frames</span><span class="op">&lt;</span><span class="ident">SB</span>, <span class="ident">SC</span><span class="op">&gt;</span>(<span class="ident">dir</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>, <span class="ident">up</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SC</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_observer_frames</span><span class="op">&lt;</span><span class="ident">SB</span>, <span class="ident">SC</span><span class="op">&gt;</span>(<span class="ident">dir</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>, <span class="ident">up</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SC</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>,
         <span class="ident">SC</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>,
@@ -1513,7 +1611,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot * dir.normalize(), -Vector3::z());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">look_at_rh</span><span class="op">&lt;</span><span class="ident">SB</span>, <span class="ident">SC</span><span class="op">&gt;</span>(<span class="ident">dir</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>, <span class="ident">up</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SC</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">look_at_rh</span><span class="op">&lt;</span><span class="ident">SB</span>, <span class="ident">SC</span><span class="op">&gt;</span>(<span class="ident">dir</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>, <span class="ident">up</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SC</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>,
         <span class="ident">SC</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>,
@@ -1544,7 +1642,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot * dir.normalize(), Vector3::z());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">look_at_lh</span><span class="op">&lt;</span><span class="ident">SB</span>, <span class="ident">SC</span><span class="op">&gt;</span>(<span class="ident">dir</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>, <span class="ident">up</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SC</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">look_at_lh</span><span class="op">&lt;</span><span class="ident">SB</span>, <span class="ident">SC</span><span class="op">&gt;</span>(<span class="ident">dir</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>, <span class="ident">up</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SC</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>,
         <span class="ident">SC</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>,
@@ -1567,7 +1665,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot.inverse() * b, a, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotation_between</span><span class="op">&lt;</span><span class="ident">SB</span>, <span class="ident">SC</span><span class="op">&gt;</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>, <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SC</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotation_between</span><span class="op">&lt;</span><span class="ident">SB</span>, <span class="ident">SC</span><span class="op">&gt;</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>, <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SC</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>,
@@ -1595,7 +1693,7 @@
         <span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SB</span><span class="op">&gt;</span>,
         <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">SC</span><span class="op">&gt;</span>,
         <span class="ident">n</span>: <span class="ident">N</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>,
@@ -1633,7 +1731,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot.angle(), 1.78);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">angle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">angle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
         ((<span class="self">self</span>.<span class="ident">matrix</span>()[(<span class="number">0</span>, <span class="number">0</span>)] <span class="op">+</span> <span class="self">self</span>.<span class="ident">matrix</span>()[(<span class="number">1</span>, <span class="number">1</span>)] <span class="op">+</span> <span class="self">self</span>.<span class="ident">matrix</span>()[(<span class="number">2</span>, <span class="number">2</span>)] <span class="op">-</span> <span class="ident">N</span>::<span class="ident">one</span>())
             <span class="op">/</span> <span class="kw">crate</span>::<span class="ident">convert</span>(<span class="number">2.0</span>))
         .<span class="ident">simd_acos</span>()
@@ -1655,7 +1753,7 @@
     <span class="doccomment">/// assert!(rot.axis().is_none());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -1679,7 +1777,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot.scaled_axis(), axisangle, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scaled_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scaled_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -1710,7 +1808,7 @@
     <span class="doccomment">/// assert!(rot.axis_angle().is_none());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">axis_angle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">N</span>)<span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">axis_angle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>, <span class="ident">N</span>)<span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -1732,7 +1830,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot1.angle_to(&amp;rot2), 1.0045657, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">angle_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">angle_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
         <span class="self">self</span>.<span class="ident">rotation_to</span>(<span class="ident">other</span>).<span class="ident">angle</span>()
     }
 
@@ -1750,7 +1848,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot_to * rot1, rot2, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotation_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotation_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">other</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">inverse</span>()
     }
 
@@ -1769,7 +1867,7 @@
     <span class="doccomment">/// assert_eq!(pow.angle(), 2.4);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">powf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">powf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -1782,16 +1880,63 @@
             <span class="self">Self</span>::<span class="ident">identity</span>()
         }
     }
+
+    <span class="doccomment">/// Spherical linear interpolation between two rotation matrices.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Panics if the angle between both rotations is 180 degrees (in which case the interpolation</span>
+    <span class="doccomment">/// is not well-defined). Use `.try_slerp` instead to avoid the panic.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use nalgebra::geometry::Rotation3;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let q1 = Rotation3::from_euler_angles(std::f32::consts::FRAC_PI_4, 0.0, 0.0);</span>
+    <span class="doccomment">/// let q2 = Rotation3::from_euler_angles(-std::f32::consts::PI, 0.0, 0.0);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let q = q1.slerp(&amp;q2, 1.0 / 3.0);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(q.euler_angles(), (std::f32::consts::FRAC_PI_2, 0.0, 0.0));</span>
+    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slerp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">t</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+    <span class="kw">where</span>
+        <span class="ident">N</span>: <span class="ident">RealField</span>,
+    {
+        <span class="kw">let</span> <span class="ident">q1</span> <span class="op">=</span> <span class="ident">UnitQuaternion</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="self">self</span>);
+        <span class="kw">let</span> <span class="ident">q2</span> <span class="op">=</span> <span class="ident">UnitQuaternion</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="ident">other</span>);
+        <span class="ident">q1</span>.<span class="ident">slerp</span>(<span class="kw-2">&amp;</span><span class="ident">q2</span>, <span class="ident">t</span>).<span class="ident">into</span>()
+    }
+
+    <span class="doccomment">/// Computes the spherical linear interpolation between two rotation matrices or returns `None`</span>
+    <span class="doccomment">/// if both rotations are approximately 180 degrees apart (in which case the interpolation is</span>
+    <span class="doccomment">/// not well-defined).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Arguments</span>
+    <span class="doccomment">/// * `self`: the first rotation to interpolate from.</span>
+    <span class="doccomment">/// * `other`: the second rotation to interpolate toward.</span>
+    <span class="doccomment">/// * `t`: the interpolation parameter. Should be between 0 and 1.</span>
+    <span class="doccomment">/// * `epsilon`: the value below which the sinus of the angle separating both rotations</span>
+    <span class="doccomment">/// must be to return `None`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_slerp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">t</span>: <span class="ident">N</span>, <span class="ident">epsilon</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">N</span>: <span class="ident">RealField</span>,
+    {
+        <span class="kw">let</span> <span class="ident">q1</span> <span class="op">=</span> <span class="ident">Rotation3</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="self">self</span>);
+        <span class="kw">let</span> <span class="ident">q2</span> <span class="op">=</span> <span class="ident">Rotation3</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="ident">other</span>);
+        <span class="ident">q1</span>.<span class="ident">try_slerp</span>(<span class="kw-2">&amp;</span><span class="ident">q2</span>, <span class="ident">t</span>, <span class="ident">epsilon</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">q</span><span class="op">|</span> <span class="ident">q</span>.<span class="ident">into</span>())
+    }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">Rotation3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Standard</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">Rotation3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Standard</span>
 <span class="kw">where</span>
     <span class="ident">N</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,
     <span class="ident">OpenClosed01</span>: <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
 {
     <span class="doccomment">/// Generate a uniformly distributed random rotation.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sample</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">R</span>: <span class="ident">Rng</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rotation3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">sample</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">R</span>: <span class="ident">Rng</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="ident">Rotation3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
         <span class="comment">// James Arvo.</span>
         <span class="comment">// Fast random rotation matrices.</span>
         <span class="comment">// In D. Kirk, editor, Graphics Gems III, pages 117-120. Academic, New York, 1992.</span>
@@ -1818,8 +1963,8 @@
         <span class="kw">let</span> <span class="ident">sqrt_z</span> <span class="op">=</span> <span class="ident">z</span>.<span class="ident">simd_sqrt</span>();
         <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">Vector3</span>::<span class="ident">new</span>(<span class="ident">pc</span> <span class="op">*</span> <span class="ident">sqrt_z</span>, <span class="ident">ps</span> <span class="op">*</span> <span class="ident">sqrt_z</span>, (<span class="ident">N</span>::<span class="ident">one</span>() <span class="op">-</span> <span class="ident">z</span>).<span class="ident">simd_sqrt</span>());
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">v</span> <span class="op">*</span> <span class="ident">v</span>.<span class="ident">transpose</span>();
-        <span class="ident">b</span> <span class="op">+</span><span class="op">=</span> <span class="ident">b</span>;
-        <span class="ident">b</span> <span class="op">-</span><span class="op">=</span> <span class="ident">MatrixN</span>::<span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>::<span class="ident">identity</span>();
+        <span class="ident">b</span> <span class="op">+=</span> <span class="ident">b</span>;
+        <span class="ident">b</span> <span class="op">-=</span> <span class="ident">MatrixN</span>::<span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>::<span class="ident">identity</span>();
 
         <span class="ident">Rotation3</span>::<span class="ident">from_matrix_unchecked</span>(<span class="ident">b</span> <span class="op">*</span> <span class="ident">a</span>)
     }
@@ -1833,7 +1978,7 @@
     <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>: <span class="ident">Send</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">arbitrary</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">Gen</span><span class="op">&gt;</span>(<span class="ident">g</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">arbitrary</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">Gen</span><span class="op">&gt;</span>(<span class="ident">g</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">G</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">VectorN</span>::<span class="ident">arbitrary</span>(<span class="ident">g</span>))
     }
 }

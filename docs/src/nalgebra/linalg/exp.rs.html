@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.22.0/src/linalg/exp.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>exp.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.0/src/linalg/exp.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>exp.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -523,17 +524,17 @@
 <span class="kw">where</span>
     <span class="ident">N</span>: <span class="ident">ComplexField</span>,
     <span class="ident">D</span>: <span class="ident">DimMin</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>,
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">DimMinimum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">DimMinimum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span>,
 {
     <span class="ident">use_exact_norm</span>: <span class="ident">bool</span>,
     <span class="ident">ident</span>: <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>,
 
     <span class="ident">a</span>: <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>,
-    <span class="ident">a2</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">a4</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">a6</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">a8</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">a10</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">a2</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">a4</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">a6</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">a8</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">a10</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span>,
 
     <span class="ident">d4_exact</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">N</span>::<span class="ident">RealField</span><span class="op">&gt;</span>,
     <span class="ident">d6_exact</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">N</span>::<span class="ident">RealField</span><span class="op">&gt;</span>,
@@ -550,9 +551,9 @@
 <span class="kw">where</span>
     <span class="ident">N</span>: <span class="ident">ComplexField</span>,
     <span class="ident">D</span>: <span class="ident">DimMin</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>,
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">DimMinimum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">DimMinimum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">a</span>: <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">use_exact_norm</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">a</span>: <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">use_exact_norm</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="ident">a</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
         <span class="ident">ExpmPadeHelper</span> {
             <span class="ident">use_exact_norm</span>,
@@ -618,7 +619,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">d4_tight</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">d4_tight</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">d4_exact</span>.<span class="ident">is_none</span>() {
             <span class="self">self</span>.<span class="ident">calc_a4</span>();
             <span class="self">self</span>.<span class="ident">d4_exact</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">one_norm</span>(<span class="self">self</span>.<span class="ident">a4</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>()).<span class="ident">powf</span>(<span class="ident">convert</span>(<span class="number">0.25</span>)));
@@ -626,7 +627,7 @@
         <span class="self">self</span>.<span class="ident">d4_exact</span>.<span class="ident">unwrap</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">d6_tight</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">d6_tight</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">d6_exact</span>.<span class="ident">is_none</span>() {
             <span class="self">self</span>.<span class="ident">calc_a6</span>();
             <span class="self">self</span>.<span class="ident">d6_exact</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">one_norm</span>(<span class="self">self</span>.<span class="ident">a6</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>()).<span class="ident">powf</span>(<span class="ident">convert</span>(<span class="number">1.0</span> <span class="op">/</span> <span class="number">6.0</span>)));
@@ -634,7 +635,7 @@
         <span class="self">self</span>.<span class="ident">d6_exact</span>.<span class="ident">unwrap</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">d8_tight</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">d8_tight</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">d8_exact</span>.<span class="ident">is_none</span>() {
             <span class="self">self</span>.<span class="ident">calc_a8</span>();
             <span class="self">self</span>.<span class="ident">d8_exact</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">one_norm</span>(<span class="self">self</span>.<span class="ident">a8</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>()).<span class="ident">powf</span>(<span class="ident">convert</span>(<span class="number">1.0</span> <span class="op">/</span> <span class="number">8.0</span>)));
@@ -642,7 +643,7 @@
         <span class="self">self</span>.<span class="ident">d8_exact</span>.<span class="ident">unwrap</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">d10_tight</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">d10_tight</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">d10_exact</span>.<span class="ident">is_none</span>() {
             <span class="self">self</span>.<span class="ident">calc_a10</span>();
             <span class="self">self</span>.<span class="ident">d10_exact</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">one_norm</span>(<span class="self">self</span>.<span class="ident">a10</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>()).<span class="ident">powf</span>(<span class="ident">convert</span>(<span class="number">1.0</span> <span class="op">/</span> <span class="number">10.0</span>)));
@@ -650,7 +651,7 @@
         <span class="self">self</span>.<span class="ident">d10_exact</span>.<span class="ident">unwrap</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">d4_loose</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">d4_loose</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">use_exact_norm</span> {
             <span class="kw">return</span> <span class="self">self</span>.<span class="ident">d4_tight</span>();
         }
@@ -667,7 +668,7 @@
         <span class="self">self</span>.<span class="ident">d4_approx</span>.<span class="ident">unwrap</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">d6_loose</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">d6_loose</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">use_exact_norm</span> {
             <span class="kw">return</span> <span class="self">self</span>.<span class="ident">d6_tight</span>();
         }
@@ -684,7 +685,7 @@
         <span class="self">self</span>.<span class="ident">d6_approx</span>.<span class="ident">unwrap</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">d8_loose</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">d8_loose</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">use_exact_norm</span> {
             <span class="kw">return</span> <span class="self">self</span>.<span class="ident">d8_tight</span>();
         }
@@ -701,7 +702,7 @@
         <span class="self">self</span>.<span class="ident">d8_approx</span>.<span class="ident">unwrap</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">d10_loose</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">d10_loose</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">use_exact_norm</span> {
             <span class="kw">return</span> <span class="self">self</span>.<span class="ident">d10_tight</span>();
         }
@@ -718,7 +719,7 @@
         <span class="self">self</span>.<span class="ident">d10_approx</span>.<span class="ident">unwrap</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">pade3</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">pade3</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">b</span>: [<span class="ident">N</span>; <span class="number">4</span>] <span class="op">=</span> [<span class="ident">convert</span>(<span class="number">120.0</span>), <span class="ident">convert</span>(<span class="number">60.0</span>), <span class="ident">convert</span>(<span class="number">12.0</span>), <span class="ident">convert</span>(<span class="number">1.0</span>)];
         <span class="self">self</span>.<span class="ident">calc_a2</span>();
         <span class="kw">let</span> <span class="ident">a2</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">a2</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>();
@@ -727,7 +728,7 @@
         (<span class="ident">u</span>, <span class="ident">v</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">pade5</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">pade5</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">b</span>: [<span class="ident">N</span>; <span class="number">6</span>] <span class="op">=</span> [
             <span class="ident">convert</span>(<span class="number">30240.0</span>),
             <span class="ident">convert</span>(<span class="number">15120.0</span>),
@@ -748,7 +749,7 @@
         (<span class="ident">u</span>, <span class="ident">v</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">pade7</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">pade7</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">b</span>: [<span class="ident">N</span>; <span class="number">8</span>] <span class="op">=</span> [
             <span class="ident">convert</span>(<span class="number">17297280.0</span>),
             <span class="ident">convert</span>(<span class="number">8648640.0</span>),
@@ -774,7 +775,7 @@
         (<span class="ident">u</span>, <span class="ident">v</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">pade9</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">pade9</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">b</span>: [<span class="ident">N</span>; <span class="number">10</span>] <span class="op">=</span> [
             <span class="ident">convert</span>(<span class="number">17643225600.0</span>),
             <span class="ident">convert</span>(<span class="number">8821612800.0</span>),
@@ -805,7 +806,7 @@
         (<span class="ident">u</span>, <span class="ident">v</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">pade13_scaled</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">s</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">pade13_scaled</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">s</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> (<span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">b</span>: [<span class="ident">N</span>; <span class="number">14</span>] <span class="op">=</span> [
             <span class="ident">convert</span>(<span class="number">64764752532480000.0</span>),
             <span class="ident">convert</span>(<span class="number">32382376266240000.0</span>),
@@ -840,15 +841,15 @@
     }
 }
 
-<span class="kw">fn</span> <span class="ident">factorial</span>(<span class="ident">n</span>: <span class="ident">u128</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u128</span> {
-    <span class="kw">if</span> <span class="ident">n</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
+<span class="kw">fn</span> <span class="ident">factorial</span>(<span class="ident">n</span>: <span class="ident">u128</span>) <span class="op">-&gt;</span> <span class="ident">u128</span> {
+    <span class="kw">if</span> <span class="ident">n</span> <span class="op">==</span> <span class="number">1</span> {
         <span class="kw">return</span> <span class="number">1</span>;
     }
     <span class="ident">n</span> <span class="op">*</span> <span class="ident">factorial</span>(<span class="ident">n</span> <span class="op">-</span> <span class="number">1</span>)
 }
 
 <span class="doccomment">/// Compute the 1-norm of a non-negative integer power of a non-negative matrix.</span>
-<span class="kw">fn</span> <span class="ident">onenorm_matrix_power_nonm</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">p</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>
+<span class="kw">fn</span> <span class="ident">onenorm_matrix_power_nonm</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">p</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">N</span>
 <span class="kw">where</span>
     <span class="ident">N</span>: <span class="ident">RealField</span>,
     <span class="ident">D</span>: <span class="ident">Dim</span>,
@@ -865,7 +866,7 @@
     <span class="ident">v</span>.<span class="ident">max</span>()
 }
 
-<span class="kw">fn</span> <span class="ident">ell</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">m</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span>
+<span class="kw">fn</span> <span class="ident">ell</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">m</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">u64</span>
 <span class="kw">where</span>
     <span class="ident">N</span>: <span class="ident">ComplexField</span>,
     <span class="ident">D</span>: <span class="ident">Dim</span>,
@@ -880,7 +881,7 @@
 
     <span class="kw">let</span> <span class="ident">a_abs_onenorm</span> <span class="op">=</span> <span class="ident">onenorm_matrix_power_nonm</span>(<span class="kw-2">&amp;</span><span class="ident">a_abs</span>, <span class="number">2</span> <span class="op">*</span> <span class="ident">m</span> <span class="op">+</span> <span class="number">1</span>);
 
-    <span class="kw">if</span> <span class="ident">a_abs_onenorm</span> <span class="op">=</span><span class="op">=</span> <span class="op">&lt;</span><span class="ident">N</span> <span class="kw">as</span> <span class="ident">ComplexField</span><span class="op">&gt;</span>::<span class="ident">RealField</span>::<span class="ident">zero</span>() {
+    <span class="kw">if</span> <span class="ident">a_abs_onenorm</span> <span class="op">==</span> <span class="op">&lt;</span><span class="ident">N</span> <span class="kw">as</span> <span class="ident">ComplexField</span><span class="op">&gt;</span>::<span class="ident">RealField</span>::<span class="ident">zero</span>() {
         <span class="kw">return</span> <span class="number">0</span>;
     }
 
@@ -900,11 +901,11 @@
     }
 }
 
-<span class="kw">fn</span> <span class="ident">solve_p_q</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">u</span>: <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">v</span>: <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>
+<span class="kw">fn</span> <span class="ident">solve_p_q</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">u</span>: <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">v</span>: <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">N</span>: <span class="ident">ComplexField</span>,
     <span class="ident">D</span>: <span class="ident">DimMin</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="ident">D</span><span class="op">&gt;</span>,
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">DimMinimum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">DimMinimum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span>,
 {
     <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">u</span> <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">v</span>;
     <span class="kw">let</span> <span class="ident">q</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">v</span> <span class="op">-</span> <span class="kw-2">&amp;</span><span class="ident">u</span>;
@@ -912,7 +913,7 @@
     <span class="ident">q</span>.<span class="ident">lu</span>().<span class="ident">solve</span>(<span class="kw-2">&amp;</span><span class="ident">p</span>).<span class="ident">unwrap</span>()
 }
 
-<span class="kw">fn</span> <span class="ident">one_norm</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span>
+<span class="kw">fn</span> <span class="ident">one_norm</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">N</span>::<span class="ident">RealField</span>
 <span class="kw">where</span>
     <span class="ident">N</span>: <span class="ident">ComplexField</span>,
     <span class="ident">D</span>: <span class="ident">Dim</span>,
@@ -935,38 +936,38 @@
 <span class="kw">where</span>
     <span class="ident">D</span>: <span class="ident">DimMin</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="ident">D</span><span class="op">&gt;</span>,
     <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>
-        <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">DimMinimum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span>
+        <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">DimMinimum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span>
         <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>
         <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>::<span class="ident">RealField</span>, <span class="ident">D</span><span class="op">&gt;</span>
         <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>::<span class="ident">RealField</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
 {
     <span class="doccomment">/// Computes exponential of this matrix</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// Simple case</span>
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">nrows</span>() <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">nrows</span>() <span class="op">==</span> <span class="number">1</span> {
             <span class="kw">return</span> <span class="self">self</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">exp</span>());
         }
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">ExpmPadeHelper</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">clone</span>(), <span class="bool-val">true</span>);
 
         <span class="kw">let</span> <span class="ident">eta_1</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">RealField</span>::<span class="ident">max</span>(<span class="ident">h</span>.<span class="ident">d4_loose</span>(), <span class="ident">h</span>.<span class="ident">d6_loose</span>());
-        <span class="kw">if</span> <span class="ident">eta_1</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">1.495585217958292e-002</span>) <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">3</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">eta_1</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">1.495585217958292e-002</span>) <span class="op">&amp;&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">3</span>) <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">let</span> (<span class="ident">u</span>, <span class="ident">v</span>) <span class="op">=</span> <span class="ident">h</span>.<span class="ident">pade3</span>();
             <span class="kw">return</span> <span class="ident">solve_p_q</span>(<span class="ident">u</span>, <span class="ident">v</span>);
         }
 
         <span class="kw">let</span> <span class="ident">eta_2</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">RealField</span>::<span class="ident">max</span>(<span class="ident">h</span>.<span class="ident">d4_tight</span>(), <span class="ident">h</span>.<span class="ident">d6_loose</span>());
-        <span class="kw">if</span> <span class="ident">eta_2</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">2.539398330063230e-001</span>) <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">5</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">eta_2</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">2.539398330063230e-001</span>) <span class="op">&amp;&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">5</span>) <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">let</span> (<span class="ident">u</span>, <span class="ident">v</span>) <span class="op">=</span> <span class="ident">h</span>.<span class="ident">pade5</span>();
             <span class="kw">return</span> <span class="ident">solve_p_q</span>(<span class="ident">u</span>, <span class="ident">v</span>);
         }
 
         <span class="kw">let</span> <span class="ident">eta_3</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">RealField</span>::<span class="ident">max</span>(<span class="ident">h</span>.<span class="ident">d6_tight</span>(), <span class="ident">h</span>.<span class="ident">d8_loose</span>());
-        <span class="kw">if</span> <span class="ident">eta_3</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">9.504178996162932e-001</span>) <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">7</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">eta_3</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">9.504178996162932e-001</span>) <span class="op">&amp;&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">7</span>) <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">let</span> (<span class="ident">u</span>, <span class="ident">v</span>) <span class="op">=</span> <span class="ident">h</span>.<span class="ident">pade7</span>();
             <span class="kw">return</span> <span class="ident">solve_p_q</span>(<span class="ident">u</span>, <span class="ident">v</span>);
         }
-        <span class="kw">if</span> <span class="ident">eta_3</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">2.097847961257068e+000</span>) <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">9</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">eta_3</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">2.097847961257068e+000</span>) <span class="op">&amp;&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">9</span>) <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">let</span> (<span class="ident">u</span>, <span class="ident">v</span>) <span class="op">=</span> <span class="ident">h</span>.<span class="ident">pade9</span>();
             <span class="kw">return</span> <span class="ident">solve_p_q</span>(<span class="ident">u</span>, <span class="ident">v</span>);
         }
@@ -975,7 +976,7 @@
         <span class="kw">let</span> <span class="ident">eta_5</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">RealField</span>::<span class="ident">min</span>(<span class="ident">eta_3</span>, <span class="ident">eta_4</span>);
         <span class="kw">let</span> <span class="ident">theta_13</span> <span class="op">=</span> <span class="ident">convert</span>(<span class="number">4.25</span>);
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">eta_5</span> <span class="op">=</span><span class="op">=</span> <span class="ident">N</span>::<span class="ident">RealField</span>::<span class="ident">zero</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">eta_5</span> <span class="op">==</span> <span class="ident">N</span>::<span class="ident">RealField</span>::<span class="ident">zero</span>() {
             <span class="number">0</span>
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">l2</span> <span class="op">=</span> <span class="ident">try_convert</span>((<span class="ident">eta_5</span> <span class="op">/</span> <span class="ident">theta_13</span>).<span class="ident">log2</span>().<span class="ident">ceil</span>()).<span class="ident">unwrap</span>();
@@ -987,7 +988,7 @@
             }
         };
 
-        <span class="ident">s</span> <span class="op">+</span><span class="op">=</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span> <span class="op">*</span> <span class="ident">convert</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="ident">N</span><span class="op">&gt;</span>(<span class="number">2.0_f64</span>.<span class="ident">powf</span>(<span class="op">-</span>(<span class="ident">s</span> <span class="kw">as</span> <span class="ident">f64</span>)))), <span class="number">13</span>);
+        <span class="ident">s</span> <span class="op">+=</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span> <span class="op">*</span> <span class="ident">convert</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="ident">N</span><span class="op">&gt;</span>(<span class="number">2.0_f64</span>.<span class="ident">powf</span>(<span class="op">-</span>(<span class="ident">s</span> <span class="kw">as</span> <span class="ident">f64</span>)))), <span class="number">13</span>);
 
         <span class="kw">let</span> (<span class="ident">u</span>, <span class="ident">v</span>) <span class="op">=</span> <span class="ident">h</span>.<span class="ident">pade13_scaled</span>(<span class="ident">s</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">solve_p_q</span>(<span class="ident">u</span>, <span class="ident">v</span>);

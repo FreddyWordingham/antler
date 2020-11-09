@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["build","Build instances."],["grow","Grow domains."],["init","Initialise the command line arguments and directories."],["input","Load the input files."],["main",""]],"struct":[["Parameters","Input parameters."]],"type":[["Key","Key type."]]});

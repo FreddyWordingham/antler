@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.22.0/src/base/blas.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>blas.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.0/src/base/blas.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>blas.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1668,6 +1669,13 @@
 <span id="1668">1668</span>
 <span id="1669">1669</span>
 <span id="1670">1670</span>
+<span id="1671">1671</span>
+<span id="1672">1672</span>
+<span id="1673">1673</span>
+<span id="1674">1674</span>
+<span id="1675">1675</span>
+<span id="1676">1676</span>
+<span id="1677">1677</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">SimdComplexField</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
@@ -1688,7 +1696,7 @@
 };
 
 <span class="comment">// FIXME: find a way to avoid code duplication just for complex number support.</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">ComplexField</span>, <span class="ident">D</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">ComplexField</span>, <span class="ident">D</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span> <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Computes the index of the vector component with the largest complex or real absolute value.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples:</span>
@@ -1702,7 +1710,7 @@
     <span class="doccomment">/// assert_eq!(vec.icamax(), 2);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">icamax</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">icamax</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">is_empty</span>(), <span class="string">&quot;The input vector must not be empty.&quot;</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">the_max</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">vget_unchecked</span>(<span class="number">0</span>).<span class="ident">norm1</span>() };
@@ -1721,7 +1729,7 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">PartialOrd</span>, <span class="ident">D</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">PartialOrd</span>, <span class="ident">D</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span> <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Computes the index and value of the vector component with the largest value.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples:</span>
@@ -1732,7 +1740,7 @@
     <span class="doccomment">/// assert_eq!(vec.argmax(), (2, 13));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">argmax</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="ident">N</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">argmax</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">N</span>) {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">is_empty</span>(), <span class="string">&quot;The input vector must not be empty.&quot;</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">the_max</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">vget_unchecked</span>(<span class="number">0</span>) };
@@ -1760,7 +1768,7 @@
     <span class="doccomment">/// assert_eq!(vec.imax(), 2);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">imax</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">imax</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">argmax</span>().<span class="number">0</span>
     }
 
@@ -1774,7 +1782,7 @@
     <span class="doccomment">/// assert_eq!(vec.iamax(), 1);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iamax</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iamax</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">Signed</span>,
     {
@@ -1805,7 +1813,7 @@
     <span class="doccomment">/// assert_eq!(vec.argmin(), (1, -15));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">argmin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="ident">N</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">argmin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">N</span>) {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">is_empty</span>(), <span class="string">&quot;The input vector must not be empty.&quot;</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">the_min</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">vget_unchecked</span>(<span class="number">0</span>) };
@@ -1833,7 +1841,7 @@
     <span class="doccomment">/// assert_eq!(vec.imin(), 1);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">imin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">imin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">argmin</span>().<span class="number">0</span>
     }
 
@@ -1847,7 +1855,7 @@
     <span class="doccomment">/// assert_eq!(vec.iamin(), 0);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iamin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iamin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">Signed</span>,
     {
@@ -1870,7 +1878,7 @@
 }
 
 <span class="comment">// FIXME: find a way to avoid code duplication just for complex number support.</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">ComplexField</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">ComplexField</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Computes the index of the matrix component with the largest absolute value.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples:</span>
@@ -1885,7 +1893,7 @@
     <span class="doccomment">/// assert_eq!(mat.icamax_full(), (1, 0));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">icamax_full</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">icamax_full</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">is_empty</span>(), <span class="string">&quot;The input matrix must not be empty.&quot;</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">the_max</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="number">0</span>, <span class="number">0</span>)).<span class="ident">norm1</span>() };
@@ -1906,7 +1914,7 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">PartialOrd</span> <span class="op">+</span> <span class="ident">Signed</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">PartialOrd</span> <span class="op">+</span> <span class="ident">Signed</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Computes the index of the matrix component with the largest absolute value.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples:</span>
@@ -1918,7 +1926,7 @@
     <span class="doccomment">/// assert_eq!(mat.iamax_full(), (1, 2));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iamax_full</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iamax_full</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">is_empty</span>(), <span class="string">&quot;The input matrix must not be empty.&quot;</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">the_max</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="number">0</span>, <span class="number">0</span>)).<span class="ident">abs</span>() };
@@ -1939,7 +1947,7 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">ClosedAdd</span> <span class="op">+</span> <span class="ident">ClosedMul</span>,
 {
@@ -1947,22 +1955,29 @@
     <span class="kw">fn</span> <span class="ident">dotx</span><span class="op">&lt;</span><span class="ident">R2</span>: <span class="ident">Dim</span>, <span class="ident">C2</span>: <span class="ident">Dim</span>, <span class="ident">SB</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">SB</span><span class="op">&gt;</span>,
-        <span class="ident">conjugate</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>
+        <span class="ident">conjugate</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="ident">N</span>) <span class="op">-&gt;</span> <span class="ident">N</span>,
+    ) <span class="op">-&gt;</span> <span class="ident">N</span>
     <span class="kw">where</span>
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
         <span class="ident">ShapeConstraint</span>: <span class="ident">DimEq</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">R2</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">DimEq</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
     {
         <span class="macro">assert</span><span class="macro">!</span>(
-            <span class="self">self</span>.<span class="ident">nrows</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">rhs</span>.<span class="ident">nrows</span>(),
+            <span class="self">self</span>.<span class="ident">nrows</span>() <span class="op">==</span> <span class="ident">rhs</span>.<span class="ident">nrows</span>(),
             <span class="string">&quot;Dot product dimensions mismatch for shapes {:?} and {:?}: left rows != right rows.&quot;</span>,
+            <span class="self">self</span>.<span class="ident">shape</span>(),
+            <span class="ident">rhs</span>.<span class="ident">shape</span>(),
+        );
+
+        <span class="macro">assert</span><span class="macro">!</span>(
+            <span class="self">self</span>.<span class="ident">ncols</span>() <span class="op">==</span> <span class="ident">rhs</span>.<span class="ident">ncols</span>(),
+            <span class="string">&quot;Dot product dimensions mismatch for shapes {:?} and {:?}: left cols != right cols.&quot;</span>,
             <span class="self">self</span>.<span class="ident">shape</span>(),
             <span class="ident">rhs</span>.<span class="ident">shape</span>(),
         );
 
         <span class="comment">// So we do some special cases for common fixed-size vectors of dimension lower than 8</span>
         <span class="comment">// because the `for` loop below won&#39;t be very efficient on those.</span>
-        <span class="kw">if</span> (<span class="ident">R</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U2</span><span class="op">&gt;</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">R2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U2</span><span class="op">&gt;</span>()) <span class="kw-2">&amp;</span><span class="op">&amp;</span> (<span class="ident">C</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">C2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>()) {
+        <span class="kw">if</span> (<span class="ident">R</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U2</span><span class="op">&gt;</span>() <span class="op">||</span> <span class="ident">R2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U2</span><span class="op">&gt;</span>()) <span class="op">&amp;&amp;</span> (<span class="ident">C</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>() <span class="op">||</span> <span class="ident">C2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>()) {
             <span class="kw">unsafe</span> {
                 <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">conjugate</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="number">0</span>, <span class="number">0</span>)).<span class="ident">inlined_clone</span>())
                     <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="number">0</span>, <span class="number">0</span>)).<span class="ident">inlined_clone</span>();
@@ -1972,7 +1987,7 @@
                 <span class="kw">return</span> <span class="ident">a</span> <span class="op">+</span> <span class="ident">b</span>;
             }
         }
-        <span class="kw">if</span> (<span class="ident">R</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U3</span><span class="op">&gt;</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">R2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U3</span><span class="op">&gt;</span>()) <span class="kw-2">&amp;</span><span class="op">&amp;</span> (<span class="ident">C</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">C2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>()) {
+        <span class="kw">if</span> (<span class="ident">R</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U3</span><span class="op">&gt;</span>() <span class="op">||</span> <span class="ident">R2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U3</span><span class="op">&gt;</span>()) <span class="op">&amp;&amp;</span> (<span class="ident">C</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>() <span class="op">||</span> <span class="ident">C2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>()) {
             <span class="kw">unsafe</span> {
                 <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">conjugate</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="number">0</span>, <span class="number">0</span>)).<span class="ident">inlined_clone</span>())
                     <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="number">0</span>, <span class="number">0</span>)).<span class="ident">inlined_clone</span>();
@@ -1984,7 +1999,7 @@
                 <span class="kw">return</span> <span class="ident">a</span> <span class="op">+</span> <span class="ident">b</span> <span class="op">+</span> <span class="ident">c</span>;
             }
         }
-        <span class="kw">if</span> (<span class="ident">R</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U4</span><span class="op">&gt;</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">R2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U4</span><span class="op">&gt;</span>()) <span class="kw-2">&amp;</span><span class="op">&amp;</span> (<span class="ident">C</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">C2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>()) {
+        <span class="kw">if</span> (<span class="ident">R</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U4</span><span class="op">&gt;</span>() <span class="op">||</span> <span class="ident">R2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U4</span><span class="op">&gt;</span>()) <span class="op">&amp;&amp;</span> (<span class="ident">C</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>() <span class="op">||</span> <span class="ident">C2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>()) {
             <span class="kw">unsafe</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">conjugate</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="number">0</span>, <span class="number">0</span>)).<span class="ident">inlined_clone</span>())
                     <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="number">0</span>, <span class="number">0</span>)).<span class="ident">inlined_clone</span>();
@@ -1995,8 +2010,8 @@
                 <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="ident">conjugate</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="number">3</span>, <span class="number">0</span>)).<span class="ident">inlined_clone</span>())
                     <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="number">3</span>, <span class="number">0</span>)).<span class="ident">inlined_clone</span>();
 
-                <span class="ident">a</span> <span class="op">+</span><span class="op">=</span> <span class="ident">c</span>;
-                <span class="ident">b</span> <span class="op">+</span><span class="op">=</span> <span class="ident">d</span>;
+                <span class="ident">a</span> <span class="op">+=</span> <span class="ident">c</span>;
+                <span class="ident">b</span> <span class="op">+=</span> <span class="ident">d</span>;
 
                 <span class="kw">return</span> <span class="ident">a</span> <span class="op">+</span> <span class="ident">b</span>;
             }
@@ -2032,49 +2047,49 @@
             <span class="ident">acc6</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">zero</span>();
             <span class="ident">acc7</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">zero</span>();
 
-            <span class="kw">while</span> <span class="self">self</span>.<span class="ident">nrows</span>() <span class="op">-</span> <span class="ident">i</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">8</span> {
-                <span class="ident">acc0</span> <span class="op">+</span><span class="op">=</span> <span class="kw">unsafe</span> {
-                    <span class="ident">conjugate</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">0</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>())
-                        <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">0</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>()
+            <span class="kw">while</span> <span class="self">self</span>.<span class="ident">nrows</span>() <span class="op">-</span> <span class="ident">i</span> <span class="op">&gt;=</span> <span class="number">8</span> {
+                <span class="ident">acc0</span> <span class="op">+=</span> <span class="kw">unsafe</span> {
+                    <span class="ident">conjugate</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>())
+                        <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>()
                 };
-                <span class="ident">acc1</span> <span class="op">+</span><span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="ident">acc1</span> <span class="op">+=</span> <span class="kw">unsafe</span> {
                     <span class="ident">conjugate</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>())
                         <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>()
                 };
-                <span class="ident">acc2</span> <span class="op">+</span><span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="ident">acc2</span> <span class="op">+=</span> <span class="kw">unsafe</span> {
                     <span class="ident">conjugate</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">2</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>())
                         <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">2</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>()
                 };
-                <span class="ident">acc3</span> <span class="op">+</span><span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="ident">acc3</span> <span class="op">+=</span> <span class="kw">unsafe</span> {
                     <span class="ident">conjugate</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">3</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>())
                         <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">3</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>()
                 };
-                <span class="ident">acc4</span> <span class="op">+</span><span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="ident">acc4</span> <span class="op">+=</span> <span class="kw">unsafe</span> {
                     <span class="ident">conjugate</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">4</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>())
                         <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">4</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>()
                 };
-                <span class="ident">acc5</span> <span class="op">+</span><span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="ident">acc5</span> <span class="op">+=</span> <span class="kw">unsafe</span> {
                     <span class="ident">conjugate</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">5</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>())
                         <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">5</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>()
                 };
-                <span class="ident">acc6</span> <span class="op">+</span><span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="ident">acc6</span> <span class="op">+=</span> <span class="kw">unsafe</span> {
                     <span class="ident">conjugate</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">6</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>())
                         <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">6</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>()
                 };
-                <span class="ident">acc7</span> <span class="op">+</span><span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="ident">acc7</span> <span class="op">+=</span> <span class="kw">unsafe</span> {
                     <span class="ident">conjugate</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">7</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>())
                         <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span> <span class="op">+</span> <span class="number">7</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>()
                 };
-                <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">8</span>;
+                <span class="ident">i</span> <span class="op">+=</span> <span class="number">8</span>;
             }
 
-            <span class="ident">res</span> <span class="op">+</span><span class="op">=</span> <span class="ident">acc0</span> <span class="op">+</span> <span class="ident">acc4</span>;
-            <span class="ident">res</span> <span class="op">+</span><span class="op">=</span> <span class="ident">acc1</span> <span class="op">+</span> <span class="ident">acc5</span>;
-            <span class="ident">res</span> <span class="op">+</span><span class="op">=</span> <span class="ident">acc2</span> <span class="op">+</span> <span class="ident">acc6</span>;
-            <span class="ident">res</span> <span class="op">+</span><span class="op">=</span> <span class="ident">acc3</span> <span class="op">+</span> <span class="ident">acc7</span>;
+            <span class="ident">res</span> <span class="op">+=</span> <span class="ident">acc0</span> <span class="op">+</span> <span class="ident">acc4</span>;
+            <span class="ident">res</span> <span class="op">+=</span> <span class="ident">acc1</span> <span class="op">+</span> <span class="ident">acc5</span>;
+            <span class="ident">res</span> <span class="op">+=</span> <span class="ident">acc2</span> <span class="op">+</span> <span class="ident">acc6</span>;
+            <span class="ident">res</span> <span class="op">+=</span> <span class="ident">acc3</span> <span class="op">+</span> <span class="ident">acc7</span>;
 
             <span class="kw">for</span> <span class="ident">k</span> <span class="kw">in</span> <span class="ident">i</span>..<span class="self">self</span>.<span class="ident">nrows</span>() {
-                <span class="ident">res</span> <span class="op">+</span><span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="ident">res</span> <span class="op">+=</span> <span class="kw">unsafe</span> {
                     <span class="ident">conjugate</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="ident">k</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>())
                         <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="ident">k</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>()
                 }
@@ -2108,7 +2123,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dot</span><span class="op">&lt;</span><span class="ident">R2</span>: <span class="ident">Dim</span>, <span class="ident">C2</span>: <span class="ident">Dim</span>, <span class="ident">SB</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">SB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dot</span><span class="op">&lt;</span><span class="ident">R2</span>: <span class="ident">Dim</span>, <span class="ident">C2</span>: <span class="ident">Dim</span>, <span class="ident">SB</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">SB</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">N</span>
     <span class="kw">where</span>
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
         <span class="ident">ShapeConstraint</span>: <span class="ident">DimEq</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">R2</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">DimEq</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
@@ -2136,7 +2151,7 @@
     <span class="doccomment">/// assert_ne!(vec1.dotc(&amp;vec2), vec1.dot(&amp;vec2));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dotc</span><span class="op">&lt;</span><span class="ident">R2</span>: <span class="ident">Dim</span>, <span class="ident">C2</span>: <span class="ident">Dim</span>, <span class="ident">SB</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">SB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dotc</span><span class="op">&lt;</span><span class="ident">R2</span>: <span class="ident">Dim</span>, <span class="ident">C2</span>: <span class="ident">Dim</span>, <span class="ident">SB</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">SB</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">N</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">SimdComplexField</span>,
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
@@ -2163,7 +2178,7 @@
     <span class="doccomment">/// assert_eq!(mat1.tr_dot(&amp;mat2), 9.1);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tr_dot</span><span class="op">&lt;</span><span class="ident">R2</span>: <span class="ident">Dim</span>, <span class="ident">C2</span>: <span class="ident">Dim</span>, <span class="ident">SB</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">SB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tr_dot</span><span class="op">&lt;</span><span class="ident">R2</span>: <span class="ident">Dim</span>, <span class="ident">C2</span>: <span class="ident">Dim</span>, <span class="ident">SB</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">SB</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">N</span>
     <span class="kw">where</span>
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
         <span class="ident">ShapeConstraint</span>: <span class="ident">DimEq</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">R2</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">DimEq</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
@@ -2179,7 +2194,7 @@
 
         <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">nrows</span>() {
             <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">ncols</span>() {
-                <span class="ident">res</span> <span class="op">+</span><span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="ident">res</span> <span class="op">+=</span> <span class="kw">unsafe</span> {
                     <span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="ident">j</span>, <span class="ident">i</span>)).<span class="ident">inlined_clone</span>()
                         <span class="op">*</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>()
                 }
@@ -2323,18 +2338,18 @@
         <span class="kw">let</span> <span class="ident">dim3</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">nrows</span>();
 
         <span class="macro">assert</span><span class="macro">!</span>(
-            <span class="ident">ncols2</span> <span class="op">=</span><span class="op">=</span> <span class="ident">dim3</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">dim1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">nrows2</span>,
+            <span class="ident">ncols2</span> <span class="op">==</span> <span class="ident">dim3</span> <span class="op">&amp;&amp;</span> <span class="ident">dim1</span> <span class="op">==</span> <span class="ident">nrows2</span>,
             <span class="string">&quot;Gemv: dimensions mismatch.&quot;</span>
         );
 
-        <span class="kw">if</span> <span class="ident">ncols2</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">ncols2</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="comment">// NOTE: we can&#39;t just always multiply by beta</span>
             <span class="comment">// because we documented the guaranty that `self` is</span>
             <span class="comment">// never read if `beta` is zero.</span>
             <span class="kw">if</span> <span class="ident">beta</span>.<span class="ident">is_zero</span>() {
                 <span class="self">self</span>.<span class="ident">fill</span>(<span class="ident">N</span>::<span class="ident">zero</span>());
             } <span class="kw">else</span> {
-                <span class="kw-2">*</span><span class="self">self</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">beta</span>;
+                <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">beta</span>;
             }
             <span class="kw">return</span>;
         }
@@ -2362,7 +2377,7 @@
         <span class="ident">dot</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(
             <span class="kw-2">&amp;</span><span class="ident">DVectorSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">SB</span>::<span class="ident">RStride</span>, <span class="ident">SB</span>::<span class="ident">CStride</span><span class="op">&gt;</span>,
             <span class="kw-2">&amp;</span><span class="ident">DVectorSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">SC</span>::<span class="ident">RStride</span>, <span class="ident">SC</span>::<span class="ident">CStride</span><span class="op">&gt;</span>,
-        ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>,
+        ) <span class="op">-&gt;</span> <span class="ident">N</span>,
     ) <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">One</span>,
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D2</span>, <span class="ident">D2</span><span class="op">&gt;</span>,
@@ -2378,11 +2393,11 @@
             <span class="string">&quot;Symmetric cgemv: the input matrix must be square.&quot;</span>
         );
         <span class="macro">assert</span><span class="macro">!</span>(
-            <span class="ident">dim2</span> <span class="op">=</span><span class="op">=</span> <span class="ident">dim3</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">dim1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">dim2</span>,
+            <span class="ident">dim2</span> <span class="op">==</span> <span class="ident">dim3</span> <span class="op">&amp;&amp;</span> <span class="ident">dim1</span> <span class="op">==</span> <span class="ident">dim2</span>,
             <span class="string">&quot;Symmetric cgemv: dimensions mismatch.&quot;</span>
         );
 
-        <span class="kw">if</span> <span class="ident">dim2</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">dim2</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">return</span>;
         }
 
@@ -2390,7 +2405,7 @@
         <span class="kw">let</span> <span class="ident">col2</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">column</span>(<span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">x</span>.<span class="ident">vget_unchecked</span>(<span class="number">0</span>).<span class="ident">inlined_clone</span>() };
         <span class="self">self</span>.<span class="ident">axpy</span>(<span class="ident">alpha</span>.<span class="ident">inlined_clone</span>() <span class="op">*</span> <span class="ident">val</span>, <span class="kw-2">&amp;</span><span class="ident">col2</span>, <span class="ident">beta</span>);
-        <span class="self">self</span>[<span class="number">0</span>] <span class="op">+</span><span class="op">=</span> <span class="ident">alpha</span>.<span class="ident">inlined_clone</span>() <span class="op">*</span> <span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="ident">a</span>.<span class="ident">slice_range</span>(<span class="number">1</span>.., <span class="number">0</span>), <span class="kw-2">&amp;</span><span class="ident">x</span>.<span class="ident">rows_range</span>(<span class="number">1</span>..));
+        <span class="self">self</span>[<span class="number">0</span>] <span class="op">+=</span> <span class="ident">alpha</span>.<span class="ident">inlined_clone</span>() <span class="op">*</span> <span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="ident">a</span>.<span class="ident">slice_range</span>(<span class="number">1</span>.., <span class="number">0</span>), <span class="kw-2">&amp;</span><span class="ident">x</span>.<span class="ident">rows_range</span>(<span class="number">1</span>..));
 
         <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">1</span>..<span class="ident">dim2</span> {
             <span class="kw">let</span> <span class="ident">col2</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">column</span>(<span class="ident">j</span>);
@@ -2399,7 +2414,7 @@
             <span class="kw">let</span> <span class="ident">val</span>;
             <span class="kw">unsafe</span> {
                 <span class="ident">val</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">vget_unchecked</span>(<span class="ident">j</span>).<span class="ident">inlined_clone</span>();
-                <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">vget_unchecked_mut</span>(<span class="ident">j</span>) <span class="op">+</span><span class="op">=</span> <span class="ident">alpha</span>.<span class="ident">inlined_clone</span>() <span class="op">*</span> <span class="ident">dot</span>;
+                <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">vget_unchecked_mut</span>(<span class="ident">j</span>) <span class="op">+=</span> <span class="ident">alpha</span>.<span class="ident">inlined_clone</span>() <span class="op">*</span> <span class="ident">dot</span>;
             }
             <span class="self">self</span>.<span class="ident">rows_range_mut</span>(<span class="ident">j</span> <span class="op">+</span> <span class="number">1</span>..).<span class="ident">axpy</span>(
                 <span class="ident">alpha</span>.<span class="ident">inlined_clone</span>() <span class="op">*</span> <span class="ident">val</span>,
@@ -2524,7 +2539,7 @@
         <span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">SB</span><span class="op">&gt;</span>,
         <span class="ident">x</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D3</span>, <span class="ident">SC</span><span class="op">&gt;</span>,
         <span class="ident">beta</span>: <span class="ident">N</span>,
-        <span class="ident">dot</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">VectorSliceN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">SB</span>::<span class="ident">RStride</span>, <span class="ident">SB</span>::<span class="ident">CStride</span><span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D3</span>, <span class="ident">SC</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>,
+        <span class="ident">dot</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">VectorSliceN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">SB</span>::<span class="ident">RStride</span>, <span class="ident">SB</span>::<span class="ident">CStride</span><span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D3</span>, <span class="ident">SC</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">N</span>,
     ) <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">One</span>,
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
@@ -2536,11 +2551,11 @@
         <span class="kw">let</span> <span class="ident">dim3</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">nrows</span>();
 
         <span class="macro">assert</span><span class="macro">!</span>(
-            <span class="ident">nrows2</span> <span class="op">=</span><span class="op">=</span> <span class="ident">dim3</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">dim1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ncols2</span>,
+            <span class="ident">nrows2</span> <span class="op">==</span> <span class="ident">dim3</span> <span class="op">&amp;&amp;</span> <span class="ident">dim1</span> <span class="op">==</span> <span class="ident">ncols2</span>,
             <span class="string">&quot;Gemv: dimensions mismatch.&quot;</span>
         );
 
-        <span class="kw">if</span> <span class="ident">ncols2</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">ncols2</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">return</span>;
         }
 
@@ -2628,7 +2643,7 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R1</span>: <span class="ident">Dim</span>, <span class="ident">C1</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R1</span>, <span class="ident">C1</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R1</span>, <span class="ident">C1</span>, <span class="ident">S</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R1</span>: <span class="ident">Dim</span>, <span class="ident">C1</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R1</span>, <span class="ident">C1</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R1</span>, <span class="ident">C1</span>, <span class="ident">S</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">ClosedAdd</span> <span class="op">+</span> <span class="ident">ClosedMul</span>,
 {
@@ -2639,7 +2654,7 @@
         <span class="ident">x</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D2</span>, <span class="ident">SB</span><span class="op">&gt;</span>,
         <span class="ident">y</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D3</span>, <span class="ident">SC</span><span class="op">&gt;</span>,
         <span class="ident">beta</span>: <span class="ident">N</span>,
-        <span class="ident">conjugate</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>,
+        <span class="ident">conjugate</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="ident">N</span>) <span class="op">-&gt;</span> <span class="ident">N</span>,
     ) <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">One</span>,
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D2</span><span class="op">&gt;</span>,
@@ -2651,7 +2666,7 @@
         <span class="kw">let</span> <span class="ident">dim3</span> <span class="op">=</span> <span class="ident">y</span>.<span class="ident">nrows</span>();
 
         <span class="macro">assert</span><span class="macro">!</span>(
-            <span class="ident">nrows1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">dim2</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">ncols1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">dim3</span>,
+            <span class="ident">nrows1</span> <span class="op">==</span> <span class="ident">dim2</span> <span class="op">&amp;&amp;</span> <span class="ident">ncols1</span> <span class="op">==</span> <span class="ident">dim3</span>,
             <span class="string">&quot;ger: dimensions mismatch.&quot;</span>
         );
 
@@ -2773,11 +2788,11 @@
             <span class="comment">// threshold to activate it would be different from SMALL_DIM because our code optimizes</span>
             <span class="comment">// better for statically-sized matrices.</span>
             <span class="kw">if</span> <span class="ident">R1</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">Dynamic</span><span class="op">&gt;</span>()
-                <span class="op">|</span><span class="op">|</span> <span class="ident">C1</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">Dynamic</span><span class="op">&gt;</span>()
-                <span class="op">|</span><span class="op">|</span> <span class="ident">R2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">Dynamic</span><span class="op">&gt;</span>()
-                <span class="op">|</span><span class="op">|</span> <span class="ident">C2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">Dynamic</span><span class="op">&gt;</span>()
-                <span class="op">|</span><span class="op">|</span> <span class="ident">R3</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">Dynamic</span><span class="op">&gt;</span>()
-                <span class="op">|</span><span class="op">|</span> <span class="ident">C3</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">Dynamic</span><span class="op">&gt;</span>()
+                <span class="op">||</span> <span class="ident">C1</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">Dynamic</span><span class="op">&gt;</span>()
+                <span class="op">||</span> <span class="ident">R2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">Dynamic</span><span class="op">&gt;</span>()
+                <span class="op">||</span> <span class="ident">C2</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">Dynamic</span><span class="op">&gt;</span>()
+                <span class="op">||</span> <span class="ident">R3</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">Dynamic</span><span class="op">&gt;</span>()
+                <span class="op">||</span> <span class="ident">C3</span>::<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">Dynamic</span><span class="op">&gt;</span>()
             {
                 <span class="comment">// matrixmultiply can be used only if the std feature is available.</span>
                 <span class="kw">let</span> <span class="ident">nrows1</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">nrows</span>();
@@ -2788,9 +2803,9 @@
                 <span class="kw">const</span> <span class="ident">SMALL_DIM</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">5</span>;
 
                 <span class="kw">if</span> <span class="ident">nrows1</span> <span class="op">&gt;</span> <span class="ident">SMALL_DIM</span>
-                    <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">ncols1</span> <span class="op">&gt;</span> <span class="ident">SMALL_DIM</span>
-                    <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">nrows2</span> <span class="op">&gt;</span> <span class="ident">SMALL_DIM</span>
-                    <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">ncols2</span> <span class="op">&gt;</span> <span class="ident">SMALL_DIM</span>
+                    <span class="op">&amp;&amp;</span> <span class="ident">ncols1</span> <span class="op">&gt;</span> <span class="ident">SMALL_DIM</span>
+                    <span class="op">&amp;&amp;</span> <span class="ident">nrows2</span> <span class="op">&gt;</span> <span class="ident">SMALL_DIM</span>
+                    <span class="op">&amp;&amp;</span> <span class="ident">ncols2</span> <span class="op">&gt;</span> <span class="ident">SMALL_DIM</span>
                 {
                     <span class="macro">assert_eq</span><span class="macro">!</span>(
                         <span class="ident">ncols2</span>, <span class="ident">nrows3</span>,
@@ -2806,14 +2821,14 @@
                     <span class="comment">// codepath only when ncols2 &gt; SMALL_DIM. Though we keep this</span>
                     <span class="comment">// here just in case if in the future we change the conditions to</span>
                     <span class="comment">// enter this codepath.</span>
-                    <span class="kw">if</span> <span class="ident">ncols2</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                    <span class="kw">if</span> <span class="ident">ncols2</span> <span class="op">==</span> <span class="number">0</span> {
                         <span class="comment">// NOTE: we can&#39;t just always multiply by beta</span>
                         <span class="comment">// because we documented the guaranty that `self` is</span>
                         <span class="comment">// never read if `beta` is zero.</span>
                         <span class="kw">if</span> <span class="ident">beta</span>.<span class="ident">is_zero</span>() {
                             <span class="self">self</span>.<span class="ident">fill</span>(<span class="ident">N</span>::<span class="ident">zero</span>());
                         } <span class="kw">else</span> {
-                            <span class="kw-2">*</span><span class="self">self</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">beta</span>;
+                            <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">beta</span>;
                         }
                         <span class="kw">return</span>;
                     }
@@ -3002,7 +3017,7 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R1</span>: <span class="ident">Dim</span>, <span class="ident">C1</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R1</span>, <span class="ident">C1</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R1</span>, <span class="ident">C1</span>, <span class="ident">S</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R1</span>: <span class="ident">Dim</span>, <span class="ident">C1</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R1</span>, <span class="ident">C1</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R1</span>, <span class="ident">C1</span>, <span class="ident">S</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">ClosedAdd</span> <span class="op">+</span> <span class="ident">ClosedMul</span>,
 {
@@ -3013,7 +3028,7 @@
         <span class="ident">x</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D2</span>, <span class="ident">SB</span><span class="op">&gt;</span>,
         <span class="ident">y</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D3</span>, <span class="ident">SC</span><span class="op">&gt;</span>,
         <span class="ident">beta</span>: <span class="ident">N</span>,
-        <span class="ident">conjugate</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>,
+        <span class="ident">conjugate</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="ident">N</span>) <span class="op">-&gt;</span> <span class="ident">N</span>,
     ) <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">One</span>,
         <span class="ident">SB</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D2</span><span class="op">&gt;</span>,
@@ -3028,7 +3043,7 @@
             <span class="self">self</span>.<span class="ident">is_square</span>(),
             <span class="string">&quot;Symmetric ger: the input matrix must be square.&quot;</span>
         );
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">dim1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">dim2</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">dim1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">dim3</span>, <span class="string">&quot;ger: dimensions mismatch.&quot;</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">dim1</span> <span class="op">==</span> <span class="ident">dim2</span> <span class="op">&amp;&amp;</span> <span class="ident">dim1</span> <span class="op">==</span> <span class="ident">dim3</span>, <span class="string">&quot;ger: dimensions mismatch.&quot;</span>);
 
         <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">dim1</span> {
             <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">conjugate</span>(<span class="ident">y</span>.<span class="ident">vget_unchecked</span>(<span class="ident">j</span>).<span class="ident">inlined_clone</span>()) };
@@ -3150,7 +3165,7 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D1</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D1</span>, <span class="ident">D1</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">SquareMatrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D1</span>, <span class="ident">S</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D1</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D1</span>, <span class="ident">D1</span><span class="op">&gt;&gt;</span> <span class="ident">SquareMatrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D1</span>, <span class="ident">S</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">One</span> <span class="op">+</span> <span class="ident">ClosedAdd</span> <span class="op">+</span> <span class="ident">ClosedMul</span>,
 {

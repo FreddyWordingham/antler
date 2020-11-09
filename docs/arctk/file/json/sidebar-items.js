@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["from_json","Deserialise the type in json format. # Errors if file can not be opened or read string can not be serialised into an instance of the required type."]]});
+initSidebarItems({"fn":[["from_json","Deserialise the type in json format. # Errors if file can not be opened or read string can not be serialised into an instance of the required type."],["from_json_str","Deserialise the type in json format. # Errors if string can not be serialised into an instance of the required type."]]});

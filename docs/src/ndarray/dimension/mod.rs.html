@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.13.1/src/dimension/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ndarray/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.13.1/src/dimension/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ndarray/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -957,7 +958,7 @@
 
 <span class="doccomment">/// Calculate offset from `Ix` stride converting sign properly</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stride_offset</span>(<span class="ident">n</span>: <span class="ident">Ix</span>, <span class="ident">stride</span>: <span class="ident">Ix</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">isize</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stride_offset</span>(<span class="ident">n</span>: <span class="ident">Ix</span>, <span class="ident">stride</span>: <span class="ident">Ix</span>) <span class="op">-&gt;</span> <span class="ident">isize</span> {
     (<span class="ident">n</span> <span class="kw">as</span> <span class="ident">isize</span>) <span class="op">*</span> ((<span class="ident">stride</span> <span class="kw">as</span> <span class="ident">Ixs</span>) <span class="kw">as</span> <span class="ident">isize</span>)
 }
 
@@ -969,20 +970,20 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// The current implementation assumes that strides of axes with length &gt; 1 are</span>
 <span class="doccomment">/// nonnegative. Additionally, it does not check for overflow.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dim_stride_overlap</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Dimension</span><span class="op">&gt;</span>(<span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>, <span class="ident">strides</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dim_stride_overlap</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Dimension</span><span class="op">&gt;</span>(<span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>, <span class="ident">strides</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
     <span class="kw">let</span> <span class="ident">order</span> <span class="op">=</span> <span class="ident">strides</span>.<span class="ident">_fastest_varying_stride_order</span>();
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sum_prev_offsets</span> <span class="op">=</span> <span class="number">0</span>;
     <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">index</span> <span class="kw">in</span> <span class="ident">order</span>.<span class="ident">slice</span>() {
         <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="ident">dim</span>[<span class="ident">index</span>];
         <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">strides</span>[<span class="ident">index</span>] <span class="kw">as</span> <span class="ident">isize</span>;
         <span class="kw">match</span> <span class="ident">d</span> {
-            <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="bool-val">false</span>,
-            <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> {}
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">if</span> <span class="ident">s</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">sum_prev_offsets</span> {
+            <span class="number">0</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="bool-val">false</span>,
+            <span class="number">1</span> <span class="op">=&gt;</span> {}
+            <span class="kw">_</span> <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="ident">s</span> <span class="op">&lt;=</span> <span class="ident">sum_prev_offsets</span> {
                     <span class="kw">return</span> <span class="bool-val">true</span>;
                 }
-                <span class="ident">sum_prev_offsets</span> <span class="op">+</span><span class="op">=</span> (<span class="ident">d</span> <span class="op">-</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">isize</span> <span class="op">*</span> <span class="ident">s</span>;
+                <span class="ident">sum_prev_offsets</span> <span class="op">+=</span> (<span class="ident">d</span> <span class="op">-</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">isize</span> <span class="op">*</span> <span class="ident">s</span>;
             }
         }
     }
@@ -998,13 +999,13 @@
 <span class="doccomment">/// are met to construct an array from the data buffer, `dim`, and `strides`.</span>
 <span class="doccomment">/// (The data buffer being a slice or `Vec` guarantees that it contains no more</span>
 <span class="doccomment">/// than `isize::MAX` bytes.)</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size_of_shape_checked</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Dimension</span><span class="op">&gt;</span>(<span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ShapeError</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size_of_shape_checked</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Dimension</span><span class="op">&gt;</span>(<span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ShapeError</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">size_nonzero</span> <span class="op">=</span> <span class="ident">dim</span>
         .<span class="ident">slice</span>()
         .<span class="ident">iter</span>()
-        .<span class="ident">filter</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="kw-2">&amp;</span><span class="ident">d</span><span class="op">|</span> <span class="ident">d</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>)
+        .<span class="ident">filter</span>(<span class="op">|</span><span class="op">&amp;&amp;</span><span class="ident">d</span><span class="op">|</span> <span class="ident">d</span> <span class="op">!=</span> <span class="number">0</span>)
         .<span class="ident">try_fold</span>(<span class="number">1usize</span>, <span class="op">|</span><span class="ident">acc</span>, <span class="kw-2">&amp;</span><span class="ident">d</span><span class="op">|</span> <span class="ident">acc</span>.<span class="ident">checked_mul</span>(<span class="ident">d</span>))
-        .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">Overflow</span>))<span class="question-mark">?</span>;
+        .<span class="ident">ok_or_else</span>(<span class="op">||</span> <span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">Overflow</span>))<span class="question-mark">?</span>;
     <span class="kw">if</span> <span class="ident">size_nonzero</span> <span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">isize</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">usize</span> {
         <span class="prelude-val">Err</span>(<span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">Overflow</span>))
     } <span class="kw">else</span> {
@@ -1036,7 +1037,7 @@
 <span class="doccomment">/// conditions 1 and 2 are sufficient to guarantee that the offset in units of</span>
 <span class="doccomment">/// `A` and in units of bytes between the least address and greatest address</span>
 <span class="doccomment">/// accessible by moving along all axes does not exceed `isize::MAX`.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">can_index_slice_not_custom</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span>: <span class="ident">Dimension</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">A</span>], <span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ShapeError</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">can_index_slice_not_custom</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span>: <span class="ident">Dimension</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">A</span>], <span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ShapeError</span><span class="op">&gt;</span> {
     <span class="comment">// Condition 1.</span>
     <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">size_of_shape_checked</span>(<span class="ident">dim</span>)<span class="question-mark">?</span>;
     <span class="comment">// Condition 2.</span>
@@ -1060,12 +1061,12 @@
 <span class="doccomment">/// 3. The product of non-zero axis lengths does not exceed `isize::MAX`. (This</span>
 <span class="doccomment">///    also implies that the length of any individual axis does not exceed</span>
 <span class="doccomment">///    `isize::MAX`.)</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_abs_offset_check_overflow</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>, <span class="ident">strides</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ShapeError</span><span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_abs_offset_check_overflow</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>, <span class="ident">strides</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ShapeError</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">D</span>: <span class="ident">Dimension</span>,
 {
     <span class="comment">// Condition 1.</span>
-    <span class="kw">if</span> <span class="ident">dim</span>.<span class="ident">ndim</span>() <span class="op">!</span><span class="op">=</span> <span class="ident">strides</span>.<span class="ident">ndim</span>() {
+    <span class="kw">if</span> <span class="ident">dim</span>.<span class="ident">ndim</span>() <span class="op">!=</span> <span class="ident">strides</span>.<span class="ident">ndim</span>() {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">IncompatibleLayout</span>));
     }
 
@@ -1081,7 +1082,7 @@
             <span class="kw">let</span> <span class="ident">off</span> <span class="op">=</span> <span class="ident">d</span>.<span class="ident">saturating_sub</span>(<span class="number">1</span>).<span class="ident">checked_mul</span>(<span class="ident">s</span>.<span class="ident">abs</span>() <span class="kw">as</span> <span class="ident">usize</span>)<span class="question-mark">?</span>;
             <span class="ident">acc</span>.<span class="ident">checked_add</span>(<span class="ident">off</span>)
         })
-        .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">Overflow</span>))<span class="question-mark">?</span>;
+        .<span class="ident">ok_or_else</span>(<span class="op">||</span> <span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">Overflow</span>))<span class="question-mark">?</span>;
     <span class="comment">// Condition 2a.</span>
     <span class="kw">if</span> <span class="ident">max_offset</span> <span class="op">&gt;</span> <span class="ident">isize</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">usize</span> {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">Overflow</span>));
@@ -1091,7 +1092,7 @@
     <span class="comment">// greatest address accessible by moving along all axes</span>
     <span class="kw">let</span> <span class="ident">max_offset_bytes</span> <span class="op">=</span> <span class="ident">max_offset</span>
         .<span class="ident">checked_mul</span>(<span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>())
-        .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">Overflow</span>))<span class="question-mark">?</span>;
+        .<span class="ident">ok_or_else</span>(<span class="op">||</span> <span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">Overflow</span>))<span class="question-mark">?</span>;
     <span class="comment">// Condition 2b.</span>
     <span class="kw">if</span> <span class="ident">max_offset_bytes</span> <span class="op">&gt;</span> <span class="ident">isize</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">usize</span> {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">Overflow</span>));
@@ -1135,29 +1136,29 @@
     <span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">A</span>],
     <span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>,
     <span class="ident">strides</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ShapeError</span><span class="op">&gt;</span> {
+) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ShapeError</span><span class="op">&gt;</span> {
     <span class="comment">// Check conditions 1 and 2 and calculate `max_offset`.</span>
     <span class="kw">let</span> <span class="ident">max_offset</span> <span class="op">=</span> <span class="ident">max_abs_offset_check_overflow</span>::<span class="op">&lt;</span><span class="ident">A</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">dim</span>, <span class="ident">strides</span>)<span class="question-mark">?</span>;
 
     <span class="comment">// Check condition 4.</span>
-    <span class="kw">let</span> <span class="ident">is_empty</span> <span class="op">=</span> <span class="ident">dim</span>.<span class="ident">slice</span>().<span class="ident">iter</span>().<span class="ident">any</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">d</span><span class="op">|</span> <span class="ident">d</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>);
-    <span class="kw">if</span> <span class="ident">is_empty</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">max_offset</span> <span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">len</span>() {
+    <span class="kw">let</span> <span class="ident">is_empty</span> <span class="op">=</span> <span class="ident">dim</span>.<span class="ident">slice</span>().<span class="ident">iter</span>().<span class="ident">any</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">d</span><span class="op">|</span> <span class="ident">d</span> <span class="op">==</span> <span class="number">0</span>);
+    <span class="kw">if</span> <span class="ident">is_empty</span> <span class="op">&amp;&amp;</span> <span class="ident">max_offset</span> <span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">len</span>() {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">OutOfBounds</span>));
     }
-    <span class="kw">if</span> <span class="op">!</span><span class="ident">is_empty</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">max_offset</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">data</span>.<span class="ident">len</span>() {
+    <span class="kw">if</span> <span class="op">!</span><span class="ident">is_empty</span> <span class="op">&amp;&amp;</span> <span class="ident">max_offset</span> <span class="op">&gt;=</span> <span class="ident">data</span>.<span class="ident">len</span>() {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">OutOfBounds</span>));
     }
 
     <span class="comment">// Check condition 3.</span>
     <span class="kw">for</span> (<span class="kw-2">&amp;</span><span class="ident">d</span>, <span class="kw-2">&amp;</span><span class="ident">s</span>) <span class="kw">in</span> <span class="macro">izip</span><span class="macro">!</span>(<span class="ident">dim</span>.<span class="ident">slice</span>(), <span class="ident">strides</span>.<span class="ident">slice</span>()) {
         <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">s</span> <span class="kw">as</span> <span class="ident">isize</span>;
-        <span class="kw">if</span> <span class="ident">d</span> <span class="op">&gt;</span> <span class="number">1</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">s</span> <span class="op">&lt;</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">d</span> <span class="op">&gt;</span> <span class="number">1</span> <span class="op">&amp;&amp;</span> <span class="ident">s</span> <span class="op">&lt;</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">Unsupported</span>));
         }
     }
 
     <span class="comment">// Check condition 5.</span>
-    <span class="kw">if</span> <span class="op">!</span><span class="ident">is_empty</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">dim_stride_overlap</span>(<span class="ident">dim</span>, <span class="ident">strides</span>) {
+    <span class="kw">if</span> <span class="op">!</span><span class="ident">is_empty</span> <span class="op">&amp;&amp;</span> <span class="ident">dim_stride_overlap</span>(<span class="ident">dim</span>, <span class="ident">strides</span>) {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">Unsupported</span>));
     }
 
@@ -1166,16 +1167,16 @@
 
 <span class="doccomment">/// Stride offset checked general version (slices)</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stride_offset_checked</span>(<span class="ident">dim</span>: <span class="kw-2">&amp;</span>[<span class="ident">Ix</span>], <span class="ident">strides</span>: <span class="kw-2">&amp;</span>[<span class="ident">Ix</span>], <span class="ident">index</span>: <span class="kw-2">&amp;</span>[<span class="ident">Ix</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">isize</span><span class="op">&gt;</span> {
-    <span class="kw">if</span> <span class="ident">index</span>.<span class="ident">len</span>() <span class="op">!</span><span class="op">=</span> <span class="ident">dim</span>.<span class="ident">len</span>() {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stride_offset_checked</span>(<span class="ident">dim</span>: <span class="kw-2">&amp;</span>[<span class="ident">Ix</span>], <span class="ident">strides</span>: <span class="kw-2">&amp;</span>[<span class="ident">Ix</span>], <span class="ident">index</span>: <span class="kw-2">&amp;</span>[<span class="ident">Ix</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">isize</span><span class="op">&gt;</span> {
+    <span class="kw">if</span> <span class="ident">index</span>.<span class="ident">len</span>() <span class="op">!=</span> <span class="ident">dim</span>.<span class="ident">len</span>() {
         <span class="kw">return</span> <span class="prelude-val">None</span>;
     }
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0</span>;
     <span class="kw">for</span> (<span class="kw-2">&amp;</span><span class="ident">d</span>, <span class="kw-2">&amp;</span><span class="ident">i</span>, <span class="kw-2">&amp;</span><span class="ident">s</span>) <span class="kw">in</span> <span class="macro">izip</span><span class="macro">!</span>(<span class="ident">dim</span>, <span class="ident">index</span>, <span class="ident">strides</span>) {
-        <span class="kw">if</span> <span class="ident">i</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">d</span> {
+        <span class="kw">if</span> <span class="ident">i</span> <span class="op">&gt;=</span> <span class="ident">d</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
-        <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="ident">stride_offset</span>(<span class="ident">i</span>, <span class="ident">s</span>);
+        <span class="ident">offset</span> <span class="op">+=</span> <span class="ident">stride_offset</span>(<span class="ident">i</span>, <span class="ident">s</span>);
     }
     <span class="prelude-val">Some</span>(<span class="ident">offset</span>)
 }
@@ -1187,7 +1188,7 @@
     <span class="doccomment">/// Get the dimension at `axis`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// *Panics* if `axis` is out of bounds.</span>
-    <span class="kw">fn</span> <span class="ident">axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ix</span>;
+    <span class="kw">fn</span> <span class="ident">axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-&gt;</span> <span class="ident">Ix</span>;
 
     <span class="doccomment">/// Set the dimension at `axis`.</span>
     <span class="doccomment">///</span>
@@ -1200,7 +1201,7 @@
     <span class="ident">D</span>: <span class="ident">Dimension</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ix</span> {
+    <span class="kw">fn</span> <span class="ident">axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-&gt;</span> <span class="ident">Ix</span> {
         <span class="self">self</span>[<span class="ident">axis</span>.<span class="ident">index</span>()]
     }
 
@@ -1212,7 +1213,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DimensionExt</span> <span class="kw">for</span> [<span class="ident">Ix</span>] {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ix</span> {
+    <span class="kw">fn</span> <span class="ident">axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-&gt;</span> <span class="ident">Ix</span> {
         <span class="self">self</span>[<span class="ident">axis</span>.<span class="ident">index</span>()]
     }
 
@@ -1232,7 +1233,7 @@
     <span class="ident">strides</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>,
     <span class="ident">axis</span>: <span class="ident">usize</span>,
     <span class="ident">index</span>: <span class="ident">usize</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">isize</span> {
+) <span class="op">-&gt;</span> <span class="ident">isize</span> {
     <span class="kw">let</span> <span class="ident">dim</span> <span class="op">=</span> <span class="ident">dims</span>.<span class="ident">slice</span>()[<span class="ident">axis</span>];
     <span class="kw">let</span> <span class="ident">stride</span> <span class="op">=</span> <span class="ident">strides</span>.<span class="ident">slice</span>()[<span class="ident">axis</span>];
     <span class="macro">ndassert</span><span class="macro">!</span>(
@@ -1249,7 +1250,7 @@
 
 <span class="doccomment">/// Compute the equivalent unsigned index given the axis length and signed index.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">abs_index</span>(<span class="ident">len</span>: <span class="ident">Ix</span>, <span class="ident">index</span>: <span class="ident">Ixs</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ix</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">abs_index</span>(<span class="ident">len</span>: <span class="ident">Ix</span>, <span class="ident">index</span>: <span class="ident">Ixs</span>) <span class="op">-&gt;</span> <span class="ident">Ix</span> {
     <span class="kw">if</span> <span class="ident">index</span> <span class="op">&lt;</span> <span class="number">0</span> {
         <span class="ident">len</span> <span class="op">-</span> (<span class="op">-</span><span class="ident">index</span> <span class="kw">as</span> <span class="ident">Ix</span>)
     } <span class="kw">else</span> {
@@ -1262,7 +1263,7 @@
 <span class="doccomment">/// The return value is (start, end, step).</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// **Panics** if stride is 0 or if any index is out of bounds.</span>
-<span class="kw">fn</span> <span class="ident">to_abs_slice</span>(<span class="ident">axis_len</span>: <span class="ident">usize</span>, <span class="ident">slice</span>: <span class="ident">Slice</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">isize</span>) {
+<span class="kw">fn</span> <span class="ident">to_abs_slice</span>(<span class="ident">axis_len</span>: <span class="ident">usize</span>, <span class="ident">slice</span>: <span class="ident">Slice</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">isize</span>) {
     <span class="kw">let</span> <span class="ident">Slice</span> { <span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">step</span> } <span class="op">=</span> <span class="ident">slice</span>;
     <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">abs_index</span>(<span class="ident">axis_len</span>, <span class="ident">start</span>);
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">end</span> <span class="op">=</span> <span class="ident">abs_index</span>(<span class="ident">axis_len</span>, <span class="ident">end</span>.<span class="ident">unwrap_or</span>(<span class="ident">axis_len</span> <span class="kw">as</span> <span class="ident">isize</span>));
@@ -1270,32 +1271,32 @@
         <span class="ident">end</span> <span class="op">=</span> <span class="ident">start</span>;
     }
     <span class="macro">ndassert</span><span class="macro">!</span>(
-        <span class="ident">start</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">axis_len</span>,
+        <span class="ident">start</span> <span class="op">&lt;=</span> <span class="ident">axis_len</span>,
         <span class="string">&quot;Slice begin {} is past end of axis of length {}&quot;</span>,
         <span class="ident">start</span>,
         <span class="ident">axis_len</span>,
     );
     <span class="macro">ndassert</span><span class="macro">!</span>(
-        <span class="ident">end</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">axis_len</span>,
+        <span class="ident">end</span> <span class="op">&lt;=</span> <span class="ident">axis_len</span>,
         <span class="string">&quot;Slice end {} is past end of axis of length {}&quot;</span>,
         <span class="ident">end</span>,
         <span class="ident">axis_len</span>,
     );
-    <span class="macro">ndassert</span><span class="macro">!</span>(<span class="ident">step</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>, <span class="string">&quot;Slice stride must not be zero&quot;</span>);
+    <span class="macro">ndassert</span><span class="macro">!</span>(<span class="ident">step</span> <span class="op">!=</span> <span class="number">0</span>, <span class="string">&quot;Slice stride must not be zero&quot;</span>);
     (<span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">step</span>)
 }
 
 <span class="doccomment">/// Modify dimension, stride and return data pointer offset</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// **Panics** if stride is 0 or if any index is out of bounds.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">do_slice</span>(<span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">usize</span>, <span class="ident">stride</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">usize</span>, <span class="ident">slice</span>: <span class="ident">Slice</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">isize</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">do_slice</span>(<span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">usize</span>, <span class="ident">stride</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">usize</span>, <span class="ident">slice</span>: <span class="ident">Slice</span>) <span class="op">-&gt;</span> <span class="ident">isize</span> {
     <span class="kw">let</span> (<span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">step</span>) <span class="op">=</span> <span class="ident">to_abs_slice</span>(<span class="kw-2">*</span><span class="ident">dim</span>, <span class="ident">slice</span>);
 
     <span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="ident">end</span> <span class="op">-</span> <span class="ident">start</span>;
     <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">stride</span>) <span class="kw">as</span> <span class="ident">isize</span>;
 
     <span class="comment">// Compute data pointer offset.</span>
-    <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">m</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">m</span> <span class="op">==</span> <span class="number">0</span> {
         <span class="comment">// In this case, the resulting array is empty, so we *can* avoid performing a nonzero</span>
         <span class="comment">// offset.</span>
         <span class="comment">//</span>
@@ -1320,7 +1321,7 @@
 
     <span class="comment">// Update dimension.</span>
     <span class="kw">let</span> <span class="ident">abs_step</span> <span class="op">=</span> <span class="ident">step</span>.<span class="ident">abs</span>() <span class="kw">as</span> <span class="ident">usize</span>;
-    <span class="kw-2">*</span><span class="ident">dim</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">abs_step</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
+    <span class="kw-2">*</span><span class="ident">dim</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">abs_step</span> <span class="op">==</span> <span class="number">1</span> {
         <span class="ident">m</span>
     } <span class="kw">else</span> {
         <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="ident">m</span> <span class="op">/</span> <span class="ident">abs_step</span>;
@@ -1330,7 +1331,7 @@
 
     <span class="comment">// Update stride. The additional check is necessary to avoid possible</span>
     <span class="comment">// overflow in the multiplication.</span>
-    <span class="kw-2">*</span><span class="ident">stride</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">dim</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">1</span> { <span class="number">0</span> } <span class="kw">else</span> { (<span class="ident">s</span> <span class="op">*</span> <span class="ident">step</span>) <span class="kw">as</span> <span class="ident">usize</span> };
+    <span class="kw-2">*</span><span class="ident">stride</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">dim</span> <span class="op">&lt;=</span> <span class="number">1</span> { <span class="number">0</span> } <span class="kw">else</span> { (<span class="ident">s</span> <span class="op">*</span> <span class="ident">step</span>) <span class="kw">as</span> <span class="ident">usize</span> };
 
     <span class="ident">offset</span>
 }
@@ -1341,16 +1342,16 @@
 <span class="doccomment">/// nonnegative.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm</span>
-<span class="kw">fn</span> <span class="ident">extended_gcd</span>(<span class="ident">a</span>: <span class="ident">isize</span>, <span class="ident">b</span>: <span class="ident">isize</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">isize</span>, (<span class="ident">isize</span>, <span class="ident">isize</span>)) {
-    <span class="kw">if</span> <span class="ident">a</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+<span class="kw">fn</span> <span class="ident">extended_gcd</span>(<span class="ident">a</span>: <span class="ident">isize</span>, <span class="ident">b</span>: <span class="ident">isize</span>) <span class="op">-&gt;</span> (<span class="ident">isize</span>, (<span class="ident">isize</span>, <span class="ident">isize</span>)) {
+    <span class="kw">if</span> <span class="ident">a</span> <span class="op">==</span> <span class="number">0</span> {
         (<span class="ident">b</span>.<span class="ident">abs</span>(), (<span class="number">0</span>, <span class="ident">b</span>.<span class="ident">signum</span>()))
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">b</span> <span class="op">==</span> <span class="number">0</span> {
         (<span class="ident">a</span>.<span class="ident">abs</span>(), (<span class="ident">a</span>.<span class="ident">signum</span>(), <span class="number">0</span>))
     } <span class="kw">else</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> (<span class="ident">a</span>, <span class="ident">b</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> (<span class="number">1</span>, <span class="number">0</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span> <span class="op">=</span> (<span class="number">0</span>, <span class="number">1</span>);
-        <span class="kw">while</span> <span class="ident">r</span>.<span class="number">1</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">while</span> <span class="ident">r</span>.<span class="number">1</span> <span class="op">!=</span> <span class="number">0</span> {
             <span class="kw">let</span> <span class="ident">q</span> <span class="op">=</span> <span class="ident">r</span>.<span class="number">0</span> <span class="op">/</span> <span class="ident">r</span>.<span class="number">1</span>;
             <span class="ident">r</span> <span class="op">=</span> (<span class="ident">r</span>.<span class="number">1</span>, <span class="ident">r</span>.<span class="number">0</span> <span class="op">-</span> <span class="ident">q</span> <span class="op">*</span> <span class="ident">r</span>.<span class="number">1</span>);
             <span class="ident">s</span> <span class="op">=</span> (<span class="ident">s</span>.<span class="number">1</span>, <span class="ident">s</span>.<span class="number">0</span> <span class="op">-</span> <span class="ident">q</span> <span class="op">*</span> <span class="ident">s</span>.<span class="number">1</span>);
@@ -1377,11 +1378,11 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// See https://en.wikipedia.org/wiki/Diophantine_equation#One_equation</span>
 <span class="doccomment">/// and https://math.stackexchange.com/questions/1656120#1656138</span>
-<span class="kw">fn</span> <span class="ident">solve_linear_diophantine_eq</span>(<span class="ident">a</span>: <span class="ident">isize</span>, <span class="ident">b</span>: <span class="ident">isize</span>, <span class="ident">c</span>: <span class="ident">isize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">isize</span>, <span class="ident">isize</span>)<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">solve_linear_diophantine_eq</span>(<span class="ident">a</span>: <span class="ident">isize</span>, <span class="ident">b</span>: <span class="ident">isize</span>, <span class="ident">c</span>: <span class="ident">isize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">isize</span>, <span class="ident">isize</span>)<span class="op">&gt;</span> {
     <span class="macro">debug_assert_ne</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="number">0</span>);
     <span class="macro">debug_assert_ne</span><span class="macro">!</span>(<span class="ident">b</span>, <span class="number">0</span>);
     <span class="kw">let</span> (<span class="ident">g</span>, (<span class="ident">u</span>, <span class="kw">_</span>)) <span class="op">=</span> <span class="ident">extended_gcd</span>(<span class="ident">a</span>, <span class="ident">b</span>);
-    <span class="kw">if</span> <span class="ident">c</span> <span class="op">%</span> <span class="ident">g</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">c</span> <span class="op">%</span> <span class="ident">g</span> <span class="op">==</span> <span class="number">0</span> {
         <span class="prelude-val">Some</span>((<span class="ident">c</span> <span class="op">/</span> <span class="ident">g</span> <span class="op">*</span> <span class="ident">u</span>, (<span class="ident">b</span> <span class="op">/</span> <span class="ident">g</span>).<span class="ident">abs</span>()))
     } <span class="kw">else</span> {
         <span class="prelude-val">None</span>
@@ -1398,14 +1399,14 @@
 <span class="kw">fn</span> <span class="ident">arith_seq_intersect</span>(
     (<span class="ident">min1</span>, <span class="ident">max1</span>, <span class="ident">step1</span>): (<span class="ident">isize</span>, <span class="ident">isize</span>, <span class="ident">isize</span>),
     (<span class="ident">min2</span>, <span class="ident">max2</span>, <span class="ident">step2</span>): (<span class="ident">isize</span>, <span class="ident">isize</span>, <span class="ident">isize</span>),
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">max1</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">min1</span>);
-    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">max2</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">min2</span>);
+) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">max1</span> <span class="op">&gt;=</span> <span class="ident">min1</span>);
+    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">max2</span> <span class="op">&gt;=</span> <span class="ident">min2</span>);
     <span class="macro">debug_assert_eq</span><span class="macro">!</span>((<span class="ident">max1</span> <span class="op">-</span> <span class="ident">min1</span>) <span class="op">%</span> <span class="ident">step1</span>, <span class="number">0</span>);
     <span class="macro">debug_assert_eq</span><span class="macro">!</span>((<span class="ident">max2</span> <span class="op">-</span> <span class="ident">min2</span>) <span class="op">%</span> <span class="ident">step2</span>, <span class="number">0</span>);
 
     <span class="comment">// Handle the easy case where we don&#39;t have to solve anything.</span>
-    <span class="kw">if</span> <span class="ident">min1</span> <span class="op">&gt;</span> <span class="ident">max2</span> <span class="op">|</span><span class="op">|</span> <span class="ident">min2</span> <span class="op">&gt;</span> <span class="ident">max1</span> {
+    <span class="kw">if</span> <span class="ident">min1</span> <span class="op">&gt;</span> <span class="ident">max2</span> <span class="op">||</span> <span class="ident">min2</span> <span class="op">&gt;</span> <span class="ident">max1</span> {
         <span class="bool-val">false</span>
     } <span class="kw">else</span> {
         <span class="comment">// The sign doesn&#39;t matter semantically, and it&#39;s mathematically convenient</span>
@@ -1443,8 +1444,8 @@
             <span class="comment">// The greatest possible intersection `a(x)` that is ≤ `max` has</span>
             <span class="comment">//   t = ⌊(max - min1 - step1 * x0) / (step1 * xd)⌋</span>
             <span class="comment">// If this `a(x) is also ≥ `min`, then there is an intersection in `[min, max]`.</span>
-            <span class="ident">min1</span> <span class="op">+</span> <span class="ident">step1</span> <span class="op">*</span> (<span class="ident">x0</span> <span class="op">-</span> <span class="ident">xd</span> <span class="op">*</span> <span class="ident">div_floor</span>(<span class="ident">min</span> <span class="op">-</span> <span class="ident">min1</span> <span class="op">-</span> <span class="ident">step1</span> <span class="op">*</span> <span class="ident">x0</span>, <span class="op">-</span><span class="ident">step1</span> <span class="op">*</span> <span class="ident">xd</span>)) <span class="op">&lt;</span><span class="op">=</span> <span class="ident">max</span>
-                <span class="op">|</span><span class="op">|</span> <span class="ident">min1</span> <span class="op">+</span> <span class="ident">step1</span> <span class="op">*</span> (<span class="ident">x0</span> <span class="op">+</span> <span class="ident">xd</span> <span class="op">*</span> <span class="ident">div_floor</span>(<span class="ident">max</span> <span class="op">-</span> <span class="ident">min1</span> <span class="op">-</span> <span class="ident">step1</span> <span class="op">*</span> <span class="ident">x0</span>, <span class="ident">step1</span> <span class="op">*</span> <span class="ident">xd</span>)) <span class="op">&gt;</span><span class="op">=</span> <span class="ident">min</span>
+            <span class="ident">min1</span> <span class="op">+</span> <span class="ident">step1</span> <span class="op">*</span> (<span class="ident">x0</span> <span class="op">-</span> <span class="ident">xd</span> <span class="op">*</span> <span class="ident">div_floor</span>(<span class="ident">min</span> <span class="op">-</span> <span class="ident">min1</span> <span class="op">-</span> <span class="ident">step1</span> <span class="op">*</span> <span class="ident">x0</span>, <span class="op">-</span><span class="ident">step1</span> <span class="op">*</span> <span class="ident">xd</span>)) <span class="op">&lt;=</span> <span class="ident">max</span>
+                <span class="op">||</span> <span class="ident">min1</span> <span class="op">+</span> <span class="ident">step1</span> <span class="op">*</span> (<span class="ident">x0</span> <span class="op">+</span> <span class="ident">xd</span> <span class="op">*</span> <span class="ident">div_floor</span>(<span class="ident">max</span> <span class="op">-</span> <span class="ident">min1</span> <span class="op">-</span> <span class="ident">step1</span> <span class="op">*</span> <span class="ident">x0</span>, <span class="ident">step1</span> <span class="op">*</span> <span class="ident">xd</span>)) <span class="op">&gt;=</span> <span class="ident">min</span>
         } <span class="kw">else</span> {
             <span class="bool-val">false</span>
         }
@@ -1454,9 +1455,9 @@
 <span class="doccomment">/// Returns the minimum and maximum values of the indices (inclusive).</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// If the slice is empty, then returns `None`, otherwise returns `Some((min, max))`.</span>
-<span class="kw">fn</span> <span class="ident">slice_min_max</span>(<span class="ident">axis_len</span>: <span class="ident">usize</span>, <span class="ident">slice</span>: <span class="ident">Slice</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">slice_min_max</span>(<span class="ident">axis_len</span>: <span class="ident">usize</span>, <span class="ident">slice</span>: <span class="ident">Slice</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
     <span class="kw">let</span> (<span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">step</span>) <span class="op">=</span> <span class="ident">to_abs_slice</span>(<span class="ident">axis_len</span>, <span class="ident">slice</span>);
-    <span class="kw">if</span> <span class="ident">start</span> <span class="op">=</span><span class="op">=</span> <span class="ident">end</span> {
+    <span class="kw">if</span> <span class="ident">start</span> <span class="op">==</span> <span class="ident">end</span> {
         <span class="prelude-val">None</span>
     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">step</span> <span class="op">&gt;</span> <span class="number">0</span> {
         <span class="prelude-val">Some</span>((<span class="ident">start</span>, <span class="ident">end</span> <span class="op">-</span> <span class="number">1</span> <span class="op">-</span> (<span class="ident">end</span> <span class="op">-</span> <span class="ident">start</span> <span class="op">-</span> <span class="number">1</span>) <span class="op">%</span> (<span class="ident">step</span> <span class="kw">as</span> <span class="ident">usize</span>)))
@@ -1470,7 +1471,7 @@
     <span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>,
     <span class="ident">indices1</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>::<span class="ident">SliceArg</span>,
     <span class="ident">indices2</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>::<span class="ident">SliceArg</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+) <span class="op">-&gt;</span> <span class="ident">bool</span> {
     <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">indices1</span>.<span class="ident">as_ref</span>().<span class="ident">len</span>(), <span class="ident">indices2</span>.<span class="ident">as_ref</span>().<span class="ident">len</span>());
     <span class="kw">for</span> (<span class="kw-2">&amp;</span><span class="ident">axis_len</span>, <span class="kw-2">&amp;</span><span class="ident">si1</span>, <span class="kw-2">&amp;</span><span class="ident">si2</span>) <span class="kw">in</span> <span class="macro">izip</span><span class="macro">!</span>(<span class="ident">dim</span>.<span class="ident">slice</span>(), <span class="ident">indices1</span>.<span class="ident">as_ref</span>(), <span class="ident">indices2</span>.<span class="ident">as_ref</span>()) {
         <span class="comment">// The slices do not intersect iff any pair of `SliceOrIndex` does not intersect.</span>
@@ -1486,14 +1487,14 @@
                     <span class="ident">end</span>: <span class="ident">end2</span>,
                     <span class="ident">step</span>: <span class="ident">step2</span>,
                 },
-            ) <span class="op">=</span><span class="op">&gt;</span> {
+            ) <span class="op">=&gt;</span> {
                 <span class="kw">let</span> (<span class="ident">min1</span>, <span class="ident">max1</span>) <span class="op">=</span> <span class="kw">match</span> <span class="ident">slice_min_max</span>(<span class="ident">axis_len</span>, <span class="ident">Slice</span>::<span class="ident">new</span>(<span class="ident">start1</span>, <span class="ident">end1</span>, <span class="ident">step1</span>)) {
-                    <span class="prelude-val">Some</span>(<span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>,
-                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="bool-val">false</span>,
+                    <span class="prelude-val">Some</span>(<span class="ident">m</span>) <span class="op">=&gt;</span> <span class="ident">m</span>,
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="bool-val">false</span>,
                 };
                 <span class="kw">let</span> (<span class="ident">min2</span>, <span class="ident">max2</span>) <span class="op">=</span> <span class="kw">match</span> <span class="ident">slice_min_max</span>(<span class="ident">axis_len</span>, <span class="ident">Slice</span>::<span class="ident">new</span>(<span class="ident">start2</span>, <span class="ident">end2</span>, <span class="ident">step2</span>)) {
-                    <span class="prelude-val">Some</span>(<span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>,
-                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="bool-val">false</span>,
+                    <span class="prelude-val">Some</span>(<span class="ident">m</span>) <span class="op">=&gt;</span> <span class="ident">m</span>,
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="bool-val">false</span>,
                 };
                 <span class="kw">if</span> <span class="op">!</span><span class="ident">arith_seq_intersect</span>(
                     (<span class="ident">min1</span> <span class="kw">as</span> <span class="ident">isize</span>, <span class="ident">max1</span> <span class="kw">as</span> <span class="ident">isize</span>, <span class="ident">step1</span>),
@@ -1503,20 +1504,20 @@
                 }
             }
             (<span class="ident">SliceOrIndex</span>::<span class="ident">Slice</span> { <span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">step</span> }, <span class="ident">SliceOrIndex</span>::<span class="ident">Index</span>(<span class="ident">ind</span>))
-            <span class="op">|</span> (<span class="ident">SliceOrIndex</span>::<span class="ident">Index</span>(<span class="ident">ind</span>), <span class="ident">SliceOrIndex</span>::<span class="ident">Slice</span> { <span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">step</span> }) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="op">|</span> (<span class="ident">SliceOrIndex</span>::<span class="ident">Index</span>(<span class="ident">ind</span>), <span class="ident">SliceOrIndex</span>::<span class="ident">Slice</span> { <span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">step</span> }) <span class="op">=&gt;</span> {
                 <span class="kw">let</span> <span class="ident">ind</span> <span class="op">=</span> <span class="ident">abs_index</span>(<span class="ident">axis_len</span>, <span class="ident">ind</span>);
                 <span class="kw">let</span> (<span class="ident">min</span>, <span class="ident">max</span>) <span class="op">=</span> <span class="kw">match</span> <span class="ident">slice_min_max</span>(<span class="ident">axis_len</span>, <span class="ident">Slice</span>::<span class="ident">new</span>(<span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">step</span>)) {
-                    <span class="prelude-val">Some</span>(<span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>,
-                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="bool-val">false</span>,
+                    <span class="prelude-val">Some</span>(<span class="ident">m</span>) <span class="op">=&gt;</span> <span class="ident">m</span>,
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="bool-val">false</span>,
                 };
-                <span class="kw">if</span> <span class="ident">ind</span> <span class="op">&lt;</span> <span class="ident">min</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ind</span> <span class="op">&gt;</span> <span class="ident">max</span> <span class="op">|</span><span class="op">|</span> (<span class="ident">ind</span> <span class="op">-</span> <span class="ident">min</span>) <span class="op">%</span> <span class="ident">step</span>.<span class="ident">abs</span>() <span class="kw">as</span> <span class="ident">usize</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+                <span class="kw">if</span> <span class="ident">ind</span> <span class="op">&lt;</span> <span class="ident">min</span> <span class="op">||</span> <span class="ident">ind</span> <span class="op">&gt;</span> <span class="ident">max</span> <span class="op">||</span> (<span class="ident">ind</span> <span class="op">-</span> <span class="ident">min</span>) <span class="op">%</span> <span class="ident">step</span>.<span class="ident">abs</span>() <span class="kw">as</span> <span class="ident">usize</span> <span class="op">!=</span> <span class="number">0</span> {
                     <span class="kw">return</span> <span class="bool-val">false</span>;
                 }
             }
-            (<span class="ident">SliceOrIndex</span>::<span class="ident">Index</span>(<span class="ident">ind1</span>), <span class="ident">SliceOrIndex</span>::<span class="ident">Index</span>(<span class="ident">ind2</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+            (<span class="ident">SliceOrIndex</span>::<span class="ident">Index</span>(<span class="ident">ind1</span>), <span class="ident">SliceOrIndex</span>::<span class="ident">Index</span>(<span class="ident">ind2</span>)) <span class="op">=&gt;</span> {
                 <span class="kw">let</span> <span class="ident">ind1</span> <span class="op">=</span> <span class="ident">abs_index</span>(<span class="ident">axis_len</span>, <span class="ident">ind1</span>);
                 <span class="kw">let</span> <span class="ident">ind2</span> <span class="op">=</span> <span class="ident">abs_index</span>(<span class="ident">axis_len</span>, <span class="ident">ind2</span>);
-                <span class="kw">if</span> <span class="ident">ind1</span> <span class="op">!</span><span class="op">=</span> <span class="ident">ind2</span> {
+                <span class="kw">if</span> <span class="ident">ind1</span> <span class="op">!=</span> <span class="ident">ind2</span> {
                     <span class="kw">return</span> <span class="bool-val">false</span>;
                 }
             }
@@ -1525,7 +1526,7 @@
     <span class="bool-val">true</span>
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">merge_axes</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">D</span>, <span class="ident">strides</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">D</span>, <span class="ident">take</span>: <span class="ident">Axis</span>, <span class="ident">into</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">merge_axes</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">D</span>, <span class="ident">strides</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">D</span>, <span class="ident">take</span>: <span class="ident">Axis</span>, <span class="ident">into</span>: <span class="ident">Axis</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>
 <span class="kw">where</span>
     <span class="ident">D</span>: <span class="ident">Dimension</span>,
 {
@@ -1534,16 +1535,16 @@
     <span class="kw">let</span> <span class="ident">take_len</span> <span class="op">=</span> <span class="ident">dim</span>.<span class="ident">axis</span>(<span class="ident">take</span>);
     <span class="kw">let</span> <span class="ident">take_stride</span> <span class="op">=</span> <span class="ident">strides</span>.<span class="ident">axis</span>(<span class="ident">take</span>) <span class="kw">as</span> <span class="ident">isize</span>;
     <span class="kw">let</span> <span class="ident">merged_len</span> <span class="op">=</span> <span class="ident">into_len</span> <span class="op">*</span> <span class="ident">take_len</span>;
-    <span class="kw">if</span> <span class="ident">take_len</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">1</span> {
+    <span class="kw">if</span> <span class="ident">take_len</span> <span class="op">&lt;=</span> <span class="number">1</span> {
         <span class="ident">dim</span>.<span class="ident">set_axis</span>(<span class="ident">into</span>, <span class="ident">merged_len</span>);
-        <span class="ident">dim</span>.<span class="ident">set_axis</span>(<span class="ident">take</span>, <span class="kw">if</span> <span class="ident">merged_len</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> { <span class="number">0</span> } <span class="kw">else</span> { <span class="number">1</span> });
+        <span class="ident">dim</span>.<span class="ident">set_axis</span>(<span class="ident">take</span>, <span class="kw">if</span> <span class="ident">merged_len</span> <span class="op">==</span> <span class="number">0</span> { <span class="number">0</span> } <span class="kw">else</span> { <span class="number">1</span> });
         <span class="bool-val">true</span>
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">into_len</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">1</span> {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">into_len</span> <span class="op">&lt;=</span> <span class="number">1</span> {
         <span class="ident">strides</span>.<span class="ident">set_axis</span>(<span class="ident">into</span>, <span class="ident">take_stride</span> <span class="kw">as</span> <span class="ident">usize</span>);
         <span class="ident">dim</span>.<span class="ident">set_axis</span>(<span class="ident">into</span>, <span class="ident">merged_len</span>);
-        <span class="ident">dim</span>.<span class="ident">set_axis</span>(<span class="ident">take</span>, <span class="kw">if</span> <span class="ident">merged_len</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> { <span class="number">0</span> } <span class="kw">else</span> { <span class="number">1</span> });
+        <span class="ident">dim</span>.<span class="ident">set_axis</span>(<span class="ident">take</span>, <span class="kw">if</span> <span class="ident">merged_len</span> <span class="op">==</span> <span class="number">0</span> { <span class="number">0</span> } <span class="kw">else</span> { <span class="number">1</span> });
         <span class="bool-val">true</span>
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">take_stride</span> <span class="op">=</span><span class="op">=</span> <span class="ident">into_len</span> <span class="kw">as</span> <span class="ident">isize</span> <span class="op">*</span> <span class="ident">into_stride</span> {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">take_stride</span> <span class="op">==</span> <span class="ident">into_len</span> <span class="kw">as</span> <span class="ident">isize</span> <span class="op">*</span> <span class="ident">into_stride</span> {
         <span class="ident">dim</span>.<span class="ident">set_axis</span>(<span class="ident">into</span>, <span class="ident">merged_len</span>);
         <span class="ident">dim</span>.<span class="ident">set_axis</span>(<span class="ident">take</span>, <span class="number">1</span>);
         <span class="bool-val">true</span>
@@ -1675,28 +1676,28 @@
     }
 
     <span class="macro">quickcheck</span><span class="macro">!</span> {
-        <span class="kw">fn</span> <span class="ident">can_index_slice_not_custom_same_as_can_index_slice</span>(<span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">dim</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">fn</span> <span class="ident">can_index_slice_not_custom_same_as_can_index_slice</span>(<span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">dim</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
             <span class="kw">let</span> <span class="ident">dim</span> <span class="op">=</span> <span class="ident">IxDyn</span>(<span class="kw-2">&amp;</span><span class="ident">dim</span>);
             <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">can_index_slice_not_custom</span>(<span class="kw-2">&amp;</span><span class="ident">data</span>, <span class="kw-2">&amp;</span><span class="ident">dim</span>);
             <span class="kw">if</span> <span class="ident">dim</span>.<span class="ident">size_checked</span>().<span class="ident">is_none</span>() {
                 <span class="comment">// Avoid overflow `dim.default_strides()` or `dim.fortran_strides()`.</span>
                 <span class="ident">result</span>.<span class="ident">is_err</span>()
             } <span class="kw">else</span> {
-                <span class="ident">result</span> <span class="op">=</span><span class="op">=</span> <span class="ident">can_index_slice</span>(<span class="kw-2">&amp;</span><span class="ident">data</span>, <span class="kw-2">&amp;</span><span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="ident">dim</span>.<span class="ident">default_strides</span>()) <span class="kw-2">&amp;</span><span class="op">&amp;</span>
-                    <span class="ident">result</span> <span class="op">=</span><span class="op">=</span> <span class="ident">can_index_slice</span>(<span class="kw-2">&amp;</span><span class="ident">data</span>, <span class="kw-2">&amp;</span><span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="ident">dim</span>.<span class="ident">fortran_strides</span>())
+                <span class="ident">result</span> <span class="op">==</span> <span class="ident">can_index_slice</span>(<span class="kw-2">&amp;</span><span class="ident">data</span>, <span class="kw-2">&amp;</span><span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="ident">dim</span>.<span class="ident">default_strides</span>()) <span class="op">&amp;&amp;</span>
+                    <span class="ident">result</span> <span class="op">==</span> <span class="ident">can_index_slice</span>(<span class="kw-2">&amp;</span><span class="ident">data</span>, <span class="kw-2">&amp;</span><span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="ident">dim</span>.<span class="ident">fortran_strides</span>())
             }
         }
     }
 
     <span class="macro">quickcheck</span><span class="macro">!</span> {
-        <span class="kw">fn</span> <span class="ident">extended_gcd_solves_eq</span>(<span class="ident">a</span>: <span class="ident">isize</span>, <span class="ident">b</span>: <span class="ident">isize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">fn</span> <span class="ident">extended_gcd_solves_eq</span>(<span class="ident">a</span>: <span class="ident">isize</span>, <span class="ident">b</span>: <span class="ident">isize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
             <span class="kw">let</span> (<span class="ident">g</span>, (<span class="ident">x</span>, <span class="ident">y</span>)) <span class="op">=</span> <span class="ident">extended_gcd</span>(<span class="ident">a</span>, <span class="ident">b</span>);
-            <span class="ident">a</span> <span class="op">*</span> <span class="ident">x</span> <span class="op">+</span> <span class="ident">b</span> <span class="op">*</span> <span class="ident">y</span> <span class="op">=</span><span class="op">=</span> <span class="ident">g</span>
+            <span class="ident">a</span> <span class="op">*</span> <span class="ident">x</span> <span class="op">+</span> <span class="ident">b</span> <span class="op">*</span> <span class="ident">y</span> <span class="op">==</span> <span class="ident">g</span>
         }
 
-        <span class="kw">fn</span> <span class="ident">extended_gcd_correct_gcd</span>(<span class="ident">a</span>: <span class="ident">isize</span>, <span class="ident">b</span>: <span class="ident">isize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">fn</span> <span class="ident">extended_gcd_correct_gcd</span>(<span class="ident">a</span>: <span class="ident">isize</span>, <span class="ident">b</span>: <span class="ident">isize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
             <span class="kw">let</span> (<span class="ident">g</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">extended_gcd</span>(<span class="ident">a</span>, <span class="ident">b</span>);
-            <span class="ident">g</span> <span class="op">=</span><span class="op">=</span> <span class="ident">gcd</span>(<span class="ident">a</span>, <span class="ident">b</span>)
+            <span class="ident">g</span> <span class="op">==</span> <span class="ident">gcd</span>(<span class="ident">a</span>, <span class="ident">b</span>)
         }
     }
 
@@ -1712,29 +1713,29 @@
     <span class="macro">quickcheck</span><span class="macro">!</span> {
         <span class="kw">fn</span> <span class="ident">solve_linear_diophantine_eq_solution_existence</span>(
             <span class="ident">a</span>: <span class="ident">isize</span>, <span class="ident">b</span>: <span class="ident">isize</span>, <span class="ident">c</span>: <span class="ident">isize</span>
-        ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TestResult</span> {
-            <span class="kw">if</span> <span class="ident">a</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        ) <span class="op">-&gt;</span> <span class="ident">TestResult</span> {
+            <span class="kw">if</span> <span class="ident">a</span> <span class="op">==</span> <span class="number">0</span> <span class="op">||</span> <span class="ident">b</span> <span class="op">==</span> <span class="number">0</span> {
                 <span class="ident">TestResult</span>::<span class="ident">discard</span>()
             } <span class="kw">else</span> {
                 <span class="ident">TestResult</span>::<span class="ident">from_bool</span>(
-                    (<span class="ident">c</span> <span class="op">%</span> <span class="ident">gcd</span>(<span class="ident">a</span>, <span class="ident">b</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span>) <span class="op">=</span><span class="op">=</span> <span class="ident">solve_linear_diophantine_eq</span>(<span class="ident">a</span>, <span class="ident">b</span>, <span class="ident">c</span>).<span class="ident">is_some</span>()
+                    (<span class="ident">c</span> <span class="op">%</span> <span class="ident">gcd</span>(<span class="ident">a</span>, <span class="ident">b</span>) <span class="op">==</span> <span class="number">0</span>) <span class="op">==</span> <span class="ident">solve_linear_diophantine_eq</span>(<span class="ident">a</span>, <span class="ident">b</span>, <span class="ident">c</span>).<span class="ident">is_some</span>()
                 )
             }
         }
 
         <span class="kw">fn</span> <span class="ident">solve_linear_diophantine_eq_correct_solution</span>(
             <span class="ident">a</span>: <span class="ident">isize</span>, <span class="ident">b</span>: <span class="ident">isize</span>, <span class="ident">c</span>: <span class="ident">isize</span>, <span class="ident">t</span>: <span class="ident">isize</span>
-        ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TestResult</span> {
-            <span class="kw">if</span> <span class="ident">a</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        ) <span class="op">-&gt;</span> <span class="ident">TestResult</span> {
+            <span class="kw">if</span> <span class="ident">a</span> <span class="op">==</span> <span class="number">0</span> <span class="op">||</span> <span class="ident">b</span> <span class="op">==</span> <span class="number">0</span> {
                 <span class="ident">TestResult</span>::<span class="ident">discard</span>()
             } <span class="kw">else</span> {
                 <span class="kw">match</span> <span class="ident">solve_linear_diophantine_eq</span>(<span class="ident">a</span>, <span class="ident">b</span>, <span class="ident">c</span>) {
-                    <span class="prelude-val">Some</span>((<span class="ident">x0</span>, <span class="ident">xd</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="prelude-val">Some</span>((<span class="ident">x0</span>, <span class="ident">xd</span>)) <span class="op">=&gt;</span> {
                         <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">x0</span> <span class="op">+</span> <span class="ident">xd</span> <span class="op">*</span> <span class="ident">t</span>;
                         <span class="kw">let</span> <span class="ident">y</span> <span class="op">=</span> (<span class="ident">c</span> <span class="op">-</span> <span class="ident">a</span> <span class="op">*</span> <span class="ident">x</span>) <span class="op">/</span> <span class="ident">b</span>;
-                        <span class="ident">TestResult</span>::<span class="ident">from_bool</span>(<span class="ident">a</span> <span class="op">*</span> <span class="ident">x</span> <span class="op">+</span> <span class="ident">b</span> <span class="op">*</span> <span class="ident">y</span> <span class="op">=</span><span class="op">=</span> <span class="ident">c</span>)
+                        <span class="ident">TestResult</span>::<span class="ident">from_bool</span>(<span class="ident">a</span> <span class="op">*</span> <span class="ident">x</span> <span class="op">+</span> <span class="ident">b</span> <span class="op">*</span> <span class="ident">y</span> <span class="op">==</span> <span class="ident">c</span>)
                     }
-                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">TestResult</span>::<span class="ident">discard</span>(),
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">TestResult</span>::<span class="ident">discard</span>(),
                 }
             }
         }
@@ -1744,10 +1745,10 @@
         <span class="kw">fn</span> <span class="ident">arith_seq_intersect_correct</span>(
             <span class="ident">first1</span>: <span class="ident">isize</span>, <span class="ident">len1</span>: <span class="ident">isize</span>, <span class="ident">step1</span>: <span class="ident">isize</span>,
             <span class="ident">first2</span>: <span class="ident">isize</span>, <span class="ident">len2</span>: <span class="ident">isize</span>, <span class="ident">step2</span>: <span class="ident">isize</span>
-        ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TestResult</span> {
+        ) <span class="op">-&gt;</span> <span class="ident">TestResult</span> {
             <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
 
-            <span class="kw">if</span> <span class="ident">len1</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">|</span><span class="op">|</span> <span class="ident">len2</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="ident">len1</span> <span class="op">==</span> <span class="number">0</span> <span class="op">||</span> <span class="ident">len2</span> <span class="op">==</span> <span class="number">0</span> {
                 <span class="comment">// This case is impossible to reach in `arith_seq_intersect()`</span>
                 <span class="comment">// because the `min*` and `max*` arguments are inclusive.</span>
                 <span class="kw">return</span> <span class="ident">TestResult</span>::<span class="ident">discard</span>();
@@ -1771,9 +1772,9 @@
 
             <span class="ident">TestResult</span>::<span class="ident">from_bool</span>(
                 <span class="ident">arith_seq_intersect</span>(
-                    (<span class="ident">min1</span>, <span class="ident">max1</span>, <span class="kw">if</span> <span class="ident">step1</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> { <span class="number">1</span> } <span class="kw">else</span> { <span class="ident">step1</span> }),
-                    (<span class="ident">min2</span>, <span class="ident">max2</span>, <span class="kw">if</span> <span class="ident">step2</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> { <span class="number">1</span> } <span class="kw">else</span> { <span class="ident">step2</span> })
-                ) <span class="op">=</span><span class="op">=</span> <span class="ident">intersects</span>
+                    (<span class="ident">min1</span>, <span class="ident">max1</span>, <span class="kw">if</span> <span class="ident">step1</span> <span class="op">==</span> <span class="number">0</span> { <span class="number">1</span> } <span class="kw">else</span> { <span class="ident">step1</span> }),
+                    (<span class="ident">min2</span>, <span class="ident">max2</span>, <span class="kw">if</span> <span class="ident">step2</span> <span class="op">==</span> <span class="number">0</span> { <span class="number">1</span> } <span class="kw">else</span> { <span class="ident">step2</span> })
+                ) <span class="op">==</span> <span class="ident">intersects</span>
             )
         }
     }

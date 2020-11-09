@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.22.0/src/geometry/quaternion.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>quaternion.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.0/src/geometry/quaternion.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>quaternion.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1615,6 +1616,27 @@
 <span id="1615">1615</span>
 <span id="1616">1616</span>
 <span id="1617">1617</span>
+<span id="1618">1618</span>
+<span id="1619">1619</span>
+<span id="1620">1620</span>
+<span id="1621">1621</span>
+<span id="1622">1622</span>
+<span id="1623">1623</span>
+<span id="1624">1624</span>
+<span id="1625">1625</span>
+<span id="1626">1626</span>
+<span id="1627">1627</span>
+<span id="1628">1628</span>
+<span id="1629">1629</span>
+<span id="1630">1630</span>
+<span id="1631">1631</span>
+<span id="1632">1632</span>
+<span id="1633">1633</span>
+<span id="1634">1634</span>
+<span id="1635">1635</span>
+<span id="1636">1636</span>
+<span id="1637">1637</span>
+<span id="1638">1638</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">approx</span>::{<span class="ident">AbsDiffEq</span>, <span class="ident">RelativeEq</span>, <span class="ident">UlpsEq</span>};
 <span class="kw">use</span> <span class="ident">num</span>::<span class="ident">Zero</span>;
@@ -1652,7 +1674,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span><span class="op">&gt;</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Quaternion</span> {
             <span class="ident">coords</span>: <span class="ident">Vector4</span>::<span class="ident">zeros</span>(),
         }
@@ -1664,15 +1686,15 @@
 <span class="kw">where</span>
     <span class="ident">Vector4</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>: <span class="ident">Abomonation</span>,
 {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">entomb</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IOResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">entomb</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-&gt;</span> <span class="ident">IOResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">entomb</span>(<span class="ident">writer</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">extent</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">extent</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">extent</span>()
     }
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">exhume</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">exhume</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">exhume</span>(<span class="ident">bytes</span>)
     }
 }
@@ -1683,10 +1705,10 @@
 <span class="kw">where</span>
     <span class="ident">N</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,
 {
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">coords</span> <span class="op">=</span><span class="op">=</span> <span class="ident">rhs</span>.<span class="ident">coords</span> <span class="op">|</span><span class="op">|</span>
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">coords</span> <span class="op">==</span> <span class="ident">rhs</span>.<span class="ident">coords</span> <span class="op">||</span>
         <span class="comment">// Account for the double-covering of S², i.e. q = -q</span>
-        <span class="self">self</span>.<span class="ident">as_vector</span>().<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">rhs</span>.<span class="ident">as_vector</span>().<span class="ident">iter</span>()).<span class="ident">all</span>(<span class="op">|</span>(<span class="ident">a</span>, <span class="ident">b</span>)<span class="op">|</span> <span class="kw-2">*</span><span class="ident">a</span> <span class="op">=</span><span class="op">=</span> <span class="op">-</span><span class="kw-2">*</span><span class="ident">b</span>)
+        <span class="self">self</span>.<span class="ident">as_vector</span>().<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">rhs</span>.<span class="ident">as_vector</span>().<span class="ident">iter</span>()).<span class="ident">all</span>(<span class="op">|</span>(<span class="ident">a</span>, <span class="ident">b</span>)<span class="op">|</span> <span class="kw-2">*</span><span class="ident">a</span> <span class="op">==</span> <span class="op">-</span><span class="kw-2">*</span><span class="ident">b</span>)
     }
 }
 
@@ -1700,7 +1722,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">SimdValue</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">clone</span>())
     }
 }
@@ -1710,7 +1732,7 @@
 <span class="kw">where</span>
     <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U4</span><span class="op">&gt;</span>: <span class="ident">Serialize</span>,
 {
-    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Serializer</span>,
     {
@@ -1723,7 +1745,7 @@
 <span class="kw">where</span>
     <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U4</span><span class="op">&gt;</span>: <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">Des</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">Des</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Des</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">Des</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">Des</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Des</span>::<span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">Des</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
     {
@@ -1740,14 +1762,14 @@
     <span class="doccomment">/// Moves this unit quaternion into one that owns its data.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;This method is a no-op and will be removed in a future release.&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Clones this unit quaternion into one that owns its data.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;This method is a no-op and will be removed in a future release.&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clone_owned</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clone_owned</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">clone_owned</span>())
     }
 
@@ -1763,13 +1785,13 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Did you mean to use normalize_mut()?&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normalize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normalize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">normalize</span>())
     }
 
     <span class="doccomment">/// The imaginary part of this quaternion.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">imag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">imag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">xyz</span>()
     }
 
@@ -1784,7 +1806,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Did you mean to use conjugate_mut()?&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">conjugate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">conjugate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from_parts</span>(<span class="self">self</span>.<span class="ident">w</span>, <span class="op">-</span><span class="self">self</span>.<span class="ident">imag</span>())
     }
 
@@ -1801,7 +1823,7 @@
     <span class="doccomment">/// assert_eq!(q1.lerp(&amp;q2, 0.1), Quaternion::new(1.9, 3.8, 5.7, 7.6));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lerp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">t</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lerp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">t</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span> <span class="op">*</span> (<span class="ident">N</span>::<span class="ident">one</span>() <span class="op">-</span> <span class="ident">t</span>) <span class="op">+</span> <span class="ident">other</span> <span class="op">*</span> <span class="ident">t</span>
     }
 
@@ -1816,7 +1838,7 @@
     <span class="doccomment">/// assert_eq!(q.vector()[2], 4.0);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">U1</span>, <span class="ident">RStride</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U4</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">CStride</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U4</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">U1</span>, <span class="ident">RStride</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U4</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">CStride</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U4</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span> {
         <span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">fixed_rows</span>::<span class="op">&lt;</span><span class="ident">U3</span><span class="op">&gt;</span>(<span class="number">0</span>)
     }
 
@@ -1829,7 +1851,7 @@
     <span class="doccomment">/// assert_eq!(q.scalar(), 1.0);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scalar</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scalar</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
         <span class="self">self</span>.<span class="ident">coords</span>[<span class="number">3</span>]
     }
 
@@ -1844,7 +1866,7 @@
     <span class="doccomment">/// assert_eq!(*q.as_vector(), Vector4::new(2.0, 3.0, 4.0, 1.0));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_vector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Vector4</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_vector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Vector4</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">coords</span>
     }
 
@@ -1858,7 +1880,7 @@
     <span class="doccomment">/// assert_relative_eq!(q.norm(), 5.47722557, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">norm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">norm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
         <span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">norm</span>()
     }
 
@@ -1875,7 +1897,7 @@
     <span class="doccomment">/// assert_relative_eq!(q.magnitude(), 5.47722557, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">magnitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">magnitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
         <span class="self">self</span>.<span class="ident">norm</span>()
     }
 
@@ -1888,7 +1910,7 @@
     <span class="doccomment">/// assert_eq!(q.magnitude_squared(), 30.0);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">norm_squared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">norm_squared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
         <span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">norm_squared</span>()
     }
 
@@ -1904,7 +1926,7 @@
     <span class="doccomment">/// assert_eq!(q.magnitude_squared(), 30.0);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">magnitude_squared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">magnitude_squared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
         <span class="self">self</span>.<span class="ident">norm_squared</span>()
     }
 
@@ -1918,7 +1940,7 @@
     <span class="doccomment">/// assert_eq!(q1.dot(&amp;q2), 70.0);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
         <span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="ident">rhs</span>.<span class="ident">coords</span>)
     }
 }
@@ -1949,7 +1971,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Did you mean to use try_inverse_mut()?&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_inverse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_inverse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -1967,7 +1989,7 @@
     <span class="doccomment">/// This method also works with SIMD components.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Did you mean to use try_inverse_mut()?&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">simd_try_inverse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SimdOption</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">simd_try_inverse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">SimdOption</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">norm_squared</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">norm_squared</span>();
         <span class="kw">let</span> <span class="ident">ge</span> <span class="op">=</span> <span class="ident">norm_squared</span>.<span class="ident">simd_ge</span>(<span class="ident">N</span>::<span class="ident">simd_default_epsilon</span>());
         <span class="ident">SimdOption</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">conjugate</span>() <span class="op">/</span> <span class="ident">norm_squared</span>, <span class="ident">ge</span>)
@@ -1987,7 +2009,7 @@
     <span class="doccomment">/// let result = a.inner(&amp;b);</span>
     <span class="doccomment">/// assert_relative_eq!(expected, result, epsilon = 1.0e-5);</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         (<span class="self">self</span> <span class="op">*</span> <span class="ident">other</span> <span class="op">+</span> <span class="ident">other</span> <span class="op">*</span> <span class="self">self</span>).<span class="ident">half</span>()
     }
 
@@ -2006,7 +2028,8 @@
     <span class="doccomment">/// assert_relative_eq!(expected, result, epsilon = 1.0e-5);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">eq_op</span>)]</span>
         (<span class="self">self</span> <span class="op">*</span> <span class="ident">other</span> <span class="op">-</span> <span class="ident">other</span> <span class="op">*</span> <span class="self">self</span>).<span class="ident">half</span>()
     }
 
@@ -2025,7 +2048,7 @@
     <span class="doccomment">/// assert_relative_eq!(expected, result, epsilon = 1.0e-5);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">project</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">project</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -2047,7 +2070,7 @@
     <span class="doccomment">/// assert_relative_eq!(expected, result, epsilon = 1.0e-5);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reject</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reject</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -2069,7 +2092,7 @@
     <span class="doccomment">/// assert_eq!(half_ang, f32::consts::FRAC_PI_2);</span>
     <span class="doccomment">/// assert_eq!(axis, Some(Vector3::x_axis()));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">polar_decomposition</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">N</span>, <span class="ident">N</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">polar_decomposition</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">N</span>, <span class="ident">N</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>)
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -2096,7 +2119,7 @@
     <span class="doccomment">/// assert_relative_eq!(q.ln(), Quaternion::new(1.683647, 1.190289, 0.0, 0.0), epsilon = 1.0e-6)</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ln</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ln</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">norm</span>();
         <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">vector</span>();
         <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">scalar</span>();
@@ -2114,7 +2137,7 @@
     <span class="doccomment">/// assert_relative_eq!(q.exp(), Quaternion::new(2.0, 5.0, 0.0, 0.0), epsilon = 1.0e-5)</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">exp_eps</span>(<span class="ident">N</span>::<span class="ident">simd_default_epsilon</span>())
     }
 
@@ -2133,13 +2156,13 @@
     <span class="doccomment">/// assert_eq!(q.exp_eps(1.0e-6), Quaternion::identity());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exp_eps</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">eps</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exp_eps</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">eps</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">vector</span>();
         <span class="kw">let</span> <span class="ident">nn</span> <span class="op">=</span> <span class="ident">v</span>.<span class="ident">norm_squared</span>();
         <span class="kw">let</span> <span class="ident">le</span> <span class="op">=</span> <span class="ident">nn</span>.<span class="ident">simd_le</span>(<span class="ident">eps</span> <span class="op">*</span> <span class="ident">eps</span>);
         <span class="ident">le</span>.<span class="ident">if_else</span>(
-            <span class="op">|</span><span class="op">|</span> <span class="self">Self</span>::<span class="ident">identity</span>(),
-            <span class="op">|</span><span class="op">|</span> {
+            <span class="op">||</span> <span class="self">Self</span>::<span class="ident">identity</span>(),
+            <span class="op">||</span> {
                 <span class="kw">let</span> <span class="ident">w_exp</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">scalar</span>().<span class="ident">simd_exp</span>();
                 <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">nn</span>.<span class="ident">simd_sqrt</span>();
                 <span class="kw">let</span> <span class="ident">nv</span> <span class="op">=</span> <span class="ident">v</span> <span class="op">*</span> (<span class="ident">w_exp</span> <span class="op">*</span> <span class="ident">n</span>.<span class="ident">simd_sin</span>() <span class="op">/</span> <span class="ident">n</span>);
@@ -2159,7 +2182,7 @@
     <span class="doccomment">/// assert_relative_eq!(q.powf(1.5), Quaternion::new( -6.2576659, 4.1549037, 6.2323556, 8.3098075), epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">powf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">powf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         (<span class="self">self</span>.<span class="ident">ln</span>() <span class="op">*</span> <span class="ident">n</span>).<span class="ident">exp</span>()
     }
 
@@ -2173,7 +2196,7 @@
     <span class="doccomment">/// assert!(q.i == 1.0 &amp;&amp; q.j == 2.0 &amp;&amp; q.k == 3.0 &amp;&amp; q.w == 4.0);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_vector_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vector4</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_vector_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vector4</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">coords</span>
     }
 
@@ -2194,7 +2217,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vector_mut</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MatrixSliceMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">U1</span>, <span class="ident">RStride</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U4</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">CStride</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U4</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="ident">MatrixSliceMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">U1</span>, <span class="ident">RStride</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U4</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">CStride</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U4</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span> {
         <span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">fixed_rows_mut</span>::<span class="op">&lt;</span><span class="ident">U3</span><span class="op">&gt;</span>(<span class="number">0</span>)
     }
 
@@ -2230,10 +2253,10 @@
     <span class="doccomment">/// assert!(!q.try_inverse_mut());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_inverse_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>::<span class="ident">SimdBool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_inverse_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span>::<span class="ident">SimdBool</span> {
         <span class="kw">let</span> <span class="ident">norm_squared</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">norm_squared</span>();
         <span class="kw">let</span> <span class="ident">ge</span> <span class="op">=</span> <span class="ident">norm_squared</span>.<span class="ident">simd_ge</span>(<span class="ident">N</span>::<span class="ident">simd_default_epsilon</span>());
-        <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">ge</span>.<span class="ident">if_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">conjugate</span>() <span class="op">/</span> <span class="ident">norm_squared</span>, <span class="op">|</span><span class="op">|</span> <span class="kw-2">*</span><span class="self">self</span>);
+        <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">ge</span>.<span class="ident">if_else</span>(<span class="op">||</span> <span class="self">self</span>.<span class="ident">conjugate</span>() <span class="op">/</span> <span class="ident">norm_squared</span>, <span class="op">||</span> <span class="kw-2">*</span><span class="self">self</span>);
         <span class="ident">ge</span>
     }
 
@@ -2248,25 +2271,25 @@
     <span class="doccomment">/// assert_relative_eq!(q.norm(), 1.0);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normalize_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normalize_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
         <span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">normalize_mut</span>()
     }
 
     <span class="doccomment">/// Calculates square of a quaternion.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">squared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">squared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span> <span class="op">*</span> <span class="self">self</span>
     }
 
     <span class="doccomment">/// Divides quaternion into two.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">half</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">half</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span> <span class="op">/</span> <span class="kw">crate</span>::<span class="ident">convert</span>(<span class="number">2.0f64</span>)
     }
 
     <span class="doccomment">/// Calculates square root.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">powf</span>(<span class="kw">crate</span>::<span class="ident">convert</span>(<span class="number">0.5</span>))
     }
 
@@ -2274,13 +2297,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// A quaternion is pure if it has no real part (`self.w == 0.0`).</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_pure</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_pure</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">w</span>.<span class="ident">is_zero</span>()
     }
 
     <span class="doccomment">/// Convert quaternion to pure quaternion.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pure</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pure</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from_imag</span>(<span class="self">self</span>.<span class="ident">imag</span>())
     }
 
@@ -2288,7 +2311,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Calculates B&lt;sup&gt;-1&lt;/sup&gt; * A where A = self, B = other.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left_div</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left_div</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -2310,7 +2333,7 @@
     <span class="doccomment">/// assert_relative_eq!(expected, result, epsilon = 1.0e-7);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right_div</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right_div</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -2329,7 +2352,7 @@
     <span class="doccomment">/// assert_relative_eq!(expected, result, epsilon = 1.0e-7);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">z</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">imag</span>().<span class="ident">magnitude</span>();
         <span class="kw">let</span> <span class="ident">w</span> <span class="op">=</span> <span class="op">-</span><span class="self">self</span>.<span class="ident">w</span>.<span class="ident">simd_sin</span>() <span class="op">*</span> <span class="ident">z</span>.<span class="ident">simd_sinhc</span>();
         <span class="self">Self</span>::<span class="ident">from_parts</span>(<span class="self">self</span>.<span class="ident">w</span>.<span class="ident">simd_cos</span>() <span class="op">*</span> <span class="ident">z</span>.<span class="ident">simd_cosh</span>(), <span class="self">self</span>.<span class="ident">imag</span>() <span class="op">*</span> <span class="ident">w</span>)
@@ -2346,7 +2369,7 @@
     <span class="doccomment">/// assert_relative_eq!(input, result, epsilon = 1.0e-7);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">acos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">acos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">u</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">from_imag</span>(<span class="self">self</span>.<span class="ident">imag</span>().<span class="ident">normalize</span>());
         <span class="kw">let</span> <span class="ident">identity</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">identity</span>();
 
@@ -2367,7 +2390,7 @@
     <span class="doccomment">/// assert_relative_eq!(expected, result, epsilon = 1.0e-7);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">z</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">imag</span>().<span class="ident">magnitude</span>();
         <span class="kw">let</span> <span class="ident">w</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">w</span>.<span class="ident">simd_cos</span>() <span class="op">*</span> <span class="ident">z</span>.<span class="ident">simd_sinhc</span>();
         <span class="self">Self</span>::<span class="ident">from_parts</span>(<span class="self">self</span>.<span class="ident">w</span>.<span class="ident">simd_sin</span>() <span class="op">*</span> <span class="ident">z</span>.<span class="ident">simd_cosh</span>(), <span class="self">self</span>.<span class="ident">imag</span>() <span class="op">*</span> <span class="ident">w</span>)
@@ -2384,7 +2407,7 @@
     <span class="doccomment">/// assert_relative_eq!(input, result, epsilon = 1.0e-7);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">asin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">asin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">u</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">from_imag</span>(<span class="self">self</span>.<span class="ident">imag</span>().<span class="ident">normalize</span>());
         <span class="kw">let</span> <span class="ident">identity</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">identity</span>();
 
@@ -2405,7 +2428,7 @@
     <span class="doccomment">/// assert_relative_eq!(expected, result, epsilon = 1.0e-7);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tan</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tan</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -2423,7 +2446,7 @@
     <span class="doccomment">/// assert_relative_eq!(input, result, epsilon = 1.0e-7);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">atan</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">atan</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -2447,7 +2470,7 @@
     <span class="doccomment">/// assert_relative_eq!(expected, result, epsilon = 1.0e-7);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sinh</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sinh</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         (<span class="self">self</span>.<span class="ident">exp</span>() <span class="op">-</span> (<span class="op">-</span><span class="self">self</span>).<span class="ident">exp</span>()).<span class="ident">half</span>()
     }
 
@@ -2463,7 +2486,7 @@
     <span class="doccomment">/// assert_relative_eq!(expected, result, epsilon = 1.0e-7);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">asinh</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">asinh</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">identity</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">identity</span>();
         (<span class="self">self</span> <span class="op">+</span> (<span class="ident">identity</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">squared</span>()).<span class="ident">sqrt</span>()).<span class="ident">ln</span>()
     }
@@ -2480,7 +2503,7 @@
     <span class="doccomment">/// assert_relative_eq!(expected, result, epsilon = 1.0e-7);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         (<span class="self">self</span>.<span class="ident">exp</span>() <span class="op">+</span> (<span class="op">-</span><span class="self">self</span>).<span class="ident">exp</span>()).<span class="ident">half</span>()
     }
 
@@ -2496,7 +2519,7 @@
     <span class="doccomment">/// assert_relative_eq!(expected, result, epsilon = 1.0e-7);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">acosh</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">acosh</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">identity</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">identity</span>();
         (<span class="self">self</span> <span class="op">+</span> (<span class="self">self</span> <span class="op">+</span> <span class="ident">identity</span>).<span class="ident">sqrt</span>() <span class="op">*</span> (<span class="self">self</span> <span class="op">-</span> <span class="ident">identity</span>).<span class="ident">sqrt</span>()).<span class="ident">ln</span>()
     }
@@ -2513,7 +2536,7 @@
     <span class="doccomment">/// assert_relative_eq!(expected, result, epsilon = 1.0e-7);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -2532,31 +2555,31 @@
     <span class="doccomment">/// assert_relative_eq!(expected, result, epsilon = 1.0e-7);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">atanh</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">atanh</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">identity</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">identity</span>();
         ((<span class="ident">identity</span> <span class="op">+</span> <span class="self">self</span>).<span class="ident">ln</span>() <span class="op">-</span> (<span class="ident">identity</span> <span class="op">-</span> <span class="self">self</span>).<span class="ident">ln</span>()).<span class="ident">half</span>()
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">AbsDiffEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">AbsDiffEq</span> <span class="kw">for</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">AbsDiffEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="ident">AbsDiffEq</span> <span class="kw">for</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default_epsilon</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
+    <span class="kw">fn</span> <span class="ident">default_epsilon</span>() <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
         <span class="ident">N</span>::<span class="ident">default_epsilon</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">abs_diff_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">as_vector</span>().<span class="ident">abs_diff_eq</span>(<span class="ident">other</span>.<span class="ident">as_vector</span>(), <span class="ident">epsilon</span>) <span class="op">|</span><span class="op">|</span>
+    <span class="kw">fn</span> <span class="ident">abs_diff_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">as_vector</span>().<span class="ident">abs_diff_eq</span>(<span class="ident">other</span>.<span class="ident">as_vector</span>(), <span class="ident">epsilon</span>) <span class="op">||</span>
         <span class="comment">// Account for the double-covering of S², i.e. q = -q</span>
         <span class="self">self</span>.<span class="ident">as_vector</span>().<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">other</span>.<span class="ident">as_vector</span>().<span class="ident">iter</span>()).<span class="ident">all</span>(<span class="op">|</span>(<span class="ident">a</span>, <span class="ident">b</span>)<span class="op">|</span> <span class="ident">a</span>.<span class="ident">abs_diff_eq</span>(<span class="kw-2">&amp;</span><span class="op">-</span><span class="kw-2">*</span><span class="ident">b</span>, <span class="ident">epsilon</span>))
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">RelativeEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">RelativeEq</span> <span class="kw">for</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">RelativeEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="ident">RelativeEq</span> <span class="kw">for</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default_max_relative</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
+    <span class="kw">fn</span> <span class="ident">default_max_relative</span>() <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
         <span class="ident">N</span>::<span class="ident">default_max_relative</span>()
     }
 
@@ -2566,29 +2589,29 @@
         <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>,
         <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>,
         <span class="ident">max_relative</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">as_vector</span>().<span class="ident">relative_eq</span>(<span class="ident">other</span>.<span class="ident">as_vector</span>(), <span class="ident">epsilon</span>, <span class="ident">max_relative</span>) <span class="op">|</span><span class="op">|</span>
+    ) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">as_vector</span>().<span class="ident">relative_eq</span>(<span class="ident">other</span>.<span class="ident">as_vector</span>(), <span class="ident">epsilon</span>, <span class="ident">max_relative</span>) <span class="op">||</span>
         <span class="comment">// Account for the double-covering of S², i.e. q = -q</span>
         <span class="self">self</span>.<span class="ident">as_vector</span>().<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">other</span>.<span class="ident">as_vector</span>().<span class="ident">iter</span>()).<span class="ident">all</span>(<span class="op">|</span>(<span class="ident">a</span>, <span class="ident">b</span>)<span class="op">|</span> <span class="ident">a</span>.<span class="ident">relative_eq</span>(<span class="kw-2">&amp;</span><span class="op">-</span><span class="kw-2">*</span><span class="ident">b</span>, <span class="ident">epsilon</span>, <span class="ident">max_relative</span>))
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">UlpsEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">UlpsEq</span> <span class="kw">for</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">UlpsEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="ident">UlpsEq</span> <span class="kw">for</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default_max_ulps</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">fn</span> <span class="ident">default_max_ulps</span>() <span class="op">-&gt;</span> <span class="ident">u32</span> {
         <span class="ident">N</span>::<span class="ident">default_max_ulps</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>, <span class="ident">max_ulps</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">as_vector</span>().<span class="ident">ulps_eq</span>(<span class="ident">other</span>.<span class="ident">as_vector</span>(), <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>) <span class="op">|</span><span class="op">|</span>
+    <span class="kw">fn</span> <span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>, <span class="ident">max_ulps</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">as_vector</span>().<span class="ident">ulps_eq</span>(<span class="ident">other</span>.<span class="ident">as_vector</span>(), <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>) <span class="op">||</span>
         <span class="comment">// Account for the double-covering of S², i.e. q = -q.</span>
         <span class="self">self</span>.<span class="ident">as_vector</span>().<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">other</span>.<span class="ident">as_vector</span>().<span class="ident">iter</span>()).<span class="ident">all</span>(<span class="op">|</span>(<span class="ident">a</span>, <span class="ident">b</span>)<span class="op">|</span> <span class="ident">a</span>.<span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="op">-</span><span class="kw-2">*</span><span class="ident">b</span>, <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>))
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Display</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="macro">write</span><span class="macro">!</span>(
             <span class="ident">f</span>,
             <span class="string">&quot;Quaternion {} − ({}, {}, {})&quot;</span>,
@@ -2598,18 +2621,18 @@
 }
 
 <span class="doccomment">/// A unit quaternions. May be used to represent a rotation.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>;
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">Normed</span> <span class="kw">for</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Norm</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">SimdRealField</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">norm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>::<span class="ident">SimdRealField</span> {
+    <span class="kw">fn</span> <span class="ident">norm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span>::<span class="ident">SimdRealField</span> {
         <span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">norm</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">norm_squared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span>::<span class="ident">SimdRealField</span> {
+    <span class="kw">fn</span> <span class="ident">norm_squared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span>::<span class="ident">SimdRealField</span> {
         <span class="self">self</span>.<span class="ident">coords</span>.<span class="ident">norm_squared</span>()
     }
 
@@ -2638,7 +2661,7 @@
     <span class="doccomment">/// assert_eq!(rot.angle(), 1.78);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">angle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">angle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
         <span class="kw">let</span> <span class="ident">w</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">quaternion</span>().<span class="ident">scalar</span>().<span class="ident">simd_abs</span>();
         <span class="self">self</span>.<span class="ident">quaternion</span>().<span class="ident">imag</span>().<span class="ident">norm</span>().<span class="ident">simd_atan2</span>(<span class="ident">w</span>) <span class="op">*</span> <span class="kw">crate</span>::<span class="ident">convert</span>(<span class="number">2.0f64</span>)
     }
@@ -2654,7 +2677,7 @@
     <span class="doccomment">/// assert_eq!(*axis.quaternion(), Quaternion::new(1.0, 0.0, 0.0, 0.0));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quaternion</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quaternion</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>()
     }
 
@@ -2670,7 +2693,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Did you mean to use conjugate_mut()?&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">conjugate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">conjugate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new_unchecked</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">conjugate</span>())
     }
 
@@ -2687,7 +2710,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Did you mean to use inverse_mut()?&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inverse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inverse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">conjugate</span>()
     }
 
@@ -2702,7 +2725,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot1.angle_to(&amp;rot2), 1.0045657, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">angle_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">N</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">angle_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
         <span class="kw">let</span> <span class="ident">delta</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rotation_to</span>(<span class="ident">other</span>);
         <span class="ident">delta</span>.<span class="ident">angle</span>()
     }
@@ -2721,7 +2744,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot_to * rot1, rot2, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotation_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotation_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">other</span> <span class="op">/</span> <span class="self">self</span>
     }
 
@@ -2737,7 +2760,7 @@
     <span class="doccomment">/// assert_eq!(q1.lerp(&amp;q2, 0.1), Quaternion::new(0.9, 0.1, 0.0, 0.0));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lerp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">t</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lerp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">t</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">lerp</span>(<span class="ident">other</span>.<span class="ident">as_ref</span>(), <span class="ident">t</span>)
     }
 
@@ -2753,7 +2776,7 @@
     <span class="doccomment">/// assert_eq!(q1.nlerp(&amp;q2, 0.1), UnitQuaternion::new_normalize(Quaternion::new(0.9, 0.1, 0.0, 0.0)));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">nlerp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">t</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">nlerp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">t</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">lerp</span>(<span class="ident">other</span>, <span class="ident">t</span>);
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">res</span>.<span class="ident">normalize_mut</span>();
 
@@ -2778,7 +2801,7 @@
     <span class="doccomment">/// assert_eq!(q.euler_angles(), (std::f32::consts::FRAC_PI_2, 0.0, 0.0));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slerp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">t</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slerp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">t</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -2797,7 +2820,7 @@
     <span class="doccomment">/// * `epsilon`: the value below which the sinus of the angle separating both quaternion</span>
     <span class="doccomment">/// must be to return `None`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_slerp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">t</span>: <span class="ident">N</span>, <span class="ident">epsilon</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_slerp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">t</span>: <span class="ident">N</span>, <span class="ident">epsilon</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -2856,11 +2879,11 @@
     <span class="doccomment">/// assert!(rot.axis().is_none());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
-        <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">quaternion</span>().<span class="ident">scalar</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="ident">N</span>::<span class="ident">zero</span>() {
+        <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">quaternion</span>().<span class="ident">scalar</span>() <span class="op">&gt;=</span> <span class="ident">N</span>::<span class="ident">zero</span>() {
             <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">vector</span>().<span class="ident">clone_owned</span>()
         } <span class="kw">else</span> {
             <span class="op">-</span><span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">vector</span>()
@@ -2880,7 +2903,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot.scaled_axis(), axisangle, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scaled_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scaled_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -2908,7 +2931,7 @@
     <span class="doccomment">/// assert!(rot.axis_angle().is_none());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">axis_angle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">N</span>)<span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">axis_angle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>, <span class="ident">N</span>)<span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -2919,7 +2942,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note that this function yields a `Quaternion&lt;N&gt;` because it loses the unit property.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">exp</span>()
     }
 
@@ -2938,7 +2961,7 @@
     <span class="doccomment">/// assert_relative_eq!(q.ln().vector().into_owned(), axisangle, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ln</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ln</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -2966,7 +2989,7 @@
     <span class="doccomment">/// assert_eq!(pow.angle(), 2.4);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">powf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">powf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -2994,7 +3017,7 @@
     <span class="doccomment">/// assert_relative_eq!(*rot.matrix(), expected, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_rotation_matrix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rotation</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_rotation_matrix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Rotation</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_ref</span>()[<span class="number">0</span>];
         <span class="kw">let</span> <span class="ident">j</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_ref</span>()[<span class="number">1</span>];
         <span class="kw">let</span> <span class="ident">k</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_ref</span>()[<span class="number">2</span>];
@@ -3029,7 +3052,7 @@
     <span class="doccomment">/// The angles are produced in the form (roll, pitch, yaw).</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;This is renamed to use `.euler_angles()`.&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_euler_angles</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">N</span>, <span class="ident">N</span>, <span class="ident">N</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_euler_angles</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">N</span>, <span class="ident">N</span>, <span class="ident">N</span>)
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -3051,7 +3074,7 @@
     <span class="doccomment">/// assert_relative_eq!(euler.2, 0.3, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">euler_angles</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">N</span>, <span class="ident">N</span>, <span class="ident">N</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">euler_angles</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">N</span>, <span class="ident">N</span>, <span class="ident">N</span>)
     <span class="kw">where</span>
         <span class="ident">N</span>: <span class="ident">RealField</span>,
     {
@@ -3075,7 +3098,7 @@
     <span class="doccomment">/// assert_relative_eq!(rot.to_homogeneous(), expected, epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_homogeneous</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Matrix4</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_homogeneous</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Matrix4</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">to_rotation_matrix</span>().<span class="ident">to_homogeneous</span>()
     }
 
@@ -3095,7 +3118,7 @@
     <span class="doccomment">/// assert_relative_eq!(transformed_point, Point3::new(3.0, 2.0, -1.0), epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transform_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pt</span>: <span class="kw-2">&amp;</span><span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transform_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pt</span>: <span class="kw-2">&amp;</span><span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
         <span class="self">self</span> <span class="op">*</span> <span class="ident">pt</span>
     }
 
@@ -3115,7 +3138,7 @@
     <span class="doccomment">/// assert_relative_eq!(transformed_vector, Vector3::new(3.0, 2.0, -1.0), epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transform_vector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transform_vector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
         <span class="self">self</span> <span class="op">*</span> <span class="ident">v</span>
     }
 
@@ -3135,7 +3158,7 @@
     <span class="doccomment">/// assert_relative_eq!(transformed_point, Point3::new(-3.0, 2.0, 1.0), epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inverse_transform_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pt</span>: <span class="kw-2">&amp;</span><span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inverse_transform_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pt</span>: <span class="kw-2">&amp;</span><span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
         <span class="comment">// FIXME: would it be useful performancewise not to call inverse explicitly (i-e. implement</span>
         <span class="comment">// the inverse transformation explicitly here) ?</span>
         <span class="self">self</span>.<span class="ident">inverse</span>() <span class="op">*</span> <span class="ident">pt</span>
@@ -3157,19 +3180,39 @@
     <span class="doccomment">/// assert_relative_eq!(transformed_vector, Vector3::new(-3.0, 2.0, 1.0), epsilon = 1.0e-6);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inverse_transform_vector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inverse_transform_vector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">inverse</span>() <span class="op">*</span> <span class="ident">v</span>
+    }
+
+    <span class="doccomment">/// Rotate a vector by the inverse of this unit quaternion. This may be</span>
+    <span class="doccomment">/// cheaper than inverting the unit quaternion and transforming the</span>
+    <span class="doccomment">/// vector.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # #[macro_use] extern crate approx;</span>
+    <span class="doccomment">/// # use std::f32;</span>
+    <span class="doccomment">/// # use nalgebra::{UnitQuaternion, Vector3};</span>
+    <span class="doccomment">/// let rot = UnitQuaternion::from_axis_angle(&amp;Vector3::z_axis(), f32::consts::FRAC_PI_2);</span>
+    <span class="doccomment">/// let transformed_vector = rot.inverse_transform_unit_vector(&amp;Vector3::x_axis());</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_relative_eq!(transformed_vector, -Vector3::y_axis(), epsilon = 1.0e-6);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inverse_transform_unit_vector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
         <span class="self">self</span>.<span class="ident">inverse</span>() <span class="op">*</span> <span class="ident">v</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span><span class="op">&gt;</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">identity</span>()
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Display</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">axis</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">axis</span>() {
             <span class="kw">let</span> <span class="ident">axis</span> <span class="op">=</span> <span class="ident">axis</span>.<span class="ident">into_inner</span>();
             <span class="macro">write</span><span class="macro">!</span>(
@@ -3190,23 +3233,23 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">AbsDiffEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">AbsDiffEq</span> <span class="kw">for</span> <span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">AbsDiffEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="ident">AbsDiffEq</span> <span class="kw">for</span> <span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default_epsilon</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
+    <span class="kw">fn</span> <span class="ident">default_epsilon</span>() <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
         <span class="ident">N</span>::<span class="ident">default_epsilon</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">abs_diff_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">abs_diff_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">abs_diff_eq</span>(<span class="ident">other</span>.<span class="ident">as_ref</span>(), <span class="ident">epsilon</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">RelativeEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">RelativeEq</span> <span class="kw">for</span> <span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">RelativeEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="ident">RelativeEq</span> <span class="kw">for</span> <span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default_max_relative</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
+    <span class="kw">fn</span> <span class="ident">default_max_relative</span>() <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
         <span class="ident">N</span>::<span class="ident">default_max_relative</span>()
     }
 
@@ -3216,20 +3259,20 @@
         <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>,
         <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>,
         <span class="ident">max_relative</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    ) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>()
             .<span class="ident">relative_eq</span>(<span class="ident">other</span>.<span class="ident">as_ref</span>(), <span class="ident">epsilon</span>, <span class="ident">max_relative</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">UlpsEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">UlpsEq</span> <span class="kw">for</span> <span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">UlpsEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="ident">UlpsEq</span> <span class="kw">for</span> <span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default_max_ulps</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">fn</span> <span class="ident">default_max_ulps</span>() <span class="op">-&gt;</span> <span class="ident">u32</span> {
         <span class="ident">N</span>::<span class="ident">default_max_ulps</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>, <span class="ident">max_ulps</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>, <span class="ident">max_ulps</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">ulps_eq</span>(<span class="ident">other</span>.<span class="ident">as_ref</span>(), <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>)
     }
 }

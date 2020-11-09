@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/crossbeam-channel-0.4.4/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../crossbeam_channel/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/crossbeam-channel-0.5.0/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../crossbeam_channel/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -366,17 +367,6 @@
 <span id="366">366</span>
 <span id="367">367</span>
 <span id="368">368</span>
-<span id="369">369</span>
-<span id="370">370</span>
-<span id="371">371</span>
-<span id="372">372</span>
-<span id="373">373</span>
-<span id="374">374</span>
-<span id="375">375</span>
-<span id="376">376</span>
-<span id="377">377</span>
-<span id="378">378</span>
-<span id="379">379</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Multi-producer multi-consumer channels for message passing.</span>
 <span class="doccomment">//!</span>
@@ -502,10 +492,6 @@
 <span class="doccomment">//! It&#39;s also possible to share senders and receivers by reference:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # extern crate crossbeam_channel;</span>
-<span class="doccomment">//! # extern crate crossbeam_utils;</span>
-<span class="doccomment">//! # fn main() {</span>
-<span class="doccomment">//! use std::thread;</span>
 <span class="doccomment">//! use crossbeam_channel::bounded;</span>
 <span class="doccomment">//! use crossbeam_utils::thread::scope;</span>
 <span class="doccomment">//!</span>
@@ -522,7 +508,6 @@
 <span class="doccomment">//!     s.send(1).unwrap();</span>
 <span class="doccomment">//!     r.recv().unwrap();</span>
 <span class="doccomment">//! }).unwrap();</span>
-<span class="doccomment">//! # }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # Disconnection</span>
@@ -651,12 +636,9 @@
 <span class="doccomment">//! An example of receiving a message from two channels:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # #[macro_use]</span>
-<span class="doccomment">//! # extern crate crossbeam_channel;</span>
-<span class="doccomment">//! # fn main() {</span>
 <span class="doccomment">//! use std::thread;</span>
 <span class="doccomment">//! use std::time::Duration;</span>
-<span class="doccomment">//! use crossbeam_channel::unbounded;</span>
+<span class="doccomment">//! use crossbeam_channel::{select, unbounded};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! let (s1, r1) = unbounded();</span>
 <span class="doccomment">//! let (s2, r2) = unbounded();</span>
@@ -670,7 +652,6 @@
 <span class="doccomment">//!     recv(r2) -&gt; msg =&gt; assert_eq!(msg, Ok(20)),</span>
 <span class="doccomment">//!     default(Duration::from_secs(1)) =&gt; println!(&quot;timed out&quot;),</span>
 <span class="doccomment">//! }</span>
-<span class="doccomment">//! # }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! If you need to select over a dynamically created list of channel operations, use [`Select`]</span>
@@ -690,11 +671,8 @@
 <span class="doccomment">//! An example that prints elapsed time every 50 milliseconds for the duration of 1 second:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # #[macro_use]</span>
-<span class="doccomment">//! # extern crate crossbeam_channel;</span>
-<span class="doccomment">//! # fn main() {</span>
 <span class="doccomment">//! use std::time::{Duration, Instant};</span>
-<span class="doccomment">//! use crossbeam_channel::{after, tick};</span>
+<span class="doccomment">//! use crossbeam_channel::{after, select, tick};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! let start = Instant::now();</span>
 <span class="doccomment">//! let ticker = tick(Duration::from_millis(50));</span>
@@ -706,56 +684,57 @@
 <span class="doccomment">//!         recv(timeout) -&gt; _ =&gt; break,</span>
 <span class="doccomment">//!     }</span>
 <span class="doccomment">//! }</span>
-<span class="doccomment">//! # }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! [`std::sync::mpsc`]: https://doc.rust-lang.org/std/sync/mpsc/index.html</span>
-<span class="doccomment">//! [`unbounded`]: fn.unbounded.html</span>
-<span class="doccomment">//! [`bounded`]: fn.bounded.html</span>
-<span class="doccomment">//! [`after`]: fn.after.html</span>
-<span class="doccomment">//! [`tick`]: fn.tick.html</span>
-<span class="doccomment">//! [`never`]: fn.never.html</span>
-<span class="doccomment">//! [`send`]: struct.Sender.html#method.send</span>
-<span class="doccomment">//! [`recv`]: struct.Receiver.html#method.recv</span>
-<span class="doccomment">//! [`iter`]: struct.Receiver.html#method.iter</span>
-<span class="doccomment">//! [`try_iter`]: struct.Receiver.html#method.try_iter</span>
-<span class="doccomment">//! [`select!`]: macro.select.html</span>
-<span class="doccomment">//! [`Select`]: struct.Select.html</span>
-<span class="doccomment">//! [`Sender`]: struct.Sender.html</span>
-<span class="doccomment">//! [`Receiver`]: struct.Receiver.html</span>
+<span class="doccomment">//! [`send`]: Sender::send</span>
+<span class="doccomment">//! [`recv`]: Receiver::recv</span>
+<span class="doccomment">//! [`iter`]: Receiver::iter</span>
+<span class="doccomment">//! [`try_iter`]: Receiver::try_iter</span>
 
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_debug_implementations</span>)]</span>
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">test</span>(
+    <span class="ident">no_crate_inject</span>,
+    <span class="ident">attr</span>(
+        <span class="ident">deny</span>(<span class="ident">warnings</span>, <span class="ident">rust_2018_idioms</span>),
+        <span class="ident">allow</span>(<span class="ident">dead_code</span>, <span class="ident">unused_assignments</span>, <span class="ident">unused_variables</span>)
+    )
+))]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>, <span class="ident">missing_debug_implementations</span>, <span class="ident">rust_2018_idioms</span>)]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
+<span class="comment">// matches! requires Rust 1.42</span>
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">match_like_matches_macro</span>)]</span>
 
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">crossbeam_utils</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">maybe_uninit</span>;
+<span class="kw">use</span> <span class="ident">cfg_if</span>::<span class="ident">cfg_if</span>;
 
-<span class="kw">mod</span> <span class="ident">channel</span>;
-<span class="kw">mod</span> <span class="ident">context</span>;
-<span class="kw">mod</span> <span class="ident">counter</span>;
-<span class="kw">mod</span> <span class="ident">err</span>;
-<span class="kw">mod</span> <span class="ident">flavors</span>;
-<span class="kw">mod</span> <span class="ident">select</span>;
-<span class="kw">mod</span> <span class="ident">select_macro</span>;
-<span class="kw">mod</span> <span class="ident">utils</span>;
-<span class="kw">mod</span> <span class="ident">waker</span>;
+<span class="macro">cfg_if</span><span class="macro">!</span> {
+    <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span> {
+        <span class="kw">mod</span> <span class="ident">channel</span>;
+        <span class="kw">mod</span> <span class="ident">context</span>;
+        <span class="kw">mod</span> <span class="ident">counter</span>;
+        <span class="kw">mod</span> <span class="ident">err</span>;
+        <span class="kw">mod</span> <span class="ident">flavors</span>;
+        <span class="kw">mod</span> <span class="ident">select</span>;
+        <span class="kw">mod</span> <span class="ident">select_macro</span>;
+        <span class="kw">mod</span> <span class="ident">utils</span>;
+        <span class="kw">mod</span> <span class="ident">waker</span>;
 
-<span class="doccomment">/// Crate internals used by the `select!` macro.</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">internal</span> {
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">select</span>::<span class="ident">SelectHandle</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">select</span>::{<span class="ident">select</span>, <span class="ident">select_timeout</span>, <span class="ident">try_select</span>};
+        <span class="doccomment">/// Crate internals used by the `select!` macro.</span>
+        <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+        <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">internal</span> {
+            <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">select</span>::<span class="ident">SelectHandle</span>;
+            <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">select</span>::{<span class="ident">select</span>, <span class="ident">select_timeout</span>, <span class="ident">try_select</span>};
+        }
+
+        <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">channel</span>::{<span class="ident">after</span>, <span class="ident">at</span>, <span class="ident">never</span>, <span class="ident">tick</span>};
+        <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">channel</span>::{<span class="ident">bounded</span>, <span class="ident">unbounded</span>};
+        <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">channel</span>::{<span class="ident">IntoIter</span>, <span class="ident">Iter</span>, <span class="ident">TryIter</span>};
+        <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">channel</span>::{<span class="ident">Receiver</span>, <span class="ident">Sender</span>};
+
+        <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">select</span>::{<span class="ident">Select</span>, <span class="ident">SelectedOperation</span>};
+
+        <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">err</span>::{<span class="ident">ReadyTimeoutError</span>, <span class="ident">SelectTimeoutError</span>, <span class="ident">TryReadyError</span>, <span class="ident">TrySelectError</span>};
+        <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">err</span>::{<span class="ident">RecvError</span>, <span class="ident">RecvTimeoutError</span>, <span class="ident">TryRecvError</span>};
+        <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">err</span>::{<span class="ident">SendError</span>, <span class="ident">SendTimeoutError</span>, <span class="ident">TrySendError</span>};
+    }
 }
-
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">channel</span>::{<span class="ident">after</span>, <span class="ident">never</span>, <span class="ident">tick</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">channel</span>::{<span class="ident">bounded</span>, <span class="ident">unbounded</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">channel</span>::{<span class="ident">IntoIter</span>, <span class="ident">Iter</span>, <span class="ident">TryIter</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">channel</span>::{<span class="ident">Receiver</span>, <span class="ident">Sender</span>};
-
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">select</span>::{<span class="ident">Select</span>, <span class="ident">SelectedOperation</span>};
-
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">err</span>::{<span class="ident">ReadyTimeoutError</span>, <span class="ident">SelectTimeoutError</span>, <span class="ident">TryReadyError</span>, <span class="ident">TrySelectError</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">err</span>::{<span class="ident">RecvError</span>, <span class="ident">RecvTimeoutError</span>, <span class="ident">TryRecvError</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">err</span>::{<span class="ident">SendError</span>, <span class="ident">SendTimeoutError</span>, <span class="ident">TrySendError</span>};
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "crossbeam_channel";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

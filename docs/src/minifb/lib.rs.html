@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/minifb-0.19.0/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../minifb/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/minifb-0.19.0/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../minifb/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1168,18 +1169,18 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Window</span>(<span class="ident">imp</span>::<span class="ident">Window</span>);
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Window</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;Window&quot;</span>).<span class="ident">field</span>(<span class="kw-2">&amp;</span><span class="macro">format_args</span><span class="macro">!</span>(<span class="string">&quot;..&quot;</span>)).<span class="ident">finish</span>()
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">raw_window_handle</span>::<span class="ident">HasRawWindowHandle</span> <span class="kw">for</span> <span class="ident">Window</span> {
-    <span class="kw">fn</span> <span class="ident">raw_window_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">raw_window_handle</span>::<span class="ident">RawWindowHandle</span> {
+    <span class="kw">fn</span> <span class="ident">raw_window_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">raw_window_handle</span>::<span class="ident">RawWindowHandle</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">raw_window_handle</span>()
     }
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clamp</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PartialOrd</span><span class="op">&gt;</span>(<span class="ident">low</span>: <span class="ident">T</span>, <span class="ident">value</span>: <span class="ident">T</span>, <span class="ident">high</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clamp</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PartialOrd</span><span class="op">&gt;</span>(<span class="ident">low</span>: <span class="ident">T</span>, <span class="ident">value</span>: <span class="ident">T</span>, <span class="ident">high</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
     <span class="kw">if</span> <span class="ident">value</span> <span class="op">&lt;</span> <span class="ident">low</span> {
         <span class="ident">low</span>
     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">value</span> <span class="op">&gt;</span> <span class="ident">high</span> {
@@ -1261,8 +1262,8 @@
     <span class="doccomment">///  })</span>
     <span class="doccomment">///  .expect(&quot;Unable to open Window&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">width</span>: <span class="ident">usize</span>, <span class="ident">height</span>: <span class="ident">usize</span>, <span class="ident">opts</span>: <span class="ident">WindowOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="ident">opts</span>.<span class="ident">transparency</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="ident">opts</span>.<span class="ident">borderless</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">width</span>: <span class="ident">usize</span>, <span class="ident">height</span>: <span class="ident">usize</span>, <span class="ident">opts</span>: <span class="ident">WindowOptions</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">opts</span>.<span class="ident">transparency</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">opts</span>.<span class="ident">borderless</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">WindowCreate</span>(
                 <span class="string">&quot;Window transparency requires the borderless property&quot;</span>.<span class="ident">to_owned</span>(),
             ));
@@ -1297,7 +1298,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_window_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">raw</span>::<span class="ident">c_void</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_window_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">raw</span>::<span class="ident">c_void</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">get_window_handle</span>()
     }
 
@@ -1335,7 +1336,7 @@
         <span class="ident">buffer</span>: <span class="kw-2">&amp;</span>[<span class="ident">u32</span>],
         <span class="ident">width</span>: <span class="ident">usize</span>,
         <span class="ident">height</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">update_rate</span>();
         <span class="self">self</span>.<span class="number">0</span>
             .<span class="ident">update_with_buffer_stride</span>(<span class="ident">buffer</span>, <span class="ident">width</span>, <span class="ident">height</span>, <span class="ident">width</span>)
@@ -1375,7 +1376,7 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_open</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_open</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">is_open</span>()
     }
 
@@ -1436,7 +1437,7 @@
         <span class="kw">let</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">clamp</span>(<span class="number">0</span>, <span class="ident">green</span>, <span class="number">255</span>);
         <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">clamp</span>(<span class="number">0</span>, <span class="ident">blue</span>, <span class="number">255</span>);
         <span class="self">self</span>.<span class="number">0</span>
-            .<span class="ident">set_background_color</span>(((<span class="ident">r</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">16</span>) <span class="op">|</span> (<span class="ident">g</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">8</span>) <span class="op">|</span> <span class="ident">b</span>) <span class="kw">as</span> <span class="ident">u32</span>);
+            .<span class="ident">set_background_color</span>(((<span class="ident">r</span> <span class="op">&lt;&lt;</span> <span class="number">16</span>) <span class="op">|</span> (<span class="ident">g</span> <span class="op">&lt;&lt;</span> <span class="number">8</span>) <span class="op">|</span> <span class="ident">b</span>) <span class="kw">as</span> <span class="ident">u32</span>);
     }
 
     <span class="doccomment">///</span>
@@ -1491,7 +1492,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">get_size</span>()
     }
 
@@ -1510,7 +1511,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_mouse_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mode</span>: <span class="ident">MouseMode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">f32</span>, <span class="ident">f32</span>)<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_mouse_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mode</span>: <span class="ident">MouseMode</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">f32</span>, <span class="ident">f32</span>)<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">get_mouse_pos</span>(<span class="ident">mode</span>)
     }
 
@@ -1530,7 +1531,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_unscaled_mouse_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mode</span>: <span class="ident">MouseMode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">f32</span>, <span class="ident">f32</span>)<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_unscaled_mouse_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mode</span>: <span class="ident">MouseMode</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">f32</span>, <span class="ident">f32</span>)<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">get_unscaled_mouse_pos</span>(<span class="ident">mode</span>)
     }
 
@@ -1547,7 +1548,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_mouse_down</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">button</span>: <span class="ident">MouseButton</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_mouse_down</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">button</span>: <span class="ident">MouseButton</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">get_mouse_down</span>(<span class="ident">button</span>)
     }
 
@@ -1570,7 +1571,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_scroll_wheel</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">f32</span>, <span class="ident">f32</span>)<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_scroll_wheel</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">f32</span>, <span class="ident">f32</span>)<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">get_scroll_wheel</span>()
     }
 
@@ -1609,7 +1610,7 @@
     <span class="doccomment">/// });</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Key</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Key</span><span class="op">&gt;&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">get_keys</span>()
     }
 
@@ -1633,7 +1634,7 @@
     <span class="doccomment">/// });</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_keys_pressed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">repeat</span>: <span class="ident">KeyRepeat</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Key</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_keys_pressed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">repeat</span>: <span class="ident">KeyRepeat</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Key</span><span class="op">&gt;&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">get_keys_pressed</span>(<span class="ident">repeat</span>)
     }
 
@@ -1656,7 +1657,7 @@
     <span class="doccomment">/// });</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_keys_released</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Key</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_keys_released</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Key</span><span class="op">&gt;&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">get_keys_released</span>()
     }
 
@@ -1674,7 +1675,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_key_down</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_key_down</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">is_key_down</span>(<span class="ident">key</span>)
     }
 
@@ -1693,7 +1694,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_key_pressed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>, <span class="ident">repeat</span>: <span class="ident">KeyRepeat</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_key_pressed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>, <span class="ident">repeat</span>: <span class="ident">KeyRepeat</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">is_key_pressed</span>(<span class="ident">key</span>, <span class="ident">repeat</span>)
     }
 
@@ -1701,7 +1702,7 @@
     <span class="doccomment">/// Check if a single key was released since last call to update.</span>
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_key_released</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_key_released</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">is_key_released</span>(<span class="ident">key</span>)
     }
 
@@ -1743,7 +1744,7 @@
     <span class="doccomment">/// Returns if this windows is the current active one</span>
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_active</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_active</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">is_active</span>()
     }
 
@@ -1771,7 +1772,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_menu</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">menu</span>: <span class="kw-2">&amp;</span><span class="ident">Menu</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MenuHandle</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_menu</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">menu</span>: <span class="kw-2">&amp;</span><span class="ident">Menu</span>) <span class="op">-&gt;</span> <span class="ident">MenuHandle</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">add_menu</span>(<span class="kw-2">&amp;</span><span class="ident">menu</span>.<span class="number">0</span>)
     }
 
@@ -1788,7 +1789,7 @@
     <span class="doccomment">/// otherwise ```None```</span>
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;windows&quot;</span>))]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_posix_menus</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UnixMenu</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_posix_menus</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UnixMenu</span><span class="op">&gt;&gt;</span> {
         <span class="prelude-val">None</span>
     }
 
@@ -1800,7 +1801,7 @@
         <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>,
         <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>
     ))]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_posix_menus</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UnixMenu</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_posix_menus</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UnixMenu</span><span class="op">&gt;&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">get_posix_menus</span>()
     }
 
@@ -1808,7 +1809,7 @@
         <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.17.0&quot;</span>,
         <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;`get_unix_menus` will be removed in 1.0.0, use `get_posix_menus` instead&quot;</span>
     )]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_unix_menus</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UnixMenu</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_unix_menus</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UnixMenu</span><span class="op">&gt;&gt;</span> {
         <span class="self">self</span>.<span class="ident">get_posix_menus</span>()
     }
 
@@ -1816,7 +1817,7 @@
     <span class="doccomment">/// Check if a menu item has been pressed</span>
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_menu_pressed</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_menu_pressed</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">is_menu_pressed</span>()
     }
 }
@@ -1860,7 +1861,7 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UnixMenuItem</span> {
     <span class="doccomment">/// Set to a menu if there is a Item is a sub_menu otherwise None</span>
-    <span class="kw">pub</span> <span class="ident">sub_menu</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">UnixMenu</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">sub_menu</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">UnixMenu</span><span class="op">&gt;&gt;</span>,
     <span class="doccomment">/// Handle of the MenuItem</span>
     <span class="kw">pub</span> <span class="ident">handle</span>: <span class="ident">MenuItemHandle</span>,
     <span class="doccomment">/// Id of the item (set by the user from the outside and should be reported back when pressed)</span>
@@ -1889,14 +1890,14 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Menu</span>(<span class="ident">imp</span>::<span class="ident">Menu</span>);
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Menu</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;Menu&quot;</span>).<span class="ident">field</span>(<span class="kw-2">&amp;</span><span class="macro">format_args</span><span class="macro">!</span>(<span class="string">&quot;..&quot;</span>)).<span class="ident">finish</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Menu</span> {
     <span class="doccomment">/// Create a new menu. Returns error if failed</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Menu</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Menu</span><span class="op">&gt;</span> {
         <span class="ident">imp</span>::<span class="ident">Menu</span>::<span class="ident">new</span>(<span class="ident">name</span>).<span class="ident">map</span>(<span class="ident">Menu</span>)
     }
 
@@ -1922,7 +1923,7 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="doccomment">/// Adds an item to the menu</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_menu_item</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">item</span>: <span class="kw-2">&amp;</span><span class="ident">MenuItem</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MenuItemHandle</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_menu_item</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">item</span>: <span class="kw-2">&amp;</span><span class="ident">MenuItem</span>) <span class="op">-&gt;</span> <span class="ident">MenuItemHandle</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">add_menu_item</span>(<span class="ident">item</span>)
     }
 
@@ -1936,7 +1937,7 @@
     <span class="doccomment">/// menu.add_item(&quot;test&quot;, 1).shortcut(Key::A, 0).build()</span>
     <span class="doccomment">/// # ;</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_item</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">id</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MenuItem</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_item</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">id</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">MenuItem</span> {
         <span class="ident">MenuItem</span> {
             <span class="ident">id</span>,
             <span class="ident">label</span>: <span class="ident">name</span>.<span class="ident">to_owned</span>(),
@@ -1967,7 +1968,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">MenuItem</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">MenuItem</span> {
             <span class="ident">id</span>: <span class="ident">MENU_ID_SEPARATOR</span>,
             <span class="ident">label</span>: <span class="string">&quot;&quot;</span>.<span class="ident">to_owned</span>(),
@@ -1980,7 +1981,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">MenuItem</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">MenuItem</span> {
             <span class="ident">id</span>: <span class="self">self</span>.<span class="ident">id</span>,
             <span class="ident">label</span>: <span class="self">self</span>.<span class="ident">label</span>.<span class="ident">clone</span>(),
@@ -1994,7 +1995,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">MenuItem</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Creates a new menu item</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">id</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MenuItem</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">id</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">MenuItem</span> {
         <span class="ident">MenuItem</span> {
             <span class="ident">id</span>,
             <span class="ident">label</span>: <span class="ident">name</span>.<span class="ident">to_owned</span>(),
@@ -2012,7 +2013,7 @@
     <span class="doccomment">/// menu.add_item(&quot;test&quot;, 1).shortcut(Key::A, 0).build()</span>
     <span class="doccomment">/// # ;</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shortcut</span>(<span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>, <span class="ident">modifier</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shortcut</span>(<span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>, <span class="ident">modifier</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">MenuItem</span> {
             <span class="ident">key</span>,
             <span class="ident">modifier</span>,
@@ -2031,7 +2032,7 @@
     <span class="doccomment">/// # ;</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// Notice that it&#39;s usually easier to just call ```menu.add_separator()``` directly</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">separator</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">separator</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">MenuItem</span> {
             <span class="ident">id</span>: <span class="ident">MENU_ID_SEPARATOR</span>,
             ..<span class="self">self</span>
@@ -2048,7 +2049,7 @@
     <span class="doccomment">/// menu.add_item(&quot;test&quot;, 1).enabled(false).build()</span>
     <span class="doccomment">/// # ;</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enabled</span>(<span class="self">self</span>, <span class="ident">enabled</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enabled</span>(<span class="self">self</span>, <span class="ident">enabled</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">MenuItem</span> { <span class="ident">enabled</span>, ..<span class="self">self</span> }
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -2062,7 +2063,7 @@
     <span class="doccomment">/// menu.add_item(&quot;test&quot;, 1).enabled(false).build()</span>
     <span class="doccomment">/// # ;</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MenuItemHandle</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MenuItemHandle</span> {
         <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">clone</span>();
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">menu</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">menu</span> {
             <span class="ident">menu</span>.<span class="number">0</span>.<span class="ident">add_menu_item</span>(<span class="kw-2">&amp;</span><span class="ident">t</span>)
@@ -2075,7 +2076,7 @@
 <span class="comment">// Impl for WindowOptions</span>
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">WindowOptions</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">WindowOptions</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">WindowOptions</span> {
         <span class="ident">WindowOptions</span> {
             <span class="ident">borderless</span>: <span class="bool-val">false</span>,
             <span class="ident">transparency</span>: <span class="bool-val">false</span>,

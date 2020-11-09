@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Rate","Rate of reaction."]]});

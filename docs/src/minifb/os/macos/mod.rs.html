@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/minifb-0.19.0/src/os/macos/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle"><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../minifb/index.html'><div class='logo-container'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/minifb-0.19.0/src/os/macos/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../minifb/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -925,7 +926,7 @@
         <span class="ident">flags</span>: <span class="ident">u32</span>,
         <span class="ident">scale</span>: <span class="ident">i32</span>,
         <span class="ident">view_handle</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
+    ) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
     <span class="kw">fn</span> <span class="ident">mfb_set_title</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">title</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>);
     <span class="kw">fn</span> <span class="ident">mfb_close</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>);
     <span class="kw">fn</span> <span class="ident">mfb_update</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>);
@@ -946,14 +947,14 @@
     <span class="kw">fn</span> <span class="ident">mfb_set_mouse_data</span>(<span class="ident">window_handle</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">shared_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SharedData</span>);
     <span class="kw">fn</span> <span class="ident">mfb_set_cursor_style</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">cursor</span>: <span class="ident">u32</span>);
     <span class="kw">fn</span> <span class="ident">mfb_set_cursor_visibility</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">visibility</span>: <span class="ident">bool</span>);
-    <span class="kw">fn</span> <span class="ident">mfb_should_close</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span>;
-    <span class="kw">fn</span> <span class="ident">mfb_get_screen_size</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span>;
-    <span class="kw">fn</span> <span class="ident">mfb_is_active</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span>;
-    <span class="kw">fn</span> <span class="ident">mfb_add_menu</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">menu</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span>;
+    <span class="kw">fn</span> <span class="ident">mfb_should_close</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">i32</span>;
+    <span class="kw">fn</span> <span class="ident">mfb_get_screen_size</span>() <span class="op">-&gt;</span> <span class="ident">u32</span>;
+    <span class="kw">fn</span> <span class="ident">mfb_is_active</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">u32</span>;
+    <span class="kw">fn</span> <span class="ident">mfb_add_menu</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">menu</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">u64</span>;
     <span class="kw">fn</span> <span class="ident">mfb_add_sub_menu</span>(<span class="ident">parent_menu</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">menu</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>);
-    <span class="kw">fn</span> <span class="ident">mfb_active_menu</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span>;
+    <span class="kw">fn</span> <span class="ident">mfb_active_menu</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">i32</span>;
 
-    <span class="kw">fn</span> <span class="ident">mfb_create_menu</span>(<span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
+    <span class="kw">fn</span> <span class="ident">mfb_create_menu</span>(<span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
     <span class="kw">fn</span> <span class="ident">mfb_remove_menu_at</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">index</span>: <span class="ident">i32</span>);
 
     <span class="doccomment">/// Sets the whether or not the window is the topmost window</span>
@@ -966,7 +967,7 @@
         <span class="ident">enabled</span>: <span class="ident">bool</span>,
         <span class="ident">key</span>: <span class="ident">u32</span>,
         <span class="ident">modifier</span>: <span class="ident">u32</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span>;
+    ) <span class="op">-&gt;</span> <span class="ident">u64</span>;
     <span class="kw">fn</span> <span class="ident">mfb_remove_menu_item</span>(<span class="ident">menu</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">item_handle</span>: <span class="ident">u64</span>);
 }
 
@@ -998,7 +999,7 @@
 <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">key_callback</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">key</span>: <span class="ident">i32</span>, <span class="ident">state</span>: <span class="ident">i32</span>) {
     <span class="kw">let</span> <span class="ident">win</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Window</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">window</span>);
 
-    <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span>;
+    <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">state</span> <span class="op">==</span> <span class="number">1</span>;
 
     <span class="kw">if</span> <span class="ident">key</span> <span class="op">&gt;</span> <span class="number">128</span> {
         (<span class="kw-2">*</span><span class="ident">win</span>).<span class="ident">key_handler</span>.<span class="ident">set_key_state</span>(<span class="ident">Key</span>::<span class="ident">Unknown</span>, <span class="ident">s</span>);
@@ -1013,7 +1014,7 @@
     <span class="kw">let</span> <span class="ident">win</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Window</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">window</span>);
 
     <span class="comment">// Taken from GLFW</span>
-    <span class="kw">if</span> <span class="ident">code_point</span> <span class="op">&lt;</span> <span class="number">32</span> <span class="op">|</span><span class="op">|</span> (<span class="ident">code_point</span> <span class="op">&gt;</span> <span class="number">126</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">code_point</span> <span class="op">&lt;</span> <span class="number">160</span>) {
+    <span class="kw">if</span> <span class="ident">code_point</span> <span class="op">&lt;</span> <span class="number">32</span> <span class="op">||</span> (<span class="ident">code_point</span> <span class="op">&gt;</span> <span class="number">126</span> <span class="op">&amp;&amp;</span> <span class="ident">code_point</span> <span class="op">&lt;</span> <span class="number">160</span>) {
         <span class="kw">return</span>;
     }
 
@@ -1023,7 +1024,7 @@
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">raw_window_handle</span>::<span class="ident">HasRawWindowHandle</span> <span class="kw">for</span> <span class="ident">Window</span> {
-    <span class="kw">fn</span> <span class="ident">raw_window_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">raw_window_handle</span>::<span class="ident">RawWindowHandle</span> {
+    <span class="kw">fn</span> <span class="ident">raw_window_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">raw_window_handle</span>::<span class="ident">RawWindowHandle</span> {
         <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">raw_window_handle</span>::<span class="ident">macos</span>::<span class="ident">MacOSHandle</span> {
             <span class="ident">ns_window</span>: <span class="self">self</span>.<span class="ident">window_handle</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>,
             <span class="ident">ns_view</span>: <span class="self">self</span>.<span class="ident">view_handle</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>,
@@ -1034,13 +1035,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Window</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">width</span>: <span class="ident">usize</span>, <span class="ident">height</span>: <span class="ident">usize</span>, <span class="ident">opts</span>: <span class="ident">WindowOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">width</span>: <span class="ident">usize</span>, <span class="ident">height</span>: <span class="ident">usize</span>, <span class="ident">opts</span>: <span class="ident">WindowOptions</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">name</span>) {
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> {
                 <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Unable to convert {} to c_string&quot;</span>, <span class="ident">name</span>);
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">WindowCreate</span>(<span class="string">&quot;Unable to set correct name&quot;</span>.<span class="ident">to_owned</span>()));
             }
-            <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">n</span>,
+            <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="op">=&gt;</span> <span class="ident">n</span>,
         };
 
         <span class="kw">unsafe</span> {
@@ -1059,7 +1060,7 @@
                 <span class="ident">mfb_topmost</span>(<span class="ident">handle</span>, <span class="bool-val">true</span>);
             }
 
-            <span class="kw">if</span> <span class="ident">handle</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>() {
+            <span class="kw">if</span> <span class="ident">handle</span> <span class="op">==</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>() {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">WindowCreate</span>(<span class="string">&quot;Unable to open Window&quot;</span>.<span class="ident">to_owned</span>()));
             }
 
@@ -1101,7 +1102,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_window_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">raw</span>::<span class="ident">c_void</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_window_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">raw</span>::<span class="ident">c_void</span> {
         <span class="self">self</span>.<span class="ident">window_handle</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">raw</span>::<span class="ident">c_void</span>
     }
 
@@ -1128,7 +1129,7 @@
         <span class="ident">buf_width</span>: <span class="ident">usize</span>,
         <span class="ident">buf_height</span>: <span class="ident">usize</span>,
         <span class="ident">buf_stride</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">key_handler</span>.<span class="ident">update</span>();
 
         <span class="ident">buffer_helper</span>::<span class="ident">check_buffer_size</span>(<span class="ident">buf_width</span>, <span class="ident">buf_height</span>, <span class="ident">buf_stride</span>, <span class="ident">buffer</span>)<span class="question-mark">?</span>;
@@ -1178,33 +1179,33 @@
         <span class="kw">unsafe</span> { <span class="ident">mfb_topmost</span>(<span class="self">self</span>.<span class="ident">window_handle</span>, <span class="ident">topmost</span>) }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
         (
             <span class="self">self</span>.<span class="ident">shared_data</span>.<span class="ident">width</span> <span class="kw">as</span> <span class="ident">usize</span>,
             <span class="self">self</span>.<span class="ident">shared_data</span>.<span class="ident">height</span> <span class="kw">as</span> <span class="ident">usize</span>,
         )
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_scroll_wheel</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">f32</span>, <span class="ident">f32</span>)<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_scroll_wheel</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">f32</span>, <span class="ident">f32</span>)<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">sx</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">shared_data</span>.<span class="ident">scroll_x</span>;
         <span class="kw">let</span> <span class="ident">sy</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">shared_data</span>.<span class="ident">scroll_y</span>;
 
-        <span class="kw">if</span> <span class="ident">sx</span>.<span class="ident">abs</span>() <span class="op">&gt;</span> <span class="number">0.0001</span> <span class="op">|</span><span class="op">|</span> <span class="ident">sy</span>.<span class="ident">abs</span>() <span class="op">&gt;</span> <span class="number">0.0001</span> {
+        <span class="kw">if</span> <span class="ident">sx</span>.<span class="ident">abs</span>() <span class="op">&gt;</span> <span class="number">0.0001</span> <span class="op">||</span> <span class="ident">sy</span>.<span class="ident">abs</span>() <span class="op">&gt;</span> <span class="number">0.0001</span> {
             <span class="prelude-val">Some</span>((<span class="ident">sx</span>, <span class="ident">sy</span>))
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_mouse_down</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">button</span>: <span class="ident">MouseButton</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_mouse_down</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">button</span>: <span class="ident">MouseButton</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="ident">button</span> {
-            <span class="ident">MouseButton</span>::<span class="ident">Left</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">shared_data</span>.<span class="ident">state</span>[<span class="number">0</span>] <span class="op">&gt;</span> <span class="number">0</span>,
-            <span class="ident">MouseButton</span>::<span class="ident">Middle</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">shared_data</span>.<span class="ident">state</span>[<span class="number">1</span>] <span class="op">&gt;</span> <span class="number">0</span>,
-            <span class="ident">MouseButton</span>::<span class="ident">Right</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">shared_data</span>.<span class="ident">state</span>[<span class="number">2</span>] <span class="op">&gt;</span> <span class="number">0</span>,
+            <span class="ident">MouseButton</span>::<span class="ident">Left</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">shared_data</span>.<span class="ident">state</span>[<span class="number">0</span>] <span class="op">&gt;</span> <span class="number">0</span>,
+            <span class="ident">MouseButton</span>::<span class="ident">Middle</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">shared_data</span>.<span class="ident">state</span>[<span class="number">1</span>] <span class="op">&gt;</span> <span class="number">0</span>,
+            <span class="ident">MouseButton</span>::<span class="ident">Right</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">shared_data</span>.<span class="ident">state</span>[<span class="number">2</span>] <span class="op">&gt;</span> <span class="number">0</span>,
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_mouse_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mode</span>: <span class="ident">MouseMode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">f32</span>, <span class="ident">f32</span>)<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_mouse_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mode</span>: <span class="ident">MouseMode</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">f32</span>, <span class="ident">f32</span>)<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">scale_factor</span> <span class="kw">as</span> <span class="ident">f32</span>;
         <span class="kw">let</span> <span class="ident">w</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">shared_data</span>.<span class="ident">width</span> <span class="kw">as</span> <span class="ident">f32</span>;
         <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">shared_data</span>.<span class="ident">height</span> <span class="kw">as</span> <span class="ident">f32</span>;
@@ -1219,7 +1220,7 @@
         )
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_unscaled_mouse_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mode</span>: <span class="ident">MouseMode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">f32</span>, <span class="ident">f32</span>)<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_unscaled_mouse_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mode</span>: <span class="ident">MouseMode</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">f32</span>, <span class="ident">f32</span>)<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="number">1.0</span>;
         <span class="kw">let</span> <span class="ident">w</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">shared_data</span>.<span class="ident">width</span> <span class="kw">as</span> <span class="ident">f32</span>;
         <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">shared_data</span>.<span class="ident">height</span> <span class="kw">as</span> <span class="ident">f32</span>;
@@ -1242,22 +1243,22 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Key</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Key</span><span class="op">&gt;&gt;</span> {
         <span class="self">self</span>.<span class="ident">key_handler</span>.<span class="ident">get_keys</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_keys_pressed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">repeat</span>: <span class="ident">KeyRepeat</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Key</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_keys_pressed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">repeat</span>: <span class="ident">KeyRepeat</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Key</span><span class="op">&gt;&gt;</span> {
         <span class="self">self</span>.<span class="ident">key_handler</span>.<span class="ident">get_keys_pressed</span>(<span class="ident">repeat</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_keys_released</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Key</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_keys_released</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Key</span><span class="op">&gt;&gt;</span> {
         <span class="self">self</span>.<span class="ident">key_handler</span>.<span class="ident">get_keys_released</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_key_down</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_key_down</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">key_handler</span>.<span class="ident">is_key_down</span>(<span class="ident">key</span>)
     }
 
@@ -1272,12 +1273,12 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_key_pressed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>, <span class="ident">repeat</span>: <span class="ident">KeyRepeat</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_key_pressed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>, <span class="ident">repeat</span>: <span class="ident">KeyRepeat</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">key_handler</span>.<span class="ident">is_key_pressed</span>(<span class="ident">key</span>, <span class="ident">repeat</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_key_released</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_key_released</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">key_handler</span>.<span class="ident">is_key_released</span>(<span class="ident">key</span>)
     }
 
@@ -1286,7 +1287,7 @@
         <span class="self">self</span>.<span class="ident">key_handler</span>.<span class="ident">set_input_callback</span>(<span class="ident">callback</span>)
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_menu_pressed</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_menu_pressed</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">menu_id</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mfb_active_menu</span>(<span class="self">self</span>.<span class="ident">window_handle</span>) };
 
         <span class="kw">if</span> <span class="ident">menu_id</span> <span class="op">&lt;</span> <span class="number">0</span> {
@@ -1296,7 +1297,7 @@
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_menu</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">menu</span>: <span class="kw-2">&amp;</span><span class="ident">Menu</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MenuHandle</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_menu</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">menu</span>: <span class="kw-2">&amp;</span><span class="ident">Menu</span>) <span class="op">-&gt;</span> <span class="ident">MenuHandle</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">MenuHandle</span>(<span class="ident">mfb_add_menu</span>(<span class="self">self</span>.<span class="ident">window_handle</span>, <span class="ident">menu</span>.<span class="ident">menu_handle</span>));
             <span class="self">self</span>.<span class="ident">menus</span>.<span class="ident">push</span>(<span class="ident">handle</span>);
@@ -1306,7 +1307,7 @@
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_menu</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle</span>: <span class="ident">MenuHandle</span>) {
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">menus</span>.<span class="ident">len</span>() {
-            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">menus</span>[<span class="ident">i</span>] <span class="op">=</span><span class="op">=</span> <span class="ident">handle</span> {
+            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">menus</span>[<span class="ident">i</span>] <span class="op">==</span> <span class="ident">handle</span> {
                 <span class="self">self</span>.<span class="ident">menus</span>.<span class="ident">remove</span>(<span class="ident">i</span>);
                 <span class="kw">unsafe</span> {
                     <span class="comment">// + 1 here as we always have a default menu we shouldn&#39;t remove</span>
@@ -1318,26 +1319,26 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_open</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> { <span class="ident">mfb_should_close</span>(<span class="self">self</span>.<span class="ident">window_handle</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_open</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">mfb_should_close</span>(<span class="self">self</span>.<span class="ident">window_handle</span>) <span class="op">==</span> <span class="number">0</span> }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_active</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> { <span class="ident">mfb_is_active</span>(<span class="self">self</span>.<span class="ident">window_handle</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_active</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">mfb_is_active</span>(<span class="self">self</span>.<span class="ident">window_handle</span>) <span class="op">==</span> <span class="number">0</span> }
     }
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">get_scale_factor</span>(<span class="ident">width</span>: <span class="ident">usize</span>, <span class="ident">height</span>: <span class="ident">usize</span>, <span class="ident">scale</span>: <span class="ident">Scale</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">get_scale_factor</span>(<span class="ident">width</span>: <span class="ident">usize</span>, <span class="ident">height</span>: <span class="ident">usize</span>, <span class="ident">scale</span>: <span class="ident">Scale</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
         <span class="kw">let</span> <span class="ident">factor</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">scale</span> {
-            <span class="ident">Scale</span>::<span class="ident">X1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
-            <span class="ident">Scale</span>::<span class="ident">X2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">2</span>,
-            <span class="ident">Scale</span>::<span class="ident">X4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">4</span>,
-            <span class="ident">Scale</span>::<span class="ident">X8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">8</span>,
-            <span class="ident">Scale</span>::<span class="ident">X16</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">16</span>,
-            <span class="ident">Scale</span>::<span class="ident">X32</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">32</span>,
-            <span class="ident">Scale</span>::<span class="ident">FitScreen</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">Scale</span>::<span class="ident">X1</span> <span class="op">=&gt;</span> <span class="number">1</span>,
+            <span class="ident">Scale</span>::<span class="ident">X2</span> <span class="op">=&gt;</span> <span class="number">2</span>,
+            <span class="ident">Scale</span>::<span class="ident">X4</span> <span class="op">=&gt;</span> <span class="number">4</span>,
+            <span class="ident">Scale</span>::<span class="ident">X8</span> <span class="op">=&gt;</span> <span class="number">8</span>,
+            <span class="ident">Scale</span>::<span class="ident">X16</span> <span class="op">=&gt;</span> <span class="number">16</span>,
+            <span class="ident">Scale</span>::<span class="ident">X32</span> <span class="op">=&gt;</span> <span class="number">32</span>,
+            <span class="ident">Scale</span>::<span class="ident">FitScreen</span> <span class="op">=&gt;</span> {
                 <span class="kw">let</span> <span class="ident">wh</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">mfb_get_screen_size</span>();
-                <span class="kw">let</span> <span class="ident">screen_x</span> <span class="op">=</span> (<span class="ident">wh</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">16</span>) <span class="kw">as</span> <span class="ident">i32</span>;
+                <span class="kw">let</span> <span class="ident">screen_x</span> <span class="op">=</span> (<span class="ident">wh</span> <span class="op">&gt;&gt;</span> <span class="number">16</span>) <span class="kw">as</span> <span class="ident">i32</span>;
                 <span class="kw">let</span> <span class="ident">screen_y</span> <span class="op">=</span> (<span class="ident">wh</span> <span class="op">&amp;</span> <span class="number">0xffff</span>) <span class="kw">as</span> <span class="ident">i32</span>;
 
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">scale</span> <span class="op">=</span> <span class="number">1i32</span>;
@@ -1346,11 +1347,11 @@
                     <span class="kw">let</span> <span class="ident">w</span> <span class="op">=</span> <span class="ident">width</span> <span class="kw">as</span> <span class="ident">i32</span> <span class="op">*</span> (<span class="ident">scale</span> <span class="op">+</span> <span class="number">1</span>);
                     <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">height</span> <span class="kw">as</span> <span class="ident">i32</span> <span class="op">*</span> (<span class="ident">scale</span> <span class="op">+</span> <span class="number">1</span>);
 
-                    <span class="kw">if</span> <span class="ident">w</span> <span class="op">&gt;</span> <span class="ident">screen_x</span> <span class="op">|</span><span class="op">|</span> <span class="ident">h</span> <span class="op">&gt;</span> <span class="ident">screen_y</span> {
+                    <span class="kw">if</span> <span class="ident">w</span> <span class="op">&gt;</span> <span class="ident">screen_x</span> <span class="op">||</span> <span class="ident">h</span> <span class="op">&gt;</span> <span class="ident">screen_y</span> {
                         <span class="kw">break</span>;
                     }
 
-                    <span class="ident">scale</span> <span class="kw-2">*</span><span class="op">=</span> <span class="number">2</span>;
+                    <span class="ident">scale</span> <span class="op">*=</span> <span class="number">2</span>;
                 }
 
                 <span class="ident">scale</span>
@@ -1366,7 +1367,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Menu</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Menu</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Menu</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">menu_name</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">name</span>).<span class="ident">unwrap</span>();
             <span class="prelude-val">Ok</span>(<span class="ident">Menu</span> {
@@ -1375,114 +1376,114 @@
         }
     }
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">map_key_to_menu_key</span>(<span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">map_key_to_menu_key</span>(<span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
         <span class="kw">match</span> <span class="ident">key</span> {
-            <span class="ident">Key</span>::<span class="ident">A</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x00</span>,
-            <span class="ident">Key</span>::<span class="ident">S</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x01</span>,
-            <span class="ident">Key</span>::<span class="ident">D</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x02</span>,
-            <span class="ident">Key</span>::<span class="ident">F</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x03</span>,
-            <span class="ident">Key</span>::<span class="ident">H</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x04</span>,
-            <span class="ident">Key</span>::<span class="ident">G</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x05</span>,
-            <span class="ident">Key</span>::<span class="ident">Z</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x06</span>,
-            <span class="ident">Key</span>::<span class="ident">X</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x07</span>,
-            <span class="ident">Key</span>::<span class="ident">C</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x08</span>,
-            <span class="ident">Key</span>::<span class="ident">V</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x09</span>,
-            <span class="ident">Key</span>::<span class="ident">B</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x0b</span>,
-            <span class="ident">Key</span>::<span class="ident">Q</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x0c</span>,
-            <span class="ident">Key</span>::<span class="ident">W</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x0d</span>,
-            <span class="ident">Key</span>::<span class="ident">E</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x0e</span>,
-            <span class="ident">Key</span>::<span class="ident">R</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x0f</span>,
-            <span class="ident">Key</span>::<span class="ident">Y</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x10</span>,
-            <span class="ident">Key</span>::<span class="ident">T</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x11</span>,
-            <span class="ident">Key</span>::<span class="ident">Key1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x12</span>,
-            <span class="ident">Key</span>::<span class="ident">Key2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x13</span>,
-            <span class="ident">Key</span>::<span class="ident">Key3</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x14</span>,
-            <span class="ident">Key</span>::<span class="ident">Key4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x15</span>,
-            <span class="ident">Key</span>::<span class="ident">Key6</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x16</span>,
-            <span class="ident">Key</span>::<span class="ident">Key5</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x17</span>,
-            <span class="ident">Key</span>::<span class="ident">Equal</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x18</span>,
-            <span class="ident">Key</span>::<span class="ident">Key9</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x19</span>,
-            <span class="ident">Key</span>::<span class="ident">Key7</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x1a</span>,
-            <span class="ident">Key</span>::<span class="ident">Minus</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x1b</span>,
-            <span class="ident">Key</span>::<span class="ident">Key8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x1c</span>,
-            <span class="ident">Key</span>::<span class="ident">Key0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x1d</span>,
-            <span class="ident">Key</span>::<span class="ident">RightBracket</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x1e</span>,
-            <span class="ident">Key</span>::<span class="ident">O</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x1f</span>,
-            <span class="ident">Key</span>::<span class="ident">U</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x20</span>,
-            <span class="ident">Key</span>::<span class="ident">LeftBracket</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x21</span>,
-            <span class="ident">Key</span>::<span class="ident">I</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x22</span>,
-            <span class="ident">Key</span>::<span class="ident">P</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x23</span>,
-            <span class="ident">Key</span>::<span class="ident">Enter</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x24</span>,
-            <span class="ident">Key</span>::<span class="ident">L</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x25</span>,
-            <span class="ident">Key</span>::<span class="ident">J</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x26</span>,
-            <span class="ident">Key</span>::<span class="ident">Apostrophe</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x27</span>,
-            <span class="ident">Key</span>::<span class="ident">K</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x28</span>,
-            <span class="ident">Key</span>::<span class="ident">Semicolon</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x29</span>,
-            <span class="ident">Key</span>::<span class="ident">Backslash</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x2a</span>,
-            <span class="ident">Key</span>::<span class="ident">Comma</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x2b</span>,
-            <span class="ident">Key</span>::<span class="ident">Slash</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x2c</span>,
-            <span class="ident">Key</span>::<span class="ident">N</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x2d</span>,
-            <span class="ident">Key</span>::<span class="ident">M</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x2e</span>,
-            <span class="ident">Key</span>::<span class="ident">Period</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x2f</span>,
+            <span class="ident">Key</span>::<span class="ident">A</span> <span class="op">=&gt;</span> <span class="number">0x00</span>,
+            <span class="ident">Key</span>::<span class="ident">S</span> <span class="op">=&gt;</span> <span class="number">0x01</span>,
+            <span class="ident">Key</span>::<span class="ident">D</span> <span class="op">=&gt;</span> <span class="number">0x02</span>,
+            <span class="ident">Key</span>::<span class="ident">F</span> <span class="op">=&gt;</span> <span class="number">0x03</span>,
+            <span class="ident">Key</span>::<span class="ident">H</span> <span class="op">=&gt;</span> <span class="number">0x04</span>,
+            <span class="ident">Key</span>::<span class="ident">G</span> <span class="op">=&gt;</span> <span class="number">0x05</span>,
+            <span class="ident">Key</span>::<span class="ident">Z</span> <span class="op">=&gt;</span> <span class="number">0x06</span>,
+            <span class="ident">Key</span>::<span class="ident">X</span> <span class="op">=&gt;</span> <span class="number">0x07</span>,
+            <span class="ident">Key</span>::<span class="ident">C</span> <span class="op">=&gt;</span> <span class="number">0x08</span>,
+            <span class="ident">Key</span>::<span class="ident">V</span> <span class="op">=&gt;</span> <span class="number">0x09</span>,
+            <span class="ident">Key</span>::<span class="ident">B</span> <span class="op">=&gt;</span> <span class="number">0x0b</span>,
+            <span class="ident">Key</span>::<span class="ident">Q</span> <span class="op">=&gt;</span> <span class="number">0x0c</span>,
+            <span class="ident">Key</span>::<span class="ident">W</span> <span class="op">=&gt;</span> <span class="number">0x0d</span>,
+            <span class="ident">Key</span>::<span class="ident">E</span> <span class="op">=&gt;</span> <span class="number">0x0e</span>,
+            <span class="ident">Key</span>::<span class="ident">R</span> <span class="op">=&gt;</span> <span class="number">0x0f</span>,
+            <span class="ident">Key</span>::<span class="ident">Y</span> <span class="op">=&gt;</span> <span class="number">0x10</span>,
+            <span class="ident">Key</span>::<span class="ident">T</span> <span class="op">=&gt;</span> <span class="number">0x11</span>,
+            <span class="ident">Key</span>::<span class="ident">Key1</span> <span class="op">=&gt;</span> <span class="number">0x12</span>,
+            <span class="ident">Key</span>::<span class="ident">Key2</span> <span class="op">=&gt;</span> <span class="number">0x13</span>,
+            <span class="ident">Key</span>::<span class="ident">Key3</span> <span class="op">=&gt;</span> <span class="number">0x14</span>,
+            <span class="ident">Key</span>::<span class="ident">Key4</span> <span class="op">=&gt;</span> <span class="number">0x15</span>,
+            <span class="ident">Key</span>::<span class="ident">Key6</span> <span class="op">=&gt;</span> <span class="number">0x16</span>,
+            <span class="ident">Key</span>::<span class="ident">Key5</span> <span class="op">=&gt;</span> <span class="number">0x17</span>,
+            <span class="ident">Key</span>::<span class="ident">Equal</span> <span class="op">=&gt;</span> <span class="number">0x18</span>,
+            <span class="ident">Key</span>::<span class="ident">Key9</span> <span class="op">=&gt;</span> <span class="number">0x19</span>,
+            <span class="ident">Key</span>::<span class="ident">Key7</span> <span class="op">=&gt;</span> <span class="number">0x1a</span>,
+            <span class="ident">Key</span>::<span class="ident">Minus</span> <span class="op">=&gt;</span> <span class="number">0x1b</span>,
+            <span class="ident">Key</span>::<span class="ident">Key8</span> <span class="op">=&gt;</span> <span class="number">0x1c</span>,
+            <span class="ident">Key</span>::<span class="ident">Key0</span> <span class="op">=&gt;</span> <span class="number">0x1d</span>,
+            <span class="ident">Key</span>::<span class="ident">RightBracket</span> <span class="op">=&gt;</span> <span class="number">0x1e</span>,
+            <span class="ident">Key</span>::<span class="ident">O</span> <span class="op">=&gt;</span> <span class="number">0x1f</span>,
+            <span class="ident">Key</span>::<span class="ident">U</span> <span class="op">=&gt;</span> <span class="number">0x20</span>,
+            <span class="ident">Key</span>::<span class="ident">LeftBracket</span> <span class="op">=&gt;</span> <span class="number">0x21</span>,
+            <span class="ident">Key</span>::<span class="ident">I</span> <span class="op">=&gt;</span> <span class="number">0x22</span>,
+            <span class="ident">Key</span>::<span class="ident">P</span> <span class="op">=&gt;</span> <span class="number">0x23</span>,
+            <span class="ident">Key</span>::<span class="ident">Enter</span> <span class="op">=&gt;</span> <span class="number">0x24</span>,
+            <span class="ident">Key</span>::<span class="ident">L</span> <span class="op">=&gt;</span> <span class="number">0x25</span>,
+            <span class="ident">Key</span>::<span class="ident">J</span> <span class="op">=&gt;</span> <span class="number">0x26</span>,
+            <span class="ident">Key</span>::<span class="ident">Apostrophe</span> <span class="op">=&gt;</span> <span class="number">0x27</span>,
+            <span class="ident">Key</span>::<span class="ident">K</span> <span class="op">=&gt;</span> <span class="number">0x28</span>,
+            <span class="ident">Key</span>::<span class="ident">Semicolon</span> <span class="op">=&gt;</span> <span class="number">0x29</span>,
+            <span class="ident">Key</span>::<span class="ident">Backslash</span> <span class="op">=&gt;</span> <span class="number">0x2a</span>,
+            <span class="ident">Key</span>::<span class="ident">Comma</span> <span class="op">=&gt;</span> <span class="number">0x2b</span>,
+            <span class="ident">Key</span>::<span class="ident">Slash</span> <span class="op">=&gt;</span> <span class="number">0x2c</span>,
+            <span class="ident">Key</span>::<span class="ident">N</span> <span class="op">=&gt;</span> <span class="number">0x2d</span>,
+            <span class="ident">Key</span>::<span class="ident">M</span> <span class="op">=&gt;</span> <span class="number">0x2e</span>,
+            <span class="ident">Key</span>::<span class="ident">Period</span> <span class="op">=&gt;</span> <span class="number">0x2f</span>,
             <span class="comment">// Key::Tab =&gt; 0x30,</span>
-            <span class="ident">Key</span>::<span class="ident">Space</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x31</span>,
+            <span class="ident">Key</span>::<span class="ident">Space</span> <span class="op">=&gt;</span> <span class="number">0x31</span>,
             <span class="comment">// Key::Backspace =&gt; 0x33,</span>
             <span class="comment">// Key::Escape =&gt; 0x35,</span>
-            <span class="ident">Key</span>::<span class="ident">RightSuper</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x36</span>,
-            <span class="ident">Key</span>::<span class="ident">LeftSuper</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x37</span>,
-            <span class="ident">Key</span>::<span class="ident">LeftShift</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x38</span>,
-            <span class="ident">Key</span>::<span class="ident">CapsLock</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x39</span>,
-            <span class="ident">Key</span>::<span class="ident">LeftAlt</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x3a</span>,
-            <span class="ident">Key</span>::<span class="ident">LeftCtrl</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x3b</span>,
-            <span class="ident">Key</span>::<span class="ident">RightShift</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x3c</span>,
-            <span class="ident">Key</span>::<span class="ident">RightAlt</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x3d</span>,
-            <span class="ident">Key</span>::<span class="ident">RightCtrl</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x3e</span>,
+            <span class="ident">Key</span>::<span class="ident">RightSuper</span> <span class="op">=&gt;</span> <span class="number">0x36</span>,
+            <span class="ident">Key</span>::<span class="ident">LeftSuper</span> <span class="op">=&gt;</span> <span class="number">0x37</span>,
+            <span class="ident">Key</span>::<span class="ident">LeftShift</span> <span class="op">=&gt;</span> <span class="number">0x38</span>,
+            <span class="ident">Key</span>::<span class="ident">CapsLock</span> <span class="op">=&gt;</span> <span class="number">0x39</span>,
+            <span class="ident">Key</span>::<span class="ident">LeftAlt</span> <span class="op">=&gt;</span> <span class="number">0x3a</span>,
+            <span class="ident">Key</span>::<span class="ident">LeftCtrl</span> <span class="op">=&gt;</span> <span class="number">0x3b</span>,
+            <span class="ident">Key</span>::<span class="ident">RightShift</span> <span class="op">=&gt;</span> <span class="number">0x3c</span>,
+            <span class="ident">Key</span>::<span class="ident">RightAlt</span> <span class="op">=&gt;</span> <span class="number">0x3d</span>,
+            <span class="ident">Key</span>::<span class="ident">RightCtrl</span> <span class="op">=&gt;</span> <span class="number">0x3e</span>,
             <span class="comment">// Key::Equal =&gt; 0x51,</span>
-            <span class="ident">Key</span>::<span class="ident">NumPad0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x52</span>,
-            <span class="ident">Key</span>::<span class="ident">NumPad1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x53</span>,
-            <span class="ident">Key</span>::<span class="ident">NumPad2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x54</span>,
-            <span class="ident">Key</span>::<span class="ident">NumPad3</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x55</span>,
-            <span class="ident">Key</span>::<span class="ident">NumPad4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x56</span>,
-            <span class="ident">Key</span>::<span class="ident">NumPad5</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x57</span>,
-            <span class="ident">Key</span>::<span class="ident">NumPad6</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x58</span>,
-            <span class="ident">Key</span>::<span class="ident">NumPad7</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x59</span>,
-            <span class="ident">Key</span>::<span class="ident">NumPad8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x5b</span>,
-            <span class="ident">Key</span>::<span class="ident">NumPad9</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x5c</span>,
-            <span class="ident">Key</span>::<span class="ident">F5</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x60</span>,
-            <span class="ident">Key</span>::<span class="ident">F6</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x61</span>,
-            <span class="ident">Key</span>::<span class="ident">F7</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x62</span>,
-            <span class="ident">Key</span>::<span class="ident">F3</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x63</span>,
-            <span class="ident">Key</span>::<span class="ident">F8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x64</span>,
-            <span class="ident">Key</span>::<span class="ident">F9</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x65</span>,
-            <span class="ident">Key</span>::<span class="ident">F11</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x67</span>,
-            <span class="ident">Key</span>::<span class="ident">F14</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x6b</span>,
-            <span class="ident">Key</span>::<span class="ident">F10</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x6d</span>,
-            <span class="ident">Key</span>::<span class="ident">F12</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x6f</span>,
-            <span class="ident">Key</span>::<span class="ident">F15</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x71</span>,
-            <span class="ident">Key</span>::<span class="ident">Insert</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x72</span>, <span class="comment">/* Really Help... */</span>
-            <span class="ident">Key</span>::<span class="ident">Home</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x73</span>,
+            <span class="ident">Key</span>::<span class="ident">NumPad0</span> <span class="op">=&gt;</span> <span class="number">0x52</span>,
+            <span class="ident">Key</span>::<span class="ident">NumPad1</span> <span class="op">=&gt;</span> <span class="number">0x53</span>,
+            <span class="ident">Key</span>::<span class="ident">NumPad2</span> <span class="op">=&gt;</span> <span class="number">0x54</span>,
+            <span class="ident">Key</span>::<span class="ident">NumPad3</span> <span class="op">=&gt;</span> <span class="number">0x55</span>,
+            <span class="ident">Key</span>::<span class="ident">NumPad4</span> <span class="op">=&gt;</span> <span class="number">0x56</span>,
+            <span class="ident">Key</span>::<span class="ident">NumPad5</span> <span class="op">=&gt;</span> <span class="number">0x57</span>,
+            <span class="ident">Key</span>::<span class="ident">NumPad6</span> <span class="op">=&gt;</span> <span class="number">0x58</span>,
+            <span class="ident">Key</span>::<span class="ident">NumPad7</span> <span class="op">=&gt;</span> <span class="number">0x59</span>,
+            <span class="ident">Key</span>::<span class="ident">NumPad8</span> <span class="op">=&gt;</span> <span class="number">0x5b</span>,
+            <span class="ident">Key</span>::<span class="ident">NumPad9</span> <span class="op">=&gt;</span> <span class="number">0x5c</span>,
+            <span class="ident">Key</span>::<span class="ident">F5</span> <span class="op">=&gt;</span> <span class="number">0x60</span>,
+            <span class="ident">Key</span>::<span class="ident">F6</span> <span class="op">=&gt;</span> <span class="number">0x61</span>,
+            <span class="ident">Key</span>::<span class="ident">F7</span> <span class="op">=&gt;</span> <span class="number">0x62</span>,
+            <span class="ident">Key</span>::<span class="ident">F3</span> <span class="op">=&gt;</span> <span class="number">0x63</span>,
+            <span class="ident">Key</span>::<span class="ident">F8</span> <span class="op">=&gt;</span> <span class="number">0x64</span>,
+            <span class="ident">Key</span>::<span class="ident">F9</span> <span class="op">=&gt;</span> <span class="number">0x65</span>,
+            <span class="ident">Key</span>::<span class="ident">F11</span> <span class="op">=&gt;</span> <span class="number">0x67</span>,
+            <span class="ident">Key</span>::<span class="ident">F14</span> <span class="op">=&gt;</span> <span class="number">0x6b</span>,
+            <span class="ident">Key</span>::<span class="ident">F10</span> <span class="op">=&gt;</span> <span class="number">0x6d</span>,
+            <span class="ident">Key</span>::<span class="ident">F12</span> <span class="op">=&gt;</span> <span class="number">0x6f</span>,
+            <span class="ident">Key</span>::<span class="ident">F15</span> <span class="op">=&gt;</span> <span class="number">0x71</span>,
+            <span class="ident">Key</span>::<span class="ident">Insert</span> <span class="op">=&gt;</span> <span class="number">0x72</span>, <span class="comment">/* Really Help... */</span>
+            <span class="ident">Key</span>::<span class="ident">Home</span> <span class="op">=&gt;</span> <span class="number">0x73</span>,
             <span class="comment">// Key::PageUp =&gt; 0x74,</span>
-            <span class="ident">Key</span>::<span class="ident">Delete</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x75</span>,
-            <span class="ident">Key</span>::<span class="ident">F4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x76</span>,
-            <span class="ident">Key</span>::<span class="ident">End</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x77</span>,
-            <span class="ident">Key</span>::<span class="ident">F2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x78</span>,
+            <span class="ident">Key</span>::<span class="ident">Delete</span> <span class="op">=&gt;</span> <span class="number">0x75</span>,
+            <span class="ident">Key</span>::<span class="ident">F4</span> <span class="op">=&gt;</span> <span class="number">0x76</span>,
+            <span class="ident">Key</span>::<span class="ident">End</span> <span class="op">=&gt;</span> <span class="number">0x77</span>,
+            <span class="ident">Key</span>::<span class="ident">F2</span> <span class="op">=&gt;</span> <span class="number">0x78</span>,
             <span class="comment">// Key::PageDown =&gt; 0x79,</span>
-            <span class="ident">Key</span>::<span class="ident">F1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x7a</span>,
+            <span class="ident">Key</span>::<span class="ident">F1</span> <span class="op">=&gt;</span> <span class="number">0x7a</span>,
             <span class="comment">// Key::Left =&gt; 0x7b,</span>
             <span class="comment">// Key::Right =&gt; 0x7c,</span>
             <span class="comment">// Key::Down =&gt; 0x7d,</span>
             <span class="comment">// Key::Up =&gt; 0x7e,</span>
-            <span class="ident">Key</span>::<span class="ident">Left</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x2190</span>,
-            <span class="ident">Key</span>::<span class="ident">Up</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x2191</span>,
-            <span class="ident">Key</span>::<span class="ident">Down</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x2193</span>,
-            <span class="ident">Key</span>::<span class="ident">Right</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x2192</span>,
-            <span class="ident">Key</span>::<span class="ident">Escape</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x238b</span>,
+            <span class="ident">Key</span>::<span class="ident">Left</span> <span class="op">=&gt;</span> <span class="number">0x2190</span>,
+            <span class="ident">Key</span>::<span class="ident">Up</span> <span class="op">=&gt;</span> <span class="number">0x2191</span>,
+            <span class="ident">Key</span>::<span class="ident">Down</span> <span class="op">=&gt;</span> <span class="number">0x2193</span>,
+            <span class="ident">Key</span>::<span class="ident">Right</span> <span class="op">=&gt;</span> <span class="number">0x2192</span>,
+            <span class="ident">Key</span>::<span class="ident">Escape</span> <span class="op">=&gt;</span> <span class="number">0x238b</span>,
             <span class="comment">// Key::Enter =&gt; 0x000d,</span>
-            <span class="ident">Key</span>::<span class="ident">Backspace</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x232b</span>,
-            <span class="ident">Key</span>::<span class="ident">Tab</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x21e4</span>,
-            <span class="ident">Key</span>::<span class="ident">PageUp</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x21de</span>,
-            <span class="ident">Key</span>::<span class="ident">PageDown</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x21df</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0x7f</span>,
+            <span class="ident">Key</span>::<span class="ident">Backspace</span> <span class="op">=&gt;</span> <span class="number">0x232b</span>,
+            <span class="ident">Key</span>::<span class="ident">Tab</span> <span class="op">=&gt;</span> <span class="number">0x21e4</span>,
+            <span class="ident">Key</span>::<span class="ident">PageUp</span> <span class="op">=&gt;</span> <span class="number">0x21de</span>,
+            <span class="ident">Key</span>::<span class="ident">PageDown</span> <span class="op">=&gt;</span> <span class="number">0x21df</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="number">0x7f</span>,
         }
     }
 
@@ -1493,7 +1494,7 @@
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_menu_item</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">item</span>: <span class="kw-2">&amp;</span><span class="ident">MenuItem</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MenuItemHandle</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_menu_item</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">item</span>: <span class="kw-2">&amp;</span><span class="ident">MenuItem</span>) <span class="op">-&gt;</span> <span class="ident">MenuItemHandle</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">item_name</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">label</span>.<span class="ident">as_str</span>()).<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">conv_key</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">map_key_to_menu_key</span>(<span class="ident">item</span>.<span class="ident">key</span>);

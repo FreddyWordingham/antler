@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/rand_distr-0.2.2/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="https://www.rust-lang.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../rand_distr/index.html'><div class='logo-container'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/rand_distr-0.3.0/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="https://www.rust-lang.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../rand_distr/index.html'><div class='logo-container'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -132,6 +133,40 @@
 <span id="132">132</span>
 <span id="133">133</span>
 <span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// Copyright 2019 Developers of the Rand project.</span>
 <span class="comment">//</span>
@@ -141,15 +176,20 @@
 <span class="comment">// option. This file may not be copied, modified, or distributed</span>
 <span class="comment">// except according to those terms.</span>
 
-<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;https://www.rust-lang.org/logos/rust-logo-128x128-blk.png&quot;</span>,
-       <span class="ident">html_favicon_url</span> <span class="op">=</span> <span class="string">&quot;https://www.rust-lang.org/favicon.ico&quot;</span>,
-       <span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://rust-random.github.io/rand/&quot;</span>)]</span>
-
+<span class="attribute">#![<span class="ident">doc</span>(
+    <span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;https://www.rust-lang.org/logos/rust-logo-128x128-blk.png&quot;</span>,
+    <span class="ident">html_favicon_url</span> <span class="op">=</span> <span class="string">&quot;https://www.rust-lang.org/favicon.ico&quot;</span>,
+    <span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://rust-random.github.io/rand/&quot;</span>
+)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_debug_implementations</span>)]</span>
-
-<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">excessive_precision</span>, <span class="ident">clippy</span>::<span class="ident">float_cmp</span>, <span class="ident">clippy</span>::<span class="ident">unreadable_literal</span>)]</span>
-<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">neg_cmp_op_on_partial_ord</span>)]</span>  <span class="comment">// suggested fix too verbose</span>
+<span class="attribute">#![<span class="ident">allow</span>(
+    <span class="ident">clippy</span>::<span class="ident">excessive_precision</span>,
+    <span class="ident">clippy</span>::<span class="ident">float_cmp</span>,
+    <span class="ident">clippy</span>::<span class="ident">unreadable_literal</span>
+)]</span>
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">neg_cmp_op_on_partial_ord</span>)]</span> <span class="comment">// suggested fix too verbose</span>
+<span class="attribute">#![<span class="ident">no_std</span>]</span>
 
 <span class="doccomment">//! Generating random samples from probability distributions.</span>
 <span class="doccomment">//!</span>
@@ -160,10 +200,10 @@
 <span class="doccomment">//! [`Distribution`] trait and implementations.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! The following are re-exported:</span>
-<span class="doccomment">//! </span>
+<span class="doccomment">//!</span>
 <span class="doccomment">//! - The [`Distribution`] trait and [`DistIter`] helper type</span>
-<span class="doccomment">//! - The [`Standard`], [`Alphanumeric`], [`Uniform`], [`OpenClosed01`], [`Open01`] and [`Bernoulli`] distributions</span>
-<span class="doccomment">//! - The [`weighted`] sub-module</span>
+<span class="doccomment">//! - The [`Standard`], [`Alphanumeric`], [`Uniform`], [`OpenClosed01`],</span>
+<span class="doccomment">//! [`Open01`], [`Bernoulli`], and [`WeightedIndex`] distributions</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Distributions</span>
 <span class="doccomment">//!</span>
@@ -197,53 +237,82 @@
 <span class="doccomment">//!   - [`UnitBall`] distribution</span>
 <span class="doccomment">//!   - [`UnitCircle`] distribution</span>
 <span class="doccomment">//!   - [`UnitDisc`] distribution</span>
+<span class="doccomment">//! - Misc. distributions</span>
+<span class="doccomment">//!   - [`InverseGaussian`] distribution</span>
+<span class="doccomment">//!   - [`NormalInverseGaussian`] distribution</span>
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">distributions</span>::{<span class="ident">Distribution</span>, <span class="ident">DistIter</span>, <span class="ident">Standard</span>,
-    <span class="ident">Alphanumeric</span>, <span class="ident">Uniform</span>, <span class="ident">OpenClosed01</span>, <span class="ident">Open01</span>, <span class="ident">Bernoulli</span>, <span class="ident">uniform</span>, <span class="ident">weighted</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>, <span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)))]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">alloc</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">unit_sphere</span>::<span class="ident">UnitSphere</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">std</span>;
+<span class="comment">// TODO: remove on MSRV bump to 1.36</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">std</span> <span class="kw">as</span> <span class="ident">alloc</span>;
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">distributions</span>::{
+    <span class="ident">uniform</span>, <span class="ident">Alphanumeric</span>, <span class="ident">Bernoulli</span>, <span class="ident">BernoulliError</span>, <span class="ident">DistIter</span>, <span class="ident">Distribution</span>, <span class="ident">Open01</span>, <span class="ident">OpenClosed01</span>,
+    <span class="ident">Standard</span>, <span class="ident">Uniform</span>,
+};
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">binomial</span>::{<span class="ident">Binomial</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">BinomialError</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">cauchy</span>::{<span class="ident">Cauchy</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">CauchyError</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">dirichlet</span>::{<span class="ident">Dirichlet</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">DirichletError</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">exponential</span>::{<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">ExpError</span>, <span class="ident">Exp</span>, <span class="ident">Exp1</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">gamma</span>::{
+    <span class="ident">Beta</span>, <span class="ident">BetaError</span>, <span class="ident">ChiSquared</span>, <span class="ident">ChiSquaredError</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">GammaError</span>, <span class="ident">FisherF</span>, <span class="ident">FisherFError</span>,
+    <span class="ident">Gamma</span>, <span class="ident">StudentT</span>,
+};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">inverse_gaussian</span>::{<span class="ident">InverseGaussian</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">InverseGaussianError</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">normal</span>::{<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">NormalError</span>, <span class="ident">LogNormal</span>, <span class="ident">Normal</span>, <span class="ident">StandardNormal</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">normal_inverse_gaussian</span>::{<span class="ident">NormalInverseGaussian</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">NormalInverseGaussianError</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">pareto</span>::{<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">ParetoError</span>, <span class="ident">Pareto</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">pert</span>::{<span class="ident">Pert</span>, <span class="ident">PertError</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">poisson</span>::{<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">PoissonError</span>, <span class="ident">Poisson</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">triangular</span>::{<span class="ident">Triangular</span>, <span class="ident">TriangularError</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">unit_ball</span>::<span class="ident">UnitBall</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">unit_circle</span>::<span class="ident">UnitCircle</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">unit_disc</span>::<span class="ident">UnitDisc</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">gamma</span>::{<span class="ident">Gamma</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">GammaError</span>, <span class="ident">ChiSquared</span>, <span class="ident">ChiSquaredError</span>,
-    <span class="ident">FisherF</span>, <span class="ident">FisherFError</span>, <span class="ident">StudentT</span>, <span class="ident">Beta</span>, <span class="ident">BetaError</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">normal</span>::{<span class="ident">Normal</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">NormalError</span>, <span class="ident">LogNormal</span>, <span class="ident">StandardNormal</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">exponential</span>::{<span class="ident">Exp</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">ExpError</span>, <span class="ident">Exp1</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">pareto</span>::{<span class="ident">Pareto</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">ParetoError</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">pert</span>::{<span class="ident">Pert</span>, <span class="ident">PertError</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">poisson</span>::{<span class="ident">Poisson</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">PoissonError</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">binomial</span>::{<span class="ident">Binomial</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">BinomialError</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">cauchy</span>::{<span class="ident">Cauchy</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">CauchyError</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">dirichlet</span>::{<span class="ident">Dirichlet</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">DirichletError</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">triangular</span>::{<span class="ident">Triangular</span>, <span class="ident">TriangularError</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">weibull</span>::{<span class="ident">Weibull</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">WeibullError</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">utils</span>::<span class="ident">Float</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">unit_sphere</span>::<span class="ident">UnitSphere</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">weibull</span>::{<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">WeibullError</span>, <span class="ident">Weibull</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">distributions</span>::<span class="ident">weighted</span>::{<span class="ident">WeightedError</span>, <span class="ident">WeightedIndex</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">weighted_alias</span>::<span class="ident">WeightedAliasIndex</span>;
 
-<span class="kw">mod</span> <span class="ident">unit_sphere</span>;
-<span class="kw">mod</span> <span class="ident">unit_ball</span>;
-<span class="kw">mod</span> <span class="ident">unit_circle</span>;
-<span class="kw">mod</span> <span class="ident">unit_disc</span>;
-<span class="kw">mod</span> <span class="ident">gamma</span>;
-<span class="kw">mod</span> <span class="ident">normal</span>;
-<span class="kw">mod</span> <span class="ident">exponential</span>;
-<span class="kw">mod</span> <span class="ident">pareto</span>;
-<span class="kw">mod</span> <span class="ident">pert</span>;
-<span class="kw">mod</span> <span class="ident">poisson</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">num_traits</span>;
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">weighted_alias</span>;
+
 <span class="kw">mod</span> <span class="ident">binomial</span>;
 <span class="kw">mod</span> <span class="ident">cauchy</span>;
 <span class="kw">mod</span> <span class="ident">dirichlet</span>;
+<span class="kw">mod</span> <span class="ident">exponential</span>;
+<span class="kw">mod</span> <span class="ident">gamma</span>;
+<span class="kw">mod</span> <span class="ident">inverse_gaussian</span>;
+<span class="kw">mod</span> <span class="ident">normal</span>;
+<span class="kw">mod</span> <span class="ident">normal_inverse_gaussian</span>;
+<span class="kw">mod</span> <span class="ident">pareto</span>;
+<span class="kw">mod</span> <span class="ident">pert</span>;
+<span class="kw">mod</span> <span class="ident">poisson</span>;
 <span class="kw">mod</span> <span class="ident">triangular</span>;
-<span class="kw">mod</span> <span class="ident">weibull</span>;
+<span class="kw">mod</span> <span class="ident">unit_ball</span>;
+<span class="kw">mod</span> <span class="ident">unit_circle</span>;
+<span class="kw">mod</span> <span class="ident">unit_disc</span>;
+<span class="kw">mod</span> <span class="ident">unit_sphere</span>;
 <span class="kw">mod</span> <span class="ident">utils</span>;
+<span class="kw">mod</span> <span class="ident">weibull</span>;
 <span class="kw">mod</span> <span class="ident">ziggurat_tables</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
     <span class="comment">// Notes on testing</span>
-    <span class="comment">// </span>
+    <span class="comment">//</span>
     <span class="comment">// Testing random number distributions correctly is hard. The following</span>
     <span class="comment">// testing is desired:</span>
-    <span class="comment">// </span>
+    <span class="comment">//</span>
     <span class="comment">// - Construction: test initialisation with a few valid parameter sets.</span>
     <span class="comment">// - Erroneous usage: test that incorrect usage generates an error.</span>
     <span class="comment">// - Vector: test that usage with fixed inputs (including RNG) generates a</span>
@@ -260,7 +329,7 @@
     <span class="comment">// generated. This is redundant with vector and correctness tests.</span>
 
     <span class="doccomment">/// Construct a deterministic RNG with the given seed</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rng</span>(<span class="ident">seed</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">impl</span> <span class="ident">rand</span>::<span class="ident">RngCore</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rng</span>(<span class="ident">seed</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="kw">impl</span> <span class="ident">rand</span>::<span class="ident">RngCore</span> {
         <span class="comment">// For tests, we want a statistically good, fast, reproducible RNG.</span>
         <span class="comment">// PCG32 will do fine, and will be easy to embed if we ever need to.</span>
         <span class="kw">const</span> <span class="ident">INC</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">11634580027462260723</span>;

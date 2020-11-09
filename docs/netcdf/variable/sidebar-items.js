@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["Endianness","Enum for variables endianness"]],"struct":[["Variable","This struct defines a `netCDF` variable."],["VariableMut","Mutable access to a variable."]],"trait":[["Numeric","This trait allow an implicit cast when fetching a netCDF variable. These methods are not be called directly, but used through methods on `Variable`"]]});

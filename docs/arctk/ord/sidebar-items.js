@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["list","Enumerated lists."],["set","Set implementation."],["sort","Ordering functions."]]});
+initSidebarItems({"mod":[["list","Enumerated lists."],["name","Name trait."],["register","Register structure."],["set","Set implementation."],["sort","Ordering functions."]]});

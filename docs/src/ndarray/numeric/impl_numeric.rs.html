@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.13.1/src/numeric/impl_numeric.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>impl_numeric.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ndarray/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.13.1/src/numeric/impl_numeric.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>impl_numeric.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ndarray/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -367,7 +368,7 @@
     <span class="doccomment">///                [3., 4.]]);</span>
     <span class="doccomment">/// assert_eq!(a.sum(), 10.);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sum</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">A</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sum</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">A</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">A</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">num_traits</span>::<span class="ident">Zero</span>,
     {
@@ -398,12 +399,12 @@
     <span class="doccomment">/// **Panics** if `A::from_usize()` fails to convert the number of elements in the array.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [arithmetic mean]: https://en.wikipedia.org/wiki/Arithmetic_mean</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mean</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mean</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">FromPrimitive</span> <span class="op">+</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">A</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Div</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">A</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Zero</span>,
     {
         <span class="kw">let</span> <span class="ident">n_elements</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span>();
-        <span class="kw">if</span> <span class="ident">n_elements</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">n_elements</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">n_elements</span> <span class="op">=</span> <span class="ident">A</span>::<span class="ident">from_usize</span>(<span class="ident">n_elements</span>)
@@ -417,7 +418,7 @@
     <span class="doccomment">/// *This method has been renamed to `.sum()` and will be deprecated in the</span>
     <span class="doccomment">/// next version.*</span>
     <span class="comment">// #[deprecated(note=&quot;renamed to `sum`&quot;, since=&quot;0.13&quot;)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scalar_sum</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">A</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scalar_sum</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">A</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">A</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">num_traits</span>::<span class="ident">Zero</span>,
     {
@@ -433,7 +434,7 @@
     <span class="doccomment">///                [3., 4.]]);</span>
     <span class="doccomment">/// assert_eq!(a.product(), 24.);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">product</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">A</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">product</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">A</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">A</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">num_traits</span>::<span class="ident">One</span>,
     {
@@ -467,7 +468,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Panics** if `axis` is out of bounds.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sum_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sum_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-&gt;</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">A</span><span class="op">&gt;</span>,
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
@@ -475,7 +476,7 @@
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">len_of</span>(<span class="ident">axis</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">zeros</span>(<span class="self">self</span>.<span class="ident">raw_dim</span>().<span class="ident">remove_axis</span>(<span class="ident">axis</span>));
         <span class="kw">let</span> <span class="ident">stride</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">strides</span>()[<span class="ident">axis</span>.<span class="ident">index</span>()];
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">ndim</span>() <span class="op">=</span><span class="op">=</span> <span class="number">2</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">stride</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">ndim</span>() <span class="op">==</span> <span class="number">2</span> <span class="op">&amp;&amp;</span> <span class="ident">stride</span> <span class="op">==</span> <span class="number">1</span> {
             <span class="comment">// contiguous along the axis we are summing</span>
             <span class="kw">let</span> <span class="ident">ax</span> <span class="op">=</span> <span class="ident">axis</span>.<span class="ident">index</span>();
             <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">elt</span>) <span class="kw">in</span> <span class="ident">enumerate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>) {
@@ -509,13 +510,13 @@
     <span class="doccomment">///     a.mean_axis(Axis(0)).unwrap().mean_axis(Axis(0)).unwrap() == aview0(&amp;3.5)</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mean_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Array</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mean_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Array</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;&gt;</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">FromPrimitive</span> <span class="op">+</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">A</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Div</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">A</span><span class="op">&gt;</span>,
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
     {
         <span class="kw">let</span> <span class="ident">axis_length</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">len_of</span>(<span class="ident">axis</span>);
-        <span class="kw">if</span> <span class="ident">axis_length</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">axis_length</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">axis_length</span> <span class="op">=</span>
@@ -567,7 +568,7 @@
     <span class="doccomment">/// let var = a.var_axis(Axis(0), 1.);</span>
     <span class="doccomment">/// assert_eq!(var, aview1(&amp;[4., 4.]));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">var_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="ident">ddof</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">var_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="ident">ddof</span>: <span class="ident">A</span>) <span class="op">-&gt;</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">FromPrimitive</span>,
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
@@ -575,7 +576,7 @@
         <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="ident">A</span>::<span class="ident">from_usize</span>(<span class="number">0</span>).<span class="ident">expect</span>(<span class="string">&quot;Converting 0 to `A` must not fail.&quot;</span>);
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">A</span>::<span class="ident">from_usize</span>(<span class="self">self</span>.<span class="ident">len_of</span>(<span class="ident">axis</span>)).<span class="ident">expect</span>(<span class="string">&quot;Converting length to `A` must not fail.&quot;</span>);
         <span class="macro">assert</span><span class="macro">!</span>(
-            <span class="op">!</span>(<span class="ident">ddof</span> <span class="op">&lt;</span> <span class="ident">zero</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ddof</span> <span class="op">&gt;</span> <span class="ident">n</span>),
+            <span class="op">!</span>(<span class="ident">ddof</span> <span class="op">&lt;</span> <span class="ident">zero</span> <span class="op">||</span> <span class="ident">ddof</span> <span class="op">&gt;</span> <span class="ident">n</span>),
             <span class="string">&quot;`ddof` must not be less than zero or greater than the length of \
              the axis&quot;</span>,
         );
@@ -635,7 +636,7 @@
     <span class="doccomment">/// let stddev = a.std_axis(Axis(0), 1.);</span>
     <span class="doccomment">/// assert_eq!(stddev, aview1(&amp;[2., 2.]));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">std_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="ident">ddof</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">std_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="ident">ddof</span>: <span class="ident">A</span>) <span class="op">-&gt;</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">FromPrimitive</span>,
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
@@ -653,7 +654,7 @@
         <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;Use `abs_diff_eq` - it requires the `approx` crate feature&quot;</span>,
         <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.13.0&quot;</span>
     )]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">all_close</span><span class="op">&lt;</span><span class="ident">S2</span>, <span class="ident">E</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S2</span>, <span class="ident">E</span><span class="op">&gt;</span>, <span class="ident">tol</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">all_close</span><span class="op">&lt;</span><span class="ident">S2</span>, <span class="ident">E</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S2</span>, <span class="ident">E</span><span class="op">&gt;</span>, <span class="ident">tol</span>: <span class="ident">A</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Float</span>,
         <span class="ident">S2</span>: <span class="ident">Data</span><span class="op">&lt;</span><span class="ident">Elem</span> <span class="op">=</span> <span class="ident">A</span><span class="op">&gt;</span>,
@@ -662,7 +663,7 @@
         <span class="op">!</span><span class="ident">Zip</span>::<span class="ident">from</span>(<span class="self">self</span>)
             .<span class="ident">and</span>(<span class="ident">rhs</span>.<span class="ident">broadcast_unwrap</span>(<span class="self">self</span>.<span class="ident">raw_dim</span>()))
             .<span class="ident">fold_while</span>((), <span class="op">|</span><span class="kw">_</span>, <span class="ident">x</span>, <span class="ident">y</span><span class="op">|</span> {
-                <span class="kw">if</span> (<span class="kw-2">*</span><span class="ident">x</span> <span class="op">-</span> <span class="kw-2">*</span><span class="ident">y</span>).<span class="ident">abs</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="ident">tol</span> {
+                <span class="kw">if</span> (<span class="kw-2">*</span><span class="ident">x</span> <span class="op">-</span> <span class="kw-2">*</span><span class="ident">y</span>).<span class="ident">abs</span>() <span class="op">&lt;=</span> <span class="ident">tol</span> {
                     <span class="ident">FoldWhile</span>::<span class="ident">Continue</span>(())
                 } <span class="kw">else</span> {
                     <span class="ident">FoldWhile</span>::<span class="ident">Done</span>(())

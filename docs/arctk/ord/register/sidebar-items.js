@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Register","Register used to convert between names and indices."]]});

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.13.1/src/shape_builder.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>shape_builder.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../ndarray/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.13.1/src/shape_builder.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>shape_builder.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../ndarray/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -137,10 +138,10 @@
     <span class="kw">type</span> <span class="ident">Dim</span>: <span class="ident">Dimension</span>;
     <span class="kw">type</span> <span class="ident">Strides</span>;
 
-    <span class="kw">fn</span> <span class="ident">into_shape</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span>;
-    <span class="kw">fn</span> <span class="ident">f</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span>;
-    <span class="kw">fn</span> <span class="ident">set_f</span>(<span class="self">self</span>, <span class="ident">is_f</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span>;
-    <span class="kw">fn</span> <span class="ident">strides</span>(<span class="self">self</span>, <span class="ident">strides</span>: <span class="self">Self</span>::<span class="ident">Strides</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">StrideShape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">into_shape</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">f</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">set_f</span>(<span class="self">self</span>, <span class="ident">is_f</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">strides</span>(<span class="self">self</span>, <span class="ident">strides</span>: <span class="self">Self</span>::<span class="ident">Strides</span>) <span class="op">-&gt;</span> <span class="ident">StrideShape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span>;
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>
@@ -148,7 +149,7 @@
     <span class="ident">D</span>: <span class="ident">Dimension</span>,
 {
     <span class="doccomment">/// Create a `Shape` from `dimension`, using the default memory layout.</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">dimension</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">dimension</span>: <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span> {
         <span class="ident">dimension</span>.<span class="ident">into_shape</span>()
     }
 }
@@ -158,7 +159,7 @@
     <span class="ident">D</span>: <span class="ident">Dimension</span>,
     <span class="ident">T</span>: <span class="ident">ShapeBuilder</span><span class="op">&lt;</span><span class="ident">Dim</span> <span class="op">=</span> <span class="ident">D</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">value</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">value</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into_shape</span>();
         <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="ident">shape</span>.<span class="ident">dim</span>;
         <span class="kw">let</span> <span class="ident">st</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">shape</span>.<span class="ident">is_c</span> {
@@ -196,19 +197,19 @@ impl&lt;D&gt; From&lt;Shape&lt;D&gt;&gt; for StrideShape&lt;D&gt;
 {
     <span class="kw">type</span> <span class="ident">Dim</span> <span class="op">=</span> <span class="ident">T</span>::<span class="ident">Dim</span>;
     <span class="kw">type</span> <span class="ident">Strides</span> <span class="op">=</span> <span class="ident">T</span>;
-    <span class="kw">fn</span> <span class="ident">into_shape</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">into_shape</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span> {
         <span class="ident">Shape</span> {
             <span class="ident">dim</span>: <span class="self">self</span>.<span class="ident">into_dimension</span>(),
             <span class="ident">is_c</span>: <span class="bool-val">true</span>,
         }
     }
-    <span class="kw">fn</span> <span class="ident">f</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">f</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">set_f</span>(<span class="bool-val">true</span>)
     }
-    <span class="kw">fn</span> <span class="ident">set_f</span>(<span class="self">self</span>, <span class="ident">is_f</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">set_f</span>(<span class="self">self</span>, <span class="ident">is_f</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">into_shape</span>().<span class="ident">set_f</span>(<span class="ident">is_f</span>)
     }
-    <span class="kw">fn</span> <span class="ident">strides</span>(<span class="self">self</span>, <span class="ident">st</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">StrideShape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">strides</span>(<span class="self">self</span>, <span class="ident">st</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">StrideShape</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Dim</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">into_shape</span>().<span class="ident">strides</span>(<span class="ident">st</span>.<span class="ident">into_dimension</span>())
     }
 }
@@ -219,17 +220,17 @@ impl&lt;D&gt; From&lt;Shape&lt;D&gt;&gt; for StrideShape&lt;D&gt;
 {
     <span class="kw">type</span> <span class="ident">Dim</span> <span class="op">=</span> <span class="ident">D</span>;
     <span class="kw">type</span> <span class="ident">Strides</span> <span class="op">=</span> <span class="ident">D</span>;
-    <span class="kw">fn</span> <span class="ident">into_shape</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">into_shape</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span> {
         <span class="self">self</span>
     }
-    <span class="kw">fn</span> <span class="ident">f</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">f</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">set_f</span>(<span class="bool-val">true</span>)
     }
-    <span class="kw">fn</span> <span class="ident">set_f</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">is_f</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">set_f</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">is_f</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">is_c</span> <span class="op">=</span> <span class="op">!</span><span class="ident">is_f</span>;
         <span class="self">self</span>
     }
-    <span class="kw">fn</span> <span class="ident">strides</span>(<span class="self">self</span>, <span class="ident">st</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">StrideShape</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">strides</span>(<span class="self">self</span>, <span class="ident">st</span>: <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="ident">StrideShape</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span> {
         <span class="ident">StrideShape</span> {
             <span class="ident">dim</span>: <span class="self">self</span>.<span class="ident">dim</span>,
             <span class="ident">strides</span>: <span class="ident">st</span>,
@@ -245,7 +246,7 @@ impl&lt;D&gt; From&lt;Shape&lt;D&gt;&gt; for StrideShape&lt;D&gt;
     <span class="comment">// Return a reference to the dimension</span>
     <span class="comment">//pub fn dimension(&amp;self) -&gt; &amp;D { &amp;self.dim }</span>
     <span class="doccomment">/// Return the size of the shape in number of elements</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">size</span>()
     }
 }

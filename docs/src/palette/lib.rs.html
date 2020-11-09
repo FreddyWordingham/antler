@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/palette-0.5.0/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../palette/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/palette-0.5.0/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../palette/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -852,18 +853,18 @@
 <span class="comment">//Helper macro for checking ranges and clamping.</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">assert_ranges</span> {
-    (@<span class="ident">make_tuple</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">first</span>:<span class="ident">pat</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">next</span>:<span class="ident">ident</span>,) <span class="op">=</span><span class="op">&gt;</span> ((<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">next</span>));
+    (@<span class="ident">make_tuple</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">first</span>:<span class="ident">pat</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">next</span>:<span class="ident">ident</span>,) <span class="op">=&gt;</span> ((<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">next</span>));
 
-    (@<span class="ident">make_tuple</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">first</span>:<span class="ident">pat</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">next</span>:<span class="ident">ident</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>:<span class="ident">ident</span>,)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> (
+    (@<span class="ident">make_tuple</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">first</span>:<span class="ident">pat</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">next</span>:<span class="ident">ident</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>:<span class="ident">ident</span>,)<span class="kw-2">*</span>) <span class="op">=&gt;</span> (
         <span class="macro">assert_ranges</span><span class="macro">!</span>(@<span class="ident">make_tuple</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">next</span>), $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>,)<span class="kw-2">*</span>)
     );
 
     (
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span> <span class="op">&lt;</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty_params</span>:<span class="ident">ty</span>),<span class="op">+</span> <span class="op">&gt;</span>;
-        <span class="ident">limited</span> {$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">limited</span>:<span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">limited_from</span>:<span class="ident">expr</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">limited_to</span>:<span class="ident">expr</span>),<span class="op">+</span>}
-        <span class="ident">limited_min</span> {$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">limited_min</span>:<span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">limited_min_from</span>:<span class="ident">expr</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">limited_min_to</span>:<span class="ident">expr</span>),<span class="kw-2">*</span>}
-        <span class="ident">unlimited</span> {$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">unlimited</span>:<span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unlimited_from</span>:<span class="ident">expr</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unlimited_to</span>:<span class="ident">expr</span>),<span class="kw-2">*</span>}
-    ) <span class="op">=</span><span class="op">&gt;</span> (
+        <span class="ident">limited</span> {$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">limited</span>:<span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">limited_from</span>:<span class="ident">expr</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">limited_to</span>:<span class="ident">expr</span>),<span class="op">+</span>}
+        <span class="ident">limited_min</span> {$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">limited_min</span>:<span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">limited_min_from</span>:<span class="ident">expr</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">limited_min_to</span>:<span class="ident">expr</span>),<span class="kw-2">*</span>}
+        <span class="ident">unlimited</span> {$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">unlimited</span>:<span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unlimited_from</span>:<span class="ident">expr</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unlimited_to</span>:<span class="ident">expr</span>),<span class="kw-2">*</span>}
+    ) <span class="op">=&gt;</span> (
         {
             <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">iter</span>::<span class="ident">repeat</span>;
             <span class="kw">use</span> <span class="ident">Limited</span>;
@@ -1033,7 +1034,7 @@
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">float</span>;
 
-<span class="kw">fn</span> <span class="ident">clamp</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PartialOrd</span><span class="op">&gt;</span>(<span class="ident">v</span>: <span class="ident">T</span>, <span class="ident">min</span>: <span class="ident">T</span>, <span class="ident">max</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+<span class="kw">fn</span> <span class="ident">clamp</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PartialOrd</span><span class="op">&gt;</span>(<span class="ident">v</span>: <span class="ident">T</span>, <span class="ident">min</span>: <span class="ident">T</span>, <span class="ident">max</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
     <span class="kw">if</span> <span class="ident">v</span> <span class="op">&lt;</span> <span class="ident">min</span> {
         <span class="ident">min</span>
     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">v</span> <span class="op">&gt;</span> <span class="ident">max</span> {
@@ -1046,11 +1047,11 @@
 <span class="doccomment">///A trait for clamping and checking if colors are within their ranges.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Limited</span> {
     <span class="doccomment">///Check if the color&#39;s components are within the expected ranges.</span>
-    <span class="kw">fn</span> <span class="ident">is_valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
 
     <span class="doccomment">///Return a new color where the components has been clamped to the nearest</span>
     <span class="doccomment">///valid values.</span>
-    <span class="kw">fn</span> <span class="ident">clamp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">clamp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
     <span class="doccomment">///Clamp the color&#39;s components to the nearest valid values.</span>
     <span class="kw">fn</span> <span class="ident">clamp_self</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>);
@@ -1077,7 +1078,7 @@
     <span class="doccomment">///`factor` sould be between `0.0` and `1.0`, where `0.0` will result in</span>
     <span class="doccomment">///the same color as `self` and `1.0` will result in the same color as</span>
     <span class="doccomment">///`other`.</span>
-    <span class="kw">fn</span> <span class="ident">mix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">Scalar</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">mix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">Scalar</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 }
 
 <span class="doccomment">/// The `Shade` trait allows a color to be lightened or darkened.</span>
@@ -1095,10 +1096,10 @@
     <span class="kw">type</span> <span class="ident">Scalar</span>: <span class="ident">Float</span>;
 
     <span class="doccomment">///Lighten the color by `amount`.</span>
-    <span class="kw">fn</span> <span class="ident">lighten</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">amount</span>: <span class="self">Self</span>::<span class="ident">Scalar</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">lighten</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">amount</span>: <span class="self">Self</span>::<span class="ident">Scalar</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
     <span class="doccomment">///Darken the color by `amount`.</span>
-    <span class="kw">fn</span> <span class="ident">darken</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">amount</span>: <span class="self">Self</span>::<span class="ident">Scalar</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">darken</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">amount</span>: <span class="self">Self</span>::<span class="ident">Scalar</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">lighten</span>(<span class="op">-</span><span class="ident">amount</span>)
     }
 }
@@ -1131,16 +1132,16 @@
     <span class="doccomment">///</span>
     <span class="doccomment">///Colors in the gray scale has no well defined hue and should preferably</span>
     <span class="doccomment">///return `None`.</span>
-    <span class="kw">fn</span> <span class="ident">get_hue</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Hue</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">get_hue</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Hue</span><span class="op">&gt;</span>;
 }
 
 <span class="doccomment">///A trait for colors where the hue can be manipulated without conversion.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Hue</span>: <span class="ident">GetHue</span> {
     <span class="doccomment">///Return a new copy of `self`, but with a specific hue.</span>
-    <span class="kw">fn</span> <span class="ident">with_hue</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Hue</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hue</span>: <span class="ident">H</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">with_hue</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Hue</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hue</span>: <span class="ident">H</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
     <span class="doccomment">///Return a new copy of `self`, but with the hue shifted by `amount`.</span>
-    <span class="kw">fn</span> <span class="ident">shift_hue</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Hue</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">amount</span>: <span class="ident">H</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">shift_hue</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Hue</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">amount</span>: <span class="ident">H</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 }
 
 <span class="doccomment">/// A trait for colors where the saturation (or chroma) can be manipulated</span>
@@ -1159,10 +1160,10 @@
     <span class="kw">type</span> <span class="ident">Scalar</span>: <span class="ident">Float</span>;
 
     <span class="doccomment">///Increase the saturation by `factor`.</span>
-    <span class="kw">fn</span> <span class="ident">saturate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">Scalar</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">saturate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">Scalar</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
     <span class="doccomment">///Decrease the saturation by `factor`.</span>
-    <span class="kw">fn</span> <span class="ident">desaturate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">Scalar</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">desaturate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">Scalar</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">saturate</span>(<span class="op">-</span><span class="ident">factor</span>)
     }
 }
@@ -1173,14 +1174,14 @@
     <span class="kw">type</span> <span class="ident">Scalar</span>;
 
     <span class="doccomment">///Perform a binary operation on this and an other color.</span>
-    <span class="kw">fn</span> <span class="ident">component_wise</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Scalar</span>, <span class="self">Self</span>::<span class="ident">Scalar</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>(
+    <span class="kw">fn</span> <span class="ident">component_wise</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Scalar</span>, <span class="self">Self</span>::<span class="ident">Scalar</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>,
         <span class="ident">f</span>: <span class="ident">F</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    ) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
     <span class="doccomment">///Perform a unary operation on this color.</span>
-    <span class="kw">fn</span> <span class="ident">component_wise_self</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Scalar</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">component_wise_self</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Scalar</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 }
 
 <span class="doccomment">/// Common trait for color components.</span>
@@ -1192,20 +1193,20 @@
     <span class="doccomment">/// The highest displayable value this component type can reach. Higher</span>
     <span class="doccomment">/// values are allowed, but they may be lowered to this before</span>
     <span class="doccomment">/// converting to another format.</span>
-    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
 
     <span class="doccomment">/// Convert into another color component type, including scaling.</span>
-    <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>;
+    <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span>;
 }
 
 <span class="kw">impl</span> <span class="ident">Component</span> <span class="kw">for</span> <span class="ident">f32</span> {
     <span class="kw">const</span> <span class="ident">LIMITED</span>: <span class="ident">bool</span> <span class="op">=</span> <span class="bool-val">false</span>;
 
-    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="number">1.0</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
         <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f32</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>());
 
         <span class="kw">if</span> <span class="ident">T</span>::<span class="ident">LIMITED</span> {
@@ -1219,11 +1220,11 @@
 <span class="kw">impl</span> <span class="ident">Component</span> <span class="kw">for</span> <span class="ident">f64</span> {
     <span class="kw">const</span> <span class="ident">LIMITED</span>: <span class="ident">bool</span> <span class="op">=</span> <span class="bool-val">false</span>;
 
-    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="number">1.0</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
         <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>());
 
         <span class="kw">if</span> <span class="ident">T</span>::<span class="ident">LIMITED</span> {
@@ -1237,11 +1238,11 @@
 <span class="kw">impl</span> <span class="ident">Component</span> <span class="kw">for</span> <span class="ident">u8</span> {
     <span class="kw">const</span> <span class="ident">LIMITED</span>: <span class="ident">bool</span> <span class="op">=</span> <span class="bool-val">true</span>;
 
-    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">core</span>::<span class="ident">u8</span>::<span class="ident">MAX</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
         <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())
             <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
 
@@ -1256,11 +1257,11 @@
 <span class="kw">impl</span> <span class="ident">Component</span> <span class="kw">for</span> <span class="ident">u16</span> {
     <span class="kw">const</span> <span class="ident">LIMITED</span>: <span class="ident">bool</span> <span class="op">=</span> <span class="bool-val">true</span>;
 
-    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">core</span>::<span class="ident">u16</span>::<span class="ident">MAX</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
         <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())
             <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
 
@@ -1275,11 +1276,11 @@
 <span class="kw">impl</span> <span class="ident">Component</span> <span class="kw">for</span> <span class="ident">u32</span> {
     <span class="kw">const</span> <span class="ident">LIMITED</span>: <span class="ident">bool</span> <span class="op">=</span> <span class="bool-val">true</span>;
 
-    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">core</span>::<span class="ident">u32</span>::<span class="ident">MAX</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
         <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())
             <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
 
@@ -1294,11 +1295,11 @@
 <span class="kw">impl</span> <span class="ident">Component</span> <span class="kw">for</span> <span class="ident">u64</span> {
     <span class="kw">const</span> <span class="ident">LIMITED</span>: <span class="ident">bool</span> <span class="op">=</span> <span class="bool-val">true</span>;
 
-    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">core</span>::<span class="ident">u64</span>::<span class="ident">MAX</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
         <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())
             <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
 
@@ -1312,7 +1313,7 @@
 
 <span class="doccomment">/// A convenience function to convert a constant number to Float Type</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">fn</span> <span class="ident">cast</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">NumCast</span>, <span class="ident">P</span>: <span class="ident">ToPrimitive</span><span class="op">&gt;</span>(<span class="ident">prim</span>: <span class="ident">P</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+<span class="kw">fn</span> <span class="ident">cast</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">NumCast</span>, <span class="ident">P</span>: <span class="ident">ToPrimitive</span><span class="op">&gt;</span>(<span class="ident">prim</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
     <span class="ident">NumCast</span>::<span class="ident">from</span>(<span class="ident">prim</span>).<span class="ident">unwrap</span>()
 }
 </pre></div>

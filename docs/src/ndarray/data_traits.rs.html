@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.13.1/src/data_traits.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>data_traits.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../ndarray/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.13.1/src/data_traits.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>data_traits.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../ndarray/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -598,7 +599,7 @@
 
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="comment">// This method is only used for debugging</span>
-    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="self">Self</span>::<span class="ident">Elem</span>]<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="self">Self</span>::<span class="ident">Elem</span>]<span class="op">&gt;</span>;
 
     <span class="macro">private_decl</span><span class="macro">!</span> {}
 }
@@ -624,7 +625,7 @@
     <span class="doccomment">/// If `Self` provides safe mutable access to array elements, then it</span>
     <span class="doccomment">/// **must** return `Some(_)`.</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">try_is_unique</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">try_is_unique</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>;
 }
 
 <span class="doccomment">/// Array representation trait.</span>
@@ -635,14 +636,14 @@
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">trait</span> <span class="ident">RawDataClone</span>: <span class="ident">RawData</span> {
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="doccomment">/// Unsafe because, `ptr` must point inside the current storage.</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_with_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>);
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_with_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>);
 
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_from_with_ptr</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>,
         <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">data</span>, <span class="ident">ptr</span>) <span class="op">=</span> <span class="ident">other</span>.<span class="ident">clone_with_ptr</span>(<span class="ident">ptr</span>);
         <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">data</span>;
         <span class="ident">ptr</span>
@@ -657,7 +658,7 @@
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">trait</span> <span class="ident">Data</span>: <span class="ident">RawData</span> {
     <span class="doccomment">/// Converts the array to a uniquely owned array, cloning elements if necessary.</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">into_owned</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">self_</span>: <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">into_owned</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">self_</span>: <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>::<span class="ident">Elem</span>: <span class="ident">Clone</span>,
         <span class="ident">D</span>: <span class="ident">Dimension</span>;
@@ -690,7 +691,7 @@
     <span class="doccomment">/// Returns whether the array has unique access to its data.</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_unique</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_unique</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">try_is_unique</span>().<span class="ident">unwrap</span>()
     }
 }
@@ -709,21 +710,21 @@
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="ident">RawData</span> <span class="kw">for</span> <span class="ident">RawViewRepr</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw">const</span> <span class="ident">A</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Elem</span> <span class="op">=</span> <span class="ident">A</span>;
-    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">A</span>]<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">A</span>]<span class="op">&gt;</span> {
         <span class="prelude-val">None</span>
     }
     <span class="macro">private_impl</span><span class="macro">!</span> {}
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="ident">RawDataClone</span> <span class="kw">for</span> <span class="ident">RawViewRepr</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw">const</span> <span class="ident">A</span><span class="op">&gt;</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_with_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_with_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) {
         (<span class="kw-2">*</span><span class="self">self</span>, <span class="ident">ptr</span>)
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="ident">RawData</span> <span class="kw">for</span> <span class="ident">RawViewRepr</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">A</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Elem</span> <span class="op">=</span> <span class="ident">A</span>;
-    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">A</span>]<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">A</span>]<span class="op">&gt;</span> {
         <span class="prelude-val">None</span>
     }
     <span class="macro">private_impl</span><span class="macro">!</span> {}
@@ -739,20 +740,20 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_is_unique</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_is_unique</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="prelude-val">None</span>
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="ident">RawDataClone</span> <span class="kw">for</span> <span class="ident">RawViewRepr</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">A</span><span class="op">&gt;</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_with_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_with_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) {
         (<span class="kw-2">*</span><span class="self">self</span>, <span class="ident">ptr</span>)
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="ident">RawData</span> <span class="kw">for</span> <span class="ident">OwnedArcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Elem</span> <span class="op">=</span> <span class="ident">A</span>;
-    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">A</span>]<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">A</span>]<span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_slice</span>())
     }
     <span class="macro">private_impl</span><span class="macro">!</span> {}
@@ -771,7 +772,7 @@
         <span class="kw">if</span> <span class="ident">Arc</span>::<span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">self_</span>.<span class="ident">data</span>.<span class="number">0</span>).<span class="ident">is_some</span>() {
             <span class="kw">return</span>;
         }
-        <span class="kw">if</span> <span class="ident">self_</span>.<span class="ident">dim</span>.<span class="ident">size</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="ident">self_</span>.<span class="ident">data</span>.<span class="number">0</span>.<span class="ident">len</span>() <span class="op">/</span> <span class="number">2</span> {
+        <span class="kw">if</span> <span class="ident">self_</span>.<span class="ident">dim</span>.<span class="ident">size</span>() <span class="op">&lt;=</span> <span class="ident">self_</span>.<span class="ident">data</span>.<span class="number">0</span>.<span class="ident">len</span>() <span class="op">/</span> <span class="number">2</span> {
             <span class="comment">// Create a new vec if the current view is less than half of</span>
             <span class="comment">// backing data.</span>
             <span class="kw">unsafe</span> {
@@ -784,7 +785,7 @@
         }
         <span class="kw">let</span> <span class="ident">rcvec</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">self_</span>.<span class="ident">data</span>.<span class="number">0</span>;
         <span class="kw">let</span> <span class="ident">a_size</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>() <span class="kw">as</span> <span class="ident">isize</span>;
-        <span class="kw">let</span> <span class="ident">our_off</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">a_size</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">let</span> <span class="ident">our_off</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">a_size</span> <span class="op">!=</span> <span class="number">0</span> {
             (<span class="ident">self_</span>.<span class="ident">ptr</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="ident">isize</span> <span class="op">-</span> <span class="ident">rcvec</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="ident">isize</span>) <span class="op">/</span> <span class="ident">a_size</span>
         } <span class="kw">else</span> {
             <span class="number">0</span>
@@ -795,13 +796,13 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">try_is_unique</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_is_unique</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="ident">Arc</span>::<span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="number">0</span>).<span class="ident">is_some</span>())
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="ident">Data</span> <span class="kw">for</span> <span class="ident">OwnedArcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">into_owned</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">self_</span>: <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">into_owned</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">self_</span>: <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Clone</span>,
         <span class="ident">D</span>: <span class="ident">Dimension</span>,
@@ -820,7 +821,7 @@
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="ident">DataMut</span> <span class="kw">for</span> <span class="ident">OwnedArcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">A</span>: <span class="ident">Clone</span> {}
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="ident">RawDataClone</span> <span class="kw">for</span> <span class="ident">OwnedArcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_with_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_with_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) {
         <span class="comment">// pointer is preserved</span>
         (<span class="self">self</span>.<span class="ident">clone</span>(), <span class="ident">ptr</span>)
     }
@@ -828,7 +829,7 @@
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="ident">RawData</span> <span class="kw">for</span> <span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Elem</span> <span class="op">=</span> <span class="ident">A</span>;
-    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">A</span>]<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">A</span>]<span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">as_slice</span>())
     }
     <span class="macro">private_impl</span><span class="macro">!</span> {}
@@ -844,14 +845,14 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_is_unique</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_is_unique</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="bool-val">true</span>)
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="ident">Data</span> <span class="kw">for</span> <span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">into_owned</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">self_</span>: <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">into_owned</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">self_</span>: <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Clone</span>,
         <span class="ident">D</span>: <span class="ident">Dimension</span>,
@@ -866,10 +867,10 @@
 <span class="kw">where</span>
     <span class="ident">A</span>: <span class="ident">Clone</span>,
 {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_with_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_with_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">u</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">clone</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_ptr</span> <span class="op">=</span> <span class="ident">u</span>.<span class="ident">as_nonnull_mut</span>();
-        <span class="kw">if</span> <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>() <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>() <span class="op">!=</span> <span class="number">0</span> {
             <span class="kw">let</span> <span class="ident">our_off</span> <span class="op">=</span>
                 (<span class="ident">ptr</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="ident">isize</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="ident">isize</span>) <span class="op">/</span> <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>() <span class="kw">as</span> <span class="ident">isize</span>;
             <span class="ident">new_ptr</span> <span class="op">=</span> <span class="ident">new_ptr</span>.<span class="ident">offset</span>(<span class="ident">our_off</span>);
@@ -881,8 +882,8 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>,
         <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">our_off</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>() <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+    ) <span class="op">-&gt;</span> <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">our_off</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>() <span class="op">!=</span> <span class="number">0</span> {
             (<span class="ident">ptr</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="ident">isize</span> <span class="op">-</span> <span class="ident">other</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="ident">isize</span>) <span class="op">/</span> <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>() <span class="kw">as</span> <span class="ident">isize</span>
         } <span class="kw">else</span> {
             <span class="number">0</span>
@@ -894,14 +895,14 @@
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span> <span class="ident">RawData</span> <span class="kw">for</span> <span class="ident">ViewRepr</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">A</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Elem</span> <span class="op">=</span> <span class="ident">A</span>;
-    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">A</span>]<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">A</span>]<span class="op">&gt;</span> {
         <span class="prelude-val">None</span>
     }
     <span class="macro">private_impl</span><span class="macro">!</span> {}
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span> <span class="ident">Data</span> <span class="kw">for</span> <span class="ident">ViewRepr</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">A</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">into_owned</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">self_</span>: <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">into_owned</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">self_</span>: <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>::<span class="ident">Elem</span>: <span class="ident">Clone</span>,
         <span class="ident">D</span>: <span class="ident">Dimension</span>,
@@ -911,14 +912,14 @@
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span> <span class="ident">RawDataClone</span> <span class="kw">for</span> <span class="ident">ViewRepr</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">A</span><span class="op">&gt;</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_with_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_with_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) {
         (<span class="kw-2">*</span><span class="self">self</span>, <span class="ident">ptr</span>)
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span> <span class="ident">RawData</span> <span class="kw">for</span> <span class="ident">ViewRepr</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">A</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Elem</span> <span class="op">=</span> <span class="ident">A</span>;
-    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">A</span>]<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">A</span>]<span class="op">&gt;</span> {
         <span class="prelude-val">None</span>
     }
     <span class="macro">private_impl</span><span class="macro">!</span> {}
@@ -934,13 +935,13 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_is_unique</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_is_unique</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="bool-val">true</span>)
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span> <span class="ident">Data</span> <span class="kw">for</span> <span class="ident">ViewRepr</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">A</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">into_owned</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">self_</span>: <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">into_owned</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">self_</span>: <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>::<span class="ident">Elem</span>: <span class="ident">Clone</span>,
         <span class="ident">D</span>: <span class="ident">Dimension</span>,
@@ -958,12 +959,12 @@
 <span class="doccomment">/// ***Internal trait, see `Data`.***</span>
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">trait</span> <span class="ident">DataOwned</span>: <span class="ident">Data</span> {
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">elements</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">elements</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
     <span class="doccomment">/// Converts the data representation to a shared (copy on write)</span>
     <span class="doccomment">/// representation, without any copying.</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">into_shared</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OwnedRcRepr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">into_shared</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">OwnedRcRepr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>;
 }
 
 <span class="doccomment">/// Array representation trait.</span>
@@ -977,30 +978,30 @@
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span> <span class="ident">DataShared</span> <span class="kw">for</span> <span class="ident">ViewRepr</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">A</span><span class="op">&gt;</span> {}
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="ident">DataOwned</span> <span class="kw">for</span> <span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">elements</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">elements</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">OwnedRepr</span>::<span class="ident">from</span>(<span class="ident">elements</span>)
     }
-    <span class="kw">fn</span> <span class="ident">into_shared</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OwnedRcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">into_shared</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">OwnedRcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
         <span class="ident">OwnedArcRepr</span>(<span class="ident">Arc</span>::<span class="ident">new</span>(<span class="self">self</span>))
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="ident">DataOwned</span> <span class="kw">for</span> <span class="ident">OwnedArcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">elements</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">elements</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">OwnedArcRepr</span>(<span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">OwnedRepr</span>::<span class="ident">from</span>(<span class="ident">elements</span>)))
     }
 
-    <span class="kw">fn</span> <span class="ident">into_shared</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OwnedRcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">into_shared</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">OwnedRcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
         <span class="self">self</span>
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span> <span class="ident">RawData</span> <span class="kw">for</span> <span class="ident">CowRepr</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Elem</span> <span class="op">=</span> <span class="ident">A</span>;
-    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">A</span>]<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">_data_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">A</span>]<span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="ident">view</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">view</span>.<span class="ident">_data_slice</span>(),
-            <span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">_data_slice</span>(),
+            <span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="ident">view</span>) <span class="op">=&gt;</span> <span class="ident">view</span>.<span class="ident">_data_slice</span>(),
+            <span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">data</span>) <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">_data_slice</span>(),
         }
     }
     <span class="macro">private_impl</span><span class="macro">!</span> {}
@@ -1017,19 +1018,19 @@
         <span class="ident">D</span>: <span class="ident">Dimension</span>,
     {
         <span class="kw">match</span> <span class="ident">array</span>.<span class="ident">data</span> {
-            <span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> {
                 <span class="kw">let</span> <span class="ident">owned</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">to_owned</span>();
                 <span class="ident">array</span>.<span class="ident">data</span> <span class="op">=</span> <span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">owned</span>.<span class="ident">data</span>);
                 <span class="ident">array</span>.<span class="ident">ptr</span> <span class="op">=</span> <span class="ident">owned</span>.<span class="ident">ptr</span>;
                 <span class="ident">array</span>.<span class="ident">dim</span> <span class="op">=</span> <span class="ident">owned</span>.<span class="ident">dim</span>;
                 <span class="ident">array</span>.<span class="ident">strides</span> <span class="op">=</span> <span class="ident">owned</span>.<span class="ident">strides</span>;
             }
-            <span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {}
+            <span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> {}
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_is_unique</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_is_unique</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">is_owned</span>())
     }
 }
@@ -1038,13 +1039,13 @@
 <span class="kw">where</span>
     <span class="ident">A</span>: <span class="ident">Clone</span>,
 {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_with_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">clone_with_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>) {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="ident">view</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="ident">view</span>) <span class="op">=&gt;</span> {
                 <span class="kw">let</span> (<span class="ident">new_view</span>, <span class="ident">ptr</span>) <span class="op">=</span> <span class="ident">view</span>.<span class="ident">clone_with_ptr</span>(<span class="ident">ptr</span>);
                 (<span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="ident">new_view</span>), <span class="ident">ptr</span>)
             }
-            <span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">data</span>) <span class="op">=&gt;</span> {
                 <span class="kw">let</span> (<span class="ident">new_data</span>, <span class="ident">ptr</span>) <span class="op">=</span> <span class="ident">data</span>.<span class="ident">clone_with_ptr</span>(<span class="ident">ptr</span>);
                 (<span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">new_data</span>), <span class="ident">ptr</span>)
             }
@@ -1056,16 +1057,16 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>,
         <span class="ident">ptr</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="ident">NonNull</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span> {
         <span class="kw">match</span> (<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="self">self</span>, <span class="ident">other</span>) {
-            (<span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="ident">self_</span>), <span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="ident">other</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">self_</span>.<span class="ident">clone_from_with_ptr</span>(<span class="ident">other</span>, <span class="ident">ptr</span>),
-            (<span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">self_</span>), <span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">other</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">self_</span>.<span class="ident">clone_from_with_ptr</span>(<span class="ident">other</span>, <span class="ident">ptr</span>),
-            (<span class="kw">_</span>, <span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">other</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+            (<span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="ident">self_</span>), <span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="ident">other</span>)) <span class="op">=&gt;</span> <span class="ident">self_</span>.<span class="ident">clone_from_with_ptr</span>(<span class="ident">other</span>, <span class="ident">ptr</span>),
+            (<span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">self_</span>), <span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">other</span>)) <span class="op">=&gt;</span> <span class="ident">self_</span>.<span class="ident">clone_from_with_ptr</span>(<span class="ident">other</span>, <span class="ident">ptr</span>),
+            (<span class="kw">_</span>, <span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">other</span>)) <span class="op">=&gt;</span> {
                 <span class="kw">let</span> (<span class="ident">cloned</span>, <span class="ident">ptr</span>) <span class="op">=</span> <span class="ident">other</span>.<span class="ident">clone_with_ptr</span>(<span class="ident">ptr</span>);
                 <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">cloned</span>);
                 <span class="ident">ptr</span>
             }
-            (<span class="kw">_</span>, <span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="ident">other</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+            (<span class="kw">_</span>, <span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="ident">other</span>)) <span class="op">=&gt;</span> {
                 <span class="kw">let</span> (<span class="ident">cloned</span>, <span class="ident">ptr</span>) <span class="op">=</span> <span class="ident">other</span>.<span class="ident">clone_with_ptr</span>(<span class="ident">ptr</span>);
                 <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="ident">cloned</span>);
                 <span class="ident">ptr</span>
@@ -1076,14 +1077,14 @@
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span> <span class="ident">Data</span> <span class="kw">for</span> <span class="ident">CowRepr</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">into_owned</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">self_</span>: <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">CowRepr</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">into_owned</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">self_</span>: <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">CowRepr</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedRepr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Clone</span>,
         <span class="ident">D</span>: <span class="ident">Dimension</span>,
     {
         <span class="kw">match</span> <span class="ident">self_</span>.<span class="ident">data</span> {
-            <span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">self_</span>.<span class="ident">to_owned</span>(),
-            <span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span> {
+            <span class="ident">CowRepr</span>::<span class="ident">View</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="ident">self_</span>.<span class="ident">to_owned</span>(),
+            <span class="ident">CowRepr</span>::<span class="ident">Owned</span>(<span class="ident">data</span>) <span class="op">=&gt;</span> <span class="ident">ArrayBase</span> {
                 <span class="ident">data</span>,
                 <span class="ident">ptr</span>: <span class="ident">self_</span>.<span class="ident">ptr</span>,
                 <span class="ident">dim</span>: <span class="ident">self_</span>.<span class="ident">dim</span>,

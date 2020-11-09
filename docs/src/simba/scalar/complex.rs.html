@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/simba-0.2.0/src/scalar/complex.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>complex.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../simba/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/simba-0.3.1/src/scalar/complex.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>complex.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../simba/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1479,42 +1480,42 @@
 
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">complex_trait_methods</span>(
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>: <span class="ident">ident</span> $(, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>: <span class="ident">ident</span>)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>: <span class="ident">ident</span> $(, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>: <span class="ident">ident</span>)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
         <span class="ident">paste</span>::<span class="macro">item</span><span class="macro">!</span> {
             <span class="doccomment">/// Builds a pure-real complex number from the given value.</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span><span class="ident">from_</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">real</span><span class="op">&gt;</span>](<span class="ident">re</span>: <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span><span class="ident">from_</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">real</span><span class="op">&gt;</span>](<span class="ident">re</span>: <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
             <span class="doccomment">/// The real part of this complex number.</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">real</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">real</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
 
             <span class="doccomment">/// The imaginary part of this complex number.</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">imaginary</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">imaginary</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
 
             <span class="doccomment">/// The modulus of this complex number.</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">modulus</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">modulus</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
 
             <span class="doccomment">/// The squared modulus of this complex number.</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">modulus_squared</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">modulus_squared</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
 
             <span class="doccomment">/// The argument of this complex number.</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">argument</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">argument</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
 
             <span class="doccomment">/// The sum of the absolute value of this complex number&#39;s real and imaginary part.</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">norm1</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">norm1</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
 
             <span class="doccomment">/// Multiplies this complex number by `factor`.</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">scale</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">scale</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
             <span class="doccomment">/// Divides this complex number by `factor`.</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">unscale</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">unscale</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
             <span class="doccomment">/// The polar form of this complex number: (modulus, arg)</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">to_polar</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>, <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>) {
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">to_polar</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>, <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>) {
                 (<span class="self">self</span>.[<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">modulus</span><span class="op">&gt;</span>](), <span class="self">self</span>.[<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">argument</span><span class="op">&gt;</span>]())
             }
 
             <span class="doccomment">/// The exponential form of this complex number: (modulus, e^{i arg})</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">to_exp</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>, <span class="self">Self</span>) {
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">to_exp</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>, <span class="self">Self</span>) {
                 <span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="self">self</span>.[<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">modulus</span><span class="op">&gt;</span>]();
 
                 <span class="kw">if</span> <span class="op">!</span><span class="ident">m</span>.<span class="ident">is_zero</span>() {
@@ -1525,48 +1526,48 @@
             }
 
             <span class="doccomment">/// The exponential part of this complex number: `self / self.modulus()`</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">signum</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">signum</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="self">self</span>.[<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">to_exp</span><span class="op">&gt;</span>]().<span class="number">1</span>
             }
 
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">floor</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">ceil</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">round</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">trunc</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">fract</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">mul_add</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">floor</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">ceil</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">round</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">trunc</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">fract</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">mul_add</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
             <span class="doccomment">/// The absolute value of this complex number: `self / self.signum()`.</span>
             <span class="doccomment">///</span>
             <span class="doccomment">/// This is equivalent to `self.modulus()`.</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">abs</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">abs</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
 
             <span class="doccomment">/// Computes (self.conjugate() * self + other.conjugate() * other).sqrt()</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">hypot</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">hypot</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>;
 
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">recip</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">conjugate</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sin</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">cos</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sin_cos</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>);
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">recip</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">conjugate</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sin</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">cos</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sin_cos</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>);
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sinh_cosh</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sinh_cosh</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
                 (<span class="self">self</span>.[<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sinh</span><span class="op">&gt;</span>](), <span class="self">self</span>.[<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">cosh</span><span class="op">&gt;</span>]())
             }
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">tan</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">asin</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">acos</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">atan</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sinh</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">cosh</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">tanh</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">asinh</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">acosh</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">atanh</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">tan</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">asin</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">acos</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">atan</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sinh</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">cosh</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">tanh</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">asinh</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">acosh</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">atanh</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
             <span class="doccomment">/// Cardinal sine</span>
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sinc</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sinc</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_zero</span>() {
                     <span class="self">Self</span>::<span class="ident">one</span>()
                 } <span class="kw">else</span> {
@@ -1575,7 +1576,7 @@
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sinhc</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sinhc</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_zero</span>() {
                     <span class="self">Self</span>::<span class="ident">one</span>()
                 } <span class="kw">else</span> {
@@ -1585,7 +1586,7 @@
 
             <span class="doccomment">/// Cardinal cos</span>
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">cosc</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">cosc</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_zero</span>() {
                     <span class="self">Self</span>::<span class="ident">one</span>()
                 } <span class="kw">else</span> {
@@ -1594,7 +1595,7 @@
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">coshc</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">coshc</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_zero</span>() {
                     <span class="self">Self</span>::<span class="ident">one</span>()
                 } <span class="kw">else</span> {
@@ -1602,19 +1603,19 @@
                 }
             }
 
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">log</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">base</span>: <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">log2</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">log10</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">ln</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">ln_1p</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sqrt</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">exp</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">exp2</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">exp_m1</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">powi</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">powf</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">powc</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">cbrt</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">log</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">base</span>: <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">log2</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">log10</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">ln</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">ln_1p</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">sqrt</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">exp</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">exp2</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">exp_m1</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">powi</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">powf</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">powc</span><span class="op">&gt;</span>](<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+            <span class="kw">fn</span> [<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prefix</span>)<span class="op">*</span> <span class="ident">cbrt</span><span class="op">&gt;</span>](<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
         }
     }
 );
@@ -1645,49 +1646,49 @@
     <span class="kw">type</span> <span class="ident">RealField</span>: <span class="ident">RealField</span>;
     <span class="macro">complex_trait_methods</span><span class="macro">!</span>(<span class="ident">RealField</span>);
 
-    <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
-    <span class="kw">fn</span> <span class="ident">try_sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">try_sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;libm_force&quot;</span>))]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_complex</span>(
-    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>: <span class="ident">ident</span>);<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> ($(
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>: <span class="ident">ident</span>);<span class="kw-2">*</span>) <span class="op">=&gt;</span> ($(
         <span class="kw">impl</span> <span class="ident">ComplexField</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span> {
             <span class="kw">type</span> <span class="ident">RealField</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>;
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">from_real</span>(<span class="ident">re</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">from_real</span>(<span class="ident">re</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="ident">re</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">real</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+            <span class="kw">fn</span> <span class="ident">real</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
                 <span class="self">self</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">imaginary</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+            <span class="kw">fn</span> <span class="ident">imaginary</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
                 <span class="self">Self</span>::<span class="ident">zero</span>()
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">norm1</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+            <span class="kw">fn</span> <span class="ident">norm1</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">abs</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">modulus</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+            <span class="kw">fn</span> <span class="ident">modulus</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">abs</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">modulus_squared</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+            <span class="kw">fn</span> <span class="ident">modulus_squared</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
                 <span class="self">self</span> <span class="op">*</span> <span class="self">self</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">argument</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
-                <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
+            <span class="kw">fn</span> <span class="ident">argument</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+                <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
                     <span class="self">Self</span>::<span class="ident">zero</span>()
                 } <span class="kw">else</span> {
                     <span class="self">Self</span>::<span class="ident">pi</span>()
@@ -1695,8 +1696,8 @@
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">to_exp</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
-                <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
+            <span class="kw">fn</span> <span class="ident">to_exp</span>(<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
+                <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
                     (<span class="self">self</span>, <span class="self">Self</span>::<span class="ident">one</span>())
                 } <span class="kw">else</span> {
                     (<span class="op">-</span><span class="self">self</span>, <span class="op">-</span><span class="self">Self</span>::<span class="ident">one</span>())
@@ -1704,97 +1705,97 @@
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">recip</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">conjugate</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">conjugate</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="self">self</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">scale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">scale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="self">self</span> <span class="op">*</span> <span class="ident">factor</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">unscale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">unscale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="self">self</span> <span class="op">/</span> <span class="ident">factor</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">floor</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">floor</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">floor</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">ceil</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">ceil</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">ceil</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">round</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">trunc</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">trunc</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">trunc</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">fract</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">fract</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">fract</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">abs</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">signum</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">signum</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="ident">Signed</span>::<span class="ident">signum</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">mul_add</span>(<span class="self">self</span>, <span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">mul_add</span>(<span class="self">self</span>, <span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">mul_add</span>(<span class="self">self</span>, <span class="ident">a</span>, <span class="ident">b</span>)
             }
 
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="self">self</span>.<span class="ident">powi</span>(<span class="ident">n</span>)
             }
 
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="comment">// FIXME: is there a more accurate solution?</span>
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">n</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">n</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">powc</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">powc</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="comment">// Same as powf.</span>
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">n</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">sqrt</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">try_sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-                <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
+            <span class="kw">fn</span> <span class="ident">try_sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+                <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
                     <span class="prelude-val">Some</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">sqrt</span>(<span class="self">self</span>))
                 } <span class="kw">else</span> {
                     <span class="prelude-val">None</span>
@@ -1802,88 +1803,88 @@
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">exp</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">exp</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">exp</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">exp2</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">exp2</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">exp2</span>(<span class="self">self</span>)
             }
 
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">exp_m1</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">exp_m1</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">exp_m1</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">ln_1p</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">ln_1p</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">ln_1p</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">ln</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">ln</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">ln</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">log</span>(<span class="self">self</span>, <span class="ident">base</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">log2</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">log2</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">log2</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">log10</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">log10</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">log10</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">cbrt</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">hypot</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+            <span class="kw">fn</span> <span class="ident">hypot</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">hypot</span>(<span class="self">self</span>, <span class="ident">other</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">sin</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">cos</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">tan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">tan</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">tan</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">asin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">asin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">asin</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">acos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">acos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">acos</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">atan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">atan</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">atan</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">sin_cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
+            <span class="kw">fn</span> <span class="ident">sin_cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">sin_cos</span>(<span class="self">self</span>)
             }
 
@@ -1898,37 +1899,37 @@
 <span class="comment">//            }</span>
 <span class="comment">//</span>
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">sinh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">sinh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">sinh</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">cosh</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">tanh</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">asinh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">asinh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">asinh</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">acosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">acosh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">acosh</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">atanh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">atanh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">libm</span>::<span class="ident">atanh</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+            <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">is_finite</span>(<span class="kw-2">*</span><span class="self">self</span>)
             }
         }
@@ -1952,38 +1953,38 @@
     <span class="kw">type</span> <span class="ident">RealField</span> <span class="op">=</span> <span class="ident">f32</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from_real</span>(<span class="ident">re</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_real</span>(<span class="ident">re</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">re</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">real</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">real</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="self">self</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">imaginary</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">imaginary</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="self">Self</span>::<span class="ident">zero</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">norm1</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">norm1</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="ident">libm_force</span>::<span class="ident">fabsf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">modulus</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">modulus</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="ident">libm_force</span>::<span class="ident">fabsf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">modulus_squared</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">modulus_squared</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="self">self</span> <span class="op">*</span> <span class="self">self</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">argument</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
-        <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
+    <span class="kw">fn</span> <span class="ident">argument</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+        <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
             <span class="self">Self</span>::<span class="ident">zero</span>()
         } <span class="kw">else</span> {
             <span class="self">Self</span>::<span class="ident">pi</span>()
@@ -1991,8 +1992,8 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">to_exp</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
-        <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
+    <span class="kw">fn</span> <span class="ident">to_exp</span>(<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
+        <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
             (<span class="self">self</span>, <span class="self">Self</span>::<span class="ident">one</span>())
         } <span class="kw">else</span> {
             (<span class="op">-</span><span class="self">self</span>, <span class="op">-</span><span class="self">Self</span>::<span class="ident">one</span>())
@@ -2000,90 +2001,90 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">f32</span>::<span class="ident">recip</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">conjugate</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">conjugate</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">scale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">scale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span> <span class="op">*</span> <span class="ident">factor</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">unscale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">unscale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span> <span class="op">/</span> <span class="ident">factor</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">floor</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">floor</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">floorf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ceil</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">ceil</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">ceilf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">roundf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">trunc</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">trunc</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">truncf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">fract</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">fract</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span> <span class="op">-</span> <span class="ident">libm_force</span>::<span class="ident">truncf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">fabsf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">signum</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">signum</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Signed</span>::<span class="ident">signum</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">mul_add</span>(<span class="self">self</span>, <span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">mul_add</span>(<span class="self">self</span>, <span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">fmaf</span>(<span class="self">self</span>, <span class="ident">a</span>, <span class="ident">b</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// TODO: implement a more accurate/efficient solution?</span>
         <span class="ident">libm_force</span>::<span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">n</span> <span class="kw">as</span> <span class="ident">f32</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">n</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">powc</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">powc</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// Same as powf.</span>
         <span class="ident">libm_force</span>::<span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">n</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">sqrtf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
+    <span class="kw">fn</span> <span class="ident">try_sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
             <span class="prelude-val">Some</span>(<span class="ident">libm_force</span>::<span class="ident">sqrtf</span>(<span class="self">self</span>))
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
@@ -2091,87 +2092,87 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">exp</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">exp</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">expf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">exp2</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">exp2</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">exp2f</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">exp_m1</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">exp_m1</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">expm1f</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ln_1p</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">ln_1p</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">log1pf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ln</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">ln</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">logf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">logf</span>(<span class="self">self</span>) <span class="op">/</span> <span class="ident">libm_force</span>::<span class="ident">logf</span>(<span class="ident">base</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">log2</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">log2</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">log2f</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">log10</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">log10</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">log10f</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">cbrtf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">hypot</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">hypot</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="ident">libm_force</span>::<span class="ident">hypotf</span>(<span class="self">self</span>, <span class="ident">other</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">sinf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">cosf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">tan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">tan</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">tanf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">asin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">asin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">asinf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">acos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">acos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">acosf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">atan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">atan</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">atanf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sin_cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
+    <span class="kw">fn</span> <span class="ident">sin_cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
         <span class="ident">libm_force</span>::<span class="ident">sincosf</span>(<span class="self">self</span>)
     }
 
@@ -2186,37 +2187,37 @@
     <span class="comment">//            }</span>
     <span class="comment">//</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sinh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">sinh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">sinhf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">coshf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">tanhf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">asinh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">asinh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">asinhf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">acosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">acosh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">acoshf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">atanh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">atanh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">atanhf</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="ident">f32</span>::<span class="ident">is_finite</span>(<span class="kw-2">*</span><span class="self">self</span>)
     }
 }
@@ -2226,38 +2227,38 @@
     <span class="kw">type</span> <span class="ident">RealField</span> <span class="op">=</span> <span class="ident">f64</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from_real</span>(<span class="ident">re</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_real</span>(<span class="ident">re</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">re</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">real</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">real</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="self">self</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">imaginary</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">imaginary</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="self">Self</span>::<span class="ident">zero</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">norm1</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">norm1</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="ident">libm_force</span>::<span class="ident">fabs</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">modulus</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">modulus</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="ident">libm_force</span>::<span class="ident">fabs</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">modulus_squared</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">modulus_squared</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="self">self</span> <span class="op">*</span> <span class="self">self</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">argument</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
-        <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
+    <span class="kw">fn</span> <span class="ident">argument</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+        <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
             <span class="self">Self</span>::<span class="ident">zero</span>()
         } <span class="kw">else</span> {
             <span class="self">Self</span>::<span class="ident">pi</span>()
@@ -2265,8 +2266,8 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">to_exp</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
-        <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
+    <span class="kw">fn</span> <span class="ident">to_exp</span>(<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
+        <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
             (<span class="self">self</span>, <span class="self">Self</span>::<span class="ident">one</span>())
         } <span class="kw">else</span> {
             (<span class="op">-</span><span class="self">self</span>, <span class="op">-</span><span class="self">Self</span>::<span class="ident">one</span>())
@@ -2274,90 +2275,90 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">f64</span>::<span class="ident">recip</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">conjugate</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">conjugate</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">scale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">scale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span> <span class="op">*</span> <span class="ident">factor</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">unscale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">unscale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span> <span class="op">/</span> <span class="ident">factor</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">floor</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">floor</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">floor</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ceil</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">ceil</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">ceil</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">round</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">trunc</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">trunc</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">trunc</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">fract</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">fract</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span> <span class="op">-</span> <span class="ident">libm_force</span>::<span class="ident">trunc</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">fabs</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">signum</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">signum</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Signed</span>::<span class="ident">signum</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">mul_add</span>(<span class="self">self</span>, <span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">mul_add</span>(<span class="self">self</span>, <span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">fma</span>(<span class="self">self</span>, <span class="ident">a</span>, <span class="ident">b</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// TODO: implement a more accurate solution?</span>
         <span class="ident">libm_force</span>::<span class="ident">pow</span>(<span class="self">self</span>, <span class="ident">n</span> <span class="kw">as</span> <span class="ident">f64</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">pow</span>(<span class="self">self</span>, <span class="ident">n</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">powc</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">powc</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// Same as powf.</span>
         <span class="ident">libm_force</span>::<span class="ident">pow</span>(<span class="self">self</span>, <span class="ident">n</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">sqrt</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
+    <span class="kw">fn</span> <span class="ident">try_sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;=</span> <span class="self">Self</span>::<span class="ident">zero</span>() {
             <span class="prelude-val">Some</span>(<span class="ident">libm_force</span>::<span class="ident">sqrt</span>(<span class="self">self</span>))
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
@@ -2365,87 +2366,87 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">exp</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">exp</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">exp</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">exp2</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">exp2</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">exp2</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">exp_m1</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">exp_m1</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">expm1</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ln_1p</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">ln_1p</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">log1p</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ln</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">ln</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">log</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">log</span>(<span class="self">self</span>) <span class="op">/</span> <span class="ident">libm_force</span>::<span class="ident">log</span>(<span class="ident">base</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">log2</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">log2</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">log2</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">log10</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">log10</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">log10</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">cbrt</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">hypot</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">hypot</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="ident">libm_force</span>::<span class="ident">hypot</span>(<span class="self">self</span>, <span class="ident">other</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">sin</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">cos</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">tan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">tan</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">tan</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">asin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">asin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">asin</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">acos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">acos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">acos</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">atan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">atan</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">atan</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sin_cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
+    <span class="kw">fn</span> <span class="ident">sin_cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
         <span class="ident">libm_force</span>::<span class="ident">sincos</span>(<span class="self">self</span>)
     }
 
@@ -2460,37 +2461,37 @@
     <span class="comment">//            }</span>
     <span class="comment">//</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sinh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">sinh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">sinh</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">cosh</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">tanh</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">asinh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">asinh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">asinh</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">acosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">acosh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">acosh</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">atanh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">atanh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">libm_force</span>::<span class="ident">atanh</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="ident">f64</span>::<span class="ident">is_finite</span>(<span class="kw-2">*</span><span class="self">self</span>)
     }
 }
@@ -2504,139 +2505,139 @@
     <span class="kw">type</span> <span class="ident">RealField</span> <span class="op">=</span> <span class="ident">N</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from_real</span>(<span class="ident">re</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_real</span>(<span class="ident">re</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">re</span>, <span class="self">Self</span>::<span class="ident">RealField</span>::<span class="ident">zero</span>())
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">real</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">real</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="self">self</span>.<span class="ident">re</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">imaginary</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">imaginary</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="self">self</span>.<span class="ident">im</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">argument</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">argument</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">atan2</span>(<span class="self">self</span>.<span class="ident">re</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">modulus</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">modulus</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">hypot</span>(<span class="self">self</span>.<span class="ident">im</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">modulus_squared</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">modulus_squared</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="self">self</span>.<span class="ident">re</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">re</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">im</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">im</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">norm1</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">norm1</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">abs</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">abs</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">one</span>() <span class="op">/</span> <span class="self">self</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">conjugate</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">conjugate</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">conj</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">scale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">scale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span> <span class="op">*</span> <span class="ident">factor</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">unscale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">unscale</span>(<span class="self">self</span>, <span class="ident">factor</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span> <span class="op">/</span> <span class="ident">factor</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">floor</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">floor</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">re</span>.<span class="ident">floor</span>(), <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">floor</span>())
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ceil</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">ceil</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">re</span>.<span class="ident">ceil</span>(), <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">ceil</span>())
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">re</span>.<span class="ident">round</span>(), <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">round</span>())
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">trunc</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">trunc</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">re</span>.<span class="ident">trunc</span>(), <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">trunc</span>())
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">fract</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">fract</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">re</span>.<span class="ident">fract</span>(), <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">fract</span>())
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">mul_add</span>(<span class="self">self</span>, <span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">mul_add</span>(<span class="self">self</span>, <span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span> <span class="op">*</span> <span class="ident">a</span> <span class="op">+</span> <span class="ident">b</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         <span class="self">self</span>.<span class="ident">modulus</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">exp2</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">exp2</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">_2</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">one</span>() <span class="op">+</span> <span class="ident">N</span>::<span class="ident">one</span>();
         <span class="ident">num_complex</span>::<span class="ident">Complex</span>::<span class="ident">new</span>(<span class="ident">_2</span>, <span class="ident">N</span>::<span class="ident">zero</span>()).<span class="ident">powc</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">exp_m1</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">exp_m1</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">exp</span>() <span class="op">-</span> <span class="self">Self</span>::<span class="ident">one</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ln_1p</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">ln_1p</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         (<span class="self">Self</span>::<span class="ident">one</span>() <span class="op">+</span> <span class="self">self</span>).<span class="ident">ln</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">log2</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">log2</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">_2</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">one</span>() <span class="op">+</span> <span class="ident">N</span>::<span class="ident">one</span>();
         <span class="self">self</span>.<span class="ident">log</span>(<span class="ident">_2</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">log10</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">log10</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">_10</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">from_subset</span>(<span class="kw-2">&amp;</span><span class="number">10.0f64</span>);
         <span class="self">self</span>.<span class="ident">log</span>(<span class="ident">_10</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">one_third</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">from_subset</span>(<span class="kw-2">&amp;</span>(<span class="number">1.0</span> <span class="op">/</span> <span class="number">3.0</span>));
         <span class="self">self</span>.<span class="ident">powf</span>(<span class="ident">one_third</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// FIXME: is there a more accurate solution?</span>
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">from_subset</span>(<span class="kw-2">&amp;</span>(<span class="ident">n</span> <span class="kw">as</span> <span class="ident">f64</span>));
         <span class="self">self</span>.<span class="ident">powf</span>(<span class="ident">n</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">is_finite</span>() <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">is_finite</span>()
+    <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">is_finite</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">is_finite</span>()
     }
 
     <span class="comment">/*
@@ -2650,7 +2651,7 @@
      */</span>
     <span class="doccomment">/// Computes `e^(self)`, where `e` is the base of the natural logarithm.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">exp</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">exp</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: e^(a + bi) = e^a (cos(b) + i*sin(b))</span>
         <span class="comment">// = from_polar(e^a, b)</span>
         <span class="ident">complex_from_polar</span>(<span class="self">self</span>.<span class="ident">re</span>.<span class="ident">exp</span>(), <span class="self">self</span>.<span class="ident">im</span>)
@@ -2664,7 +2665,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The branch satisfies `-π ≤ arg(ln(z)) ≤ π`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ln</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">ln</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: ln(z) = ln|z| + i*arg(z)</span>
         <span class="kw">let</span> (<span class="ident">r</span>, <span class="ident">theta</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_polar</span>();
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">r</span>.<span class="ident">ln</span>(), <span class="ident">theta</span>)
@@ -2678,7 +2679,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The branch satisfies `-π/2 ≤ arg(sqrt(z)) ≤ π/2`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: sqrt(r e^(it)) = sqrt(r) e^(it/2)</span>
         <span class="kw">let</span> <span class="ident">two</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">one</span>() <span class="op">+</span> <span class="ident">N</span>::<span class="ident">one</span>();
         <span class="kw">let</span> (<span class="ident">r</span>, <span class="ident">theta</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_polar</span>();
@@ -2686,18 +2687,18 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">sqrt</span>())
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">hypot</span>(<span class="self">self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
+    <span class="kw">fn</span> <span class="ident">hypot</span>(<span class="self">self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">RealField</span> {
         (<span class="self">self</span>.<span class="ident">modulus_squared</span>() <span class="op">+</span> <span class="ident">b</span>.<span class="ident">modulus_squared</span>()).<span class="ident">sqrt</span>()
     }
 
     <span class="doccomment">/// Raises `self` to a floating point power.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="self">Self</span>::<span class="ident">RealField</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: x^y = (ρ e^(i θ))^y = ρ^y e^(i θ y)</span>
         <span class="comment">// = from_polar(ρ^y, θ y)</span>
         <span class="kw">let</span> (<span class="ident">r</span>, <span class="ident">theta</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_polar</span>();
@@ -2706,7 +2707,7 @@
 
     <span class="doccomment">/// Returns the logarithm of `self` with respect to an arbitrary base.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: log_y(x) = log_y(ρ e^(i θ))</span>
         <span class="comment">// = log_y(ρ) + log_y(e^(i θ)) = log_y(ρ) + ln(e^(i θ)) / ln(y)</span>
         <span class="comment">// = log_y(ρ) + i θ / ln(y)</span>
@@ -2716,7 +2717,7 @@
 
     <span class="doccomment">/// Raises `self` to a complex power.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">powc</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">powc</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: x^y = (a + i b)^(c + i d)</span>
         <span class="comment">// = (ρ e^(i θ))^c (ρ e^(i θ))^(i d)</span>
         <span class="comment">//    where ρ=|x| and θ=arg(x)</span>
@@ -2747,7 +2748,7 @@
 
     <span class="doccomment">/// Computes the sine of `self`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: sin(a + bi) = sin(a)cosh(b) + i*cos(a)sinh(b)</span>
         <span class="self">Self</span>::<span class="ident">new</span>(
             <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">sin</span>() <span class="op">*</span> <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">cosh</span>(),
@@ -2757,7 +2758,7 @@
 
     <span class="doccomment">/// Computes the cosine of `self`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: cos(a + bi) = cos(a)cosh(b) - i*sin(a)sinh(b)</span>
         <span class="self">Self</span>::<span class="ident">new</span>(
             <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">cos</span>() <span class="op">*</span> <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">cosh</span>(),
@@ -2766,7 +2767,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sin_cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
+    <span class="kw">fn</span> <span class="ident">sin_cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
         <span class="kw">let</span> (<span class="ident">rsin</span>, <span class="ident">rcos</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">sin_cos</span>();
         <span class="kw">let</span> (<span class="ident">isinh</span>, <span class="ident">icosh</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">sinh_cosh</span>();
         <span class="kw">let</span> <span class="ident">sin</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">rsin</span> <span class="op">*</span> <span class="ident">icosh</span>, <span class="ident">rcos</span> <span class="op">*</span> <span class="ident">isinh</span>);
@@ -2777,7 +2778,7 @@
 
     <span class="doccomment">/// Computes the tangent of `self`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">tan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">tan</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: tan(a + bi) = (sin(2a) + i*sinh(2b))/(cos(2a) + cosh(2b))</span>
         <span class="kw">let</span> (<span class="ident">two_re</span>, <span class="ident">two_im</span>) <span class="op">=</span> (<span class="self">self</span>.<span class="ident">re</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">re</span>, <span class="self">self</span>.<span class="ident">im</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">im</span>);
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">two_re</span>.<span class="ident">sin</span>(), <span class="ident">two_im</span>.<span class="ident">sinh</span>()).<span class="ident">unscale</span>(<span class="ident">two_re</span>.<span class="ident">cos</span>() <span class="op">+</span> <span class="ident">two_im</span>.<span class="ident">cosh</span>())
@@ -2792,7 +2793,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The branch satisfies `-π/2 ≤ Re(asin(z)) ≤ π/2`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">asin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">asin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: arcsin(z) = -i ln(sqrt(1-z^2) + iz)</span>
         <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">i</span>();
         <span class="op">-</span><span class="ident">i</span> <span class="op">*</span> ((<span class="self">Self</span>::<span class="ident">one</span>() <span class="op">-</span> <span class="self">self</span> <span class="op">*</span> <span class="self">self</span>).<span class="ident">sqrt</span>() <span class="op">+</span> <span class="ident">i</span> <span class="op">*</span> <span class="self">self</span>).<span class="ident">ln</span>()
@@ -2807,7 +2808,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The branch satisfies `0 ≤ Re(acos(z)) ≤ π`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">acos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">acos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: arccos(z) = -i ln(i sqrt(1-z^2) + z)</span>
         <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">i</span>();
         <span class="op">-</span><span class="ident">i</span> <span class="op">*</span> (<span class="ident">i</span> <span class="op">*</span> (<span class="self">Self</span>::<span class="ident">one</span>() <span class="op">-</span> <span class="self">self</span> <span class="op">*</span> <span class="self">self</span>).<span class="ident">sqrt</span>() <span class="op">+</span> <span class="self">self</span>).<span class="ident">ln</span>()
@@ -2822,15 +2823,15 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The branch satisfies `-π/2 ≤ Re(atan(z)) ≤ π/2`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">atan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">atan</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: arctan(z) = (ln(1+iz) - ln(1-iz))/(2i)</span>
         <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">i</span>();
         <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">one</span>();
         <span class="kw">let</span> <span class="ident">two</span> <span class="op">=</span> <span class="ident">one</span> <span class="op">+</span> <span class="ident">one</span>;
 
-        <span class="kw">if</span> <span class="self">self</span> <span class="op">=</span><span class="op">=</span> <span class="ident">i</span> {
+        <span class="kw">if</span> <span class="self">self</span> <span class="op">==</span> <span class="ident">i</span> {
             <span class="kw">return</span> <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">N</span>::<span class="ident">zero</span>(), <span class="ident">N</span>::<span class="ident">one</span>() <span class="op">/</span> <span class="ident">N</span>::<span class="ident">zero</span>());
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span> <span class="op">=</span><span class="op">=</span> <span class="op">-</span><span class="ident">i</span> {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span> <span class="op">==</span> <span class="op">-</span><span class="ident">i</span> {
             <span class="kw">return</span> <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">N</span>::<span class="ident">zero</span>(), <span class="op">-</span><span class="ident">N</span>::<span class="ident">one</span>() <span class="op">/</span> <span class="ident">N</span>::<span class="ident">zero</span>());
         }
 
@@ -2839,7 +2840,7 @@
 
     <span class="doccomment">/// Computes the hyperbolic sine of `self`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sinh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">sinh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: sinh(a + bi) = sinh(a)cos(b) + i*cosh(a)sin(b)</span>
         <span class="self">Self</span>::<span class="ident">new</span>(
             <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">sinh</span>() <span class="op">*</span> <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">cos</span>(),
@@ -2849,7 +2850,7 @@
 
     <span class="doccomment">/// Computes the hyperbolic cosine of `self`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: cosh(a + bi) = cosh(a)cos(b) + i*sinh(a)sin(b)</span>
         <span class="self">Self</span>::<span class="ident">new</span>(
             <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">cosh</span>() <span class="op">*</span> <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">cos</span>(),
@@ -2858,7 +2859,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sinh_cosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
+    <span class="kw">fn</span> <span class="ident">sinh_cosh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
         <span class="kw">let</span> (<span class="ident">rsinh</span>, <span class="ident">rcosh</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">sinh_cosh</span>();
         <span class="kw">let</span> (<span class="ident">isin</span>, <span class="ident">icos</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">sin_cos</span>();
         <span class="kw">let</span> <span class="ident">sin</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">rsinh</span> <span class="op">*</span> <span class="ident">icos</span>, <span class="ident">rcosh</span> <span class="op">*</span> <span class="ident">isin</span>);
@@ -2869,7 +2870,7 @@
 
     <span class="doccomment">/// Computes the hyperbolic tangent of `self`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: tanh(a + bi) = (sinh(2a) + i*sin(2b))/(cosh(2a) + cos(2b))</span>
         <span class="kw">let</span> (<span class="ident">two_re</span>, <span class="ident">two_im</span>) <span class="op">=</span> (<span class="self">self</span>.<span class="ident">re</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">re</span>, <span class="self">self</span>.<span class="ident">im</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">im</span>);
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">two_re</span>.<span class="ident">sinh</span>(), <span class="ident">two_im</span>.<span class="ident">sin</span>()).<span class="ident">unscale</span>(<span class="ident">two_re</span>.<span class="ident">cosh</span>() <span class="op">+</span> <span class="ident">two_im</span>.<span class="ident">cos</span>())
@@ -2884,7 +2885,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The branch satisfies `-π/2 ≤ Im(asinh(z)) ≤ π/2`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">asinh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">asinh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: arcsinh(z) = ln(z + sqrt(1+z^2))</span>
         <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">one</span>();
         (<span class="self">self</span> <span class="op">+</span> (<span class="ident">one</span> <span class="op">+</span> <span class="self">self</span> <span class="op">*</span> <span class="self">self</span>).<span class="ident">sqrt</span>()).<span class="ident">ln</span>()
@@ -2898,7 +2899,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The branch satisfies `-π ≤ Im(acosh(z)) ≤ π` and `0 ≤ Re(acosh(z)) &lt; ∞`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">acosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">acosh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: arccosh(z) = 2 ln(sqrt((z+1)/2) + sqrt((z-1)/2))</span>
         <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">one</span>();
         <span class="kw">let</span> <span class="ident">two</span> <span class="op">=</span> <span class="ident">one</span> <span class="op">+</span> <span class="ident">one</span>;
@@ -2914,13 +2915,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The branch satisfies `-π/2 ≤ Im(atanh(z)) ≤ π/2`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">atanh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">atanh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="comment">// formula: arctanh(z) = (ln(1+z) - ln(1-z))/2</span>
         <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">one</span>();
         <span class="kw">let</span> <span class="ident">two</span> <span class="op">=</span> <span class="ident">one</span> <span class="op">+</span> <span class="ident">one</span>;
-        <span class="kw">if</span> <span class="self">self</span> <span class="op">=</span><span class="op">=</span> <span class="ident">one</span> {
+        <span class="kw">if</span> <span class="self">self</span> <span class="op">==</span> <span class="ident">one</span> {
             <span class="kw">return</span> <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">N</span>::<span class="ident">one</span>() <span class="op">/</span> <span class="ident">N</span>::<span class="ident">zero</span>(), <span class="ident">N</span>::<span class="ident">zero</span>());
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span> <span class="op">=</span><span class="op">=</span> <span class="op">-</span><span class="ident">one</span> {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span> <span class="op">==</span> <span class="op">-</span><span class="ident">one</span> {
             <span class="kw">return</span> <span class="self">Self</span>::<span class="ident">new</span>(<span class="op">-</span><span class="ident">N</span>::<span class="ident">one</span>() <span class="op">/</span> <span class="ident">N</span>::<span class="ident">zero</span>(), <span class="ident">N</span>::<span class="ident">zero</span>());
         }
         ((<span class="ident">one</span> <span class="op">+</span> <span class="self">self</span>).<span class="ident">ln</span>() <span class="op">-</span> (<span class="ident">one</span> <span class="op">-</span> <span class="self">self</span>).<span class="ident">ln</span>()) <span class="op">/</span> <span class="ident">two</span>
@@ -2928,7 +2929,7 @@
 }
 
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">fn</span> <span class="ident">complex_from_polar</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span><span class="op">&gt;</span>(<span class="ident">r</span>: <span class="ident">N</span>, <span class="ident">theta</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">num_complex</span>::<span class="ident">Complex</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">complex_from_polar</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span><span class="op">&gt;</span>(<span class="ident">r</span>: <span class="ident">N</span>, <span class="ident">theta</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="ident">num_complex</span>::<span class="ident">Complex</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
     <span class="ident">num_complex</span>::<span class="ident">Complex</span>::<span class="ident">new</span>(<span class="ident">r</span> <span class="op">*</span> <span class="ident">theta</span>.<span class="ident">cos</span>(), <span class="ident">r</span> <span class="op">*</span> <span class="ident">theta</span>.<span class="ident">sin</span>())
 }
 </pre></div>

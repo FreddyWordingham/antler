@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/bin/antler-window.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>antler-window.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../antler_window/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/bin/antler-window.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>antler-window.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../antler_window/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -203,16 +204,11 @@
 <span id="203">203</span>
 <span id="204">204</span>
 <span id="205">205</span>
-<span id="206">206</span>
-<span id="207">207</span>
-<span id="208">208</span>
-<span id="209">209</span>
-<span id="210">210</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Rendering engine binary.</span>
 
 <span class="kw">use</span> <span class="ident">antler</span>::{
-    <span class="ident">input</span>::{<span class="ident">Settings</span>, <span class="ident">Shader</span>, <span class="ident">ShaderBuilder</span>},
+    <span class="ident">input</span>::{<span class="ident">ScaleBuilder</span>, <span class="ident">Settings</span>, <span class="ident">Shader</span>, <span class="ident">ShaderBuilder</span>},
     <span class="ident">parts</span>::{<span class="ident">Attributes</span>, <span class="ident">Camera</span>, <span class="ident">CameraBuilder</span>, <span class="ident">Scene</span>},
     <span class="ident">run</span>::<span class="ident">window_thread</span>,
 };
@@ -221,7 +217,6 @@
     <span class="ident">file</span>::{<span class="ident">Build</span>, <span class="ident">Load</span>, <span class="ident">Redirect</span>, <span class="ident">Save</span>},
     <span class="ident">geom</span>::{<span class="ident">Mesh</span>, <span class="ident">MeshBuilder</span>, <span class="ident">Tree</span>, <span class="ident">TreeBuilder</span>},
     <span class="ident">img</span>::<span class="ident">GradientBuilder</span>,
-    <span class="ident">math</span>::<span class="ident">Pos3</span>,
     <span class="ident">ord</span>::<span class="ident">Set</span>,
     <span class="ident">util</span>::{<span class="ident">banner</span>, <span class="ident">dir</span>, <span class="ident">gradient</span>},
 };
@@ -229,7 +224,6 @@
 <span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">Gradient</span>, <span class="ident">LinSrgba</span>};
 <span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">env</span>::<span class="ident">current_dir</span>,
-    <span class="ident">f64</span>::<span class="ident">consts</span>::<span class="ident">PI</span>,
     <span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>},
 };
 
@@ -244,19 +238,19 @@
     <span class="doccomment">/// Render runtime settings.</span>
     <span class="ident">sett</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Settings</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Surfaces set.</span>
-    <span class="ident">surfs</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Key</span>, <span class="ident">MeshBuilder</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">surfs</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Key</span>, <span class="ident">MeshBuilder</span><span class="op">&gt;&gt;</span>,
     <span class="doccomment">/// Attributes set.</span>
-    <span class="ident">attrs</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Key</span>, <span class="ident">Attributes</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">attrs</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Key</span>, <span class="ident">Attributes</span><span class="op">&gt;&gt;</span>,
     <span class="doccomment">/// Colour set.</span>
-    <span class="ident">cols</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Key</span>, <span class="ident">GradientBuilder</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">cols</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Key</span>, <span class="ident">GradientBuilder</span><span class="op">&gt;&gt;</span>,
     <span class="doccomment">/// Shader.</span>
     <span class="ident">shader</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">ShaderBuilder</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Camera.</span>
     <span class="ident">cam</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">CameraBuilder</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Pixel update size.</span>
     <span class="ident">update_size</span>: <span class="ident">u64</span>,
-    <span class="doccomment">/// Number of pictures to take.</span>
-    <span class="ident">num_pics</span>: <span class="ident">u64</span>,
+    <span class="doccomment">/// Window scale.</span>
+    <span class="ident">window_scale</span>: <span class="ident">ScaleBuilder</span>,
 }
 
 <span class="kw">fn</span> <span class="ident">main</span>() {
@@ -265,35 +259,24 @@
     <span class="ident">banner</span>::<span class="ident">title</span>(<span class="string">&quot;RENDER - WINDOW&quot;</span>, <span class="ident">term_width</span>);
     <span class="kw">let</span> (<span class="ident">params_path</span>, <span class="ident">in_dir</span>, <span class="ident">out_dir</span>) <span class="op">=</span> <span class="ident">init</span>(<span class="ident">term_width</span>);
     <span class="kw">let</span> <span class="ident">params</span> <span class="op">=</span> <span class="ident">input</span>(<span class="ident">term_width</span>, <span class="kw-2">&amp;</span><span class="ident">in_dir</span>, <span class="kw-2">&amp;</span><span class="ident">params_path</span>);
-    <span class="kw">let</span> <span class="ident">num_pics</span> <span class="op">=</span> <span class="ident">params</span>.<span class="ident">num_pics</span>;
-    <span class="kw">let</span> (<span class="ident">tree_sett</span>, <span class="ident">render_sett</span>, <span class="ident">surfs</span>, <span class="ident">attrs</span>, <span class="ident">cols</span>, <span class="ident">shader</span>, <span class="kw-2">mut</span> <span class="ident">cam</span>, <span class="ident">update_size</span>) <span class="op">=</span>
+    <span class="kw">let</span> (<span class="ident">tree_sett</span>, <span class="ident">render_sett</span>, <span class="ident">surfs</span>, <span class="ident">attrs</span>, <span class="ident">cols</span>, <span class="ident">shader</span>, <span class="ident">cam</span>, <span class="ident">update_size</span>, <span class="ident">window_scale</span>) <span class="op">=</span>
         <span class="ident">build</span>(<span class="ident">term_width</span>, <span class="kw-2">&amp;</span><span class="ident">in_dir</span>, <span class="ident">params</span>);
     <span class="kw">let</span> <span class="ident">tree</span> <span class="op">=</span> <span class="ident">grow</span>(<span class="ident">term_width</span>, <span class="ident">tree_sett</span>, <span class="kw-2">&amp;</span><span class="ident">surfs</span>);
     <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="ident">Scene</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">tree</span>, <span class="kw-2">&amp;</span><span class="ident">render_sett</span>, <span class="kw-2">&amp;</span><span class="ident">surfs</span>, <span class="kw-2">&amp;</span><span class="ident">attrs</span>, <span class="kw-2">&amp;</span><span class="ident">cols</span>);
     <span class="ident">banner</span>::<span class="ident">section</span>(<span class="string">&quot;Rendering&quot;</span>, <span class="ident">term_width</span>);
 
-    <span class="kw">let</span> <span class="ident">delta</span> <span class="op">=</span> (<span class="number">2.0</span> <span class="op">*</span> <span class="ident">PI</span>) <span class="op">/</span> <span class="ident">num_pics</span> <span class="kw">as</span> <span class="ident">f64</span>;
-    <span class="kw">for</span> <span class="ident">n</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">num_pics</span> {
-        <span class="kw">let</span> <span class="ident">output</span> <span class="op">=</span> <span class="ident">window_thread</span>(<span class="ident">update_size</span>, <span class="kw-2">&amp;</span><span class="ident">input</span>, <span class="kw-2">&amp;</span><span class="ident">shader</span>, <span class="kw-2">&amp;</span><span class="ident">cam</span>)
-            .<span class="ident">expect</span>(<span class="string">&quot;Failed to perform rendering.&quot;</span>);
-        <span class="ident">output</span>
-            .<span class="ident">img</span>
-            .<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;render_{:03}.png&quot;</span>, <span class="ident">n</span>)))
-            .<span class="ident">expect</span>(<span class="string">&quot;Failed to save output data.&quot;</span>);
-
-        <span class="kw">let</span> <span class="ident">cam_pos</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">cam</span>.<span class="ident">focus</span>().<span class="ident">orient</span>().<span class="ident">pos</span>();
-        <span class="ident">cam</span>.<span class="ident">set_pos</span>(<span class="ident">Pos3</span>::<span class="ident">new</span>(
-            (<span class="ident">cam_pos</span>.<span class="ident">x</span> <span class="op">*</span> <span class="ident">delta</span>.<span class="ident">cos</span>()) <span class="op">-</span> (<span class="ident">cam_pos</span>.<span class="ident">y</span> <span class="op">*</span> <span class="ident">delta</span>.<span class="ident">sin</span>()),
-            (<span class="ident">cam_pos</span>.<span class="ident">x</span> <span class="op">*</span> <span class="ident">delta</span>.<span class="ident">sin</span>()) <span class="op">+</span> (<span class="ident">cam_pos</span>.<span class="ident">y</span> <span class="op">*</span> <span class="ident">delta</span>.<span class="ident">cos</span>()),
-            <span class="ident">cam_pos</span>.<span class="ident">z</span>,
-        ));
-    }
+    <span class="kw">let</span> <span class="ident">output</span> <span class="op">=</span> <span class="ident">window_thread</span>(<span class="ident">update_size</span>, <span class="ident">window_scale</span>, <span class="kw-2">&amp;</span><span class="ident">input</span>, <span class="kw-2">&amp;</span><span class="ident">shader</span>, <span class="kw-2">&amp;</span><span class="ident">cam</span>)
+        .<span class="ident">expect</span>(<span class="string">&quot;Failed to perform rendering.&quot;</span>);
+    <span class="ident">output</span>
+        .<span class="ident">img</span>
+        .<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="string">&quot;render.png&quot;</span>))
+        .<span class="ident">expect</span>(<span class="string">&quot;Failed to save output data.&quot;</span>);
 
     <span class="ident">banner</span>::<span class="ident">section</span>(<span class="string">&quot;Finished&quot;</span>, <span class="ident">term_width</span>);
 }
 
 <span class="doccomment">/// Initialise the command line arguments and directories.</span>
-<span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">term_width</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">PathBuf</span>, <span class="ident">PathBuf</span>, <span class="ident">PathBuf</span>) {
+<span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">term_width</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> (<span class="ident">PathBuf</span>, <span class="ident">PathBuf</span>, <span class="ident">PathBuf</span>) {
     <span class="ident">banner</span>::<span class="ident">section</span>(<span class="string">&quot;Initialisation&quot;</span>, <span class="ident">term_width</span>);
     <span class="ident">banner</span>::<span class="ident">sub_section</span>(<span class="string">&quot;Command line arguments&quot;</span>, <span class="ident">term_width</span>);
     <span class="macro">args</span><span class="macro">!</span>(<span class="ident">bin_path</span>: <span class="ident">PathBuf</span>;
@@ -313,7 +296,7 @@
 }
 
 <span class="doccomment">/// Load the input files.</span>
-<span class="kw">fn</span> <span class="ident">input</span>(<span class="ident">term_width</span>: <span class="ident">usize</span>, <span class="ident">in_dir</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">params_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Parameters</span> {
+<span class="kw">fn</span> <span class="ident">input</span>(<span class="ident">term_width</span>: <span class="ident">usize</span>, <span class="ident">in_dir</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">params_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-&gt;</span> <span class="ident">Parameters</span> {
     <span class="ident">banner</span>::<span class="ident">section</span>(<span class="string">&quot;Input&quot;</span>, <span class="ident">term_width</span>);
     <span class="ident">banner</span>::<span class="ident">sub_section</span>(<span class="string">&quot;Parameters&quot;</span>, <span class="ident">term_width</span>);
     <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="ident">params_path</span>);
@@ -327,15 +310,16 @@
     <span class="ident">term_width</span>: <span class="ident">usize</span>,
     <span class="ident">in_dir</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>,
     <span class="ident">params</span>: <span class="ident">Parameters</span>,
-) <span class="op">-</span><span class="op">&gt;</span> (
+) <span class="op">-&gt;</span> (
     <span class="ident">TreeBuilder</span>,
     <span class="ident">Settings</span>,
     <span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Key</span>, <span class="ident">Mesh</span><span class="op">&gt;</span>,
     <span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Key</span>, <span class="ident">Attributes</span><span class="op">&gt;</span>,
-    <span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Key</span>, <span class="ident">Gradient</span><span class="op">&lt;</span><span class="ident">LinSrgba</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Key</span>, <span class="ident">Gradient</span><span class="op">&lt;</span><span class="ident">LinSrgba</span><span class="op">&gt;&gt;</span>,
     <span class="ident">Shader</span>,
     <span class="ident">Camera</span>,
     <span class="ident">u64</span>,
+    <span class="ident">minifb</span>::<span class="ident">Scale</span>,
 ) {
     <span class="ident">banner</span>::<span class="ident">section</span>(<span class="string">&quot;Building&quot;</span>, <span class="ident">term_width</span>);
     <span class="ident">banner</span>::<span class="ident">sub_section</span>(<span class="string">&quot;Adaptive Tree Settings&quot;</span>, <span class="ident">term_width</span>);
@@ -393,10 +377,16 @@
         .<span class="ident">build</span>(<span class="ident">in_dir</span>)
         .<span class="ident">expect</span>(<span class="string">&quot;Failed to redirect camera settings.&quot;</span>)
         .<span class="ident">build</span>(<span class="ident">in_dir</span>)
-        .<span class="ident">expect</span>(<span class="string">&quot;Failed to build build camera.&quot;</span>);
+        .<span class="ident">expect</span>(<span class="string">&quot;Failed to build camera.&quot;</span>);
 
     <span class="ident">banner</span>::<span class="ident">sub_section</span>(<span class="string">&quot;Update Size&quot;</span>, <span class="ident">term_width</span>);
     <span class="kw">let</span> <span class="ident">update_size</span> <span class="op">=</span> <span class="ident">params</span>.<span class="ident">update_size</span>;
+
+    <span class="ident">banner</span>::<span class="ident">sub_section</span>(<span class="string">&quot;Window Scale&quot;</span>, <span class="ident">term_width</span>);
+    <span class="kw">let</span> <span class="ident">window_scale</span> <span class="op">=</span> <span class="ident">params</span>
+        .<span class="ident">window_scale</span>
+        .<span class="ident">build</span>(<span class="ident">in_dir</span>)
+        .<span class="ident">expect</span>(<span class="string">&quot;Failed to determine window scaling.&quot;</span>);
 
     (
         <span class="ident">tree_sett</span>,
@@ -407,11 +397,12 @@
         <span class="ident">shader</span>,
         <span class="ident">cam</span>,
         <span class="ident">update_size</span>,
+        <span class="ident">window_scale</span>,
     )
 }
 
 <span class="doccomment">/// Grow domains.</span>
-<span class="kw">fn</span> <span class="ident">grow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">term_width</span>: <span class="ident">usize</span>, <span class="ident">tree</span>: <span class="ident">TreeBuilder</span>, <span class="ident">surfs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Key</span>, <span class="ident">Mesh</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Tree</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="kw-2">&amp;</span><span class="ident">Key</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">grow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">term_width</span>: <span class="ident">usize</span>, <span class="ident">tree</span>: <span class="ident">TreeBuilder</span>, <span class="ident">surfs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Key</span>, <span class="ident">Mesh</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Tree</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="kw-2">&amp;</span><span class="ident">Key</span><span class="op">&gt;</span> {
     <span class="ident">banner</span>::<span class="ident">section</span>(<span class="string">&quot;Growing&quot;</span>, <span class="ident">term_width</span>);
 
     <span class="ident">banner</span>::<span class="ident">sub_section</span>(<span class="string">&quot;Adaptive Tree&quot;</span>, <span class="ident">term_width</span>);

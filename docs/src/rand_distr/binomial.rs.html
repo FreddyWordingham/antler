@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/rand_distr-0.2.2/src/binomial.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>binomial.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="https://www.rust-lang.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../rand_distr/index.html'><div class='logo-container'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/rand_distr-0.3.0/src/binomial.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>binomial.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="https://www.rust-lang.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../rand_distr/index.html'><div class='logo-container'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -327,6 +328,19 @@
 <span id="327">327</span>
 <span id="328">328</span>
 <span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// Copyright 2018 Developers of the Rand project.</span>
 <span class="comment">// Copyright 2016-2017 The Rust Project Developers.</span>
@@ -339,8 +353,9 @@
 
 <span class="doccomment">//! The binomial distribution.</span>
 
-<span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">Rng</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Distribution</span>, <span class="ident">Uniform</span>};
+<span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">Rng</span>;
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 
 <span class="doccomment">/// The binomial distribution `Binomial(n, p)`.</span>
 <span class="doccomment">///</span>
@@ -373,14 +388,26 @@
     <span class="ident">ProbabilityTooLarge</span>,
 }
 
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">Error</span>::<span class="ident">ProbabilityTooSmall</span> <span class="op">=&gt;</span> <span class="string">&quot;p &lt; 0 or is NaN in binomial distribution&quot;</span>,
+            <span class="ident">Error</span>::<span class="ident">ProbabilityTooLarge</span> <span class="op">=&gt;</span> <span class="string">&quot;p &gt; 1 in binomial distribution&quot;</span>,
+        })
+    }
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">Error</span> {}
+
 <span class="kw">impl</span> <span class="ident">Binomial</span> {
     <span class="doccomment">/// Construct a new `Binomial` with the given shape parameters `n` (number</span>
     <span class="doccomment">/// of trials) and `p` (probability of success).</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">n</span>: <span class="ident">u64</span>, <span class="ident">p</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Binomial</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="op">!</span>(<span class="ident">p</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0.0</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">n</span>: <span class="ident">u64</span>, <span class="ident">p</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Binomial</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="op">!</span>(<span class="ident">p</span> <span class="op">&gt;=</span> <span class="number">0.0</span>) {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">ProbabilityTooSmall</span>);
         }
-        <span class="kw">if</span> <span class="op">!</span>(<span class="ident">p</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">1.0</span>) {
+        <span class="kw">if</span> <span class="op">!</span>(<span class="ident">p</span> <span class="op">&lt;=</span> <span class="number">1.0</span>) {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">ProbabilityTooLarge</span>);
         }
         <span class="prelude-val">Ok</span>(<span class="ident">Binomial</span> { <span class="ident">n</span>, <span class="ident">p</span> })
@@ -389,29 +416,25 @@
 
 <span class="doccomment">/// Convert a `f64` to an `i64`, panicing on overflow.</span>
 <span class="comment">// In the future (Rust 1.34), this might be replaced with `TryFrom`.</span>
-<span class="kw">fn</span> <span class="ident">f64_to_i64</span>(<span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i64</span> {
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">x</span> <span class="op">&lt;</span> (::<span class="ident">std</span>::<span class="ident">i64</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">f64</span>));
+<span class="kw">fn</span> <span class="ident">f64_to_i64</span>(<span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">i64</span> {
+    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">x</span> <span class="op">&lt;</span> (<span class="ident">core</span>::<span class="ident">i64</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">f64</span>));
     <span class="ident">x</span> <span class="kw">as</span> <span class="ident">i64</span>
 }
 
 <span class="kw">impl</span> <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Binomial</span> {
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">many_single_char_names</span>)]</span>  <span class="comment">// Same names as in the reference.</span>
-    <span class="kw">fn</span> <span class="ident">sample</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Rng</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">many_single_char_names</span>)]</span> <span class="comment">// Same names as in the reference.</span>
+    <span class="kw">fn</span> <span class="ident">sample</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Rng</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
         <span class="comment">// Handle these values directly.</span>
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">p</span> <span class="op">=</span><span class="op">=</span> <span class="number">0.0</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">p</span> <span class="op">==</span> <span class="number">0.0</span> {
             <span class="kw">return</span> <span class="number">0</span>;
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">p</span> <span class="op">=</span><span class="op">=</span> <span class="number">1.0</span> {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">p</span> <span class="op">==</span> <span class="number">1.0</span> {
             <span class="kw">return</span> <span class="self">self</span>.<span class="ident">n</span>;
         }
 
         <span class="comment">// The binomial distribution is symmetrical with respect to p -&gt; 1-p,</span>
         <span class="comment">// k -&gt; n-k switch p so that it is less than 0.5 - this allows for lower</span>
         <span class="comment">// expected values we will just invert the result at the end</span>
-        <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">p</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0.5</span> {
-            <span class="self">self</span>.<span class="ident">p</span>
-        } <span class="kw">else</span> {
-            <span class="number">1.0</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">p</span>
-        };
+        <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">p</span> <span class="op">&lt;=</span> <span class="number">0.5</span> { <span class="self">self</span>.<span class="ident">p</span> } <span class="kw">else</span> { <span class="number">1.0</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">p</span> };
 
         <span class="kw">let</span> <span class="ident">result</span>;
         <span class="kw">let</span> <span class="ident">q</span> <span class="op">=</span> <span class="number">1.</span> <span class="op">-</span> <span class="ident">p</span>;
@@ -428,8 +451,7 @@
         <span class="comment">// Ranlib uses 30, and GSL uses 14.</span>
         <span class="kw">const</span> <span class="ident">BINV_THRESHOLD</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">10.</span>;
 
-        <span class="kw">if</span> (<span class="self">self</span>.<span class="ident">n</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">*</span> <span class="ident">p</span> <span class="op">&lt;</span> <span class="ident">BINV_THRESHOLD</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span>
-           <span class="self">self</span>.<span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (::<span class="ident">std</span>::<span class="ident">i32</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">u64</span>) {
+        <span class="kw">if</span> (<span class="self">self</span>.<span class="ident">n</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">*</span> <span class="ident">p</span> <span class="op">&lt;</span> <span class="ident">BINV_THRESHOLD</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">n</span> <span class="op">&lt;=</span> (<span class="ident">core</span>::<span class="ident">i32</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">u64</span>) {
             <span class="comment">// Use the BINV algorithm.</span>
             <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">p</span> <span class="op">/</span> <span class="ident">q</span>;
             <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> ((<span class="self">self</span>.<span class="ident">n</span> <span class="op">+</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">*</span> <span class="ident">s</span>;
@@ -437,9 +459,9 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">u</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen</span>();
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">x</span> <span class="op">=</span> <span class="number">0</span>;
             <span class="kw">while</span> <span class="ident">u</span> <span class="op">&gt;</span> <span class="ident">r</span> <span class="kw">as</span> <span class="ident">f64</span> {
-                <span class="ident">u</span> <span class="op">-</span><span class="op">=</span> <span class="ident">r</span>;
-                <span class="ident">x</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                <span class="ident">r</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">a</span> <span class="op">/</span> (<span class="ident">x</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">-</span> <span class="ident">s</span>;
+                <span class="ident">u</span> <span class="op">-=</span> <span class="ident">r</span>;
+                <span class="ident">x</span> <span class="op">+=</span> <span class="number">1</span>;
+                <span class="ident">r</span> <span class="op">*=</span> <span class="ident">a</span> <span class="op">/</span> (<span class="ident">x</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">-</span> <span class="ident">s</span>;
             }
             <span class="ident">result</span> <span class="op">=</span> <span class="ident">x</span>;
         } <span class="kw">else</span> {
@@ -467,7 +489,7 @@
             <span class="comment">// p1 + area of parallelogram region</span>
             <span class="kw">let</span> <span class="ident">p2</span> <span class="op">=</span> <span class="ident">p1</span> <span class="op">*</span> (<span class="number">1.</span> <span class="op">+</span> <span class="number">2.</span> <span class="op">*</span> <span class="ident">c</span>);
 
-            <span class="kw">fn</span> <span class="ident">lambda</span>(<span class="ident">a</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+            <span class="kw">fn</span> <span class="ident">lambda</span>(<span class="ident">a</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
                 <span class="ident">a</span> <span class="op">*</span> (<span class="number">1.</span> <span class="op">+</span> <span class="number">0.5</span> <span class="op">*</span> <span class="ident">a</span>)
             }
 
@@ -510,15 +532,15 @@
                     <span class="kw">if</span> <span class="ident">y</span> <span class="op">&lt;</span> <span class="number">0</span> {
                         <span class="kw">continue</span>;
                     } <span class="kw">else</span> {
-                        <span class="ident">v</span> <span class="kw-2">*</span><span class="op">=</span> (<span class="ident">u</span> <span class="op">-</span> <span class="ident">p2</span>) <span class="op">*</span> <span class="ident">lambda_l</span>;
+                        <span class="ident">v</span> <span class="op">*=</span> (<span class="ident">u</span> <span class="op">-</span> <span class="ident">p2</span>) <span class="op">*</span> <span class="ident">lambda_l</span>;
                     }
                 } <span class="kw">else</span> {
                     <span class="comment">// Step 4: Region 4, right exponential tail.</span>
                     <span class="ident">y</span> <span class="op">=</span> <span class="ident">f64_to_i64</span>(<span class="ident">x_r</span> <span class="op">-</span> <span class="ident">v</span>.<span class="ident">ln</span>() <span class="op">/</span> <span class="ident">lambda_r</span>);
-                    <span class="kw">if</span> <span class="ident">y</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> (<span class="ident">y</span> <span class="kw">as</span> <span class="ident">u64</span>) <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">n</span> {
+                    <span class="kw">if</span> <span class="ident">y</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> (<span class="ident">y</span> <span class="kw">as</span> <span class="ident">u64</span>) <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">n</span> {
                         <span class="kw">continue</span>;
                     } <span class="kw">else</span> {
-                        <span class="ident">v</span> <span class="kw-2">*</span><span class="op">=</span> (<span class="ident">u</span> <span class="op">-</span> <span class="ident">p3</span>) <span class="op">*</span> <span class="ident">lambda_r</span>;
+                        <span class="ident">v</span> <span class="op">*=</span> (<span class="ident">u</span> <span class="op">-</span> <span class="ident">p3</span>) <span class="op">*</span> <span class="ident">lambda_r</span>;
                     }
                 }
 
@@ -526,7 +548,7 @@
 
                 <span class="comment">// Step 5.0: Test for appropriate method of evaluating f(y).</span>
                 <span class="kw">let</span> <span class="ident">k</span> <span class="op">=</span> (<span class="ident">y</span> <span class="op">-</span> <span class="ident">m</span>).<span class="ident">abs</span>();
-                <span class="kw">if</span> <span class="op">!</span>(<span class="ident">k</span> <span class="op">&gt;</span> <span class="ident">SQUEEZE_THRESHOLD</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> (<span class="ident">k</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">&lt;</span> <span class="number">0.5</span> <span class="op">*</span> <span class="ident">npq</span> <span class="op">-</span> <span class="number">1.</span>) {
+                <span class="kw">if</span> <span class="op">!</span>(<span class="ident">k</span> <span class="op">&gt;</span> <span class="ident">SQUEEZE_THRESHOLD</span> <span class="op">&amp;&amp;</span> (<span class="ident">k</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">&lt;</span> <span class="number">0.5</span> <span class="op">*</span> <span class="ident">npq</span> <span class="op">-</span> <span class="number">1.</span>) {
                     <span class="comment">// Step 5.1: Evaluate f(y) via the recursive relationship. Start the</span>
                     <span class="comment">// search from the mode.</span>
                     <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">p</span> <span class="op">/</span> <span class="ident">q</span>;
@@ -535,18 +557,18 @@
                     <span class="kw">if</span> <span class="ident">m</span> <span class="op">&lt;</span> <span class="ident">y</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="ident">m</span>;
                         <span class="kw">loop</span> {
-                            <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                            <span class="ident">f</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">a</span> <span class="op">/</span> (<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">-</span> <span class="ident">s</span>;
-                            <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="ident">y</span> {
+                            <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
+                            <span class="ident">f</span> <span class="op">*=</span> <span class="ident">a</span> <span class="op">/</span> (<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">-</span> <span class="ident">s</span>;
+                            <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="ident">y</span> {
                                 <span class="kw">break</span>;
                             }
                         }
                     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">m</span> <span class="op">&gt;</span> <span class="ident">y</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="ident">y</span>;
                         <span class="kw">loop</span> {
-                            <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                            <span class="ident">f</span> <span class="op">/</span><span class="op">=</span> <span class="ident">a</span> <span class="op">/</span> (<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">-</span> <span class="ident">s</span>;
-                            <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="ident">m</span> {
+                            <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
+                            <span class="ident">f</span> <span class="op">/=</span> <span class="ident">a</span> <span class="op">/</span> (<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">-</span> <span class="ident">s</span>;
+                            <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="ident">m</span> {
                                 <span class="kw">break</span>;
                             }
                         }
@@ -561,8 +583,8 @@
                 <span class="comment">// Step 5.2: Squeezing. Check the value of ln(v) againts upper and</span>
                 <span class="comment">// lower bound of ln(f(y)).</span>
                 <span class="kw">let</span> <span class="ident">k</span> <span class="op">=</span> <span class="ident">k</span> <span class="kw">as</span> <span class="ident">f64</span>;
-                <span class="kw">let</span> <span class="ident">rho</span> <span class="op">=</span> (<span class="ident">k</span> <span class="op">/</span> <span class="ident">npq</span>) <span class="op">*</span> ((<span class="ident">k</span> <span class="op">*</span> (<span class="ident">k</span> <span class="op">/</span> <span class="number">3.</span> <span class="op">+</span> <span class="number">0.625</span>) <span class="op">+</span> <span class="number">1.</span><span class="op">/</span><span class="number">6.</span>) <span class="op">/</span> <span class="ident">npq</span> <span class="op">+</span> <span class="number">0.5</span>);
-                <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="op">-</span><span class="number">0.5</span> <span class="op">*</span> <span class="ident">k</span><span class="kw-2">*</span><span class="ident">k</span> <span class="op">/</span> <span class="ident">npq</span>;
+                <span class="kw">let</span> <span class="ident">rho</span> <span class="op">=</span> (<span class="ident">k</span> <span class="op">/</span> <span class="ident">npq</span>) <span class="op">*</span> ((<span class="ident">k</span> <span class="op">*</span> (<span class="ident">k</span> <span class="op">/</span> <span class="number">3.</span> <span class="op">+</span> <span class="number">0.625</span>) <span class="op">+</span> <span class="number">1.</span> <span class="op">/</span> <span class="number">6.</span>) <span class="op">/</span> <span class="ident">npq</span> <span class="op">+</span> <span class="number">0.5</span>);
+                <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="op">-</span><span class="number">0.5</span> <span class="op">*</span> <span class="ident">k</span> <span class="op">*</span> <span class="ident">k</span> <span class="op">/</span> <span class="ident">npq</span>;
                 <span class="kw">let</span> <span class="ident">alpha</span> <span class="op">=</span> <span class="ident">v</span>.<span class="ident">ln</span>();
                 <span class="kw">if</span> <span class="ident">alpha</span> <span class="op">&lt;</span> <span class="ident">t</span> <span class="op">-</span> <span class="ident">rho</span> {
                     <span class="kw">break</span>;
@@ -577,32 +599,36 @@
                 <span class="kw">let</span> <span class="ident">z</span> <span class="op">=</span> (<span class="ident">f64_to_i64</span>(<span class="ident">n</span>) <span class="op">+</span> <span class="number">1</span> <span class="op">-</span> <span class="ident">m</span>) <span class="kw">as</span> <span class="ident">f64</span>;
                 <span class="kw">let</span> <span class="ident">w</span> <span class="op">=</span> (<span class="ident">f64_to_i64</span>(<span class="ident">n</span>) <span class="op">-</span> <span class="ident">y</span> <span class="op">+</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">f64</span>;
 
-                <span class="kw">fn</span> <span class="ident">stirling</span>(<span class="ident">a</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+                <span class="kw">fn</span> <span class="ident">stirling</span>(<span class="ident">a</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
                     <span class="kw">let</span> <span class="ident">a2</span> <span class="op">=</span> <span class="ident">a</span> <span class="op">*</span> <span class="ident">a</span>;
                     (<span class="number">13860.</span> <span class="op">-</span> (<span class="number">462.</span> <span class="op">-</span> (<span class="number">132.</span> <span class="op">-</span> (<span class="number">99.</span> <span class="op">-</span> <span class="number">140.</span> <span class="op">/</span> <span class="ident">a2</span>) <span class="op">/</span> <span class="ident">a2</span>) <span class="op">/</span> <span class="ident">a2</span>) <span class="op">/</span> <span class="ident">a2</span>) <span class="op">/</span> <span class="ident">a</span> <span class="op">/</span> <span class="number">166320.</span>
                 }
 
-                <span class="kw">if</span> <span class="ident">alpha</span> <span class="op">&gt;</span> <span class="ident">x_m</span> <span class="op">*</span> (<span class="ident">f1</span> <span class="op">/</span> <span class="ident">x1</span>).<span class="ident">ln</span>()
-                    <span class="op">+</span> (<span class="ident">n</span> <span class="op">-</span> (<span class="ident">m</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">+</span> <span class="number">0.5</span>) <span class="op">*</span> (<span class="ident">z</span> <span class="op">/</span> <span class="ident">w</span>).<span class="ident">ln</span>()
-                    <span class="op">+</span> ((<span class="ident">y</span> <span class="op">-</span> <span class="ident">m</span>) <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">*</span> (<span class="ident">w</span> <span class="op">*</span> <span class="ident">p</span> <span class="op">/</span> (<span class="ident">x1</span> <span class="op">*</span> <span class="ident">q</span>)).<span class="ident">ln</span>()
-                    <span class="comment">// We use the signs from the GSL implementation, which are</span>
-                    <span class="comment">// different than the ones in the reference. According to</span>
-                    <span class="comment">// the GSL authors, the new signs were verified to be</span>
-                    <span class="comment">// correct by one of the original designers of the</span>
-                    <span class="comment">// algorithm.</span>
-                    <span class="op">+</span> <span class="ident">stirling</span>(<span class="ident">f1</span>) <span class="op">+</span> <span class="ident">stirling</span>(<span class="ident">z</span>) <span class="op">-</span> <span class="ident">stirling</span>(<span class="ident">x1</span>) <span class="op">-</span> <span class="ident">stirling</span>(<span class="ident">w</span>)
+                <span class="kw">if</span> <span class="ident">alpha</span>
+                    <span class="op">&gt;</span> <span class="ident">x_m</span> <span class="op">*</span> (<span class="ident">f1</span> <span class="op">/</span> <span class="ident">x1</span>).<span class="ident">ln</span>()
+                        <span class="op">+</span> (<span class="ident">n</span> <span class="op">-</span> (<span class="ident">m</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">+</span> <span class="number">0.5</span>) <span class="op">*</span> (<span class="ident">z</span> <span class="op">/</span> <span class="ident">w</span>).<span class="ident">ln</span>()
+                        <span class="op">+</span> ((<span class="ident">y</span> <span class="op">-</span> <span class="ident">m</span>) <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">*</span> (<span class="ident">w</span> <span class="op">*</span> <span class="ident">p</span> <span class="op">/</span> (<span class="ident">x1</span> <span class="op">*</span> <span class="ident">q</span>)).<span class="ident">ln</span>()
+                        <span class="comment">// We use the signs from the GSL implementation, which are</span>
+                        <span class="comment">// different than the ones in the reference. According to</span>
+                        <span class="comment">// the GSL authors, the new signs were verified to be</span>
+                        <span class="comment">// correct by one of the original designers of the</span>
+                        <span class="comment">// algorithm.</span>
+                        <span class="op">+</span> <span class="ident">stirling</span>(<span class="ident">f1</span>)
+                        <span class="op">+</span> <span class="ident">stirling</span>(<span class="ident">z</span>)
+                        <span class="op">-</span> <span class="ident">stirling</span>(<span class="ident">x1</span>)
+                        <span class="op">-</span> <span class="ident">stirling</span>(<span class="ident">w</span>)
                 {
                     <span class="kw">continue</span>;
                 }
 
                 <span class="kw">break</span>;
             }
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">y</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span>);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">y</span> <span class="op">&gt;=</span> <span class="number">0</span>);
             <span class="ident">result</span> <span class="op">=</span> <span class="ident">y</span> <span class="kw">as</span> <span class="ident">u64</span>;
         }
 
         <span class="comment">// Invert the result for p &lt; 0.5.</span>
-        <span class="kw">if</span> <span class="ident">p</span> <span class="op">!</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">p</span> {
+        <span class="kw">if</span> <span class="ident">p</span> <span class="op">!=</span> <span class="self">self</span>.<span class="ident">p</span> {
             <span class="self">self</span>.<span class="ident">n</span> <span class="op">-</span> <span class="ident">result</span>
         } <span class="kw">else</span> {
             <span class="ident">result</span>
@@ -612,9 +638,9 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">Rng</span>;
-    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Distribution</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Binomial</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Distribution</span>;
+    <span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">Rng</span>;
 
     <span class="kw">fn</span> <span class="ident">test_binomial_mean_and_variance</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Rng</span><span class="op">&gt;</span>(<span class="ident">n</span>: <span class="ident">u64</span>, <span class="ident">p</span>: <span class="ident">f64</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) {
         <span class="kw">let</span> <span class="ident">binomial</span> <span class="op">=</span> <span class="ident">Binomial</span>::<span class="ident">new</span>(<span class="ident">n</span>, <span class="ident">p</span>).<span class="ident">unwrap</span>();
@@ -623,14 +649,15 @@
         <span class="kw">let</span> <span class="ident">expected_variance</span> <span class="op">=</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">f64</span> <span class="op">*</span> <span class="ident">p</span> <span class="op">*</span> (<span class="number">1.0</span> <span class="op">-</span> <span class="ident">p</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">results</span> <span class="op">=</span> [<span class="number">0.0</span>; <span class="number">1000</span>];
-        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">results</span>.<span class="ident">iter_mut</span>() { <span class="kw-2">*</span><span class="ident">i</span> <span class="op">=</span> <span class="ident">binomial</span>.<span class="ident">sample</span>(<span class="ident">rng</span>) <span class="kw">as</span> <span class="ident">f64</span>; }
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">results</span>.<span class="ident">iter_mut</span>() {
+            <span class="kw-2">*</span><span class="ident">i</span> <span class="op">=</span> <span class="ident">binomial</span>.<span class="ident">sample</span>(<span class="ident">rng</span>) <span class="kw">as</span> <span class="ident">f64</span>;
+        }
 
         <span class="kw">let</span> <span class="ident">mean</span> <span class="op">=</span> <span class="ident">results</span>.<span class="ident">iter</span>().<span class="ident">sum</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>() <span class="op">/</span> <span class="ident">results</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">f64</span>;
         <span class="macro">assert</span><span class="macro">!</span>((<span class="ident">mean</span> <span class="kw">as</span> <span class="ident">f64</span> <span class="op">-</span> <span class="ident">expected_mean</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="ident">expected_mean</span> <span class="op">/</span> <span class="number">50.0</span>);
 
         <span class="kw">let</span> <span class="ident">variance</span> <span class="op">=</span>
-            <span class="ident">results</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> (<span class="ident">x</span> <span class="op">-</span> <span class="ident">mean</span>) <span class="op">*</span> (<span class="ident">x</span> <span class="op">-</span> <span class="ident">mean</span>)).<span class="ident">sum</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>()
-            <span class="op">/</span> <span class="ident">results</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">f64</span>;
+            <span class="ident">results</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> (<span class="ident">x</span> <span class="op">-</span> <span class="ident">mean</span>) <span class="op">*</span> (<span class="ident">x</span> <span class="op">-</span> <span class="ident">mean</span>)).<span class="ident">sum</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>() <span class="op">/</span> <span class="ident">results</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">f64</span>;
         <span class="macro">assert</span><span class="macro">!</span>((<span class="ident">variance</span> <span class="op">-</span> <span class="ident">expected_variance</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="ident">expected_variance</span> <span class="op">/</span> <span class="number">10.0</span>);
     }
 
