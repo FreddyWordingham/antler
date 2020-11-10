@@ -15,10 +15,10 @@ use minifb::{Scale, Window, WindowOptions};
 use palette::{LinSrgba, Pixel};
 use rand::thread_rng;
 use rayon::prelude::*;
-use std::time::Instant;
 use std::{
     fmt::Display,
     sync::{Arc, Mutex},
+    time::Instant,
 };
 
 /// Render an image in a live window.
@@ -137,6 +137,7 @@ fn render_range<T: Display + Ord>(
 
             let mut total_col = LinSrgba::new(0.0, 0.0, 0.0, 0.0);
             let start_time = Instant::now();
+
             for sub_sample in 0..super_samples {
                 let ray = cam.gen_ray(pixel, sub_sample);
 

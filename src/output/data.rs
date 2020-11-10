@@ -51,6 +51,6 @@ impl Save for Data {
             LinSrgba::new(1.0, 1.0, 1.0, 1.0),
         ]);
         Image::data_to_linear(&(&self.time + 1.0e-12), &grad)?.save(&out_dir.join("time.png"))?;
-        Image::data_to_log(&(&self.time + 1.0e-12), &grad)?.save(&out_dir.join("log_time.png"))
+        Image::data_to_log(&(&self.time + 1.0), &grad)?.save(&out_dir.join("log_time.png"))
     }
 }

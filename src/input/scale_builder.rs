@@ -1,7 +1,6 @@
 //! Window scaling input structure.
 
-use arctk::err::Error;
-use arctk::file::Build;
+use arctk::{err::Error, file::Build};
 use arctk_attr::input;
 use minifb::Scale;
 use std::path::Path;
