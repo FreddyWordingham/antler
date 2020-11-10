@@ -55,10 +55,7 @@ fn main() {
 
     banner::section("Rendering", term_width);
     let output = multi_thread(&input, &shader, &cam).expect("Failed to perform rendering.");
-    output
-        .img
-        .save(&out_dir.join("render.png"))
-        .expect("Failed to save output data.");
+    output.save(&out_dir).expect("Failed to save output data.");
 
     banner::section("Finished", term_width);
 }
