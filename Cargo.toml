@@ -17,7 +17,7 @@ default = ["window"]
 window = ["minifb"]
 
 [dependencies]
-# arctk = { path = "../arctk" }
+# arctk = { path = "../arctk", features = ["png", "terminal_size"] }
 # arctk-attr = { path = "../arctk-attr" }
 # arctk-proc = { path = "../arctk-proc" }
 arctk = { version = "0.11.*", features = ["png", "terminal_size"] }
@@ -25,7 +25,6 @@ arctk-attr = "0.2.*"
 arctk-proc = "0.2.*"
 nalgebra = "0.23.*"
 ndarray = "0.13.*"
-ndarray-stats = "0.3.*"
 num_cpus = "1.13.*"
 palette = "0.5.*"
 rand = "0.7.*"

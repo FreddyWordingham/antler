@@ -7,7 +7,6 @@ use arctk::{
     ord::{X, Y},
 };
 use ndarray::Array2;
-use ndarray_stats::QuantileExt;
 use palette::{Gradient, LinSrgba};
 use std::{ops::AddAssign, path::Path};
 
@@ -32,29 +31,6 @@ impl Data {
             time: Array2::zeros(res),
         }
     }
-
-    /// Generate a time image.
-    /// # Errors
-    /// if the time data is invalid.
-    #[inline]
-    pub fn gen_time_img(&self, grad: &Gradient<LinSrgba>) -> Result<Image, Error> {
-        let data = &self.time + 1.0e-12;
-        let max = *data.max()?;
-        let linear = &data / max;
-        Ok(Image::new_from_data(&linear, grad))
-    }
-
-    /// Generate a logarithmic time image.
-    /// # Errors
-    /// if the time data is invalid.
-    #[inline]
-    pub fn gen_log_time_img(&self, grad: &Gradient<LinSrgba>) -> Result<Image, Error> {
-        let data = &self.time + 1.0e-12;
-        let max = *data.max()?;
-        let linear = &data / max;
-        let log = linear.map(|x| x.log(10.0));
-        Ok(Image::new_from_data(&log, grad))
-    }
 }
 
 impl AddAssign<&Self> for Data {
@@ -71,11 +47,10 @@ impl Save for Data {
         self.img.save(&out_dir.join("render.png"))?;
 
         let grad = Gradient::new(vec![
-            LinSrgba::new(0.0, 0.0, 0.0, 0.0),
-            LinSrgba::new(1.0, 1.0, 1.0, 0.0),
+            LinSrgba::new(0.0, 0.0, 0.0, 1.0),
+            LinSrgba::new(1.0, 1.0, 1.0, 1.0),
         ]);
-        self.gen_time_img(&grad)?.save(&out_dir.join("time.png"))?;
-        self.gen_log_time_img(&grad)?
-            .save(&out_dir.join("time_log.png"))
+        Image::data_to_linear(&(&self.time + 1.0e-12), &grad)?.save(&out_dir.join("time.png"))?;
+        Image::data_to_log(&(&self.time + 1.0e-12), &grad)?.save(&out_dir.join("log_time.png"))
     }
 }
