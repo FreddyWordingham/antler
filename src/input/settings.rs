@@ -1,6 +1,7 @@
 //! Rendering simulation structure.
 
-use arctk::clone;
+use crate::input::Order;
+use arctk::{access, clone};
 use arctk_attr::input;
 
 /// Loadable render settings structure.
@@ -14,6 +15,8 @@ pub struct Settings {
     block_size: u64,
     /// Minimum photon weight.
     min_weight: f64,
+    /// Order.
+    order: Order,
 }
 
 impl Settings {
@@ -21,4 +24,5 @@ impl Settings {
     clone!(vis_dist, f64);
     clone!(block_size, u64);
     clone!(min_weight, f64);
+    access!(order, Order);
 }
