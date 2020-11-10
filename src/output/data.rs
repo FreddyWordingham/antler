@@ -38,8 +38,9 @@ impl Data {
     /// if the time data is invalid.
     #[inline]
     pub fn gen_time_img(&self, grad: &Gradient<LinSrgba>) -> Result<Image, Error> {
-        let max = *self.time.max()?;
-        let linear = &self.time / max;
+        let data = &self.time + 1.0e-12;
+        let max = *data.max()?;
+        let linear = &data / max;
         Ok(Image::new_from_data(&linear, grad))
     }
 
@@ -48,8 +49,9 @@ impl Data {
     /// if the time data is invalid.
     #[inline]
     pub fn gen_log_time_img(&self, grad: &Gradient<LinSrgba>) -> Result<Image, Error> {
-        let max = *self.time.max()?;
-        let linear = &self.time / max;
+        let data = &self.time + 1.0e-12;
+        let max = *data.max()?;
+        let linear = &data / max;
         let log = linear.map(|x| x.log(10.0));
         Ok(Image::new_from_data(&log, grad))
     }
