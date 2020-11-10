@@ -18,8 +18,8 @@ impl Order {
     /// Generate the order list.
     #[inline]
     #[must_use]
-    pub fn list(&self, n: usize) -> Vec<usize> {
-        let mut order = (0..n).collect::<Vec<usize>>();
+    pub fn gen_list(&self, n: u64) -> Vec<u64> {
+        let mut order = (0..n).collect::<Vec<u64>>();
         match *self {
             Self::Forward => {}
             Self::Backward => {

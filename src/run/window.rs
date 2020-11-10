@@ -39,6 +39,8 @@ pub fn window_thread<T: Display + Ord + Sync>(
     let num_pixels = cam.sensor().num_pixels();
     let mut main_bar = ProgressBar::new("Rendering", num_pixels as u64);
 
+    let order = scene.sett.order().gen_list(num_pixels);
+
     let w = cam.sensor().res().0 as usize;
     let h = cam.sensor().res().1 as usize;
 
@@ -72,6 +74,7 @@ pub fn window_thread<T: Display + Ord + Sync>(
                 .map(|_id| {
                     render_range(
                         start,
+                        &order,
                         &Arc::clone(&pb),
                         scene,
                         shader,
@@ -103,6 +106,7 @@ pub fn window_thread<T: Display + Ord + Sync>(
 #[inline]
 fn render_range<T: Display + Ord>(
     offset: u64,
+    order: &[u64],
     pb: &Arc<Mutex<SilentProgressBar>>,
     scene: &Scene<T>,
     shader: &Shader,
@@ -127,6 +131,7 @@ fn render_range<T: Display + Ord>(
     } {
         for i in start..end {
             let p = i + offset;
+            let p = order[p as usize];
             let pixel = [(p % h_res) as usize, (p / h_res) as usize];
 
             let mut total_col = LinSrgba::new(0.0, 0.0, 0.0, 0.0);
