@@ -8,12 +8,19 @@ use std::path::Path;
 /// Scale enumeration.
 #[input]
 pub enum ScaleBuilder {
+    /// No pixel scaling.
     X1,
+    /// Double render window pixel size.
     X2,
+    /// Quadruple render window pixel size.
     X4,
+    /// 8 times render window pixel size.
     X8,
+    /// 16 times render window pixel size.
     X16,
+    /// 32 times render window pixel size.
     X32,
+    /// Fullscreen render window.
     FullScreen,
 }
 
