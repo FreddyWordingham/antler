@@ -20,7 +20,7 @@ pub enum ScaleBuilder {
 impl Build for ScaleBuilder {
     type Inst = Scale;
 
-    ///
+    /// Build a usable instance.
     #[inline]
     #[must_use]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
