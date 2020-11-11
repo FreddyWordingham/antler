@@ -21,7 +21,7 @@ pub enum ScaleBuilder {
     /// 32 times render window pixel size.
     X32,
     /// Fullscreen render window.
-    FullScreen,
+    Fullscreen,
 }
 
 impl Build for ScaleBuilder {
@@ -37,7 +37,7 @@ impl Build for ScaleBuilder {
             Self::X8 => Ok(Self::Inst::X8),
             Self::X16 => Ok(Self::Inst::X16),
             Self::X32 => Ok(Self::Inst::X32),
-            Self::FullScreen => Ok(Self::Inst::FitScreen),
+            Self::Fullscreen => Ok(Self::Inst::FitScreen),
         }
     }
 }
