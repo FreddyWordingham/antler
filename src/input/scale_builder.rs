@@ -22,7 +22,6 @@ impl Build for ScaleBuilder {
 
     /// Build a usable instance.
     #[inline]
-    #[must_use]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
         match self {
             Self::X1 => Ok(Self::Inst::X1),
