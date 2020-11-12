@@ -1,6 +1,7 @@
 //! Render output.
 
 use arctk::{
+    data::Histogram,
     err::Error,
     file::Save,
     img::Image,
@@ -16,9 +17,9 @@ use std::{ops::AddAssign, path::Path};
 pub struct Data {
     /// Colour image.
     pub img: Image,
-    /// Time data.
+    /// Time image.
     pub time: Array2<f64>,
-    /// Distance data.
+    /// Distance image.
     pub dist: Array2<f64>,
     /// Ending direction.
     pub end_dir: Array2<Vec3>,
@@ -64,11 +65,19 @@ impl Save for Data {
         let max_time = self.time.max()?;
         Image::new(self.time.map(|x| greyscale.get((*x / max_time) as f32)))
             .save(&out_dir.join("time.png"))?;
+        let mut dist_hist = Histogram::new(0.0, *max_time, 100);
+        for t in &self.time {
+            dist_hist.collect(*t);
+        }
+        dist_hist.save(&out_dir.join("time.csv"))?;
 
         let max_dist = self.dist.max()?;
         Image::new(self.dist.map(|x| greyscale.get((*x / max_dist) as f32)))
-            .save(&out_dir.join("dist.png"))
-        // Image::data_to_linear(&self.dist, &greyscale)?.save(&out_dir.join("dist.png"))?;
-        // Image::data_to_linear(&self.end_dir, &greyscale)?.save(&out_dir.join("dist.png"))
+            .save(&out_dir.join("dist.png"))?;
+        let mut dist_hist = Histogram::new(0.0, *max_dist, 100);
+        for d in &self.dist {
+            dist_hist.collect(*d);
+        }
+        dist_hist.save(&out_dir.join("dist.csv"))
     }
 }
