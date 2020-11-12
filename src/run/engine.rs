@@ -23,7 +23,7 @@ pub fn paint<T: Display + Ord>(
     shader: &Shader,
     cam: &Camera,
     mut trace: Tracer,
-) -> LinSrgba {
+) -> (LinSrgba, f64) {
     debug_assert!(trace.weight() > 0.0);
     debug_assert!(trace.weight() <= 1.0);
 
@@ -32,7 +32,8 @@ pub fn paint<T: Display + Ord>(
     let sun_pos = shader.sky().sun_pos();
 
     // Tracked items.
-    let mut col = LinSrgba::new(0.0, 0.0, 0.0, 0.0);
+    let mut total_col = LinSrgba::new(0.0, 0.0, 0.0, 0.0);
+    let mut total_dist = 0.0;
 
     // Event loop.
     loop {
@@ -46,14 +47,14 @@ pub fn paint<T: Display + Ord>(
                     Attributes::Luminous { mult } => {
                         trace.travel(hit.dist());
                         let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
-                        col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
+                        total_col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
                             * (mult * trace.weight()) as f32;
                         break;
                     }
                     Attributes::Transparent { abs } => {
                         trace.travel(hit.dist());
                         let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
-                        col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
+                        total_col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
                             * (abs * trace.weight()) as f32;
                         *trace.weight_mut() *= 1.0 - abs;
                         trace.travel(bump_dist);
@@ -61,7 +62,7 @@ pub fn paint<T: Display + Ord>(
                     Attributes::Mirror { abs } => {
                         trace.travel(hit.dist());
                         let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
-                        col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
+                        total_col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
                             * (abs * trace.weight()) as f32;
                         *trace.weight_mut() *= 1.0 - abs;
                         trace.set_dir(Crossing::calc_ref_dir(trace.dir(), hit.side().norm()));
@@ -74,7 +75,7 @@ pub fn paint<T: Display + Ord>(
                     } => {
                         trace.travel(hit.dist());
                         let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
-                        col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
+                        total_col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
                             * (abs * trace.weight()) as f32;
 
                         let (n_curr, n_next) = if hit.side().is_inside() {
@@ -92,7 +93,9 @@ pub fn paint<T: Display + Ord>(
                             trans.set_dir(trans_dir);
                             trans.travel(bump_dist);
 
-                            col += paint(&mut rng, scene, shader, cam, trans);
+                            let (col, dist) = paint(&mut rng, scene, shader, cam, trans);
+                            total_col += col;
+                            total_dist += dist;
                         }
 
                         // Reflection ray.
@@ -104,17 +107,18 @@ pub fn paint<T: Display + Ord>(
             } else {
                 trace.travel(hit.dist());
                 let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
-                col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
+                total_col += colour(&mut rng, scene, shader, cam, &trace, &hit, &sun_dir)
                     * trace.weight() as f32;
+                total_dist += trace.dist_travelled();
                 break;
             }
         } else {
-            col += sky_col(cam, trace.ray(), shader.sky().grad()) * trace.weight() as f32;
+            total_col += sky_col(cam, trace.ray(), shader.sky().grad()) * trace.weight() as f32;
             break;
         }
     }
 
-    col
+    (total_col, total_dist)
 }
 
 /// Perform a colouring.

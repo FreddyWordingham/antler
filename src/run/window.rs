@@ -136,16 +136,19 @@ fn render_range<T: Display + Ord>(
             let pixel = [(p % h_res) as usize, (p / h_res) as usize];
 
             let mut total_col = LinSrgba::new(0.0, 0.0, 0.0, 0.0);
+            let mut total_dist = 0.0;
             let start_time = Instant::now();
 
             for sub_sample in 0..super_samples {
                 let ray = cam.gen_ray(pixel, sub_sample);
 
-                let col = paint(&mut rng, scene, shader, cam, Tracer::new(ray));
+                let (col, dist) = paint(&mut rng, scene, shader, cam, Tracer::new(ray));
                 total_col += col * weight as f32;
+                total_dist += dist * weight;
             }
             let calc_time = start_time.elapsed().as_micros();
 
+            data.lock().expect("Could not lock data.").dist[pixel] += total_dist;
             data.lock().expect("Could not lock data.").time[pixel] += calc_time as f64;
             data.lock().expect("Could not lock data.").img.pixels_mut()[pixel] += total_col;
             let raw_col: [u8; 4] = total_col.into_format().into_raw();
