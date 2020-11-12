@@ -100,7 +100,7 @@ fn run_thread<T: Display + Ord>(
             for sub_sample in 0..super_samples {
                 let ray = cam.gen_ray(pixel, sub_sample);
 
-                let (col, dist) = paint(&mut rng, scene, shader, cam, Tracer::new(ray));
+                let (col, dist, _dir) = paint(&mut rng, scene, shader, cam, Tracer::new(ray));
                 total_col += col * weight as f32;
                 total_dist += dist * weight;
             }

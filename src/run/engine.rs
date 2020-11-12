@@ -7,7 +7,7 @@ use crate::{
 };
 use arctk::{
     geom::{Hit, Ray},
-    math::Dir3,
+    math::{Dir3, Vec3},
     phys::Crossing,
 };
 use palette::{Gradient, LinSrgba};
@@ -23,7 +23,7 @@ pub fn paint<T: Display + Ord>(
     shader: &Shader,
     cam: &Camera,
     mut trace: Tracer,
-) -> (LinSrgba, f64) {
+) -> (LinSrgba, f64, Vec3) {
     debug_assert!(trace.weight() > 0.0);
     debug_assert!(trace.weight() <= 1.0);
 
@@ -93,7 +93,7 @@ pub fn paint<T: Display + Ord>(
                             trans.set_dir(trans_dir);
                             trans.travel(bump_dist);
 
-                            let (col, dist) = paint(&mut rng, scene, shader, cam, trans);
+                            let (col, dist, _dir) = paint(&mut rng, scene, shader, cam, trans);
                             total_col += col;
                             total_dist += dist;
                         }
@@ -118,7 +118,7 @@ pub fn paint<T: Display + Ord>(
         }
     }
 
-    (total_col, total_dist)
+    (total_col, total_dist, trace.dir().into_inner())
 }
 
 /// Perform a colouring.
