@@ -5,7 +5,7 @@ use arctk::{
     err::Error,
     file::Save,
     img::Image,
-    math::Vec3,
+    math::{Dir3, Vec3},
     ord::{X, Y},
 };
 use ndarray::Array2;
@@ -61,6 +61,18 @@ impl Save for Data {
             LinSrgba::new(0.0, 0.0, 0.0, 1.0),
             LinSrgba::new(1.0, 1.0, 1.0, 1.0),
         ]);
+        let redscale = Gradient::new(vec![
+            LinSrgba::new(0.0, 0.0, 0.0, 1.0),
+            LinSrgba::new(1.0, 0.0, 0.0, 1.0),
+        ]);
+        let greenscale = Gradient::new(vec![
+            LinSrgba::new(0.0, 0.0, 0.0, 1.0),
+            LinSrgba::new(0.0, 1.0, 0.0, 1.0),
+        ]);
+        let bluescale = Gradient::new(vec![
+            LinSrgba::new(0.0, 0.0, 0.0, 1.0),
+            LinSrgba::new(0.0, 0.0, 1.0, 1.0),
+        ]);
 
         let max_time = self.time.max()?;
         Image::new(self.time.map(|x| greyscale.get((*x / max_time) as f32)))
@@ -78,6 +90,12 @@ impl Save for Data {
         for d in &self.dist {
             dist_hist.collect(*d);
         }
-        dist_hist.save(&out_dir.join("dist.csv"))
+        dist_hist.save(&out_dir.join("dist.csv"))?;
+
+        Image::new(self.end_dir.map(|v| {
+            let dir = Dir3::new_normalize(*v);
+            redscale.get(dir.x as f32) + greenscale.get(dir.y as f32) + bluescale.get(dir.z as f32)
+        }))
+        .save(&out_dir.join("norm.png"))
     }
 }
