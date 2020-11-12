@@ -3,8 +3,8 @@ import numpy as np
 import sys
 
 
-X_AXIS_LABEL = 'time'
-Y_AXIS_LABEL = 'count'
+X_AXIS_LABEL = 'time per pixel [milliseconds]'
+Y_AXIS_LABEL = 'counts'
 
 
 def quit_figure(event):
@@ -23,7 +23,8 @@ print("Loading file", filename)
 # plt.plot(data['time'], data[name], label=name)
 
 data = np.genfromtxt(filename, delimiter=',', names=['x', 'counts'])
-plt.plot(data['x'], data['counts'])
+plt.plot(data['x'], data['counts'], '.')
+# plt.bar(data['x'], data['counts'], width=0.8)
 plt.yscale("log")
 
 plt.xlabel(X_AXIS_LABEL)

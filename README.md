@@ -47,8 +47,10 @@ Example parameters.json5:
 ```
 
 # Examples
-![](./time.png)
+![](./metric.png)
+![](./data.png)
 Render both <- space and time -> (+ other metrics distance/surface normals/etc.)
+
 ![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/silver.png)
 ![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/wide.png)
 ![](https://github.com/FreddyWordingham/antler/blob/master/res/renders/vivid.png)
