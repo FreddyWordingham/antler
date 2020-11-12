@@ -16,6 +16,8 @@ pub struct Data {
     pub img: Image,
     /// Time data.
     pub time: Array2<f64>,
+    /// Distance data.
+    pub dist: Array2<f64>,
 }
 
 impl Data {
@@ -29,6 +31,7 @@ impl Data {
         Self {
             img: Image::new(res, LinSrgba::new(0.0, 0.0, 0.0, 0.0)),
             time: Array2::zeros(res),
+            dist: Array2::zeros(res),
         }
     }
 }
@@ -38,6 +41,7 @@ impl AddAssign<&Self> for Data {
     fn add_assign(&mut self, rhs: &Self) {
         self.img += &rhs.img;
         self.time += &rhs.time;
+        self.dist += &rhs.dist;
     }
 }
 
@@ -50,7 +54,7 @@ impl Save for Data {
             LinSrgba::new(0.0, 0.0, 0.0, 1.0),
             LinSrgba::new(1.0, 1.0, 1.0, 1.0),
         ]);
-        Image::data_to_linear(&(&self.time + 1.0e-12), &grad)?.save(&out_dir.join("time.png"))?;
-        Image::data_to_log(&(&self.time + 1.0), &grad)?.save(&out_dir.join("log_time.png"))
+        Image::data_to_linear(&self.time, &grad)?.save(&out_dir.join("time.png"))?;
+        Image::data_to_linear(&self.dist, &grad)?.save(&out_dir.join("dist.png"))
     }
 }
