@@ -65,7 +65,7 @@ impl Save for Data {
         let max_time = self.time.max()?;
         Image::new(self.time.map(|x| greyscale.get((*x / max_time) as f32)))
             .save(&out_dir.join("time.png"))?;
-        let mut dist_hist = Histogram::new(0.0, *max_time, 100);
+        let mut dist_hist = Histogram::new(0.0, *max_time, 1000);
         for t in &self.time {
             dist_hist.collect(*t);
         }
@@ -74,7 +74,7 @@ impl Save for Data {
         let max_dist = self.dist.max()?;
         Image::new(self.dist.map(|x| greyscale.get((*x / max_dist) as f32)))
             .save(&out_dir.join("dist.png"))?;
-        let mut dist_hist = Histogram::new(0.0, *max_dist, 100);
+        let mut dist_hist = Histogram::new(0.0, *max_dist, 1000);
         for d in &self.dist {
             dist_hist.collect(*d);
         }
