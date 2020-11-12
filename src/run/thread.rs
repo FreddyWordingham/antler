@@ -6,7 +6,7 @@ use crate::{
     parts::{Camera, Scene, Tracer},
     run::engine::paint,
 };
-use arctk::{err::Error, tools::ProgressBar};
+use arctk::{err::Error, math::Vec3, tools::ProgressBar};
 use palette::LinSrgba;
 use rand::thread_rng;
 use rayon::prelude::*;
@@ -95,17 +95,20 @@ fn run_thread<T: Display + Ord>(
 
             let mut total_col = LinSrgba::new(0.0, 0.0, 0.0, 0.0);
             let mut total_dist = 0.0;
+            let mut total_dir = Vec3::default();
             let start_time = Instant::now();
 
             for sub_sample in 0..super_samples {
                 let ray = cam.gen_ray(pixel, sub_sample);
 
-                let (col, dist, _dir) = paint(&mut rng, scene, shader, cam, Tracer::new(ray));
+                let (col, dist, dir) = paint(&mut rng, scene, shader, cam, Tracer::new(ray));
                 total_col += col * weight as f32;
                 total_dist += dist * weight;
+                total_dir += dir * weight;
             }
             let calc_time = start_time.elapsed().as_micros();
 
+            data.end_dir[pixel] += total_dir;
             data.dist[pixel] += total_dist;
             data.time[pixel] += calc_time as f64;
             data.img.pixels_mut()[pixel] += total_col;

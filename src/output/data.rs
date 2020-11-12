@@ -92,9 +92,13 @@ impl Save for Data {
         }
         dist_hist.save(&out_dir.join("dist.csv"))?;
 
+        let max_dir_len = *self.end_dir.map(Vec3::magnitude).max()?;
         Image::new(self.end_dir.map(|v| {
             let dir = Dir3::new_normalize(*v);
-            redscale.get(dir.x as f32) + greenscale.get(dir.y as f32) + bluescale.get(dir.z as f32)
+
+            redscale.get((dir.x.abs() / max_dir_len) as f32)
+                + greenscale.get((dir.y.abs() / max_dir_len) as f32)
+                + bluescale.get((dir.z.abs() / max_dir_len) as f32)
         }))
         .save(&out_dir.join("norm.png"))
     }

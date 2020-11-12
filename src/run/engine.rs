@@ -34,6 +34,7 @@ pub fn paint<T: Display + Ord>(
     // Tracked items.
     let mut total_col = LinSrgba::new(0.0, 0.0, 0.0, 0.0);
     let mut total_dist = 0.0;
+    let mut end_norm = Vec3::default();
 
     // Event loop.
     loop {
@@ -42,6 +43,8 @@ pub fn paint<T: Display + Ord>(
         }
 
         if let Some(hit) = scene.tree.observe(trace.ray().clone(), bump_dist, 1_000.0) {
+            end_norm = hit.side().norm().into_inner();
+
             if let Some(attr) = scene.attrs.map().get(hit.tag()) {
                 match *attr {
                     Attributes::Luminous { mult } => {
@@ -114,11 +117,12 @@ pub fn paint<T: Display + Ord>(
             }
         } else {
             total_col += sky_col(cam, trace.ray(), shader.sky().grad()) * trace.weight() as f32;
+            end_norm = trace.dir().into_inner();
             break;
         }
     }
 
-    (total_col, total_dist, trace.dir().into_inner())
+    (total_col, total_dist, end_norm)
 }
 
 /// Perform a colouring.
