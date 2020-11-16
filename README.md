@@ -36,7 +36,7 @@ Example parameters.json5:
     cols    : { There: 'cols/path.json5' },         // Use the colours from this file.
     cam     : { Here: {                             // Camera settings specified here:
         pos     : [-52, 0, 7],                      // Camera observation position.
-        tar     : [-4.5, 0, 1.2],                   // Camera target postion.
+        tar     : [-4.5, 0, 1.2],                   // Camera target position.
         lens    : { Perspective: {fov: 60.0} },     // Lens type and parameters.
         aspect  : "Square",                         // Aspect ratio type.
         // ss_power: 3,                             // Optional super sampling. NxN per pixel.
