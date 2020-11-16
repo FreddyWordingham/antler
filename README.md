@@ -10,9 +10,9 @@ A textureless rendering engine written in Rust.
 # Usage
 
 1) If you don't already have it install Rust: https://www.rust-lang.org/
-2) Install Antler using: cargo install antler (or without gui: cargo install antler --no-default-features)
-3) Navigate to parent of input directory (example: git clone https://github.com/FreddyWordingham/worlds; cd worlds)
-4) Run: antler-window parameters.json5 (or without live window: antler parameters.json)
+2) Install Antler using: `cargo install antler` (or without gui: `cargo install antler --no-default-features`)
+3) Navigate to parent of input directory (example: `git clone https://github.com/FreddyWordingham/worlds; cd worlds`)
+4) Run: `antler-window parameters.json5` (or without live window: `antler parameters.json`)
 5) Tinker!
 
 # Documentation
@@ -20,7 +20,7 @@ Binary specific https://freddywordingham.github.io/antler/
 
 Supporting library https://freddywordingham.github.io/arctk/
 
-# Pamaters
+# Parameters
 Example parameters.json5:
 ```json5
 {
