@@ -2,7 +2,7 @@
 A textureless rendering engine written in Rust.
 
 <!-- [![ANTLER documentation](https://docs.rs/antler/badge.svg)](https://docs.rs/antler) -->
-[![ANTLER crate](https://img.shields.io/crates/v/arctk.svg)](https://crates.io/crates/antler)
+[![ANTLER crate](https://img.shields.io/crates/v/antler.svg)](https://crates.io/crates/antler)
 [![ANTLER documentation](https://docs.rs/antler/badge.svg)](https://freddywordingham.github.io/antler/)
 [![minimum rustc 1.47](https://img.shields.io/badge/rustc-1.47+-red.svg)](https://www.rust-lang.org/)
 [![Build Status](https://travis-ci.org/FreddyWordingham/arctk.svg?branch=master)](https://travis-ci.org/FreddyWordingham/arctk)
