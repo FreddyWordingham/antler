@@ -49,32 +49,31 @@ panic = 'unwind'
 incremental = true
 overflow-checks = true
 
-[profile.release]
-# Release profile: "cargo build --release"
-# # [DEV RELEASE]
-opt-level = 3
-debug = true
-rpath = false
-lto = false
-debug-assertions = true
-codegen-units = 16
-panic = "unwind"
-incremental = false
-overflow-checks = true
-
 # [profile.release]
-# # [RELEASE]
 # # Release profile: "cargo build --release"
+# # # [DEV RELEASE]
 # opt-level = 3
-# debug = false
+# debug = true
 # rpath = false
-# lto = "fat"
-# debug-assertions = false
-# codegen-units = 1
-# panic = "abort"
+# lto = false
+# debug-assertions = true
+# codegen-units = 16
+# panic = "unwind"
 # incremental = false
-# overflow-checks = false
+# overflow-checks = true
 
+[profile.release]
+# [RELEASE]
+# Release profile: "cargo build --release"
+opt-level = 3
+debug = false
+rpath = false
+lto = "fat"
+debug-assertions = false
+codegen-units = 1
+panic = "abort"
+incremental = false
+overflow-checks = false
 [profile.test]
 # Testing profile: "cargo test"
 opt-level = 0

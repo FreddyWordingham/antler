@@ -20,7 +20,7 @@ pub fn multi_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>, 
         .par_iter()
         .map(|_id| thread(engine, input, &Arc::clone(&pb)))
         .collect();
-    pb.lock()?.finish_with_message("Simulation complete.");
+    pb.lock()?.finish_with_message("Render complete.");
 
     let mut data = out.pop().expect("No data received.");
     while let Some(o) = out.pop() {
