@@ -1,6 +1,6 @@
 //! Output data structure.
 
-use crate::{
+use arctk::{
     err::Error,
     file::Save,
     img::{Colour, Gradient, Image},

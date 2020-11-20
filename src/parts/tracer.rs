@@ -1,6 +1,6 @@
 //! Colour particle.
 
-use crate::{access, clone, geom::Ray};
+use arctk::{access, clone, geom::Ray};
 
 /// Colour particle.
 #[derive(Clone)]

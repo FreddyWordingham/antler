@@ -1,19 +1,19 @@
 //! Startup parameters file.
 
-use crate::{
+use crate::{AttributeLinker, EngineBuilder, ParametersLinker, Settings, ShaderLinker};
+use arctk::{
     err::Error,
     file::{Build, Redirect},
     geom::{CameraBuilder, SurfaceBuilder, TreeSettings},
     img::GradientBuilder,
     ord::Set,
-    sim::render::{AttributeLinker, EngineBuilder, ParametersLinker, Settings, ShaderLinker},
 };
-use arctk_attr::load;
+use arctk_attr::input;
 use std::path::Path;
 
 /// Parameter builder structure.
 /// Holds references to data still on the disk.
-#[load]
+#[input]
 pub struct ParametersBuilder {
     /// Colour gradients.
     grads: Redirect<Set<GradientBuilder>>,

@@ -1,10 +1,10 @@
 //! Parameters setup file.
 
-use crate::{
+use crate::{AttributeLinker, Engine, Settings, ShaderLinker};
+use arctk::{
     geom::{Camera, SurfaceLinker, TreeSettings},
     img::Gradient,
     ord::Set,
-    sim::render::{AttributeLinker, Engine, Settings, ShaderLinker},
 };
 
 /// Parameter linker structure.

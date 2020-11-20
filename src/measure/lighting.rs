@@ -1,11 +1,7 @@
 //! Lighting calculation.
 
-use crate::{
-    geom::Ray,
-    math::Dir3,
-    phys::Crossing,
-    sim::render::{occlusion, Input},
-};
+use crate::{occlusion, Input};
+use arctk::{geom::Ray, math::Dir3, phys::Crossing};
 
 /// Calculate the lighting factor.
 /// Zero indicates darkness.

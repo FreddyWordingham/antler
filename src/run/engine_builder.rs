@@ -1,15 +1,12 @@
 //! Engine selection.
 
-use crate::{
-    err::Error,
-    file::Build,
-    sim::render::{engines, Engine},
-};
-use arctk_attr::load;
+use crate::{engines, Engine};
+use arctk::{err::Error, file::Build};
+use arctk_attr::input;
 use std::path::Path;
 
 /// Engine selection.
-#[load]
+#[input]
 #[derive(Clone)]
 pub enum EngineBuilder {
     /// Antler rendering engine.

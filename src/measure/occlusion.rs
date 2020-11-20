@@ -1,10 +1,7 @@
 //! Visibility calculation.
 
-use crate::{
-    geom::Ray,
-    phys::Crossing,
-    sim::render::{Attribute, Input},
-};
+use crate::{Attribute, Input};
+use arctk::{geom::Ray, phys::Crossing};
 
 /// Calculate the occlusion experienced over a distance along ray.
 /// Zero indicates full occlusion.

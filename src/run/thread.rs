@@ -1,16 +1,12 @@
 //! Simulation running functions.
 
-use crate::{
-    err::Error,
-    ord::X,
-    sim::render::{Engine, Input, Output, Tracer},
-    tools::ProgressBar,
-};
+use crate::{Engine, Input, Output, Tracer};
+use arctk::{err::Error, ord::X, tools::ProgressBar};
 use rand::thread_rng;
 use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
 
-/// Run a multi-threaded MCRT simulation.
+/// Run a multi-threaded render simulation.
 /// # Errors
 /// if the progress bar can not be locked.
 #[allow(clippy::expect_used)]
@@ -34,7 +30,7 @@ pub fn multi_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>, 
     Ok(data)
 }
 
-/// Run a MCRT simulation using a single thread.
+/// Run a render simulation using a single thread.
 /// # Errors
 /// if the progress bar can not be locked.
 #[inline]

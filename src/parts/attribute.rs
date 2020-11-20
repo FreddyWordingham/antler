@@ -1,6 +1,6 @@
 //! Attributes implementation.
 
-use crate::img::Gradient;
+use arctk::img::Gradient;
 
 /// Surface attributes.
 pub enum Attribute<'a> {

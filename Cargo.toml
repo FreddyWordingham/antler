@@ -13,16 +13,16 @@ documentation = "https://freddywordingham.github.io/antler"
 exclude = ["docs/", "res/"]
 
 [features]
-default = ["window"]
-window = ["minifb"]
+# default = ["window"]
+# window = ["minifb"]
 
 [dependencies]
 # arctk = { path = "../arctk", features = ["png", "terminal_size"] }
 # arctk-attr = { path = "../arctk-attr" }
 # arctk-proc = { path = "../arctk-proc" }
-arctk = { version = "0.11.6", features = ["png", "terminal_size"] }
+arctk = { version = "0.12.4", features = ["png", "terminal_size"] }
 arctk-attr = "0.2.*"
-arctk-proc = "0.2.*"
+arctk-proc = "0.3.*"
 nalgebra = "0.23.*"
 ndarray = "0.13.*"
 ndarray-stats = "0.3.*"
@@ -33,9 +33,9 @@ rayon = "1.5.*"
 serde = { version = "1.0.*", features = ["derive"] }
 minifb = { version = "0.19.*", optional = true }
 
-[[bin]]
-name = "antler-window"
-required-features = ["window"]
+# [[bin]]
+# name = "antler-window"
+# required-features = ["window"]
 
 [profile.dev]
 # Development profile: "cargo build".

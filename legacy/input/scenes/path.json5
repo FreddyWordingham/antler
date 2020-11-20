@@ -1,0 +1,53 @@
+{    // Map of surfaces.
+    mirror      : [['objs/path/buildings/mirror.obj'],  null],  // Apply no additional transforms to this mesh before linking it.
+    wall        : [['objs/path/buildings/wall.obj'],    null],
+
+    dome_bottom : [['objs/path/dome/bottom.obj'],   null],
+    dome_top    : [['objs/path/dome/top.obj'],      null],
+    lava        : [['objs/path/dome/lava.obj'],     null],
+    clouds      : [['objs/path/dome/clouds.obj'],   null],
+
+    jwst_body   : [['objs/path/jwst/body.obj'],     null],
+    jwst_dish   : [['objs/path/jwst/dish.obj'],     null],
+    jwst_mirror : [['objs/path/jwst/mirror.obj'],   null],
+    jwst_nose   : [['objs/path/jwst/nose.obj'],     null],
+    jwst_panels : [['objs/path/jwst/panels.obj'],   null],
+    jwst_stem   : [['objs/path/jwst/stem.obj'],     null],
+    jwst_reflect: [['objs/path/jwst/reflect.obj'],  null],
+
+    bulbs       : [['objs/path/lamps/bulbs.obj'],   null],
+    lamps       : [['objs/path/lamps/lamps.obj'],   null],
+
+    bushes      : [['objs/path/landscape/bushes.obj'],  null],
+    fall        : [['objs/path/landscape/fall.obj'],    null],
+    floor       : [['objs/path/landscape/floor.obj'],   null],
+    hills       : [['objs/path/landscape/hills.obj'],   null],
+    knot        : [['objs/path/landscape/knot.obj'],    null],
+    puddles     : [['objs/path/landscape/puddles.obj'], null],
+
+    path        : [['objs/path/path/path_0.obj', 'objs/path/path/path_1.obj', 'objs/path/path/path_2.obj'], null],  // Combine these three objects together before linking.
+    sides       : [['objs/path/path/sides.obj'],        null],
+    underboard  : [['objs/path/path/underboard.obj'],   null],
+
+    dog         : [['objs/path/people/dog.obj'],        null],
+    fjmw        : [['objs/path/people/fjmw.obj'],       null],
+    klm         : [['objs/path/people/klm.obj'],        null],
+    lead        : [['objs/path/people/lead.obj'],       null],
+    umbrella    : [['objs/path/people/umbrella.obj'],   null],
+
+    core        : [['objs/path/space/core.obj'],        null],
+    inner_ring  : [['objs/path/space/inner_ring.obj'],  null],
+    outer_ring  : [['objs/path/space/outer_ring.obj'],  null],
+    glide_0     : [['objs/path/space/glide_0.obj'],     null],
+    glide_1     : [['objs/path/space/glide_1.obj'],     null],
+    glide_2     : [['objs/path/space/glide_2.obj'],     null],
+    knot        : [['objs/path/space/knot.obj'],        null],
+    moon        : [['objs/path/space/moon.obj'],        null],
+    solar       : [['objs/path/space/solar.obj'],       null],
+    starfield   : [['objs/path/space/starfield.obj'],   null],
+
+    leaves_0    : [['objs/path/trees/leaves_0.obj'],    null],
+    leaves_1    : [['objs/path/trees/leaves_1.obj'],    null],
+    leaves_2    : [['objs/path/trees/leaves_2.obj'],    null],
+    trees       : [['objs/path/trees/trees.obj'],       null],
+}

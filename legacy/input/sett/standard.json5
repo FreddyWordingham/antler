@@ -1,0 +1,8 @@
+{
+    bump_dist       : 1e-6,         // Additional distance to move tracing rays past collision surfaces.
+    vis_dist        : 1e1,          // Distance to check during light occlusion calculations.
+    block_size      : 100,          // Number of sub-pixels to render between progress updates.
+    min_weight      : 0.01,         // Minimum weight a tracing ray must have (otherwise it is discarded).
+    order           : "Shuffle",    // Rendering order.
+    histogram_bins  : 100,          // Histogram data bins.
+}

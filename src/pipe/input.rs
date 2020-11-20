@@ -1,10 +1,10 @@
 //! Render input.
 
-use crate::{
+use crate::{Attribute, Settings, Shader};
+use arctk::{
     geom::{Camera, Tree},
     img::Gradient,
     ord::Set,
-    sim::render::{Attribute, Settings, Shader},
 };
 
 /// Rendering simulation resources conglomerate.

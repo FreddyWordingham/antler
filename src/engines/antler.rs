@@ -1,10 +1,10 @@
 //! Pixel-sampling engine function.
 
-use crate::{
+use crate::{lighting, shadowing, Attribute, Input, Output, Tracer};
+use arctk::{
     img::{Colour, Gradient},
     math::Dir3,
     phys::Crossing,
-    sim::render::{lighting, shadowing, Attribute, Input, Output, Tracer},
 };
 use rand::rngs::ThreadRng;
 use std::time::Instant;

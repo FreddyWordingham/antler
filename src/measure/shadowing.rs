@@ -1,9 +1,9 @@
 //! Shadowing calculation.
 
-use crate::{
+use crate::{occlusion, Input};
+use arctk::{
     geom::Ray,
     math::{rand_circle_point, rand_hemisphere_point, Dir3},
-    sim::render::{occlusion, Input},
 };
 use rand::{rngs::ThreadRng, Rng};
 use std::f64::consts::PI;

@@ -1,15 +1,15 @@
 //! Attributes implementation.
 
-use crate::{
+use crate::Attribute;
+use arctk::{
     err::Error,
     img::Gradient,
     ord::{Link, Set},
-    sim::render::Attribute,
 };
-use arctk_attr::load;
+use arctk_attr::input;
 
 /// Surface attribute setup.
-#[load]
+#[input]
 pub enum AttributeLinker {
     /// Opaque coloured surface.
     Opaque(String),

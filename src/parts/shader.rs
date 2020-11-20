@@ -1,6 +1,6 @@
 //! Shader settings.
 
-use crate::{access, clone, img::Gradient, math::Pos3};
+use arctk::{access, clone, img::Gradient, math::Pos3};
 
 /// Colouring settings.
 pub struct Shader<'a> {

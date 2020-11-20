@@ -1,10 +1,10 @@
 //! Rendering settings.
 
-use crate::clone;
-use arctk_attr::load;
+use arctk::clone;
+use arctk_attr::input;
 
 /// General settings structure.
-#[load]
+#[input]
 pub struct Settings {
     /// Number of tracers to simulate in each thread block.
     block_size: usize,

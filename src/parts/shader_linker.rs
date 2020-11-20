@@ -1,16 +1,16 @@
 //! Loadable shader settings.
 
-use crate::{
+use crate::Shader;
+use arctk::{
     err::Error,
     img::Gradient,
     math::Pos3,
     ord::{Link, Set, X, Y, Z},
-    sim::render::Shader,
 };
-use arctk_attr::load;
+use arctk_attr::input;
 
 /// Colouring settings builder.
-#[load]
+#[input]
 pub struct ShaderLinker {
     /// Sun position used for lighting calculations [m].
     sun_pos: [f64; 3],
