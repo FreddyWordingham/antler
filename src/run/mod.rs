@@ -1,12 +1,7 @@
-//! Running.
+//! Rendering control management module.
 
 pub mod engine;
+pub mod engine_builder;
 pub mod thread;
 
-#[cfg(feature = "window")]
-pub mod window;
-
-#[cfg(feature = "window")]
-pub use self::window::*;
-
-pub use self::thread::*;
+pub use self::{engine::*, engine_builder::*, thread::*};

@@ -28,3 +28,4 @@ pub fn light<T>(shader: &Shader, cam: &Camera, ray: &Ray, hit: &Hit<T>) -> f64 {
 
     ambient + diffuse + specular
 }
+

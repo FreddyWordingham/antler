@@ -1,119 +1,82 @@
-//! Rendering thread control.
+//! Simulation running functions.
 
 use crate::{
-    input::Shader,
-    output::Data,
-    parts::{Camera, Scene, Tracer},
-    run::engine::paint,
+    err::Error,
+    ord::X,
+    sim::render::{Engine, Input, Output, Tracer},
+    tools::ProgressBar,
 };
-use arctk::{err::Error, math::Vec3, tools::ProgressBar};
-use palette::LinSrgba;
 use rand::thread_rng;
 use rayon::prelude::*;
-use std::{
-    fmt::Display,
-    sync::{Arc, Mutex},
-    time::Instant,
-};
+use std::sync::{Arc, Mutex};
 
-/// Render an image as fast as possible.
+/// Run a multi-threaded MCRT simulation.
 /// # Errors
-/// if a mutex unwrapping failed or
-/// an arc unwrapping failed or
-/// if the progress bar can not be locked inside a running thread.
+/// if the progress bar can not be locked.
+#[allow(clippy::expect_used)]
 #[inline]
-pub fn multi_thread<T: Display + Ord + Sync>(
-    scene: &Scene<T>,
-    shader: &Shader,
-    cam: &Camera,
-) -> Result<Data, Error> {
-    let num_pixels = cam.sensor().num_pixels();
-    let pb = ProgressBar::new("Rendering", num_pixels as u64);
+pub fn multi_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>, Error> {
+    let pb = ProgressBar::new("Multi-threaded", input.cam.num_samples());
     let pb = Arc::new(Mutex::new(pb));
 
     let threads: Vec<_> = (0..num_cpus::get()).collect();
     let mut out: Vec<_> = threads
         .par_iter()
-        .map(|_id| run_thread(&Arc::clone(&pb), scene, shader, cam))
+        .map(|_id| thread(engine, input, &Arc::clone(&pb)))
         .collect();
-    pb.lock()?.finish_with_message("Render complete.");
+    pb.lock()?.finish_with_message("Simulation complete.");
 
-    let mut data = out.pop().ok_or("No data received.")??;
+    let mut data = out.pop().expect("No data received.");
     while let Some(o) = out.pop() {
-        data += &o?;
+        data += &o;
     }
 
     Ok(data)
 }
 
-/// Render an image using a single thread.
+/// Run a MCRT simulation using a single thread.
 /// # Errors
-/// if the progress bar can not be locked
+/// if the progress bar can not be locked.
 #[inline]
-pub fn single_thread<T: Display + Ord>(
-    scene: &Scene<T>,
-    shader: &Shader,
-    cam: &Camera,
-) -> Result<Data, Error> {
-    let num_pixels = cam.sensor().num_pixels();
-    let pb = ProgressBar::new("Rendering", num_pixels as u64);
+pub fn single_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>, Error> {
+    let pb = ProgressBar::new("Single-threaded", input.cam.num_samples());
     let pb = Arc::new(Mutex::new(pb));
 
-    run_thread(&pb, scene, shader, cam)
+    Ok(thread(engine, input, &pb))
 }
 
-/// Render pixels using a single thread.
-/// # Errors
-/// if the progress bar can not be locked
+/// Thread control function.
+#[allow(clippy::expect_used)]
 #[inline]
-fn run_thread<T: Display + Ord>(
-    pb: &Arc<Mutex<ProgressBar>>,
-    scene: &Scene<T>,
-    shader: &Shader,
-    cam: &Camera,
-) -> Result<Data, Error> {
-    let w = cam.sensor().res().0 as usize;
-    let h = cam.sensor().res().1 as usize;
-
-    let super_samples = cam.sensor().super_samples();
-    let h_res = cam.sensor().res().0;
-    let block_size = (scene.sett.block_size() / super_samples as u64).max(1);
-
-    let weight = 1.0 / f64::from(super_samples);
+#[must_use]
+fn thread<'a>(engine: Engine, input: &'a Input, pb: &Arc<Mutex<ProgressBar>>) -> Output<'a> {
+    let res = *input.cam.res();
+    let mut data = Output::new(res, input.shader.data_grad());
 
     let mut rng = thread_rng();
 
-    let mut data = Data::new([w, h]);
+    let super_samples = input.cam.num_super_samples();
+    let ss_power = input.cam.ss_power();
+    let init_weight = 1.0 / super_samples as f64;
+
+    let block_size = input.sett.block_size();
     while let Some((start, end)) = {
-        let mut pb = pb.lock()?;
+        let mut pb = pb.lock().expect("Could not lock progress bar.");
         let b = pb.block(block_size);
         std::mem::drop(pb);
         b
     } {
-        for p in start..end {
-            let pixel = [(p % h_res) as usize, (p / h_res) as usize];
+        for n in start..end {
+            let p = n / super_samples;
+            let s = n - (p * super_samples);
 
-            let mut total_col = LinSrgba::new(0.0, 0.0, 0.0, 0.0);
-            let mut total_dist = 0.0;
-            let mut total_dir = Vec3::default();
-            let start_time = Instant::now();
+            let pixel = [p % res[X], p / res[X]];
+            let ss = [s % ss_power, s / ss_power];
 
-            for sub_sample in 0..super_samples {
-                let ray = cam.gen_ray(pixel, sub_sample);
-
-                let (col, dist, dir) = paint(&mut rng, scene, shader, cam, Tracer::new(ray));
-                total_col += col * weight as f32;
-                total_dist += dist * weight;
-                total_dir += dir * weight;
-            }
-            let calc_time = start_time.elapsed().as_micros();
-
-            data.end_dir[pixel] += total_dir;
-            data.dist[pixel] += total_dist;
-            data.time[pixel] += calc_time as f64;
-            data.img.pixels_mut()[pixel] += total_col;
+            let tracer = Tracer::new(input.cam.emit(pixel, ss), init_weight);
+            engine(input, &mut rng, tracer, &mut data, pixel);
         }
     }
 
-    Ok(data)
+    data
 }

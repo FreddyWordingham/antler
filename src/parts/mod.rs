@@ -1,9 +1,12 @@
-//! Rendering simulation parts sub-module.
+//! Rendering component parts.
 
-pub mod attributes;
-pub mod camera;
-pub mod camera_builder;
-pub mod scene;
+pub mod attribute;
+pub mod attribute_linker;
+pub mod settings;
+pub mod shader;
+pub mod shader_linker;
 pub mod tracer;
 
-pub use self::{attributes::*, camera::*, camera_builder::*, scene::*, tracer::*};
+pub use self::{
+    attribute::*, attribute_linker::*, settings::*, shader::*, shader_linker::*, tracer::*,
+};

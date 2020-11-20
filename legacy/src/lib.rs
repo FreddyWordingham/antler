@@ -29,10 +29,8 @@
     clippy::unwrap_used
 )]
 
-pub mod engines;
-pub mod measure;
+pub mod illumination;
+pub mod input;
+pub mod output;
 pub mod parts;
-pub mod pipe;
 pub mod run;
-
-pub use self::{engines::*, measure::*, parts::*, pipe::*, run::*};
