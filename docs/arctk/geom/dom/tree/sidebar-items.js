@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Tree","Tree cell enumeration."]],"mod":[["info","Information methods."],["observe","Observation methods."],["scan","Scan result enumeration."],["search","Search method."]]});
+initSidebarItems({"enum":[["Tree","Tree cell enumeration."]]});

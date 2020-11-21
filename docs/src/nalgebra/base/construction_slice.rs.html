@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.0/src/base/construction_slice.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>construction_slice.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.1/src/base/construction_slice.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>construction_slice.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -296,19 +296,14 @@
 <span id="295">295</span>
 <span id="296">296</span>
 <span id="297">297</span>
-<span id="298">298</span>
-<span id="299">299</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::<span class="ident">dimension</span>::{<span class="ident">Dim</span>, <span class="ident">DimName</span>, <span class="ident">Dynamic</span>, <span class="ident">U1</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::<span class="ident">matrix_slice</span>::{<span class="ident">SliceStorage</span>, <span class="ident">SliceStorageMut</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::{<span class="ident">MatrixSliceMN</span>, <span class="ident">MatrixSliceMutMN</span>, <span class="ident">Scalar</span>};
 
 <span class="kw">use</span> <span class="ident">num_rational</span>::<span class="ident">Ratio</span>;
-<span class="comment">/*
- *
- * Slice constructors.
- *
- */</span>
+
+<span class="doccomment">/// # Creating matrix slices from `&amp;[T]`</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">RStride</span>: <span class="ident">Dim</span>, <span class="ident">CStride</span>: <span class="ident">Dim</span><span class="op">&gt;</span>
     <span class="ident">MatrixSliceMN</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">RStride</span>, <span class="ident">CStride</span><span class="op">&gt;</span>
 {
@@ -326,7 +321,7 @@
         <span class="ident">cstride</span>: <span class="ident">CStride</span>,
     ) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">SliceStorage</span>::<span class="ident">from_raw_parts</span>(
-            <span class="ident">data</span>.<span class="ident">as_ptr</span>().<span class="ident">offset</span>(<span class="ident">start</span> <span class="kw">as</span> <span class="ident">isize</span>),
+            <span class="ident">data</span>.<span class="ident">as_ptr</span>().<span class="ident">add</span>(<span class="ident">start</span>),
             (<span class="ident">nrows</span>, <span class="ident">ncols</span>),
             (<span class="ident">rstride</span>, <span class="ident">cstride</span>),
         );
@@ -360,6 +355,89 @@
     }
 }
 
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span><span class="op">&gt;</span> <span class="ident">MatrixSliceMN</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates, without bound-checking, a matrix slice from an array and with dimensions specified by generic types instances.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This method is unsafe because the input data array is not checked to contain enough elements.</span>
+    <span class="doccomment">/// The generic types `R` and `C` can either be type-level integers or integers wrapped with `Dynamic::new()`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_slice_generic_unchecked</span>(
+        <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>],
+        <span class="ident">start</span>: <span class="ident">usize</span>,
+        <span class="ident">nrows</span>: <span class="ident">R</span>,
+        <span class="ident">ncols</span>: <span class="ident">C</span>,
+    ) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">from_slice_with_strides_generic_unchecked</span>(<span class="ident">data</span>, <span class="ident">start</span>, <span class="ident">nrows</span>, <span class="ident">ncols</span>, <span class="ident">U1</span>, <span class="ident">nrows</span>)
+    }
+
+    <span class="doccomment">/// Creates a matrix slice from an array and with dimensions and strides specified by generic types instances.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Panics if the input data array dose not contain enough elements.</span>
+    <span class="doccomment">/// The generic types `R` and `C` can either be type-level integers or integers wrapped with `Dynamic::new()`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_slice_generic</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>], <span class="ident">nrows</span>: <span class="ident">R</span>, <span class="ident">ncols</span>: <span class="ident">C</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">from_slice_with_strides_generic</span>(<span class="ident">data</span>, <span class="ident">nrows</span>, <span class="ident">ncols</span>, <span class="ident">U1</span>, <span class="ident">nrows</span>)
+    }
+}
+
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_constructors</span>(
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">Dims</span>: <span class="ident">ty</span>),<span class="kw-2">*</span>; $(<span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimIdent</span>: <span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimBound</span>: <span class="ident">ident</span>),<span class="kw-2">*</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">gargs</span>: <span class="ident">expr</span>),<span class="kw-2">*</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>: <span class="ident">ident</span>),<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimIdent</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimBound</span>),<span class="kw-2">*</span><span class="op">&gt;</span> <span class="ident">MatrixSliceMN</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">Dims</span>),<span class="kw-2">*</span><span class="op">&gt;</span> {
+            <span class="doccomment">/// Creates a new matrix slice from the given data array.</span>
+            <span class="doccomment">///</span>
+            <span class="doccomment">/// Panics if `data` does not contain enough elements.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_slice</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>], $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>: <span class="ident">usize</span>),<span class="kw-2">*</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">Self</span>::<span class="ident">from_slice_generic</span>(<span class="ident">data</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">gargs</span>),<span class="kw-2">*</span>)
+            }
+
+            <span class="doccomment">/// Creates, without bound checking, a new matrix slice from the given data array.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_slice_unchecked</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>], <span class="ident">start</span>: <span class="ident">usize</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>: <span class="ident">usize</span>),<span class="kw-2">*</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">Self</span>::<span class="ident">from_slice_generic_unchecked</span>(<span class="ident">data</span>, <span class="ident">start</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">gargs</span>),<span class="kw-2">*</span>)
+            }
+        }
+
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimIdent</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimBound</span>, )<span class="kw-2">*</span><span class="op">&gt;</span> <span class="ident">MatrixSliceMN</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">Dims</span>,)<span class="op">*</span> <span class="ident">Dynamic</span>, <span class="ident">Dynamic</span><span class="op">&gt;</span> {
+            <span class="doccomment">/// Creates a new matrix slice with the specified strides from the given data array.</span>
+            <span class="doccomment">///</span>
+            <span class="doccomment">/// Panics if `data` does not contain enough elements.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_slice_with_strides</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>], $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>: <span class="ident">usize</span>,)<span class="op">*</span> <span class="ident">rstride</span>: <span class="ident">usize</span>, <span class="ident">cstride</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">Self</span>::<span class="ident">from_slice_with_strides_generic</span>(<span class="ident">data</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">gargs</span>,)<span class="op">*</span> <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">rstride</span>), <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">cstride</span>))
+            }
+
+            <span class="doccomment">/// Creates, without bound checking, a new matrix slice with the specified strides from the given data array.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_slice_with_strides_unchecked</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>], <span class="ident">start</span>: <span class="ident">usize</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>: <span class="ident">usize</span>,)<span class="op">*</span> <span class="ident">rstride</span>: <span class="ident">usize</span>, <span class="ident">cstride</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">Self</span>::<span class="ident">from_slice_with_strides_generic_unchecked</span>(<span class="ident">data</span>, <span class="ident">start</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">gargs</span>,)<span class="op">*</span> <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">rstride</span>), <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">cstride</span>))
+            }
+        }
+    }
+);
+
+<span class="comment">// TODO: this is not very pretty. We could find a better call syntax.</span>
+<span class="macro">impl_constructors</span><span class="macro">!</span>(<span class="ident">R</span>, <span class="ident">C</span>;                         <span class="comment">// Arguments for Matrix&lt;N, ..., S&gt;</span>
+<span class="op">=&gt;</span> <span class="ident">R</span>: <span class="ident">DimName</span>, <span class="op">=&gt;</span> <span class="ident">C</span>: <span class="ident">DimName</span>; <span class="comment">// Type parameters for impl&lt;N, ..., S&gt;</span>
+<span class="ident">R</span>::<span class="ident">name</span>(), <span class="ident">C</span>::<span class="ident">name</span>();         <span class="comment">// Arguments for `_generic` constructors.</span>
+); <span class="comment">// Arguments for non-generic constructors.</span>
+
+<span class="macro">impl_constructors</span><span class="macro">!</span>(<span class="ident">R</span>, <span class="ident">Dynamic</span>;
+                   <span class="op">=&gt;</span> <span class="ident">R</span>: <span class="ident">DimName</span>;
+                   <span class="ident">R</span>::<span class="ident">name</span>(), <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">ncols</span>);
+                   <span class="ident">ncols</span>);
+
+<span class="macro">impl_constructors</span><span class="macro">!</span>(<span class="ident">Dynamic</span>, <span class="ident">C</span>;
+                   <span class="op">=&gt;</span> <span class="ident">C</span>: <span class="ident">DimName</span>;
+                   <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">nrows</span>), <span class="ident">C</span>::<span class="ident">name</span>();
+                   <span class="ident">nrows</span>);
+
+<span class="macro">impl_constructors</span><span class="macro">!</span>(<span class="ident">Dynamic</span>, <span class="ident">Dynamic</span>;
+                   ;
+                   <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">nrows</span>), <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">ncols</span>);
+                   <span class="ident">nrows</span>, <span class="ident">ncols</span>);
+
+<span class="doccomment">/// # Creating mutable matrix slices from `&amp;mut [T]`</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">RStride</span>: <span class="ident">Dim</span>, <span class="ident">CStride</span>: <span class="ident">Dim</span><span class="op">&gt;</span>
     <span class="ident">MatrixSliceMutMN</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">RStride</span>, <span class="ident">CStride</span><span class="op">&gt;</span>
 {
@@ -377,7 +455,7 @@
         <span class="ident">cstride</span>: <span class="ident">CStride</span>,
     ) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">SliceStorageMut</span>::<span class="ident">from_raw_parts</span>(
-            <span class="ident">data</span>.<span class="ident">as_mut_ptr</span>().<span class="ident">offset</span>(<span class="ident">start</span> <span class="kw">as</span> <span class="ident">isize</span>),
+            <span class="ident">data</span>.<span class="ident">as_mut_ptr</span>().<span class="ident">add</span>(<span class="ident">start</span>),
             (<span class="ident">nrows</span>, <span class="ident">ncols</span>),
             (<span class="ident">rstride</span>, <span class="ident">cstride</span>),
         );
@@ -433,31 +511,6 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span><span class="op">&gt;</span> <span class="ident">MatrixSliceMN</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Creates, without bound-checking, a matrix slice from an array and with dimensions specified by generic types instances.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This method is unsafe because the input data array is not checked to contain enough elements.</span>
-    <span class="doccomment">/// The generic types `R` and `C` can either be type-level integers or integers wrapped with `Dynamic::new()`.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_slice_generic_unchecked</span>(
-        <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>],
-        <span class="ident">start</span>: <span class="ident">usize</span>,
-        <span class="ident">nrows</span>: <span class="ident">R</span>,
-        <span class="ident">ncols</span>: <span class="ident">C</span>,
-    ) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">from_slice_with_strides_generic_unchecked</span>(<span class="ident">data</span>, <span class="ident">start</span>, <span class="ident">nrows</span>, <span class="ident">ncols</span>, <span class="ident">U1</span>, <span class="ident">nrows</span>)
-    }
-
-    <span class="doccomment">/// Creates a matrix slice from an array and with dimensions and strides specified by generic types instances.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Panics if the input data array dose not contain enough elements.</span>
-    <span class="doccomment">/// The generic types `R` and `C` can either be type-level integers or integers wrapped with `Dynamic::new()`.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_slice_generic</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>], <span class="ident">nrows</span>: <span class="ident">R</span>, <span class="ident">ncols</span>: <span class="ident">C</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">from_slice_with_strides_generic</span>(<span class="ident">data</span>, <span class="ident">nrows</span>, <span class="ident">ncols</span>, <span class="ident">U1</span>, <span class="ident">nrows</span>)
-    }
-}
-
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span><span class="op">&gt;</span> <span class="ident">MatrixSliceMutMN</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Creates, without bound-checking, a mutable matrix slice from an array and with dimensions specified by generic types instances.</span>
     <span class="doccomment">///</span>
@@ -482,63 +535,6 @@
         <span class="self">Self</span>::<span class="ident">from_slice_with_strides_generic</span>(<span class="ident">data</span>, <span class="ident">nrows</span>, <span class="ident">ncols</span>, <span class="ident">U1</span>, <span class="ident">nrows</span>)
     }
 }
-
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_constructors</span>(
-    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">Dims</span>: <span class="ident">ty</span>),<span class="kw-2">*</span>; $(<span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimIdent</span>: <span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimBound</span>: <span class="ident">ident</span>),<span class="kw-2">*</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">gargs</span>: <span class="ident">expr</span>),<span class="kw-2">*</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>: <span class="ident">ident</span>),<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
-        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimIdent</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimBound</span>),<span class="kw-2">*</span><span class="op">&gt;</span> <span class="ident">MatrixSliceMN</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">Dims</span>),<span class="kw-2">*</span><span class="op">&gt;</span> {
-            <span class="doccomment">/// Creates a new matrix slice from the given data array.</span>
-            <span class="doccomment">///</span>
-            <span class="doccomment">/// Panics if `data` does not contain enough elements.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_slice</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>], $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>: <span class="ident">usize</span>),<span class="kw-2">*</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-                <span class="self">Self</span>::<span class="ident">from_slice_generic</span>(<span class="ident">data</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">gargs</span>),<span class="kw-2">*</span>)
-            }
-
-            <span class="doccomment">/// Creates, without bound checking, a new matrix slice from the given data array.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_slice_unchecked</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>], <span class="ident">start</span>: <span class="ident">usize</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>: <span class="ident">usize</span>),<span class="kw-2">*</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-                <span class="self">Self</span>::<span class="ident">from_slice_generic_unchecked</span>(<span class="ident">data</span>, <span class="ident">start</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">gargs</span>),<span class="kw-2">*</span>)
-            }
-        }
-
-        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimIdent</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimBound</span>, )<span class="kw-2">*</span><span class="op">&gt;</span> <span class="ident">MatrixSliceMN</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">Dims</span>,)<span class="op">*</span> <span class="ident">Dynamic</span>, <span class="ident">Dynamic</span><span class="op">&gt;</span> {
-            <span class="doccomment">/// Creates a new matrix slice with the specified strides from the given data array.</span>
-            <span class="doccomment">///</span>
-            <span class="doccomment">/// Panics if `data` does not contain enough elements.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_slice_with_strides</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>], $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>: <span class="ident">usize</span>,)<span class="op">*</span> <span class="ident">rstride</span>: <span class="ident">usize</span>, <span class="ident">cstride</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-                <span class="self">Self</span>::<span class="ident">from_slice_with_strides_generic</span>(<span class="ident">data</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">gargs</span>,)<span class="op">*</span> <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">rstride</span>), <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">cstride</span>))
-            }
-
-            <span class="doccomment">/// Creates, without bound checking, a new matrix slice with the specified strides from the given data array.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_slice_with_strides_unchecked</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>], <span class="ident">start</span>: <span class="ident">usize</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>: <span class="ident">usize</span>,)<span class="op">*</span> <span class="ident">rstride</span>: <span class="ident">usize</span>, <span class="ident">cstride</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-                <span class="self">Self</span>::<span class="ident">from_slice_with_strides_generic_unchecked</span>(<span class="ident">data</span>, <span class="ident">start</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">gargs</span>,)<span class="op">*</span> <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">rstride</span>), <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">cstride</span>))
-            }
-        }
-    }
-);
-
-<span class="comment">// FIXME: this is not very pretty. We could find a better call syntax.</span>
-<span class="macro">impl_constructors</span><span class="macro">!</span>(<span class="ident">R</span>, <span class="ident">C</span>;                         <span class="comment">// Arguments for Matrix&lt;N, ..., S&gt;</span>
-<span class="op">=&gt;</span> <span class="ident">R</span>: <span class="ident">DimName</span>, <span class="op">=&gt;</span> <span class="ident">C</span>: <span class="ident">DimName</span>; <span class="comment">// Type parameters for impl&lt;N, ..., S&gt;</span>
-<span class="ident">R</span>::<span class="ident">name</span>(), <span class="ident">C</span>::<span class="ident">name</span>();         <span class="comment">// Arguments for `_generic` constructors.</span>
-); <span class="comment">// Arguments for non-generic constructors.</span>
-
-<span class="macro">impl_constructors</span><span class="macro">!</span>(<span class="ident">R</span>, <span class="ident">Dynamic</span>;
-                   <span class="op">=&gt;</span> <span class="ident">R</span>: <span class="ident">DimName</span>;
-                   <span class="ident">R</span>::<span class="ident">name</span>(), <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">ncols</span>);
-                   <span class="ident">ncols</span>);
-
-<span class="macro">impl_constructors</span><span class="macro">!</span>(<span class="ident">Dynamic</span>, <span class="ident">C</span>;
-                   <span class="op">=&gt;</span> <span class="ident">C</span>: <span class="ident">DimName</span>;
-                   <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">nrows</span>), <span class="ident">C</span>::<span class="ident">name</span>();
-                   <span class="ident">nrows</span>);
-
-<span class="macro">impl_constructors</span><span class="macro">!</span>(<span class="ident">Dynamic</span>, <span class="ident">Dynamic</span>;
-                   ;
-                   <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">nrows</span>), <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">ncols</span>);
-                   <span class="ident">nrows</span>, <span class="ident">ncols</span>);
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_constructors_mut</span>(
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">Dims</span>: <span class="ident">ty</span>),<span class="kw-2">*</span>; $(<span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimIdent</span>: <span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimBound</span>: <span class="ident">ident</span>),<span class="kw-2">*</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">gargs</span>: <span class="ident">expr</span>),<span class="kw-2">*</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>: <span class="ident">ident</span>),<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
@@ -578,7 +574,7 @@
     }
 );
 
-<span class="comment">// FIXME: this is not very pretty. We could find a better call syntax.</span>
+<span class="comment">// TODO: this is not very pretty. We could find a better call syntax.</span>
 <span class="macro">impl_constructors_mut</span><span class="macro">!</span>(<span class="ident">R</span>, <span class="ident">C</span>;                         <span class="comment">// Arguments for Matrix&lt;N, ..., S&gt;</span>
 <span class="op">=&gt;</span> <span class="ident">R</span>: <span class="ident">DimName</span>, <span class="op">=&gt;</span> <span class="ident">C</span>: <span class="ident">DimName</span>; <span class="comment">// Type parameters for impl&lt;N, ..., S&gt;</span>
 <span class="ident">R</span>::<span class="ident">name</span>(), <span class="ident">C</span>::<span class="ident">name</span>();         <span class="comment">// Arguments for `_generic` constructors.</span>

@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["build","Build trait."],["json","Json loading."],["load","Load trait."],["png","Png writing."],["redirect","File re-direction implementation."],["save","Save trait."],["wavefront","Wavefront file handling."]]});
+initSidebarItems({"mod":[["build","Build trait."],["extensions","File extension loaders."],["load","Load trait."],["redirect","File re-direction implementation."],["save","Save trait."]]});

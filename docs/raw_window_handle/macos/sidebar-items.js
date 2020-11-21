@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["MacOSHandle","Raw window handle for macOS."]]});

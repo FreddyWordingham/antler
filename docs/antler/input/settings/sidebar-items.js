@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Settings","Loadable render settings structure."]]});

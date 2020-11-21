@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["light","Light setup structure."],["samples","Lighting samples setup structure."],["shadow","Shadow setup structure."],["sky","Sky setup."],["sky_builder","Sky properties."]],"struct":[["Shader","Conglomerate lighting and shadowing settings."]]});

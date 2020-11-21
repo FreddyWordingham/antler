@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["RateBuilder","Rate of reaction builder."]]});

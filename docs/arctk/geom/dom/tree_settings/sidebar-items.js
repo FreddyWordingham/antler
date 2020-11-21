@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["TreeSettings","Tree construction settings."]]});

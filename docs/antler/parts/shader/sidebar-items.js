@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Shader","Colouring settings."]]});

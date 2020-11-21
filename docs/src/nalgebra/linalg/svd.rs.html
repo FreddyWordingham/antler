@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.0/src/linalg/svd.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>svd.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.1/src/linalg/svd.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>svd.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -692,31 +692,6 @@
 <span id="691">691</span>
 <span id="692">692</span>
 <span id="693">693</span>
-<span id="694">694</span>
-<span id="695">695</span>
-<span id="696">696</span>
-<span id="697">697</span>
-<span id="698">698</span>
-<span id="699">699</span>
-<span id="700">700</span>
-<span id="701">701</span>
-<span id="702">702</span>
-<span id="703">703</span>
-<span id="704">704</span>
-<span id="705">705</span>
-<span id="706">706</span>
-<span id="707">707</span>
-<span id="708">708</span>
-<span id="709">709</span>
-<span id="710">710</span>
-<span id="711">711</span>
-<span id="712">712</span>
-<span id="713">713</span>
-<span id="714">714</span>
-<span id="715">715</span>
-<span id="716">716</span>
-<span id="717">717</span>
-<span id="718">718</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-serialize&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
@@ -828,7 +803,7 @@
         <span class="ident">max_niter</span>: <span class="ident">usize</span>,
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(
-            <span class="ident">matrix</span>.<span class="ident">len</span>() <span class="op">!=</span> <span class="number">0</span>,
+            <span class="op">!</span><span class="ident">matrix</span>.<span class="ident">is_empty</span>(),
             <span class="string">&quot;Cannot compute the SVD of an empty matrix.&quot;</span>
         );
         <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="ident">matrix</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
@@ -911,7 +886,7 @@
                         }
 
                         <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">Vector2</span>::<span class="ident">new</span>(<span class="ident">subm</span>[(<span class="number">0</span>, <span class="number">0</span>)], <span class="ident">subm</span>[(<span class="number">1</span>, <span class="number">0</span>)]);
-                        <span class="comment">// FIXME: does the case `v.y == 0` ever happen?</span>
+                        <span class="comment">// TODO: does the case `v.y == 0` ever happen?</span>
                         <span class="kw">let</span> (<span class="ident">rot2</span>, <span class="ident">norm2</span>) <span class="op">=</span> <span class="ident">GivensRotation</span>::<span class="ident">cancel_y</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>)
                             .<span class="ident">unwrap_or</span>((<span class="ident">GivensRotation</span>::<span class="ident">identity</span>(), <span class="ident">subm</span>[(<span class="number">0</span>, <span class="number">0</span>)]));
 
@@ -1115,7 +1090,7 @@
                 <span class="ident">off_diagonal</span>[<span class="ident">m</span>] <span class="op">=</span> <span class="ident">N</span>::<span class="ident">RealField</span>::<span class="ident">zero</span>();
                 <span class="kw">break</span>;
             }
-            <span class="comment">// FIXME: write a test that enters this case.</span>
+            <span class="comment">// TODO: write a test that enters this case.</span>
             <span class="kw">else</span> <span class="kw">if</span> <span class="ident">diagonal</span>[<span class="ident">m</span>].<span class="ident">norm1</span>() <span class="op">&lt;=</span> <span class="ident">eps</span> {
                 <span class="ident">diagonal</span>[<span class="ident">m</span>] <span class="op">=</span> <span class="ident">N</span>::<span class="ident">RealField</span>::<span class="ident">zero</span>();
                 <span class="self">Self</span>::<span class="ident">cancel_horizontal_off_diagonal_elt</span>(
@@ -1282,7 +1257,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Any singular value smaller than `eps` is assumed to be zero.</span>
     <span class="doccomment">/// Returns `Err` if the singular vectors `U` and `V` have not been computed.</span>
-    <span class="comment">// FIXME: make this more generic wrt the storage types and the dimensions for `b`.</span>
+    <span class="comment">// TODO: make this more generic wrt the storage types and the dimensions for `b`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">solve</span><span class="op">&lt;</span><span class="ident">R2</span>: <span class="ident">Dim</span>, <span class="ident">C2</span>: <span class="ident">Dim</span>, <span class="ident">S2</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">S2</span><span class="op">&gt;</span>,
@@ -1336,31 +1311,6 @@
         <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>::<span class="ident">RealField</span>, <span class="ident">DimMinimum</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span>
         <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>::<span class="ident">RealField</span>, <span class="ident">DimDiff</span><span class="op">&lt;</span><span class="ident">DimMinimum</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
 {
-    <span class="doccomment">/// Computes the Singular Value Decomposition using implicit shift.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">svd</span>(<span class="self">self</span>, <span class="ident">compute_u</span>: <span class="ident">bool</span>, <span class="ident">compute_v</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">SVD</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span> {
-        <span class="ident">SVD</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">into_owned</span>(), <span class="ident">compute_u</span>, <span class="ident">compute_v</span>)
-    }
-
-    <span class="doccomment">/// Attempts to compute the Singular Value Decomposition of `matrix` using implicit shift.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `compute_u` − set this to `true` to enable the computation of left-singular vectors.</span>
-    <span class="doccomment">/// * `compute_v` − set this to `true` to enable the computation of right-singular vectors.</span>
-    <span class="doccomment">/// * `eps`       − tolerance used to determine when a value converged to 0.</span>
-    <span class="doccomment">/// * `max_niter` − maximum total number of iterations performed by the algorithm. If this</span>
-    <span class="doccomment">/// number of iteration is exceeded, `None` is returned. If `niter == 0`, then the algorithm</span>
-    <span class="doccomment">/// continues indefinitely until convergence.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_svd</span>(
-        <span class="self">self</span>,
-        <span class="ident">compute_u</span>: <span class="ident">bool</span>,
-        <span class="ident">compute_v</span>: <span class="ident">bool</span>,
-        <span class="ident">eps</span>: <span class="ident">N</span>::<span class="ident">RealField</span>,
-        <span class="ident">max_niter</span>: <span class="ident">usize</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SVD</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> {
-        <span class="ident">SVD</span>::<span class="ident">try_new</span>(<span class="self">self</span>.<span class="ident">into_owned</span>(), <span class="ident">compute_u</span>, <span class="ident">compute_v</span>, <span class="ident">eps</span>, <span class="ident">max_niter</span>)
-    }
-
     <span class="doccomment">/// Computes the singular values of this matrix.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">singular_values</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">VectorN</span><span class="op">&lt;</span><span class="ident">N</span>::<span class="ident">RealField</span>, <span class="ident">DimMinimum</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> {
         <span class="ident">SVD</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">clone_owned</span>(), <span class="bool-val">false</span>, <span class="bool-val">false</span>).<span class="ident">singular_values</span>

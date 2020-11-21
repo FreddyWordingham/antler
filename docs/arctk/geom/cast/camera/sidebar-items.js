@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Camera","Tracer emission structure."]]});

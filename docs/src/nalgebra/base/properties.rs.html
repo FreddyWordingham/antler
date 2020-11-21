@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.0/src/base/properties.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>properties.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.1/src/base/properties.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>properties.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -123,6 +123,28 @@
 <span id="122">122</span>
 <span id="123">123</span>
 <span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// Matrix properties checks.</span>
 <span class="kw">use</span> <span class="ident">approx</span>::<span class="ident">RelativeEq</span>;
@@ -136,11 +158,33 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::{<span class="ident">DefaultAllocator</span>, <span class="ident">Matrix</span>, <span class="ident">Scalar</span>, <span class="ident">SquareMatrix</span>};
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Indicates if this is an empty matrix.</span>
+    <span class="doccomment">/// The total number of elements of this matrix.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use nalgebra::Matrix3x4;</span>
+    <span class="doccomment">/// let mat = Matrix3x4::&lt;f32&gt;::zeros();</span>
+    <span class="doccomment">/// assert_eq!(mat.len(), 12);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">shape</span>();
+        <span class="ident">nrows</span> <span class="op">*</span> <span class="ident">ncols</span>
+    }
+
+    <span class="doccomment">/// Returns true if the matrix contains no elements.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use nalgebra::Matrix3x4;</span>
+    <span class="doccomment">/// let mat = Matrix3x4::&lt;f32&gt;::zeros();</span>
+    <span class="doccomment">/// assert!(!mat.is_empty());</span>
+    <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">shape</span>();
-        <span class="ident">nrows</span> <span class="op">==</span> <span class="number">0</span> <span class="op">||</span> <span class="ident">ncols</span> <span class="op">==</span> <span class="number">0</span>
+        <span class="self">self</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span>
     }
 
     <span class="doccomment">/// Indicates if this is a square matrix.</span>
@@ -150,7 +194,7 @@
         <span class="ident">nrows</span> <span class="op">==</span> <span class="ident">ncols</span>
     }
 
-    <span class="comment">// FIXME: RelativeEq prevents us from using those methods on integer matrices…</span>
+    <span class="comment">// TODO: RelativeEq prevents us from using those methods on integer matrices…</span>
     <span class="doccomment">/// Indicated if this is the identity matrix within a relative error of `eps`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If the matrix is diagonal, this checks that diagonal elements (i.e. at coordinates `(i, i)`</span>
@@ -190,7 +234,7 @@
         <span class="comment">// Off-diagonal elements of the sub-square matrix.</span>
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">1</span>..<span class="ident">d</span> {
             <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">i</span> {
-                <span class="comment">// FIXME: use unsafe indexing.</span>
+                <span class="comment">// TODO: use unsafe indexing.</span>
                 <span class="kw">if</span> <span class="op">!</span><span class="macro">relative_eq</span><span class="macro">!</span>(<span class="self">self</span>[(<span class="ident">i</span>, <span class="ident">j</span>)], <span class="ident">N</span>::<span class="ident">zero</span>(), <span class="ident">epsilon</span> <span class="op">=</span> <span class="ident">eps</span>)
                     <span class="op">||</span> <span class="op">!</span><span class="macro">relative_eq</span><span class="macro">!</span>(<span class="self">self</span>[(<span class="ident">j</span>, <span class="ident">i</span>)], <span class="ident">N</span>::<span class="ident">zero</span>(), <span class="ident">epsilon</span> <span class="op">=</span> <span class="ident">eps</span>)
                 {
@@ -244,7 +288,7 @@
     <span class="doccomment">/// Returns `true` if this matrix is invertible.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_invertible</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="comment">// FIXME: improve this?</span>
+        <span class="comment">// TODO: improve this?</span>
         <span class="self">self</span>.<span class="ident">clone_owned</span>().<span class="ident">try_inverse</span>().<span class="ident">is_some</span>()
     }
 }

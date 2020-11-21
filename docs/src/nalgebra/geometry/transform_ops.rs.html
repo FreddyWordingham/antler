@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.0/src/geometry/transform_ops.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>transform_ops.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.1/src/geometry/transform_ops.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>transform_ops.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -573,7 +573,7 @@
  * Transform × Similarity
  * Transform × Transform
  * Transform × UnitQuaternion
- * FIXME: Transform × UnitComplex
+ * TODO: Transform × UnitComplex
  * Transform × Translation
  * Transform × Vector
  * Transform × Point
@@ -583,21 +583,21 @@
  * Similarity     × Transform
  * Translation    × Transform
  * UnitQuaternion × Transform
- * FIXME: UnitComplex × Transform
+ * TODO: UnitComplex × Transform
  *
- * FIXME: Transform ÷ Isometry
+ * TODO: Transform ÷ Isometry
  * Transform ÷ Rotation
- * FIXME: Transform ÷ Similarity
+ * TODO: Transform ÷ Similarity
  * Transform ÷ Transform
  * Transform ÷ UnitQuaternion
  * Transform ÷ Translation
  *
- * FIXME: Isometry       ÷ Transform
+ * TODO: Isometry       ÷ Transform
  * Rotation       ÷ Transform
- * FIXME: Similarity     ÷ Transform
+ * TODO: Similarity     ÷ Transform
  * Translation    ÷ Transform
  * UnitQuaternion ÷ Transform
- * FIXME: UnitComplex ÷ Transform
+ * TODO: UnitComplex ÷ Transform
  *
  *
  * (Assignment Operators)
@@ -608,15 +608,15 @@
  * Transform ×= Isometry
  * Transform ×= Rotation
  * Transform ×= UnitQuaternion
- * FIXME: Transform ×= UnitComplex
+ * TODO: Transform ×= UnitComplex
  * Transform ×= Translation
  *
  * Transform ÷= Transform
- * FIXME: Transform ÷= Similarity
- * FIXME: Transform ÷= Isometry
+ * TODO: Transform ÷= Similarity
+ * TODO: Transform ÷= Isometry
  * Transform ÷= Rotation
  * Transform ÷= UnitQuaternion
- * FIXME: Transform ÷= UnitComplex
+ * TODO: Transform ÷= UnitComplex
  *
  */</span>
 
@@ -806,7 +806,7 @@
 
 <span class="comment">/*
  *
- * FIXME: don&#39;t explicitly build the homogeneous translation matrix.
+ * TODO: don&#39;t explicitly build the homogeneous translation matrix.
  * Directly apply the translation, just as in `Matrix::{append,prepend}_translation`. This has not
  * been done yet because of the `DimNameDiff` requirement (which is not automatically deduced from
  * `DimNameAdd` requirement).
@@ -998,7 +998,7 @@
 
 <span class="comment">/*
  *
- * FIXME: don&#39;t explicitly build the homogeneous translation matrix.
+ * TODO: don&#39;t explicitly build the homogeneous translation matrix.
  * Directly apply the translation, just as in `Matrix::{append,prepend}_translation`. This has not
  * been done yet because of the `DimNameDiff` requirement (which is not automatically deduced from
  * `DimNameAdd` requirement).
@@ -1037,8 +1037,8 @@
     (<span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>), (<span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>)
     <span class="kw">for</span> <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">CA</span>: <span class="ident">SuperTCategoryOf</span><span class="op">&lt;</span><span class="ident">CB</span><span class="op">&gt;</span>, <span class="ident">CB</span>: <span class="ident">SubTCategoryOf</span><span class="op">&lt;</span><span class="ident">TProjective</span><span class="op">&gt;</span>;
     <span class="self">self</span>: <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">CA</span><span class="op">&gt;</span>, <span class="ident">rhs</span>: <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">CB</span><span class="op">&gt;</span>;
-    [<span class="ident">val</span>] <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">inverse</span>();
-    [<span class="kw-2">ref</span>] <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">clone</span>().<span class="ident">inverse</span>();
+    [<span class="ident">val</span>] <span class="op">=&gt;</span> <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">suspicious_op_assign_impl</span>)]</span> { <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">inverse</span>() };
+    [<span class="kw-2">ref</span>] <span class="op">=&gt;</span> <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">suspicious_op_assign_impl</span>)]</span> { <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">clone</span>().<span class="ident">inverse</span>() };
 );
 
 <span class="comment">//      // Transform ÷= Similarity</span>
@@ -1067,8 +1067,8 @@
     <span class="ident">DivAssign</span>, <span class="ident">div_assign</span> <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">RealField</span>;
     (<span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>), (<span class="ident">D</span>, <span class="ident">U1</span>) <span class="kw">for</span> <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">C</span>: <span class="ident">TCategory</span>;
     <span class="self">self</span>: <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span>, <span class="ident">rhs</span>: <span class="ident">Translation</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>;
-    [<span class="ident">val</span>] <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">inverse</span>();
-    [<span class="kw-2">ref</span>] <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">inverse</span>();
+    [<span class="ident">val</span>] <span class="op">=&gt;</span> <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">suspicious_op_assign_impl</span>)]</span> { <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">inverse</span>() };
+    [<span class="kw-2">ref</span>] <span class="op">=&gt;</span> <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">suspicious_op_assign_impl</span>)]</span> { <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">inverse</span>() };
 );
 
 <span class="comment">// Transform ÷= Rotation</span>
@@ -1076,8 +1076,8 @@
     <span class="ident">DivAssign</span>, <span class="ident">div_assign</span> <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">RealField</span>;
     (<span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>), (<span class="ident">D</span>, <span class="ident">D</span>) <span class="kw">for</span> <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">C</span>: <span class="ident">TCategory</span>;
     <span class="self">self</span>: <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span>, <span class="ident">rhs</span>: <span class="ident">Rotation</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>;
-    [<span class="ident">val</span>] <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">inverse</span>();
-    [<span class="kw-2">ref</span>] <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">inverse</span>();
+    [<span class="ident">val</span>] <span class="op">=&gt;</span> <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">suspicious_op_assign_impl</span>)]</span> { <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">inverse</span>() };
+    [<span class="kw-2">ref</span>] <span class="op">=&gt;</span> <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">suspicious_op_assign_impl</span>)]</span> { <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">inverse</span>() };
 );
 
 <span class="comment">// Transform ÷= UnitQuaternion</span>
@@ -1085,8 +1085,8 @@
     <span class="ident">DivAssign</span>, <span class="ident">div_assign</span> <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">RealField</span>;
     (<span class="ident">U4</span>, <span class="ident">U4</span>), (<span class="ident">U4</span>, <span class="ident">U1</span>) <span class="kw">for</span> <span class="ident">C</span>: <span class="ident">TCategory</span>;
     <span class="self">self</span>: <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">C</span><span class="op">&gt;</span>, <span class="ident">rhs</span>: <span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>;
-    [<span class="ident">val</span>] <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">inverse</span>();
-    [<span class="kw-2">ref</span>] <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">inverse</span>();
+    [<span class="ident">val</span>] <span class="op">=&gt;</span> <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">suspicious_op_assign_impl</span>)]</span> { <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">inverse</span>() };
+    [<span class="kw-2">ref</span>] <span class="op">=&gt;</span> <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">suspicious_op_assign_impl</span>)]</span> { <span class="kw-2">*</span><span class="self">self</span> <span class="op">*=</span> <span class="ident">rhs</span>.<span class="ident">inverse</span>() };
 );
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "nalgebra";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>

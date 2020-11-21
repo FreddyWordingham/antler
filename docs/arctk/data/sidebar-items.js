@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["average","Rolling average implementation."],["histogram","Histogram implementation."]]});
+initSidebarItems({"mod":[["average","Rolling average implementation."],["histogram","Histogram implementation."],["table","Data table implementation."]]});

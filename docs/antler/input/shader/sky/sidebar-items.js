@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Sky","Sky properties."]]});

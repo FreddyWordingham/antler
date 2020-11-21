@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["paint","Sample the scene using the tracer."]]});
+initSidebarItems({"type":[["Engine","Rendering sampling engine function type."]]});

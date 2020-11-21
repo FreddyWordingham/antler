@@ -1,5 +1,4 @@
 (function() {var implementors = {};
-implementors["antler"] = [{"text":"impl Load for Settings","synthetic":false,"types":[]},{"text":"impl Load for Light","synthetic":false,"types":[]},{"text":"impl Load for Samples","synthetic":false,"types":[]},{"text":"impl Load for Shadow","synthetic":false,"types":[]},{"text":"impl Load for SkyBuilder","synthetic":false,"types":[]},{"text":"impl Load for ShaderBuilder","synthetic":false,"types":[]},{"text":"impl Load for ScaleBuilder","synthetic":false,"types":[]},{"text":"impl Load for Attributes","synthetic":false,"types":[]},{"text":"impl Load for LensBuilder","synthetic":false,"types":[]},{"text":"impl Load for CameraBuilder","synthetic":false,"types":[]}];
-implementors["antler_window"] = [{"text":"impl Load for Parameters","synthetic":false,"types":[]}];
+implementors["antler"] = [{"text":"impl Load for AttributeLinker","synthetic":false,"types":[]},{"text":"impl Load for Settings","synthetic":false,"types":[]},{"text":"impl Load for ShaderLinker","synthetic":false,"types":[]},{"text":"impl Load for ParametersBuilder","synthetic":false,"types":[]},{"text":"impl Load for EngineBuilder","synthetic":false,"types":[]}];
 implementors["arctk"] = [];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

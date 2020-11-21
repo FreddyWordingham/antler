@@ -1,1 +1,0 @@
-initSidebarItems({"type":[["ConcBuilder","Loadable concentration structure."]]});

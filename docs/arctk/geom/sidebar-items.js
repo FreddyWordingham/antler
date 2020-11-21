@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["dom","Domain module."],["properties","Properties module."],["rt","Ray-tracing module."],["shape","Three dimensional Euclidean shapes."]]});
+initSidebarItems({"mod":[["cast","Ray-casting module."],["dom","Domain module."],["properties","Properties module."],["rt","Ray-tracing module."],["shape","Three dimensional Euclidean shapes."]]});

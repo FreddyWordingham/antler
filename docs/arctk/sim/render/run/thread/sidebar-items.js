@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["multi_thread","Run a multi-threaded MCRT simulation. # Errors if the progress bar can not be locked."],["single_thread","Run a MCRT simulation using a single thread. # Errors if the progress bar can not be locked."]]});

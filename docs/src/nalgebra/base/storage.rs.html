@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.0/src/base/storage.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>storage.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.1/src/base/storage.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>storage.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -223,7 +223,7 @@
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SameShapeStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R1</span>, <span class="ident">C1</span>, <span class="ident">R2</span>, <span class="ident">C2</span><span class="op">&gt;</span> <span class="op">=</span>
     <span class="op">&lt;</span><span class="ident">DefaultAllocator</span> <span class="kw">as</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">SameShapeR</span><span class="op">&lt;</span><span class="ident">R1</span>, <span class="ident">R2</span><span class="op">&gt;</span>, <span class="ident">SameShapeC</span><span class="op">&lt;</span><span class="ident">C1</span>, <span class="ident">C2</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>::<span class="ident">Buffer</span>;
 
-<span class="comment">// FIXME: better name than Owned ?</span>
+<span class="comment">// TODO: better name than Owned ?</span>
 <span class="doccomment">/// The owned data storage that can be allocated from `S`.</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span> <span class="op">=</span> <span class="ident">U1</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">DefaultAllocator</span> <span class="kw">as</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span>::<span class="ident">Buffer</span>;
 
@@ -237,7 +237,7 @@
 
 <span class="doccomment">/// The trait shared by all matrix data storage.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// FIXME: doc</span>
+<span class="doccomment">/// TODO: doc</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Note that `Self` must always have a number of elements compatible with the matrix length (given</span>
 <span class="doccomment">/// by `R` and `C` if they are known at compile-time). For example, implementors of this trait</span>
@@ -268,7 +268,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```.ignore</span>
     <span class="doccomment">/// let lindex = self.linear_index(irow, icol);</span>
-    <span class="doccomment">/// assert!(*self.get_unchecked(irow, icol) == *self.get_unchecked_linear(lindex)</span>
+    <span class="doccomment">/// assert!(*self.get_unchecked(irow, icol) == *self.get_unchecked_linear(lindex))</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">linear_index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">irow</span>: <span class="ident">usize</span>, <span class="ident">icol</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
@@ -280,7 +280,7 @@
     <span class="doccomment">/// Gets the address of the i-th matrix component without performing bound-checking.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">get_address_unchecked_linear</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">N</span> {
-        <span class="self">self</span>.<span class="ident">ptr</span>().<span class="ident">wrapping_offset</span>(<span class="ident">i</span> <span class="kw">as</span> <span class="ident">isize</span>)
+        <span class="self">self</span>.<span class="ident">ptr</span>().<span class="ident">wrapping_add</span>(<span class="ident">i</span>)
     }
 
     <span class="doccomment">/// Gets the address of the i-th matrix component without performing bound-checking.</span>
@@ -332,7 +332,7 @@
     <span class="doccomment">/// Gets the mutable address of the i-th matrix component without performing bound-checking.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">get_address_unchecked_linear_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">N</span> {
-        <span class="self">self</span>.<span class="ident">ptr_mut</span>().<span class="ident">wrapping_offset</span>(<span class="ident">i</span> <span class="kw">as</span> <span class="ident">isize</span>)
+        <span class="self">self</span>.<span class="ident">ptr_mut</span>().<span class="ident">wrapping_add</span>(<span class="ident">i</span>)
     }
 
     <span class="doccomment">/// Gets the mutable address of the i-th matrix component without performing bound-checking.</span>

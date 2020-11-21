@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.0/src/base/matrix_slice.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>matrix_slice.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.1/src/base/matrix_slice.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>matrix_slice.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -901,6 +901,17 @@
 <span id="900">900</span>
 <span id="901">901</span>
 <span id="902">902</span>
+<span id="903">903</span>
+<span id="904">904</span>
+<span id="905">905</span>
+<span id="906">906</span>
+<span id="907">907</span>
+<span id="908">908</span>
+<span id="909">909</span>
+<span id="910">910</span>
+<span id="911">911</span>
+<span id="912">912</span>
+<span id="913">913</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Range</span>, <span class="ident">RangeFrom</span>, <span class="ident">RangeFull</span>, <span class="ident">RangeTo</span>};
@@ -943,9 +954,9 @@
                       <span class="ident">CStride</span>: <span class="ident">Dim</span> {
 
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span> {
-                    <span class="ident">ptr</span>:       <span class="ident">ptr</span>,
-                    <span class="ident">shape</span>:     <span class="ident">shape</span>,
-                    <span class="ident">strides</span>:   <span class="ident">strides</span>,
+                    <span class="ident">ptr</span>,
+                    <span class="ident">shape</span>,
+                    <span class="ident">strides</span>,
                     <span class="ident">_phantoms</span>: <span class="ident">PhantomData</span>
                 }
             }
@@ -1178,367 +1189,370 @@
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_slice_with_steps</span>: <span class="ident">ident</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_range_pair</span>: <span class="ident">ident</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_range_pair</span>: <span class="ident">ident</span>) <span class="op">=&gt;</span> {
-        <span class="doccomment">/// A matrix slice.</span>
-        <span class="kw">pub</span> <span class="kw">type</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">RStride</span>, <span class="ident">CStride</span><span class="op">&gt;</span>
-        <span class="op">=</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">RStride</span>, <span class="ident">CStride</span><span class="op">&gt;&gt;</span>;
+        <span class="comment">/*
+         *
+         * Row slicing.
+         *
+         */</span>
+        <span class="doccomment">/// Returns a slice containing the i-th row of this matrix.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">row</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U1</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_rows</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>(<span class="ident">i</span>)
+        }
 
-        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-            <span class="comment">/*
-             *
-             * Row slicing.
-             *
-             */</span>
-            <span class="doccomment">/// Returns a slice containing the i-th row of this matrix.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">row</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U1</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_rows</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>(<span class="ident">i</span>)
+        <span class="doccomment">/// Returns a slice containing the `n` first elements of the i-th row of this matrix.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">row_part</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U1</span>, <span class="ident">Dynamic</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_slice</span>((<span class="ident">i</span>, <span class="number">0</span>), (<span class="ident">U1</span>, <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">n</span>)))
+        }
+
+        <span class="doccomment">/// Extracts from this matrix a set of consecutive rows.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_row</span>: <span class="ident">usize</span>, <span class="ident">nrows</span>: <span class="ident">usize</span>)
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Dynamic</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_generic</span>(<span class="ident">first_row</span>, <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">nrows</span>))
+        }
+
+        <span class="doccomment">/// Extracts from this matrix a set of consecutive rows regularly skipping `step` rows.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_with_step</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_row</span>: <span class="ident">usize</span>, <span class="ident">nrows</span>: <span class="ident">usize</span>, <span class="ident">step</span>: <span class="ident">usize</span>)
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Dynamic</span>, <span class="ident">C</span>, <span class="ident">Dynamic</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_generic_with_step</span>(<span class="ident">first_row</span>, <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">nrows</span>), <span class="ident">step</span>)
+        }
+
+        <span class="doccomment">/// Extracts a compile-time number of consecutive rows from this matrix.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_rows</span><span class="op">&lt;</span><span class="ident">RSlice</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_row</span>: <span class="ident">usize</span>)
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_generic</span>(<span class="ident">first_row</span>, <span class="ident">RSlice</span>::<span class="ident">name</span>())
+        }
+
+        <span class="doccomment">/// Extracts from this matrix a compile-time number of rows regularly skipping `step`</span>
+        <span class="doccomment">/// rows.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_rows_with_step</span><span class="op">&lt;</span><span class="ident">RSlice</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_row</span>: <span class="ident">usize</span>, <span class="ident">step</span>: <span class="ident">usize</span>)
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">C</span>, <span class="ident">Dynamic</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_generic_with_step</span>(<span class="ident">first_row</span>, <span class="ident">RSlice</span>::<span class="ident">name</span>(), <span class="ident">step</span>)
+        }
+
+        <span class="doccomment">/// Extracts from this matrix `nrows` rows regularly skipping `step` rows. Both</span>
+        <span class="doccomment">/// argument may or may not be values known at compile-time.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_generic</span><span class="op">&lt;</span><span class="ident">RSlice</span>: <span class="ident">Dim</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">row_start</span>: <span class="ident">usize</span>, <span class="ident">nrows</span>: <span class="ident">RSlice</span>)
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+
+            <span class="kw">let</span> <span class="ident">my_shape</span>   <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>((<span class="ident">row_start</span>, <span class="number">0</span>), (<span class="ident">nrows</span>.<span class="ident">value</span>(), <span class="ident">my_shape</span>.<span class="number">1</span>.<span class="ident">value</span>()), (<span class="number">0</span>, <span class="number">0</span>));
+
+            <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> (<span class="ident">nrows</span>, <span class="ident">my_shape</span>.<span class="number">1</span>);
+
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, (<span class="ident">row_start</span>, <span class="number">0</span>), <span class="ident">shape</span>);
+                <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
             }
+        }
 
-            <span class="doccomment">/// Returns a slice containing the `n` first elements of the i-th row of this matrix.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">row_part</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U1</span>, <span class="ident">Dynamic</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_slice</span>((<span class="ident">i</span>, <span class="number">0</span>), (<span class="ident">U1</span>, <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">n</span>)))
+        <span class="doccomment">/// Extracts from this matrix `nrows` rows regularly skipping `step` rows. Both</span>
+        <span class="doccomment">/// argument may or may not be values known at compile-time.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_generic_with_step</span><span class="op">&lt;</span><span class="ident">RSlice</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">row_start</span>: <span class="ident">usize</span>, <span class="ident">nrows</span>: <span class="ident">RSlice</span>, <span class="ident">step</span>: <span class="ident">usize</span>)
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">C</span>, <span class="ident">Dynamic</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>
+            <span class="kw">where</span> <span class="ident">RSlice</span>: <span class="ident">Dim</span> {
+
+            <span class="kw">let</span> <span class="ident">my_shape</span>   <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
+            <span class="kw">let</span> <span class="ident">my_strides</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">strides</span>();
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>((<span class="ident">row_start</span>, <span class="number">0</span>), (<span class="ident">nrows</span>.<span class="ident">value</span>(), <span class="ident">my_shape</span>.<span class="number">1</span>.<span class="ident">value</span>()), (<span class="ident">step</span>, <span class="number">0</span>));
+
+            <span class="kw">let</span> <span class="ident">strides</span> <span class="op">=</span> (<span class="ident">Dynamic</span>::<span class="ident">new</span>((<span class="ident">step</span> <span class="op">+</span> <span class="number">1</span>) <span class="op">*</span> <span class="ident">my_strides</span>.<span class="number">0</span>.<span class="ident">value</span>()), <span class="ident">my_strides</span>.<span class="number">1</span>);
+            <span class="kw">let</span> <span class="ident">shape</span>   <span class="op">=</span> (<span class="ident">nrows</span>, <span class="ident">my_shape</span>.<span class="number">1</span>);
+
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_with_strides_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, (<span class="ident">row_start</span>, <span class="number">0</span>), <span class="ident">shape</span>, <span class="ident">strides</span>);
+                <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
             }
+        }
 
-            <span class="doccomment">/// Extracts from this matrix a set of consecutive rows.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_row</span>: <span class="ident">usize</span>, <span class="ident">nrows</span>: <span class="ident">usize</span>)
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Dynamic</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+        <span class="comment">/*
+         *
+         * Column slicing.
+         *
+         */</span>
+        <span class="doccomment">/// Returns a slice containing the i-th column of this matrix.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">column</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">U1</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_columns</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>(<span class="ident">i</span>)
+        }
 
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_generic</span>(<span class="ident">first_row</span>, <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">nrows</span>))
+        <span class="doccomment">/// Returns a slice containing the `n` first elements of the i-th column of this matrix.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">column_part</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Dynamic</span>, <span class="ident">U1</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_slice</span>((<span class="number">0</span>, <span class="ident">i</span>), (<span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">n</span>), <span class="ident">U1</span>))
+        }
+
+        <span class="doccomment">/// Extracts from this matrix a set of consecutive columns.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_col</span>: <span class="ident">usize</span>, <span class="ident">ncols</span>: <span class="ident">usize</span>)
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">Dynamic</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_generic</span>(<span class="ident">first_col</span>, <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">ncols</span>))
+        }
+
+        <span class="doccomment">/// Extracts from this matrix a set of consecutive columns regularly skipping `step`</span>
+        <span class="doccomment">/// columns.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_with_step</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_col</span>: <span class="ident">usize</span>, <span class="ident">ncols</span>: <span class="ident">usize</span>, <span class="ident">step</span>: <span class="ident">usize</span>)
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">Dynamic</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">Dynamic</span><span class="op">&gt;</span> {
+
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_generic_with_step</span>(<span class="ident">first_col</span>, <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">ncols</span>), <span class="ident">step</span>)
+        }
+
+        <span class="doccomment">/// Extracts a compile-time number of consecutive columns from this matrix.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_columns</span><span class="op">&lt;</span><span class="ident">CSlice</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_col</span>: <span class="ident">usize</span>)
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">CSlice</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_generic</span>(<span class="ident">first_col</span>, <span class="ident">CSlice</span>::<span class="ident">name</span>())
+        }
+
+        <span class="doccomment">/// Extracts from this matrix a compile-time number of columns regularly skipping</span>
+        <span class="doccomment">/// `step` columns.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_columns_with_step</span><span class="op">&lt;</span><span class="ident">CSlice</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_col</span>: <span class="ident">usize</span>, <span class="ident">step</span>: <span class="ident">usize</span>)
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">CSlice</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">Dynamic</span><span class="op">&gt;</span> {
+
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_generic_with_step</span>(<span class="ident">first_col</span>, <span class="ident">CSlice</span>::<span class="ident">name</span>(), <span class="ident">step</span>)
+        }
+
+        <span class="doccomment">/// Extracts from this matrix `ncols` columns. The number of columns may or may not be</span>
+        <span class="doccomment">/// known at compile-time.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_generic</span><span class="op">&lt;</span><span class="ident">CSlice</span>: <span class="ident">Dim</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_col</span>: <span class="ident">usize</span>, <span class="ident">ncols</span>: <span class="ident">CSlice</span>)
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">CSlice</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+
+            <span class="kw">let</span> <span class="ident">my_shape</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>((<span class="number">0</span>, <span class="ident">first_col</span>), (<span class="ident">my_shape</span>.<span class="number">0</span>.<span class="ident">value</span>(), <span class="ident">ncols</span>.<span class="ident">value</span>()), (<span class="number">0</span>, <span class="number">0</span>));
+            <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> (<span class="ident">my_shape</span>.<span class="number">0</span>, <span class="ident">ncols</span>);
+
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, (<span class="number">0</span>, <span class="ident">first_col</span>), <span class="ident">shape</span>);
+                <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
             }
+        }
 
-            <span class="doccomment">/// Extracts from this matrix a set of consecutive rows regularly skipping `step` rows.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_with_step</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_row</span>: <span class="ident">usize</span>, <span class="ident">nrows</span>: <span class="ident">usize</span>, <span class="ident">step</span>: <span class="ident">usize</span>)
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Dynamic</span>, <span class="ident">C</span>, <span class="ident">Dynamic</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
 
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_generic_with_step</span>(<span class="ident">first_row</span>, <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">nrows</span>), <span class="ident">step</span>)
+        <span class="doccomment">/// Extracts from this matrix `ncols` columns skipping `step` columns. Both argument may</span>
+        <span class="doccomment">/// or may not be values known at compile-time.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_generic_with_step</span><span class="op">&lt;</span><span class="ident">CSlice</span>: <span class="ident">Dim</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_col</span>: <span class="ident">usize</span>, <span class="ident">ncols</span>: <span class="ident">CSlice</span>, <span class="ident">step</span>: <span class="ident">usize</span>)
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">CSlice</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">Dynamic</span><span class="op">&gt;</span> {
+
+            <span class="kw">let</span> <span class="ident">my_shape</span>   <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
+            <span class="kw">let</span> <span class="ident">my_strides</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">strides</span>();
+
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>((<span class="number">0</span>, <span class="ident">first_col</span>), (<span class="ident">my_shape</span>.<span class="number">0</span>.<span class="ident">value</span>(), <span class="ident">ncols</span>.<span class="ident">value</span>()), (<span class="number">0</span>, <span class="ident">step</span>));
+
+            <span class="kw">let</span> <span class="ident">strides</span> <span class="op">=</span> (<span class="ident">my_strides</span>.<span class="number">0</span>, <span class="ident">Dynamic</span>::<span class="ident">new</span>((<span class="ident">step</span> <span class="op">+</span> <span class="number">1</span>) <span class="op">*</span> <span class="ident">my_strides</span>.<span class="number">1</span>.<span class="ident">value</span>()));
+            <span class="kw">let</span> <span class="ident">shape</span>   <span class="op">=</span> (<span class="ident">my_shape</span>.<span class="number">0</span>, <span class="ident">ncols</span>);
+
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_with_strides_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, (<span class="number">0</span>, <span class="ident">first_col</span>), <span class="ident">shape</span>, <span class="ident">strides</span>);
+                <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
             }
+        }
 
-            <span class="doccomment">/// Extracts a compile-time number of consecutive rows from this matrix.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_rows</span><span class="op">&lt;</span><span class="ident">RSlice</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_row</span>: <span class="ident">usize</span>)
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+        <span class="comment">/*
+         *
+         * General slicing.
+         *
+         */</span>
+        <span class="doccomment">/// Slices this matrix starting at its component `(irow, icol)` and with `(nrows, ncols)`</span>
+        <span class="doccomment">/// consecutive elements.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slice</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">start</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">shape</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>))
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Dynamic</span>, <span class="ident">Dynamic</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
 
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_generic</span>(<span class="ident">first_row</span>, <span class="ident">RSlice</span>::<span class="ident">name</span>())
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>(<span class="ident">start</span>, <span class="ident">shape</span>, (<span class="number">0</span>, <span class="number">0</span>));
+            <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> (<span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">shape</span>.<span class="number">0</span>), <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">shape</span>.<span class="number">1</span>));
+
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, <span class="ident">start</span>, <span class="ident">shape</span>);
+                <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
             }
+        }
 
-            <span class="doccomment">/// Extracts from this matrix a compile-time number of rows regularly skipping `step`</span>
-            <span class="doccomment">/// rows.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_rows_with_step</span><span class="op">&lt;</span><span class="ident">RSlice</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_row</span>: <span class="ident">usize</span>, <span class="ident">step</span>: <span class="ident">usize</span>)
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">C</span>, <span class="ident">Dynamic</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
 
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_generic_with_step</span>(<span class="ident">first_row</span>, <span class="ident">RSlice</span>::<span class="ident">name</span>(), <span class="ident">step</span>)
+        <span class="doccomment">/// Slices this matrix starting at its component `(start.0, start.1)` and with</span>
+        <span class="doccomment">/// `(shape.0, shape.1)` components. Each row (resp. column) of the sliced matrix is</span>
+        <span class="doccomment">/// separated by `steps.0` (resp. `steps.1`) ignored rows (resp. columns) of the</span>
+        <span class="doccomment">/// original matrix.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slice_with_steps</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">start</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">shape</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">steps</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>))
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Dynamic</span>, <span class="ident">Dynamic</span>, <span class="ident">Dynamic</span>, <span class="ident">Dynamic</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> (<span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">shape</span>.<span class="number">0</span>), <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">shape</span>.<span class="number">1</span>));
+
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_slice_with_steps</span>(<span class="ident">start</span>, <span class="ident">shape</span>, <span class="ident">steps</span>)
+        }
+
+        <span class="doccomment">/// Slices this matrix starting at its component `(irow, icol)` and with `(R::dim(),</span>
+        <span class="doccomment">/// CSlice::dim())` consecutive components.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_slice</span><span class="op">&lt;</span><span class="ident">RSlice</span>, <span class="ident">CSlice</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">irow</span>: <span class="ident">usize</span>, <span class="ident">icol</span>: <span class="ident">usize</span>)
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">CSlice</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>
+            <span class="kw">where</span> <span class="ident">RSlice</span>: <span class="ident">DimName</span>,
+                  <span class="ident">CSlice</span>: <span class="ident">DimName</span> {
+
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>((<span class="ident">irow</span>, <span class="ident">icol</span>), (<span class="ident">RSlice</span>::<span class="ident">dim</span>(), <span class="ident">CSlice</span>::<span class="ident">dim</span>()), (<span class="number">0</span>, <span class="number">0</span>));
+            <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> (<span class="ident">RSlice</span>::<span class="ident">name</span>(), <span class="ident">CSlice</span>::<span class="ident">name</span>());
+
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, (<span class="ident">irow</span>, <span class="ident">icol</span>), <span class="ident">shape</span>);
+                <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
             }
+        }
 
-            <span class="doccomment">/// Extracts from this matrix `nrows` rows regularly skipping `step` rows. Both</span>
-            <span class="doccomment">/// argument may or may not be values known at compile-time.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_generic</span><span class="op">&lt;</span><span class="ident">RSlice</span>: <span class="ident">Dim</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">row_start</span>: <span class="ident">usize</span>, <span class="ident">nrows</span>: <span class="ident">RSlice</span>)
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+        <span class="doccomment">/// Slices this matrix starting at its component `(start.0, start.1)` and with</span>
+        <span class="doccomment">/// `(R::dim(), CSlice::dim())` components. Each row (resp. column) of the sliced</span>
+        <span class="doccomment">/// matrix is separated by `steps.0` (resp. `steps.1`) ignored rows (resp. columns) of</span>
+        <span class="doccomment">/// the original matrix.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_slice_with_steps</span><span class="op">&lt;</span><span class="ident">RSlice</span>, <span class="ident">CSlice</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">start</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">steps</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>))
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">CSlice</span>, <span class="ident">Dynamic</span>, <span class="ident">Dynamic</span><span class="op">&gt;</span>
+            <span class="kw">where</span> <span class="ident">RSlice</span>: <span class="ident">DimName</span>,
+                  <span class="ident">CSlice</span>: <span class="ident">DimName</span> {
+            <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> (<span class="ident">RSlice</span>::<span class="ident">name</span>(), <span class="ident">CSlice</span>::<span class="ident">name</span>());
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_slice_with_steps</span>(<span class="ident">start</span>, <span class="ident">shape</span>, <span class="ident">steps</span>)
+        }
 
-                <span class="kw">let</span> <span class="ident">my_shape</span>   <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>((<span class="ident">row_start</span>, <span class="number">0</span>), (<span class="ident">nrows</span>.<span class="ident">value</span>(), <span class="ident">my_shape</span>.<span class="number">1</span>.<span class="ident">value</span>()), (<span class="number">0</span>, <span class="number">0</span>));
+        <span class="doccomment">/// Creates a slice that may or may not have a fixed size and stride.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_slice</span><span class="op">&lt;</span><span class="ident">RSlice</span>, <span class="ident">CSlice</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">start</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">shape</span>: (<span class="ident">RSlice</span>, <span class="ident">CSlice</span>))
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">CSlice</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>
+            <span class="kw">where</span> <span class="ident">RSlice</span>: <span class="ident">Dim</span>,
+                  <span class="ident">CSlice</span>: <span class="ident">Dim</span> {
 
-                <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> (<span class="ident">nrows</span>, <span class="ident">my_shape</span>.<span class="number">1</span>);
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>(<span class="ident">start</span>, (<span class="ident">shape</span>.<span class="number">0</span>.<span class="ident">value</span>(), <span class="ident">shape</span>.<span class="number">1</span>.<span class="ident">value</span>()), (<span class="number">0</span>, <span class="number">0</span>));
 
-                <span class="kw">unsafe</span> {
-                    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, (<span class="ident">row_start</span>, <span class="number">0</span>), <span class="ident">shape</span>);
-                    <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
-                }
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, <span class="ident">start</span>, <span class="ident">shape</span>);
+                <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
             }
+        }
 
-            <span class="doccomment">/// Extracts from this matrix `nrows` rows regularly skipping `step` rows. Both</span>
-            <span class="doccomment">/// argument may or may not be values known at compile-time.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_generic_with_step</span><span class="op">&lt;</span><span class="ident">RSlice</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">row_start</span>: <span class="ident">usize</span>, <span class="ident">nrows</span>: <span class="ident">RSlice</span>, <span class="ident">step</span>: <span class="ident">usize</span>)
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">C</span>, <span class="ident">Dynamic</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>
-                <span class="kw">where</span> <span class="ident">RSlice</span>: <span class="ident">Dim</span> {
+        <span class="doccomment">/// Creates a slice that may or may not have a fixed size and stride.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_slice_with_steps</span><span class="op">&lt;</span><span class="ident">RSlice</span>, <span class="ident">CSlice</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>,
+                                                         <span class="ident">start</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>),
+                                                         <span class="ident">shape</span>: (<span class="ident">RSlice</span>, <span class="ident">CSlice</span>),
+                                                         <span class="ident">steps</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>))
+            <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">CSlice</span>, <span class="ident">Dynamic</span>, <span class="ident">Dynamic</span><span class="op">&gt;</span>
+            <span class="kw">where</span> <span class="ident">RSlice</span>: <span class="ident">Dim</span>,
+                  <span class="ident">CSlice</span>: <span class="ident">Dim</span> {
 
-                <span class="kw">let</span> <span class="ident">my_shape</span>   <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
-                <span class="kw">let</span> <span class="ident">my_strides</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">strides</span>();
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>((<span class="ident">row_start</span>, <span class="number">0</span>), (<span class="ident">nrows</span>.<span class="ident">value</span>(), <span class="ident">my_shape</span>.<span class="number">1</span>.<span class="ident">value</span>()), (<span class="ident">step</span>, <span class="number">0</span>));
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>(<span class="ident">start</span>, (<span class="ident">shape</span>.<span class="number">0</span>.<span class="ident">value</span>(), <span class="ident">shape</span>.<span class="number">1</span>.<span class="ident">value</span>()), <span class="ident">steps</span>);
 
-                <span class="kw">let</span> <span class="ident">strides</span> <span class="op">=</span> (<span class="ident">Dynamic</span>::<span class="ident">new</span>((<span class="ident">step</span> <span class="op">+</span> <span class="number">1</span>) <span class="op">*</span> <span class="ident">my_strides</span>.<span class="number">0</span>.<span class="ident">value</span>()), <span class="ident">my_strides</span>.<span class="number">1</span>);
-                <span class="kw">let</span> <span class="ident">shape</span>   <span class="op">=</span> (<span class="ident">nrows</span>, <span class="ident">my_shape</span>.<span class="number">1</span>);
+            <span class="kw">let</span> <span class="ident">my_strides</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">strides</span>();
+            <span class="kw">let</span> <span class="ident">strides</span>    <span class="op">=</span> (<span class="ident">Dynamic</span>::<span class="ident">new</span>((<span class="ident">steps</span>.<span class="number">0</span> <span class="op">+</span> <span class="number">1</span>) <span class="op">*</span> <span class="ident">my_strides</span>.<span class="number">0</span>.<span class="ident">value</span>()),
+                              <span class="ident">Dynamic</span>::<span class="ident">new</span>((<span class="ident">steps</span>.<span class="number">1</span> <span class="op">+</span> <span class="number">1</span>) <span class="op">*</span> <span class="ident">my_strides</span>.<span class="number">1</span>.<span class="ident">value</span>()));
 
-                <span class="kw">unsafe</span> {
-                    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_with_strides_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, (<span class="ident">row_start</span>, <span class="number">0</span>), <span class="ident">shape</span>, <span class="ident">strides</span>);
-                    <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
-                }
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_with_strides_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, <span class="ident">start</span>, <span class="ident">shape</span>, <span class="ident">strides</span>);
+                <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
             }
+        }
 
-            <span class="comment">/*
-             *
-             * Column slicing.
-             *
-             */</span>
-            <span class="doccomment">/// Returns a slice containing the i-th column of this matrix.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">column</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">U1</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_columns</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>(<span class="ident">i</span>)
+        <span class="comment">/*
+         *
+         * Splitting.
+         *
+         */</span>
+        <span class="doccomment">/// Splits this NxM matrix into two parts delimited by two ranges.</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// Panics if the ranges overlap or if the first range is empty.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_range_pair</span><span class="op">&lt;</span><span class="ident">Range1</span>: <span class="ident">SliceRange</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>, <span class="ident">Range2</span>: <span class="ident">SliceRange</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">r1</span>: <span class="ident">Range1</span>, <span class="ident">r2</span>: <span class="ident">Range2</span>)
+            <span class="op">-&gt;</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Range1</span>::<span class="ident">Size</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>,
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Range2</span>::<span class="ident">Size</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>) {
+
+            <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
+            <span class="kw">let</span> <span class="ident">strides</span>        <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">strides</span>();
+
+            <span class="kw">let</span> <span class="ident">start1</span> <span class="op">=</span> <span class="ident">r1</span>.<span class="ident">begin</span>(<span class="ident">nrows</span>);
+            <span class="kw">let</span> <span class="ident">start2</span> <span class="op">=</span> <span class="ident">r2</span>.<span class="ident">begin</span>(<span class="ident">nrows</span>);
+
+            <span class="kw">let</span> <span class="ident">end1</span> <span class="op">=</span> <span class="ident">r1</span>.<span class="ident">end</span>(<span class="ident">nrows</span>);
+            <span class="kw">let</span> <span class="ident">end2</span> <span class="op">=</span> <span class="ident">r2</span>.<span class="ident">end</span>(<span class="ident">nrows</span>);
+
+            <span class="kw">let</span> <span class="ident">nrows1</span> <span class="op">=</span> <span class="ident">r1</span>.<span class="ident">size</span>(<span class="ident">nrows</span>);
+            <span class="kw">let</span> <span class="ident">nrows2</span> <span class="op">=</span> <span class="ident">r2</span>.<span class="ident">size</span>(<span class="ident">nrows</span>);
+
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">start2</span> <span class="op">&gt;=</span> <span class="ident">end1</span> <span class="op">||</span> <span class="ident">start1</span> <span class="op">&gt;=</span> <span class="ident">end2</span>, <span class="string">&quot;Rows range pair: the slice ranges must not overlap.&quot;</span>);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">end2</span> <span class="op">&lt;=</span> <span class="ident">nrows</span>.<span class="ident">value</span>(), <span class="string">&quot;Rows range pair: index out of range.&quot;</span>);
+
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">ptr1</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">get_addr</span>(<span class="ident">start1</span>, <span class="number">0</span>);
+                <span class="kw">let</span> <span class="ident">ptr2</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">get_addr</span>(<span class="ident">start2</span>, <span class="number">0</span>);
+
+                <span class="kw">let</span> <span class="ident">data1</span>  <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">from_raw_parts</span>(<span class="ident">ptr1</span>, (<span class="ident">nrows1</span>, <span class="ident">ncols</span>), <span class="ident">strides</span>);
+                <span class="kw">let</span> <span class="ident">data2</span>  <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">from_raw_parts</span>(<span class="ident">ptr2</span>, (<span class="ident">nrows2</span>, <span class="ident">ncols</span>), <span class="ident">strides</span>);
+                <span class="kw">let</span> <span class="ident">slice1</span> <span class="op">=</span> <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data1</span>);
+                <span class="kw">let</span> <span class="ident">slice2</span> <span class="op">=</span> <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data2</span>);
+
+                (<span class="ident">slice1</span>, <span class="ident">slice2</span>)
             }
+        }
 
-            <span class="doccomment">/// Returns a slice containing the `n` first elements of the i-th column of this matrix.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">column_part</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Dynamic</span>, <span class="ident">U1</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_slice</span>((<span class="number">0</span>, <span class="ident">i</span>), (<span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">n</span>), <span class="ident">U1</span>))
-            }
+        <span class="doccomment">/// Splits this NxM matrix into two parts delimited by two ranges.</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// Panics if the ranges overlap or if the first range is empty.</span>
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_range_pair</span><span class="op">&lt;</span><span class="ident">Range1</span>: <span class="ident">SliceRange</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>, <span class="ident">Range2</span>: <span class="ident">SliceRange</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">r1</span>: <span class="ident">Range1</span>, <span class="ident">r2</span>: <span class="ident">Range2</span>)
+            <span class="op">-&gt;</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">Range1</span>::<span class="ident">Size</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>,
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">Range2</span>::<span class="ident">Size</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>) {
 
-            <span class="doccomment">/// Extracts from this matrix a set of consecutive columns.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_col</span>: <span class="ident">usize</span>, <span class="ident">ncols</span>: <span class="ident">usize</span>)
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">Dynamic</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
+            <span class="kw">let</span> <span class="ident">strides</span>        <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">strides</span>();
 
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_generic</span>(<span class="ident">first_col</span>, <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">ncols</span>))
-            }
+            <span class="kw">let</span> <span class="ident">start1</span> <span class="op">=</span> <span class="ident">r1</span>.<span class="ident">begin</span>(<span class="ident">ncols</span>);
+            <span class="kw">let</span> <span class="ident">start2</span> <span class="op">=</span> <span class="ident">r2</span>.<span class="ident">begin</span>(<span class="ident">ncols</span>);
 
-            <span class="doccomment">/// Extracts from this matrix a set of consecutive columns regularly skipping `step`</span>
-            <span class="doccomment">/// columns.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_with_step</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_col</span>: <span class="ident">usize</span>, <span class="ident">ncols</span>: <span class="ident">usize</span>, <span class="ident">step</span>: <span class="ident">usize</span>)
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">Dynamic</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">Dynamic</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">end1</span> <span class="op">=</span> <span class="ident">r1</span>.<span class="ident">end</span>(<span class="ident">ncols</span>);
+            <span class="kw">let</span> <span class="ident">end2</span> <span class="op">=</span> <span class="ident">r2</span>.<span class="ident">end</span>(<span class="ident">ncols</span>);
 
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_generic_with_step</span>(<span class="ident">first_col</span>, <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">ncols</span>), <span class="ident">step</span>)
-            }
+            <span class="kw">let</span> <span class="ident">ncols1</span> <span class="op">=</span> <span class="ident">r1</span>.<span class="ident">size</span>(<span class="ident">ncols</span>);
+            <span class="kw">let</span> <span class="ident">ncols2</span> <span class="op">=</span> <span class="ident">r2</span>.<span class="ident">size</span>(<span class="ident">ncols</span>);
 
-            <span class="doccomment">/// Extracts a compile-time number of consecutive columns from this matrix.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_columns</span><span class="op">&lt;</span><span class="ident">CSlice</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_col</span>: <span class="ident">usize</span>)
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">CSlice</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">start2</span> <span class="op">&gt;=</span> <span class="ident">end1</span> <span class="op">||</span> <span class="ident">start1</span> <span class="op">&gt;=</span> <span class="ident">end2</span>, <span class="string">&quot;Columns range pair: the slice ranges must not overlap.&quot;</span>);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">end2</span> <span class="op">&lt;=</span> <span class="ident">ncols</span>.<span class="ident">value</span>(), <span class="string">&quot;Columns range pair: index out of range.&quot;</span>);
 
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_generic</span>(<span class="ident">first_col</span>, <span class="ident">CSlice</span>::<span class="ident">name</span>())
-            }
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">ptr1</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">get_addr</span>(<span class="number">0</span>, <span class="ident">start1</span>);
+                <span class="kw">let</span> <span class="ident">ptr2</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">get_addr</span>(<span class="number">0</span>, <span class="ident">start2</span>);
 
-            <span class="doccomment">/// Extracts from this matrix a compile-time number of columns regularly skipping</span>
-            <span class="doccomment">/// `step` columns.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_columns_with_step</span><span class="op">&lt;</span><span class="ident">CSlice</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_col</span>: <span class="ident">usize</span>, <span class="ident">step</span>: <span class="ident">usize</span>)
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">CSlice</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">Dynamic</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="ident">data1</span>  <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">from_raw_parts</span>(<span class="ident">ptr1</span>, (<span class="ident">nrows</span>, <span class="ident">ncols1</span>), <span class="ident">strides</span>);
+                <span class="kw">let</span> <span class="ident">data2</span>  <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">from_raw_parts</span>(<span class="ident">ptr2</span>, (<span class="ident">nrows</span>, <span class="ident">ncols2</span>), <span class="ident">strides</span>);
+                <span class="kw">let</span> <span class="ident">slice1</span> <span class="op">=</span> <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data1</span>);
+                <span class="kw">let</span> <span class="ident">slice2</span> <span class="op">=</span> <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data2</span>);
 
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_generic_with_step</span>(<span class="ident">first_col</span>, <span class="ident">CSlice</span>::<span class="ident">name</span>(), <span class="ident">step</span>)
-            }
-
-            <span class="doccomment">/// Extracts from this matrix `ncols` columns. The number of columns may or may not be</span>
-            <span class="doccomment">/// known at compile-time.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_generic</span><span class="op">&lt;</span><span class="ident">CSlice</span>: <span class="ident">Dim</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_col</span>: <span class="ident">usize</span>, <span class="ident">ncols</span>: <span class="ident">CSlice</span>)
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">CSlice</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
-
-                <span class="kw">let</span> <span class="ident">my_shape</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>((<span class="number">0</span>, <span class="ident">first_col</span>), (<span class="ident">my_shape</span>.<span class="number">0</span>.<span class="ident">value</span>(), <span class="ident">ncols</span>.<span class="ident">value</span>()), (<span class="number">0</span>, <span class="number">0</span>));
-                <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> (<span class="ident">my_shape</span>.<span class="number">0</span>, <span class="ident">ncols</span>);
-
-                <span class="kw">unsafe</span> {
-                    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, (<span class="number">0</span>, <span class="ident">first_col</span>), <span class="ident">shape</span>);
-                    <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
-                }
-            }
-
-
-            <span class="doccomment">/// Extracts from this matrix `ncols` columns skipping `step` columns. Both argument may</span>
-            <span class="doccomment">/// or may not be values known at compile-time.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_generic_with_step</span><span class="op">&lt;</span><span class="ident">CSlice</span>: <span class="ident">Dim</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">first_col</span>: <span class="ident">usize</span>, <span class="ident">ncols</span>: <span class="ident">CSlice</span>, <span class="ident">step</span>: <span class="ident">usize</span>)
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">CSlice</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">Dynamic</span><span class="op">&gt;</span> {
-
-                <span class="kw">let</span> <span class="ident">my_shape</span>   <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
-                <span class="kw">let</span> <span class="ident">my_strides</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">strides</span>();
-
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>((<span class="number">0</span>, <span class="ident">first_col</span>), (<span class="ident">my_shape</span>.<span class="number">0</span>.<span class="ident">value</span>(), <span class="ident">ncols</span>.<span class="ident">value</span>()), (<span class="number">0</span>, <span class="ident">step</span>));
-
-                <span class="kw">let</span> <span class="ident">strides</span> <span class="op">=</span> (<span class="ident">my_strides</span>.<span class="number">0</span>, <span class="ident">Dynamic</span>::<span class="ident">new</span>((<span class="ident">step</span> <span class="op">+</span> <span class="number">1</span>) <span class="op">*</span> <span class="ident">my_strides</span>.<span class="number">1</span>.<span class="ident">value</span>()));
-                <span class="kw">let</span> <span class="ident">shape</span>   <span class="op">=</span> (<span class="ident">my_shape</span>.<span class="number">0</span>, <span class="ident">ncols</span>);
-
-                <span class="kw">unsafe</span> {
-                    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_with_strides_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, (<span class="number">0</span>, <span class="ident">first_col</span>), <span class="ident">shape</span>, <span class="ident">strides</span>);
-                    <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
-                }
-            }
-
-            <span class="comment">/*
-             *
-             * General slicing.
-             *
-             */</span>
-            <span class="doccomment">/// Slices this matrix starting at its component `(irow, icol)` and with `(nrows, ncols)`</span>
-            <span class="doccomment">/// consecutive elements.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slice</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">start</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">shape</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>))
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Dynamic</span>, <span class="ident">Dynamic</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span> {
-
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>(<span class="ident">start</span>, <span class="ident">shape</span>, (<span class="number">0</span>, <span class="number">0</span>));
-                <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> (<span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">shape</span>.<span class="number">0</span>), <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">shape</span>.<span class="number">1</span>));
-
-                <span class="kw">unsafe</span> {
-                    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, <span class="ident">start</span>, <span class="ident">shape</span>);
-                    <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
-                }
-            }
-
-
-            <span class="doccomment">/// Slices this matrix starting at its component `(start.0, start.1)` and with</span>
-            <span class="doccomment">/// `(shape.0, shape.1)` components. Each row (resp. column) of the sliced matrix is</span>
-            <span class="doccomment">/// separated by `steps.0` (resp. `steps.1`) ignored rows (resp. columns) of the</span>
-            <span class="doccomment">/// original matrix.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slice_with_steps</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">start</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">shape</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">steps</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>))
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Dynamic</span>, <span class="ident">Dynamic</span>, <span class="ident">Dynamic</span>, <span class="ident">Dynamic</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> (<span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">shape</span>.<span class="number">0</span>), <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="ident">shape</span>.<span class="number">1</span>));
-
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_slice_with_steps</span>(<span class="ident">start</span>, <span class="ident">shape</span>, <span class="ident">steps</span>)
-            }
-
-            <span class="doccomment">/// Slices this matrix starting at its component `(irow, icol)` and with `(R::dim(),</span>
-            <span class="doccomment">/// CSlice::dim())` consecutive components.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_slice</span><span class="op">&lt;</span><span class="ident">RSlice</span>, <span class="ident">CSlice</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">irow</span>: <span class="ident">usize</span>, <span class="ident">icol</span>: <span class="ident">usize</span>)
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">CSlice</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>
-                <span class="kw">where</span> <span class="ident">RSlice</span>: <span class="ident">DimName</span>,
-                      <span class="ident">CSlice</span>: <span class="ident">DimName</span> {
-
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>((<span class="ident">irow</span>, <span class="ident">icol</span>), (<span class="ident">RSlice</span>::<span class="ident">dim</span>(), <span class="ident">CSlice</span>::<span class="ident">dim</span>()), (<span class="number">0</span>, <span class="number">0</span>));
-                <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> (<span class="ident">RSlice</span>::<span class="ident">name</span>(), <span class="ident">CSlice</span>::<span class="ident">name</span>());
-
-                <span class="kw">unsafe</span> {
-                    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, (<span class="ident">irow</span>, <span class="ident">icol</span>), <span class="ident">shape</span>);
-                    <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
-                }
-            }
-
-            <span class="doccomment">/// Slices this matrix starting at its component `(start.0, start.1)` and with</span>
-            <span class="doccomment">/// `(R::dim(), CSlice::dim())` components. Each row (resp. column) of the sliced</span>
-            <span class="doccomment">/// matrix is separated by `steps.0` (resp. `steps.1`) ignored rows (resp. columns) of</span>
-            <span class="doccomment">/// the original matrix.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fixed_slice_with_steps</span><span class="op">&lt;</span><span class="ident">RSlice</span>, <span class="ident">CSlice</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">start</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">steps</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>))
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">CSlice</span>, <span class="ident">Dynamic</span>, <span class="ident">Dynamic</span><span class="op">&gt;</span>
-                <span class="kw">where</span> <span class="ident">RSlice</span>: <span class="ident">DimName</span>,
-                      <span class="ident">CSlice</span>: <span class="ident">DimName</span> {
-                <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> (<span class="ident">RSlice</span>::<span class="ident">name</span>(), <span class="ident">CSlice</span>::<span class="ident">name</span>());
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_slice_with_steps</span>(<span class="ident">start</span>, <span class="ident">shape</span>, <span class="ident">steps</span>)
-            }
-
-            <span class="doccomment">/// Creates a slice that may or may not have a fixed size and stride.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_slice</span><span class="op">&lt;</span><span class="ident">RSlice</span>, <span class="ident">CSlice</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">start</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">shape</span>: (<span class="ident">RSlice</span>, <span class="ident">CSlice</span>))
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">CSlice</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>
-                <span class="kw">where</span> <span class="ident">RSlice</span>: <span class="ident">Dim</span>,
-                      <span class="ident">CSlice</span>: <span class="ident">Dim</span> {
-
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>(<span class="ident">start</span>, (<span class="ident">shape</span>.<span class="number">0</span>.<span class="ident">value</span>(), <span class="ident">shape</span>.<span class="number">1</span>.<span class="ident">value</span>()), (<span class="number">0</span>, <span class="number">0</span>));
-
-                <span class="kw">unsafe</span> {
-                    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, <span class="ident">start</span>, <span class="ident">shape</span>);
-                    <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
-                }
-            }
-
-            <span class="doccomment">/// Creates a slice that may or may not have a fixed size and stride.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_slice_with_steps</span><span class="op">&lt;</span><span class="ident">RSlice</span>, <span class="ident">CSlice</span><span class="op">&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>,
-                                                             <span class="ident">start</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>),
-                                                             <span class="ident">shape</span>: (<span class="ident">RSlice</span>, <span class="ident">CSlice</span>),
-                                                             <span class="ident">steps</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>))
-                <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">RSlice</span>, <span class="ident">CSlice</span>, <span class="ident">Dynamic</span>, <span class="ident">Dynamic</span><span class="op">&gt;</span>
-                <span class="kw">where</span> <span class="ident">RSlice</span>: <span class="ident">Dim</span>,
-                      <span class="ident">CSlice</span>: <span class="ident">Dim</span> {
-
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">assert_slice_index</span>(<span class="ident">start</span>, (<span class="ident">shape</span>.<span class="number">0</span>.<span class="ident">value</span>(), <span class="ident">shape</span>.<span class="number">1</span>.<span class="ident">value</span>()), <span class="ident">steps</span>);
-
-                <span class="kw">let</span> <span class="ident">my_strides</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">strides</span>();
-                <span class="kw">let</span> <span class="ident">strides</span>    <span class="op">=</span> (<span class="ident">Dynamic</span>::<span class="ident">new</span>((<span class="ident">steps</span>.<span class="number">0</span> <span class="op">+</span> <span class="number">1</span>) <span class="op">*</span> <span class="ident">my_strides</span>.<span class="number">0</span>.<span class="ident">value</span>()),
-                                  <span class="ident">Dynamic</span>::<span class="ident">new</span>((<span class="ident">steps</span>.<span class="number">1</span> <span class="op">+</span> <span class="number">1</span>) <span class="op">*</span> <span class="ident">my_strides</span>.<span class="number">1</span>.<span class="ident">value</span>()));
-
-                <span class="kw">unsafe</span> {
-                    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">new_with_strides_unchecked</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>, <span class="ident">start</span>, <span class="ident">shape</span>, <span class="ident">strides</span>);
-                    <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>)
-                }
-            }
-
-            <span class="comment">/*
-             *
-             * Splitting.
-             *
-             */</span>
-            <span class="doccomment">/// Splits this NxM matrix into two parts delimited by two ranges.</span>
-            <span class="doccomment">///</span>
-            <span class="doccomment">/// Panics if the ranges overlap or if the first range is empty.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rows_range_pair</span><span class="op">&lt;</span><span class="ident">Range1</span>: <span class="ident">SliceRange</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>, <span class="ident">Range2</span>: <span class="ident">SliceRange</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">r1</span>: <span class="ident">Range1</span>, <span class="ident">r2</span>: <span class="ident">Range2</span>)
-                <span class="op">-&gt;</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Range1</span>::<span class="ident">Size</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>,
-                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Range2</span>::<span class="ident">Size</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>) {
-
-                <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
-                <span class="kw">let</span> <span class="ident">strides</span>        <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">strides</span>();
-
-                <span class="kw">let</span> <span class="ident">start1</span> <span class="op">=</span> <span class="ident">r1</span>.<span class="ident">begin</span>(<span class="ident">nrows</span>);
-                <span class="kw">let</span> <span class="ident">start2</span> <span class="op">=</span> <span class="ident">r2</span>.<span class="ident">begin</span>(<span class="ident">nrows</span>);
-
-                <span class="kw">let</span> <span class="ident">end1</span> <span class="op">=</span> <span class="ident">r1</span>.<span class="ident">end</span>(<span class="ident">nrows</span>);
-                <span class="kw">let</span> <span class="ident">end2</span> <span class="op">=</span> <span class="ident">r2</span>.<span class="ident">end</span>(<span class="ident">nrows</span>);
-
-                <span class="kw">let</span> <span class="ident">nrows1</span> <span class="op">=</span> <span class="ident">r1</span>.<span class="ident">size</span>(<span class="ident">nrows</span>);
-                <span class="kw">let</span> <span class="ident">nrows2</span> <span class="op">=</span> <span class="ident">r2</span>.<span class="ident">size</span>(<span class="ident">nrows</span>);
-
-                <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">start2</span> <span class="op">&gt;=</span> <span class="ident">end1</span> <span class="op">||</span> <span class="ident">start1</span> <span class="op">&gt;=</span> <span class="ident">end2</span>, <span class="string">&quot;Rows range pair: the slice ranges must not overlap.&quot;</span>);
-                <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">end2</span> <span class="op">&lt;=</span> <span class="ident">nrows</span>.<span class="ident">value</span>(), <span class="string">&quot;Rows range pair: index out of range.&quot;</span>);
-
-                <span class="kw">unsafe</span> {
-                    <span class="kw">let</span> <span class="ident">ptr1</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">get_addr</span>(<span class="ident">start1</span>, <span class="number">0</span>);
-                    <span class="kw">let</span> <span class="ident">ptr2</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">get_addr</span>(<span class="ident">start2</span>, <span class="number">0</span>);
-
-                    <span class="kw">let</span> <span class="ident">data1</span>  <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">from_raw_parts</span>(<span class="ident">ptr1</span>, (<span class="ident">nrows1</span>, <span class="ident">ncols</span>), <span class="ident">strides</span>);
-                    <span class="kw">let</span> <span class="ident">data2</span>  <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">from_raw_parts</span>(<span class="ident">ptr2</span>, (<span class="ident">nrows2</span>, <span class="ident">ncols</span>), <span class="ident">strides</span>);
-                    <span class="kw">let</span> <span class="ident">slice1</span> <span class="op">=</span> <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data1</span>);
-                    <span class="kw">let</span> <span class="ident">slice2</span> <span class="op">=</span> <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data2</span>);
-
-                    (<span class="ident">slice1</span>, <span class="ident">slice2</span>)
-                }
-            }
-
-            <span class="doccomment">/// Splits this NxM matrix into two parts delimited by two ranges.</span>
-            <span class="doccomment">///</span>
-            <span class="doccomment">/// Panics if the ranges overlap or if the first range is empty.</span>
-            <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">columns_range_pair</span><span class="op">&lt;</span><span class="ident">Range1</span>: <span class="ident">SliceRange</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>, <span class="ident">Range2</span>: <span class="ident">SliceRange</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Me</span>, <span class="ident">r1</span>: <span class="ident">Range1</span>, <span class="ident">r2</span>: <span class="ident">Range2</span>)
-                <span class="op">-&gt;</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">Range1</span>::<span class="ident">Size</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>,
-                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MatrixSlice</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">Range2</span>::<span class="ident">Size</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>) {
-
-                <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
-                <span class="kw">let</span> <span class="ident">strides</span>        <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">me</span>.<span class="ident">data</span>.<span class="ident">strides</span>();
-
-                <span class="kw">let</span> <span class="ident">start1</span> <span class="op">=</span> <span class="ident">r1</span>.<span class="ident">begin</span>(<span class="ident">ncols</span>);
-                <span class="kw">let</span> <span class="ident">start2</span> <span class="op">=</span> <span class="ident">r2</span>.<span class="ident">begin</span>(<span class="ident">ncols</span>);
-
-                <span class="kw">let</span> <span class="ident">end1</span> <span class="op">=</span> <span class="ident">r1</span>.<span class="ident">end</span>(<span class="ident">ncols</span>);
-                <span class="kw">let</span> <span class="ident">end2</span> <span class="op">=</span> <span class="ident">r2</span>.<span class="ident">end</span>(<span class="ident">ncols</span>);
-
-                <span class="kw">let</span> <span class="ident">ncols1</span> <span class="op">=</span> <span class="ident">r1</span>.<span class="ident">size</span>(<span class="ident">ncols</span>);
-                <span class="kw">let</span> <span class="ident">ncols2</span> <span class="op">=</span> <span class="ident">r2</span>.<span class="ident">size</span>(<span class="ident">ncols</span>);
-
-                <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">start2</span> <span class="op">&gt;=</span> <span class="ident">end1</span> <span class="op">||</span> <span class="ident">start1</span> <span class="op">&gt;=</span> <span class="ident">end2</span>, <span class="string">&quot;Columns range pair: the slice ranges must not overlap.&quot;</span>);
-                <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">end2</span> <span class="op">&lt;=</span> <span class="ident">ncols</span>.<span class="ident">value</span>(), <span class="string">&quot;Columns range pair: index out of range.&quot;</span>);
-
-                <span class="kw">unsafe</span> {
-                    <span class="kw">let</span> <span class="ident">ptr1</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">get_addr</span>(<span class="number">0</span>, <span class="ident">start1</span>);
-                    <span class="kw">let</span> <span class="ident">ptr2</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">data</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">get_addr</span>(<span class="number">0</span>, <span class="ident">start2</span>);
-
-                    <span class="kw">let</span> <span class="ident">data1</span>  <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">from_raw_parts</span>(<span class="ident">ptr1</span>, (<span class="ident">nrows</span>, <span class="ident">ncols1</span>), <span class="ident">strides</span>);
-                    <span class="kw">let</span> <span class="ident">data2</span>  <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SliceStorage</span>::<span class="ident">from_raw_parts</span>(<span class="ident">ptr2</span>, (<span class="ident">nrows</span>, <span class="ident">ncols2</span>), <span class="ident">strides</span>);
-                    <span class="kw">let</span> <span class="ident">slice1</span> <span class="op">=</span> <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data1</span>);
-                    <span class="kw">let</span> <span class="ident">slice2</span> <span class="op">=</span> <span class="ident">Matrix</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data2</span>);
-
-                    (<span class="ident">slice1</span>, <span class="ident">slice2</span>)
-                }
+                (<span class="ident">slice1</span>, <span class="ident">slice2</span>)
             }
         }
     }
 );
 
-<span class="macro">matrix_slice_impl</span><span class="macro">!</span>(
+<span class="doccomment">/// A matrix slice.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">MatrixSlice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">RStride</span>, <span class="ident">CStride</span><span class="op">&gt;</span> <span class="op">=</span>
+    <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">SliceStorage</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">RStride</span>, <span class="ident">CStride</span><span class="op">&gt;&gt;</span>;
+<span class="doccomment">/// A mutable matrix slice.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">MatrixSliceMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">RStride</span>, <span class="ident">CStride</span><span class="op">&gt;</span> <span class="op">=</span>
+    <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">SliceStorageMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">RStride</span>, <span class="ident">CStride</span><span class="op">&gt;&gt;</span>;
+
+<span class="doccomment">/// # Slicing based on index and length</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="macro">matrix_slice_impl</span><span class="macro">!</span>(
      <span class="self">self</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">MatrixSlice</span>, <span class="ident">SliceStorage</span>, <span class="ident">Storage</span>.<span class="ident">get_address_unchecked</span>(), <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data</span>;
      <span class="ident">row</span>,
      <span class="ident">row_part</span>,
@@ -1564,8 +1578,11 @@
      <span class="ident">generic_slice_with_steps</span>,
      <span class="ident">rows_range_pair</span>,
      <span class="ident">columns_range_pair</span>);
+}
 
-<span class="macro">matrix_slice_impl</span><span class="macro">!</span>(
+<span class="doccomment">/// # Mutable slicing based on index and length</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="macro">matrix_slice_impl</span><span class="macro">!</span>(
      <span class="self">self</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>, <span class="ident">MatrixSliceMut</span>, <span class="ident">SliceStorageMut</span>, <span class="ident">StorageMut</span>.<span class="ident">get_address_unchecked_mut</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">data</span>;
      <span class="ident">row_mut</span>,
      <span class="ident">row_part_mut</span>,
@@ -1591,6 +1608,7 @@
      <span class="ident">generic_slice_with_steps_mut</span>,
      <span class="ident">rows_range_pair_mut</span>,
      <span class="ident">columns_range_pair_mut</span>);
+}
 
 <span class="doccomment">/// A range with a size that may be known at compile-time.</span>
 <span class="doccomment">///</span>
@@ -1707,6 +1725,8 @@
     }
 }
 
+<span class="comment">// TODO: see how much of this overlaps with the general indexing</span>
+<span class="comment">// methods from indexing.rs.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Slices a sub-matrix containing the rows indexed by the range `rows` and the columns indexed</span>
     <span class="doccomment">/// by the range `cols`.</span>
@@ -1746,6 +1766,8 @@
     }
 }
 
+<span class="comment">// TODO: see how much of this overlaps with the general indexing</span>
+<span class="comment">// methods from indexing.rs.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Slices a mutable sub-matrix containing the rows indexed by the range `rows` and the columns</span>
     <span class="doccomment">/// indexed by the range `cols`.</span>

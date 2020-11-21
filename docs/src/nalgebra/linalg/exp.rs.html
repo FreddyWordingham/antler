@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.0/src/linalg/exp.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>exp.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.1/src/linalg/exp.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>exp.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -751,12 +751,12 @@
 
     <span class="kw">fn</span> <span class="ident">pade7</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">b</span>: [<span class="ident">N</span>; <span class="number">8</span>] <span class="op">=</span> [
-            <span class="ident">convert</span>(<span class="number">17297280.0</span>),
-            <span class="ident">convert</span>(<span class="number">8648640.0</span>),
-            <span class="ident">convert</span>(<span class="number">1995840.0</span>),
-            <span class="ident">convert</span>(<span class="number">277200.0</span>),
-            <span class="ident">convert</span>(<span class="number">25200.0</span>),
-            <span class="ident">convert</span>(<span class="number">1512.0</span>),
+            <span class="ident">convert</span>(<span class="number">17_297_280.0</span>),
+            <span class="ident">convert</span>(<span class="number">8_648_640.0</span>),
+            <span class="ident">convert</span>(<span class="number">1_995_840.0</span>),
+            <span class="ident">convert</span>(<span class="number">277_200.0</span>),
+            <span class="ident">convert</span>(<span class="number">25_200.0</span>),
+            <span class="ident">convert</span>(<span class="number">1_512.0</span>),
             <span class="ident">convert</span>(<span class="number">56.0</span>),
             <span class="ident">convert</span>(<span class="number">1.0</span>),
         ];
@@ -777,14 +777,14 @@
 
     <span class="kw">fn</span> <span class="ident">pade9</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">b</span>: [<span class="ident">N</span>; <span class="number">10</span>] <span class="op">=</span> [
-            <span class="ident">convert</span>(<span class="number">17643225600.0</span>),
-            <span class="ident">convert</span>(<span class="number">8821612800.0</span>),
-            <span class="ident">convert</span>(<span class="number">2075673600.0</span>),
-            <span class="ident">convert</span>(<span class="number">302702400.0</span>),
-            <span class="ident">convert</span>(<span class="number">30270240.0</span>),
-            <span class="ident">convert</span>(<span class="number">2162160.0</span>),
-            <span class="ident">convert</span>(<span class="number">110880.0</span>),
-            <span class="ident">convert</span>(<span class="number">3960.0</span>),
+            <span class="ident">convert</span>(<span class="number">17_643_225_600.0</span>),
+            <span class="ident">convert</span>(<span class="number">8_821_612_800.0</span>),
+            <span class="ident">convert</span>(<span class="number">2_075_673_600.0</span>),
+            <span class="ident">convert</span>(<span class="number">302_702_400.0</span>),
+            <span class="ident">convert</span>(<span class="number">30_270_240.0</span>),
+            <span class="ident">convert</span>(<span class="number">2_162_160.0</span>),
+            <span class="ident">convert</span>(<span class="number">110_880.0</span>),
+            <span class="ident">convert</span>(<span class="number">3_960.0</span>),
             <span class="ident">convert</span>(<span class="number">90.0</span>),
             <span class="ident">convert</span>(<span class="number">1.0</span>),
         ];
@@ -808,18 +808,18 @@
 
     <span class="kw">fn</span> <span class="ident">pade13_scaled</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">s</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> (<span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">b</span>: [<span class="ident">N</span>; <span class="number">14</span>] <span class="op">=</span> [
-            <span class="ident">convert</span>(<span class="number">64764752532480000.0</span>),
-            <span class="ident">convert</span>(<span class="number">32382376266240000.0</span>),
-            <span class="ident">convert</span>(<span class="number">7771770303897600.0</span>),
-            <span class="ident">convert</span>(<span class="number">1187353796428800.0</span>),
-            <span class="ident">convert</span>(<span class="number">129060195264000.0</span>),
-            <span class="ident">convert</span>(<span class="number">10559470521600.0</span>),
-            <span class="ident">convert</span>(<span class="number">670442572800.0</span>),
-            <span class="ident">convert</span>(<span class="number">33522128640.0</span>),
-            <span class="ident">convert</span>(<span class="number">1323241920.0</span>),
-            <span class="ident">convert</span>(<span class="number">40840800.0</span>),
-            <span class="ident">convert</span>(<span class="number">960960.0</span>),
-            <span class="ident">convert</span>(<span class="number">16380.0</span>),
+            <span class="ident">convert</span>(<span class="number">64_764_752_532_480_000.0</span>),
+            <span class="ident">convert</span>(<span class="number">32_382_376_266_240_000.0</span>),
+            <span class="ident">convert</span>(<span class="number">7_771_770_303_897_600.0</span>),
+            <span class="ident">convert</span>(<span class="number">1_187_353_796_428_800.0</span>),
+            <span class="ident">convert</span>(<span class="number">129_060_195_264_000.0</span>),
+            <span class="ident">convert</span>(<span class="number">10_559_470_521_600.0</span>),
+            <span class="ident">convert</span>(<span class="number">670_442_572_800.0</span>),
+            <span class="ident">convert</span>(<span class="number">33_522_128_640.0</span>),
+            <span class="ident">convert</span>(<span class="number">1_323_241_920.0</span>),
+            <span class="ident">convert</span>(<span class="number">40_840_800.0</span>),
+            <span class="ident">convert</span>(<span class="number">960_960.0</span>),
+            <span class="ident">convert</span>(<span class="number">16_380.0</span>),
             <span class="ident">convert</span>(<span class="number">182.0</span>),
             <span class="ident">convert</span>(<span class="number">1.0</span>),
         ];
@@ -951,23 +951,23 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">ExpmPadeHelper</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">clone</span>(), <span class="bool-val">true</span>);
 
         <span class="kw">let</span> <span class="ident">eta_1</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">RealField</span>::<span class="ident">max</span>(<span class="ident">h</span>.<span class="ident">d4_loose</span>(), <span class="ident">h</span>.<span class="ident">d6_loose</span>());
-        <span class="kw">if</span> <span class="ident">eta_1</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">1.495585217958292e-002</span>) <span class="op">&amp;&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">3</span>) <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">eta_1</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">1.495_585_217_958_292e-2</span>) <span class="op">&amp;&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">3</span>) <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">let</span> (<span class="ident">u</span>, <span class="ident">v</span>) <span class="op">=</span> <span class="ident">h</span>.<span class="ident">pade3</span>();
             <span class="kw">return</span> <span class="ident">solve_p_q</span>(<span class="ident">u</span>, <span class="ident">v</span>);
         }
 
         <span class="kw">let</span> <span class="ident">eta_2</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">RealField</span>::<span class="ident">max</span>(<span class="ident">h</span>.<span class="ident">d4_tight</span>(), <span class="ident">h</span>.<span class="ident">d6_loose</span>());
-        <span class="kw">if</span> <span class="ident">eta_2</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">2.539398330063230e-001</span>) <span class="op">&amp;&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">5</span>) <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">eta_2</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">2.539_398_330_063_230e-1</span>) <span class="op">&amp;&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">5</span>) <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">let</span> (<span class="ident">u</span>, <span class="ident">v</span>) <span class="op">=</span> <span class="ident">h</span>.<span class="ident">pade5</span>();
             <span class="kw">return</span> <span class="ident">solve_p_q</span>(<span class="ident">u</span>, <span class="ident">v</span>);
         }
 
         <span class="kw">let</span> <span class="ident">eta_3</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">RealField</span>::<span class="ident">max</span>(<span class="ident">h</span>.<span class="ident">d6_tight</span>(), <span class="ident">h</span>.<span class="ident">d8_loose</span>());
-        <span class="kw">if</span> <span class="ident">eta_3</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">9.504178996162932e-001</span>) <span class="op">&amp;&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">7</span>) <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">eta_3</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">9.504_178_996_162_932e-1</span>) <span class="op">&amp;&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">7</span>) <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">let</span> (<span class="ident">u</span>, <span class="ident">v</span>) <span class="op">=</span> <span class="ident">h</span>.<span class="ident">pade7</span>();
             <span class="kw">return</span> <span class="ident">solve_p_q</span>(<span class="ident">u</span>, <span class="ident">v</span>);
         }
-        <span class="kw">if</span> <span class="ident">eta_3</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">2.097847961257068e+000</span>) <span class="op">&amp;&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">9</span>) <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">eta_3</span> <span class="op">&lt;</span> <span class="ident">convert</span>(<span class="number">2.097_847_961_257_068e+0</span>) <span class="op">&amp;&amp;</span> <span class="ident">ell</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>.<span class="ident">a</span>, <span class="number">9</span>) <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">let</span> (<span class="ident">u</span>, <span class="ident">v</span>) <span class="op">=</span> <span class="ident">h</span>.<span class="ident">pade9</span>();
             <span class="kw">return</span> <span class="ident">solve_p_q</span>(<span class="ident">u</span>, <span class="ident">v</span>);
         }

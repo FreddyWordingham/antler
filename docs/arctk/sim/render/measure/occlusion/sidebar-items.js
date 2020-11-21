@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["occlusion","Calculate the occlusion experienced over a distance along ray. Zero indicates full occlusion. Unity indicates full view."]]});

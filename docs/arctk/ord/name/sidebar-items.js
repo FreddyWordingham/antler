@@ -1,1 +1,0 @@
-initSidebarItems({"trait":[["Name","Types implementing this trait can be built at runtime from an input structure with names rather than indices."]]});

@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Set","Set map."]]});
+initSidebarItems({"struct":[["Set","Data map."]]});

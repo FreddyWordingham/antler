@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.0/src/base/matrix.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>matrix.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.1/src/base/matrix.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>matrix.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1942,6 +1942,17 @@
 <span id="1941">1941</span>
 <span id="1942">1942</span>
 <span id="1943">1943</span>
+<span id="1944">1944</span>
+<span id="1945">1945</span>
+<span id="1946">1946</span>
+<span id="1947">1947</span>
+<span id="1948">1948</span>
+<span id="1949">1949</span>
+<span id="1950">1950</span>
+<span id="1951">1951</span>
+<span id="1952">1952</span>
+<span id="1953">1953</span>
+<span id="1954">1954</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">num</span>::{<span class="ident">One</span>, <span class="ident">Zero</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;abomonation-serialize&quot;</span>)]</span>
@@ -1961,7 +1972,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;abomonation-serialize&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">abomonation</span>::<span class="ident">Abomonation</span>;
 
-<span class="kw">use</span> <span class="ident">simba</span>::<span class="ident">scalar</span>::{<span class="ident">ClosedAdd</span>, <span class="ident">ClosedMul</span>, <span class="ident">ClosedSub</span>, <span class="ident">Field</span>, <span class="ident">RealField</span>};
+<span class="kw">use</span> <span class="ident">simba</span>::<span class="ident">scalar</span>::{<span class="ident">ClosedAdd</span>, <span class="ident">ClosedMul</span>, <span class="ident">ClosedSub</span>, <span class="ident">Field</span>};
 <span class="kw">use</span> <span class="ident">simba</span>::<span class="ident">simd</span>::<span class="ident">SimdPartialOrd</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::<span class="ident">allocator</span>::{<span class="ident">Allocator</span>, <span class="ident">SameShapeAllocator</span>, <span class="ident">SameShapeC</span>, <span class="ident">SameShapeR</span>};
@@ -1999,7 +2010,80 @@
 
 <span class="doccomment">/// The most generic column-major matrix (and vector) type.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// It combines four type parameters:</span>
+<span class="doccomment">/// # Methods summary</span>
+<span class="doccomment">/// Because `Matrix` is the most generic types used as a common representation of all matrices and</span>
+<span class="doccomment">/// vectors of **nalgebra** this documentation page contains every single matrix/vector-related</span>
+<span class="doccomment">/// method. In order to make browsing this page simpler, the next subsections contain direct links</span>
+<span class="doccomment">/// to groups of methods related to a specific topic.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #### Vector and matrix construction</span>
+<span class="doccomment">/// - [Constructors of statically-sized vectors or statically-sized matrices](#constructors-of-statically-sized-vectors-or-statically-sized-matrices)</span>
+<span class="doccomment">///   (`Vector3`, `Matrix3x6`…)</span>
+<span class="doccomment">/// - [Constructors of fully dynamic matrices](#constructors-of-fully-dynamic-matrices) (`DMatrix`)</span>
+<span class="doccomment">/// - [Constructors of dynamic vectors and matrices with a dynamic number of rows](#constructors-of-dynamic-vectors-and-matrices-with-a-dynamic-number-of-rows)</span>
+<span class="doccomment">///   (`DVector`, `MatrixXx3`…)</span>
+<span class="doccomment">/// - [Constructors of matrices with a dynamic number of columns](#constructors-of-matrices-with-a-dynamic-number-of-columns)</span>
+<span class="doccomment">///   (`Matrix2xX`…)</span>
+<span class="doccomment">/// - [Generic constructors](#generic-constructors)</span>
+<span class="doccomment">///   (For code generic wrt. the vectors or matrices dimensions.)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #### Computer graphics utilities for transformations</span>
+<span class="doccomment">/// - [2D transformations as a Matrix3 &lt;span style=&quot;float:right;&quot;&gt;`new_rotation`…&lt;/span&gt;](#2d-transformations-as-a-matrix3)</span>
+<span class="doccomment">/// - [3D transformations as a Matrix4 &lt;span style=&quot;float:right;&quot;&gt;`new_rotation`, `new_perspective`, `look_at_rh`…&lt;/span&gt;](#3d-transformations-as-a-matrix4)</span>
+<span class="doccomment">/// - [Translation and scaling in any dimension &lt;span style=&quot;float:right;&quot;&gt;`new_scaling`, `new_translation`…&lt;/span&gt;](#translation-and-scaling-in-any-dimension)</span>
+<span class="doccomment">/// - [Append/prepend translation and scaling &lt;span style=&quot;float:right;&quot;&gt;`append_scaling`, `prepend_translation_mut`…&lt;/span&gt;](#appendprepend-translation-and-scaling)</span>
+<span class="doccomment">/// - [Transformation of vectors and points &lt;span style=&quot;float:right;&quot;&gt;`transform_vector`, `transform_point`…&lt;/span&gt;](#transformation-of-vectors-and-points)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #### Common math operations</span>
+<span class="doccomment">/// - [Componentwise operations &lt;span style=&quot;float:right;&quot;&gt;`component_mul`, `component_div`, `inf`…&lt;/span&gt;](#componentwise-operations)</span>
+<span class="doccomment">/// - [Special multiplications &lt;span style=&quot;float:right;&quot;&gt;`tr_mul`, `ad_mul`, `kronecker`…&lt;/span&gt;](#special-multiplications)</span>
+<span class="doccomment">/// - [Dot/scalar product &lt;span style=&quot;float:right;&quot;&gt;`dot`, `dotc`, `tr_dot`…&lt;/span&gt;](#dotscalar-product)</span>
+<span class="doccomment">/// - [Cross product &lt;span style=&quot;float:right;&quot;&gt;`cross`, `perp`…&lt;/span&gt;](#cross-product)</span>
+<span class="doccomment">/// - [Magnitude and norms &lt;span style=&quot;float:right;&quot;&gt;`norm`, `normalize`, `metric_distance`…&lt;/span&gt;](#magnitude-and-norms)</span>
+<span class="doccomment">/// - [In-place normalization &lt;span style=&quot;float:right;&quot;&gt;`normalize_mut`, `try_normalize_mut`…&lt;/span&gt;](#in-place-normalization)</span>
+<span class="doccomment">/// - [Interpolation &lt;span style=&quot;float:right;&quot;&gt;`lerp`, `slerp`…&lt;/span&gt;](#interpolation)</span>
+<span class="doccomment">/// - [BLAS functions &lt;span style=&quot;float:right;&quot;&gt;`gemv`, `gemm`, `syger`…&lt;/span&gt;](#blas-functions)</span>
+<span class="doccomment">/// - [Swizzling &lt;span style=&quot;float:right;&quot;&gt;`xx`, `yxz`…&lt;/span&gt;](#swizzling)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #### Statistics</span>
+<span class="doccomment">/// - [Common operations &lt;span style=&quot;float:right;&quot;&gt;`row_sum`, `column_mean`, `variance`…&lt;/span&gt;](#common-statistics-operations)</span>
+<span class="doccomment">/// - [Find the min and max components &lt;span style=&quot;float:right;&quot;&gt;`min`, `max`, `amin`, `amax`, `camin`, `cmax`…&lt;/span&gt;](#find-the-min-and-max-components)</span>
+<span class="doccomment">/// - [Find the min and max components (vector-specific methods) &lt;span style=&quot;float:right;&quot;&gt;`argmin`, `argmax`, `icamin`, `icamax`…&lt;/span&gt;](#find-the-min-and-max-components-vector-specific-methods)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #### Iteration, map, and fold</span>
+<span class="doccomment">/// - [Iteration on components, rows, and columns &lt;span style=&quot;float:right;&quot;&gt;`iter`, `column_iter`…&lt;/span&gt;](#iteration-on-components-rows-and-columns)</span>
+<span class="doccomment">/// - [Elementwise mapping and folding &lt;span style=&quot;float:right;&quot;&gt;`map`, `fold`, `zip_map`…&lt;/span&gt;](#elementwise-mapping-and-folding)</span>
+<span class="doccomment">/// - [Folding or columns and rows &lt;span style=&quot;float:right;&quot;&gt;`compress_rows`, `compress_columns`…&lt;/span&gt;](#folding-on-columns-and-rows)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #### Vector and matrix slicing</span>
+<span class="doccomment">/// - [Creating matrix slices from `&amp;[T]` &lt;span style=&quot;float:right;&quot;&gt;`from_slice`, `from_slice_with_strides`…&lt;/span&gt;](#creating-matrix-slices-from-t)</span>
+<span class="doccomment">/// - [Creating mutable matrix slices from `&amp;mut [T]` &lt;span style=&quot;float:right;&quot;&gt;`from_slice_mut`, `from_slice_with_strides_mut`…&lt;/span&gt;](#creating-mutable-matrix-slices-from-mut-t)</span>
+<span class="doccomment">/// - [Slicing based on index and length &lt;span style=&quot;float:right;&quot;&gt;`row`, `columns`, `slice`…&lt;/span&gt;](#slicing-based-on-index-and-length)</span>
+<span class="doccomment">/// - [Mutable slicing based on index and length &lt;span style=&quot;float:right;&quot;&gt;`row_mut`, `columns_mut`, `slice_mut`…&lt;/span&gt;](#mutable-slicing-based-on-index-and-length)</span>
+<span class="doccomment">/// - [Slicing based on ranges &lt;span style=&quot;float:right;&quot;&gt;`rows_range`, `columns_range`…&lt;/span&gt;](#slicing-based-on-ranges)</span>
+<span class="doccomment">/// - [Mutable slicing based on ranges &lt;span style=&quot;float:right;&quot;&gt;`rows_range_mut`, `columns_range_mut`…&lt;/span&gt;](#mutable-slicing-based-on-ranges)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #### In-place modification of a single matrix or vector</span>
+<span class="doccomment">/// - [In-place filling &lt;span style=&quot;float:right;&quot;&gt;`fill`, `fill_diagonal`, `fill_with_identity`…&lt;/span&gt;](#in-place-filling)</span>
+<span class="doccomment">/// - [In-place swapping &lt;span style=&quot;float:right;&quot;&gt;`swap`, `swap_columns`…&lt;/span&gt;](#in-place-swapping)</span>
+<span class="doccomment">/// - [Set rows, columns, and diagonal &lt;span style=&quot;float:right;&quot;&gt;`set_column`, `set_diagonal`…&lt;/span&gt;](#set-rows-columns-and-diagonal)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #### Vector and matrix size modification</span>
+<span class="doccomment">/// - [Rows and columns insertion &lt;span style=&quot;float:right;&quot;&gt;`insert_row`, `insert_column`…&lt;/span&gt;](#rows-and-columns-insertion)</span>
+<span class="doccomment">/// - [Rows and columns removal &lt;span style=&quot;float:right;&quot;&gt;`remove_row`, `remove column`…&lt;/span&gt;](#rows-and-columns-removal)</span>
+<span class="doccomment">/// - [Rows and columns extraction &lt;span style=&quot;float:right;&quot;&gt;`select_rows`, `select_columns`…&lt;/span&gt;](#rows-and-columns-extraction)</span>
+<span class="doccomment">/// - [Resizing and reshaping &lt;span style=&quot;float:right;&quot;&gt;`resize`, `reshape_generic`…&lt;/span&gt;](#resizing-and-reshaping)</span>
+<span class="doccomment">/// - [In-place resizing &lt;span style=&quot;float:right;&quot;&gt;`resize_mut`, `resize_vertically_mut`…&lt;/span&gt;](#in-place-resizing)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #### Matrix decomposition</span>
+<span class="doccomment">/// - [Rectangular matrix decomposition &lt;span style=&quot;float:right;&quot;&gt;`qr`, `lu`, `svd`…&lt;/span&gt;](#rectangular-matrix-decomposition)</span>
+<span class="doccomment">/// - [Square matrix decomposition &lt;span style=&quot;float:right;&quot;&gt;`cholesky`, `symmetric_eigen`…&lt;/span&gt;](#square-matrix-decomposition)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #### Vector basis computation</span>
+<span class="doccomment">/// - [Basis and orthogonalization &lt;span style=&quot;float:right;&quot;&gt;`orthonormal_subspace_basis`, `orthonormalize`…&lt;/span&gt;](#basis-and-orthogonalization)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Type parameters</span>
+<span class="doccomment">/// The generic `Matrix` type has four type parameters:</span>
 <span class="doccomment">/// - `N`: for the matrix components scalar type.</span>
 <span class="doccomment">/// - `R`: for the matrix number of rows.</span>
 <span class="doccomment">/// - `C`: for the matrix number of columns.</span>
@@ -2023,8 +2107,29 @@
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// The data storage that contains all the matrix components and informations about its number</span>
-    <span class="doccomment">/// of rows and column (if needed).</span>
+    <span class="doccomment">/// The data storage that contains all the matrix components. Disappointed?</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Well, if you came here to see how you can access the matrix components,</span>
+    <span class="doccomment">/// you may be in luck: you can access the individual components of all vectors with compile-time</span>
+    <span class="doccomment">/// dimensions &lt;= 6 using field notation like this:</span>
+    <span class="doccomment">/// `vec.x`, `vec.y`, `vec.z`, `vec.w`, `vec.a`, `vec.b`. Reference and assignation work too:</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use nalgebra::Vector3;</span>
+    <span class="doccomment">/// let mut vec = Vector3::new(1.0, 2.0, 3.0);</span>
+    <span class="doccomment">/// vec.x = 10.0;</span>
+    <span class="doccomment">/// vec.y += 30.0;</span>
+    <span class="doccomment">/// assert_eq!(vec.x, 10.0);</span>
+    <span class="doccomment">/// assert_eq!(vec.y + 100.0, 132.0);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// Similarly, for matrices with compile-time dimensions &lt;= 6, you can use field notation</span>
+    <span class="doccomment">/// like this: `mat.m11`, `mat.m42`, etc. The first digit identifies the row to address</span>
+    <span class="doccomment">/// and the second digit identifies the column to address. So `mat.m13` identifies the component</span>
+    <span class="doccomment">/// at the first row and third column (note that the count of rows and columns start at 1 instead</span>
+    <span class="doccomment">/// of 0 here. This is so we match the mathematical notation).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// For all matrices and vectors, independently from their size, individual components can</span>
+    <span class="doccomment">/// be accessed and modified using indexing: `vec[20]`, `mat[(20, 19)]`. Here the indexing</span>
+    <span class="doccomment">/// starts at 0 as you would expect.</span>
     <span class="kw">pub</span> <span class="ident">data</span>: <span class="ident">S</span>,
 
     <span class="ident">_phantoms</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span>(<span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>)<span class="op">&gt;</span>,
@@ -2149,20 +2254,6 @@
         <span class="kw">unsafe</span> { <span class="self">Self</span>::<span class="ident">from_data_statically_unchecked</span>(<span class="ident">data</span>) }
     }
 
-    <span class="doccomment">/// The total number of elements of this matrix.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use nalgebra::Matrix3x4;</span>
-    <span class="doccomment">/// let mat = Matrix3x4::&lt;f32&gt;::zeros();</span>
-    <span class="doccomment">/// assert_eq!(mat.len(), 12);</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
-        <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">shape</span>();
-        <span class="ident">nrows</span> <span class="op">*</span> <span class="ident">ncols</span>
-    }
-
     <span class="doccomment">/// The shape of this matrix returned as the tuple (number of rows, number of columns).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples:</span>
@@ -2217,58 +2308,6 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strides</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
         <span class="kw">let</span> (<span class="ident">srows</span>, <span class="ident">scols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">strides</span>();
         (<span class="ident">srows</span>.<span class="ident">value</span>(), <span class="ident">scols</span>.<span class="ident">value</span>())
-    }
-
-    <span class="doccomment">/// Iterates through this matrix coordinates in column-major order.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use nalgebra::Matrix2x3;</span>
-    <span class="doccomment">/// let mat = Matrix2x3::new(11, 12, 13,</span>
-    <span class="doccomment">///                          21, 22, 23);</span>
-    <span class="doccomment">/// let mut it = mat.iter();</span>
-    <span class="doccomment">/// assert_eq!(*it.next().unwrap(), 11);</span>
-    <span class="doccomment">/// assert_eq!(*it.next().unwrap(), 21);</span>
-    <span class="doccomment">/// assert_eq!(*it.next().unwrap(), 12);</span>
-    <span class="doccomment">/// assert_eq!(*it.next().unwrap(), 22);</span>
-    <span class="doccomment">/// assert_eq!(*it.next().unwrap(), 13);</span>
-    <span class="doccomment">/// assert_eq!(*it.next().unwrap(), 23);</span>
-    <span class="doccomment">/// assert!(it.next().is_none());</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MatrixIter</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-        <span class="ident">MatrixIter</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data</span>)
-    }
-
-    <span class="doccomment">/// Iterate through the rows of this matrix.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use nalgebra::Matrix2x3;</span>
-    <span class="doccomment">/// let mut a = Matrix2x3::new(1, 2, 3,</span>
-    <span class="doccomment">///                            4, 5, 6);</span>
-    <span class="doccomment">/// for (i, row) in a.row_iter().enumerate() {</span>
-    <span class="doccomment">///     assert_eq!(row, a.row(i))</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">row_iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RowIter</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-        <span class="ident">RowIter</span>::<span class="ident">new</span>(<span class="self">self</span>)
-    }
-
-    <span class="doccomment">/// Iterate through the columns of this matrix.</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use nalgebra::Matrix2x3;</span>
-    <span class="doccomment">/// let mut a = Matrix2x3::new(1, 2, 3,</span>
-    <span class="doccomment">///                            4, 5, 6);</span>
-    <span class="doccomment">/// for (i, column) in a.column_iter().enumerate() {</span>
-    <span class="doccomment">///     assert_eq!(column, a.column(i))</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">column_iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ColumnIter</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-        <span class="ident">ColumnIter</span>::<span class="ident">new</span>(<span class="self">self</span>)
     }
 
     <span class="doccomment">/// Computes the row and column coordinates of the i-th element of this matrix seen as a</span>
@@ -2363,7 +2402,7 @@
         <span class="ident">Matrix</span>::<span class="ident">from_data</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">into_owned</span>())
     }
 
-    <span class="comment">// FIXME: this could probably benefit from specialization.</span>
+    <span class="comment">// TODO: this could probably benefit from specialization.</span>
     <span class="comment">// XXX: bad name.</span>
     <span class="doccomment">/// Moves this matrix into one that owns its data. The actual type of the result depends on</span>
     <span class="doccomment">/// matrix storage combination rules for addition.</span>
@@ -2379,7 +2418,7 @@
             <span class="comment">// We can just return `self.into_owned()`.</span>
 
             <span class="kw">unsafe</span> {
-                <span class="comment">// FIXME: check that those copies are optimized away by the compiler.</span>
+                <span class="comment">// TODO: check that those copies are optimized away by the compiler.</span>
                 <span class="kw">let</span> <span class="ident">owned</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_owned</span>();
                 <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">transmute_copy</span>(<span class="kw-2">&amp;</span><span class="ident">owned</span>);
                 <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="ident">owned</span>);
@@ -2416,7 +2455,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span>: <span class="ident">MatrixSum</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">R2</span>, <span class="ident">C2</span><span class="op">&gt;</span> <span class="op">=</span>
             <span class="kw">unsafe</span> { <span class="ident">Matrix</span>::<span class="ident">new_uninitialized_generic</span>(<span class="ident">nrows</span>, <span class="ident">ncols</span>) };
 
-        <span class="comment">// FIXME: use copy_from</span>
+        <span class="comment">// TODO: use copy_from</span>
         <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">res</span>.<span class="ident">ncols</span>() {
             <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">res</span>.<span class="ident">nrows</span>() {
                 <span class="kw">unsafe</span> {
@@ -2428,6 +2467,51 @@
         <span class="ident">res</span>
     }
 
+    <span class="doccomment">/// Transposes `self` and store the result into `out`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transpose_to</span><span class="op">&lt;</span><span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">SB</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">SB</span><span class="op">&gt;</span>)
+    <span class="kw">where</span>
+        <span class="ident">R2</span>: <span class="ident">Dim</span>,
+        <span class="ident">C2</span>: <span class="ident">Dim</span>,
+        <span class="ident">SB</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
+        <span class="ident">ShapeConstraint</span>: <span class="ident">SameNumberOfRows</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">C2</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">SameNumberOfColumns</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">R2</span><span class="op">&gt;</span>,
+    {
+        <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">shape</span>();
+        <span class="macro">assert</span><span class="macro">!</span>(
+            (<span class="ident">ncols</span>, <span class="ident">nrows</span>) <span class="op">==</span> <span class="ident">out</span>.<span class="ident">shape</span>(),
+            <span class="string">&quot;Incompatible shape for transpose-copy.&quot;</span>
+        );
+
+        <span class="comment">// TODO: optimize that.</span>
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">nrows</span> {
+            <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">ncols</span> {
+                <span class="kw">unsafe</span> {
+                    <span class="kw-2">*</span><span class="ident">out</span>.<span class="ident">get_unchecked_mut</span>((<span class="ident">j</span>, <span class="ident">i</span>)) <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>();
+                }
+            }
+        }
+    }
+
+    <span class="doccomment">/// Transposes `self`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Did you mean to use transpose_mut()?&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transpose</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MatrixMN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">C</span>, <span class="ident">R</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">C</span>, <span class="ident">R</span><span class="op">&gt;</span>,
+    {
+        <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
+
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Matrix</span>::<span class="ident">new_uninitialized_generic</span>(<span class="ident">ncols</span>, <span class="ident">nrows</span>);
+            <span class="self">self</span>.<span class="ident">transpose_to</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>);
+
+            <span class="ident">res</span>
+        }
+    }
+}
+
+<span class="doccomment">/// # Elementwise mapping and folding</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Returns a matrix containing the result of `f` applied to each of its entries.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">map</span><span class="op">&lt;</span><span class="ident">N2</span>: <span class="ident">Scalar</span>, <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">N</span>) <span class="op">-&gt;</span> <span class="ident">N2</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">MatrixMN</span><span class="op">&lt;</span><span class="ident">N2</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>
@@ -2632,63 +2716,166 @@
         <span class="ident">res</span>
     }
 
-    <span class="doccomment">/// Transposes `self` and store the result into `out`.</span>
+    <span class="doccomment">/// Replaces each component of `self` by the result of a closure `f` applied on it.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transpose_to</span><span class="op">&lt;</span><span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">SB</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">SB</span><span class="op">&gt;</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">apply</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">N</span>) <span class="op">-&gt;</span> <span class="ident">N</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>)
     <span class="kw">where</span>
-        <span class="ident">R2</span>: <span class="ident">Dim</span>,
-        <span class="ident">C2</span>: <span class="ident">Dim</span>,
-        <span class="ident">SB</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R2</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
-        <span class="ident">ShapeConstraint</span>: <span class="ident">SameNumberOfRows</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">C2</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">SameNumberOfColumns</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">R2</span><span class="op">&gt;</span>,
+        <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
     {
         <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">shape</span>();
-        <span class="macro">assert</span><span class="macro">!</span>(
-            (<span class="ident">ncols</span>, <span class="ident">nrows</span>) <span class="op">==</span> <span class="ident">out</span>.<span class="ident">shape</span>(),
-            <span class="string">&quot;Incompatible shape for transpose-copy.&quot;</span>
-        );
 
-        <span class="comment">// FIXME: optimize that.</span>
-        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">nrows</span> {
-            <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">ncols</span> {
+        <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">ncols</span> {
+            <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">nrows</span> {
                 <span class="kw">unsafe</span> {
-                    <span class="kw-2">*</span><span class="ident">out</span>.<span class="ident">get_unchecked_mut</span>((<span class="ident">j</span>, <span class="ident">i</span>)) <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>();
+                    <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_mut</span>(<span class="ident">i</span>, <span class="ident">j</span>);
+                    <span class="kw-2">*</span><span class="ident">e</span> <span class="op">=</span> <span class="ident">f</span>(<span class="ident">e</span>.<span class="ident">inlined_clone</span>())
                 }
             }
         }
     }
 
-    <span class="doccomment">/// Transposes `self`.</span>
+    <span class="doccomment">/// Replaces each component of `self` by the result of a closure `f` applied on its components</span>
+    <span class="doccomment">/// joined with the components from `rhs`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Did you mean to use transpose_mut()?&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transpose</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MatrixMN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">C</span>, <span class="ident">R</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">C</span>, <span class="ident">R</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">zip_apply</span><span class="op">&lt;</span><span class="ident">N2</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">S2</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N2</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">S2</span><span class="op">&gt;</span>,
+        <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnMut</span>(<span class="ident">N</span>, <span class="ident">N2</span>) <span class="op">-&gt;</span> <span class="ident">N</span>,
+    ) <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+        <span class="ident">N2</span>: <span class="ident">Scalar</span>,
+        <span class="ident">R2</span>: <span class="ident">Dim</span>,
+        <span class="ident">C2</span>: <span class="ident">Dim</span>,
+        <span class="ident">S2</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N2</span>, <span class="ident">R2</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
+        <span class="ident">ShapeConstraint</span>: <span class="ident">SameNumberOfRows</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">R2</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">SameNumberOfColumns</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
     {
-        <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
+        <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">shape</span>();
 
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Matrix</span>::<span class="ident">new_uninitialized_generic</span>(<span class="ident">ncols</span>, <span class="ident">nrows</span>);
-            <span class="self">self</span>.<span class="ident">transpose_to</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            (<span class="ident">nrows</span>, <span class="ident">ncols</span>),
+            <span class="ident">rhs</span>.<span class="ident">shape</span>(),
+            <span class="string">&quot;Matrix simultaneous traversal error: dimension mismatch.&quot;</span>
+        );
 
-            <span class="ident">res</span>
+        <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">ncols</span> {
+            <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">nrows</span> {
+                <span class="kw">unsafe</span> {
+                    <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_mut</span>(<span class="ident">i</span>, <span class="ident">j</span>);
+                    <span class="kw">let</span> <span class="ident">rhs</span> <span class="op">=</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>();
+                    <span class="kw-2">*</span><span class="ident">e</span> <span class="op">=</span> <span class="ident">f</span>(<span class="ident">e</span>.<span class="ident">inlined_clone</span>(), <span class="ident">rhs</span>)
+                }
+            }
+        }
+    }
+
+    <span class="doccomment">/// Replaces each component of `self` by the result of a closure `f` applied on its components</span>
+    <span class="doccomment">/// joined with the components from `b` and `c`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">zip_zip_apply</span><span class="op">&lt;</span><span class="ident">N2</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">S2</span>, <span class="ident">N3</span>, <span class="ident">R3</span>, <span class="ident">C3</span>, <span class="ident">S3</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N2</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">S2</span><span class="op">&gt;</span>,
+        <span class="ident">c</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N3</span>, <span class="ident">R3</span>, <span class="ident">C3</span>, <span class="ident">S3</span><span class="op">&gt;</span>,
+        <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnMut</span>(<span class="ident">N</span>, <span class="ident">N2</span>, <span class="ident">N3</span>) <span class="op">-&gt;</span> <span class="ident">N</span>,
+    ) <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+        <span class="ident">N2</span>: <span class="ident">Scalar</span>,
+        <span class="ident">R2</span>: <span class="ident">Dim</span>,
+        <span class="ident">C2</span>: <span class="ident">Dim</span>,
+        <span class="ident">S2</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N2</span>, <span class="ident">R2</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
+        <span class="ident">N3</span>: <span class="ident">Scalar</span>,
+        <span class="ident">R3</span>: <span class="ident">Dim</span>,
+        <span class="ident">C3</span>: <span class="ident">Dim</span>,
+        <span class="ident">S3</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N3</span>, <span class="ident">R3</span>, <span class="ident">C3</span><span class="op">&gt;</span>,
+        <span class="ident">ShapeConstraint</span>: <span class="ident">SameNumberOfRows</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">R2</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">SameNumberOfColumns</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
+        <span class="ident">ShapeConstraint</span>: <span class="ident">SameNumberOfRows</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">R2</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">SameNumberOfColumns</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
+    {
+        <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">shape</span>();
+
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            (<span class="ident">nrows</span>, <span class="ident">ncols</span>),
+            <span class="ident">b</span>.<span class="ident">shape</span>(),
+            <span class="string">&quot;Matrix simultaneous traversal error: dimension mismatch.&quot;</span>
+        );
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            (<span class="ident">nrows</span>, <span class="ident">ncols</span>),
+            <span class="ident">c</span>.<span class="ident">shape</span>(),
+            <span class="string">&quot;Matrix simultaneous traversal error: dimension mismatch.&quot;</span>
+        );
+
+        <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">ncols</span> {
+            <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">nrows</span> {
+                <span class="kw">unsafe</span> {
+                    <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_mut</span>(<span class="ident">i</span>, <span class="ident">j</span>);
+                    <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">b</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>();
+                    <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">c</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>();
+                    <span class="kw-2">*</span><span class="ident">e</span> <span class="op">=</span> <span class="ident">f</span>(<span class="ident">e</span>.<span class="ident">inlined_clone</span>(), <span class="ident">b</span>, <span class="ident">c</span>)
+                }
+            }
         }
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Mutably iterates through this matrix coordinates.</span>
+<span class="doccomment">/// # Iteration on components, rows, and columns</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Iterates through this matrix coordinates in column-major order.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use nalgebra::Matrix2x3;</span>
+    <span class="doccomment">/// let mat = Matrix2x3::new(11, 12, 13,</span>
+    <span class="doccomment">///                          21, 22, 23);</span>
+    <span class="doccomment">/// let mut it = mat.iter();</span>
+    <span class="doccomment">/// assert_eq!(*it.next().unwrap(), 11);</span>
+    <span class="doccomment">/// assert_eq!(*it.next().unwrap(), 21);</span>
+    <span class="doccomment">/// assert_eq!(*it.next().unwrap(), 12);</span>
+    <span class="doccomment">/// assert_eq!(*it.next().unwrap(), 22);</span>
+    <span class="doccomment">/// assert_eq!(*it.next().unwrap(), 13);</span>
+    <span class="doccomment">/// assert_eq!(*it.next().unwrap(), 23);</span>
+    <span class="doccomment">/// assert!(it.next().is_none());</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MatrixIterMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-        <span class="ident">MatrixIterMut</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">data</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MatrixIter</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+        <span class="ident">MatrixIter</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data</span>)
     }
 
-    <span class="doccomment">/// Returns a mutable pointer to the start of the matrix.</span>
+    <span class="doccomment">/// Iterate through the rows of this matrix.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// If the matrix is not empty, this pointer is guaranteed to be aligned</span>
-    <span class="doccomment">/// and non-null.</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use nalgebra::Matrix2x3;</span>
+    <span class="doccomment">/// let mut a = Matrix2x3::new(1, 2, 3,</span>
+    <span class="doccomment">///                            4, 5, 6);</span>
+    <span class="doccomment">/// for (i, row) in a.row_iter().enumerate() {</span>
+    <span class="doccomment">///     assert_eq!(row, a.row(i))</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_mut_ptr</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">N</span> {
-        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">ptr_mut</span>()
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">row_iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RowIter</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+        <span class="ident">RowIter</span>::<span class="ident">new</span>(<span class="self">self</span>)
+    }
+
+    <span class="doccomment">/// Iterate through the columns of this matrix.</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use nalgebra::Matrix2x3;</span>
+    <span class="doccomment">/// let mut a = Matrix2x3::new(1, 2, 3,</span>
+    <span class="doccomment">///                            4, 5, 6);</span>
+    <span class="doccomment">/// for (i, column) in a.column_iter().enumerate() {</span>
+    <span class="doccomment">///     assert_eq!(column, a.column(i))</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">column_iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ColumnIter</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+        <span class="ident">ColumnIter</span>::<span class="ident">new</span>(<span class="self">self</span>)
+    }
+
+    <span class="doccomment">/// Mutably iterates through this matrix coordinates.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MatrixIterMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+    {
+        <span class="ident">MatrixIterMut</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">data</span>)
     }
 
     <span class="doccomment">/// Mutably iterates through this matrix rows.</span>
@@ -2707,7 +2894,10 @@
     <span class="doccomment">/// assert_eq!(a, expected);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">row_iter_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RowIterMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">row_iter_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RowIterMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+    {
         <span class="ident">RowIterMut</span>::<span class="ident">new</span>(<span class="self">self</span>)
     }
 
@@ -2727,8 +2917,22 @@
     <span class="doccomment">/// assert_eq!(a, expected);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">column_iter_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ColumnIterMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">column_iter_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ColumnIterMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+    {
         <span class="ident">ColumnIterMut</span>::<span class="ident">new</span>(<span class="self">self</span>)
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Returns a mutable pointer to the start of the matrix.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the matrix is not empty, this pointer is guaranteed to be aligned</span>
+    <span class="doccomment">/// and non-null.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_mut_ptr</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">N</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">ptr_mut</span>()
     }
 
     <span class="doccomment">/// Swaps two entries without bound-checking.</span>
@@ -2823,105 +3027,12 @@
         }
     }
 
-    <span class="comment">// FIXME: rename `apply` to `apply_mut` and `apply_into` to `apply`?</span>
+    <span class="comment">// TODO: rename `apply` to `apply_mut` and `apply_into` to `apply`?</span>
     <span class="doccomment">/// Returns `self` with each of its components replaced by the result of a closure `f` applied on it.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">apply_into</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">N</span>) <span class="op">-&gt;</span> <span class="ident">N</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">apply</span>(<span class="ident">f</span>);
         <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Replaces each component of `self` by the result of a closure `f` applied on it.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">apply</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">N</span>) <span class="op">-&gt;</span> <span class="ident">N</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>) {
-        <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">shape</span>();
-
-        <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">ncols</span> {
-            <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">nrows</span> {
-                <span class="kw">unsafe</span> {
-                    <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_mut</span>(<span class="ident">i</span>, <span class="ident">j</span>);
-                    <span class="kw-2">*</span><span class="ident">e</span> <span class="op">=</span> <span class="ident">f</span>(<span class="ident">e</span>.<span class="ident">inlined_clone</span>())
-                }
-            }
-        }
-    }
-
-    <span class="doccomment">/// Replaces each component of `self` by the result of a closure `f` applied on its components</span>
-    <span class="doccomment">/// joined with the components from `rhs`.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">zip_apply</span><span class="op">&lt;</span><span class="ident">N2</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">S2</span><span class="op">&gt;</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N2</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">S2</span><span class="op">&gt;</span>,
-        <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnMut</span>(<span class="ident">N</span>, <span class="ident">N2</span>) <span class="op">-&gt;</span> <span class="ident">N</span>,
-    ) <span class="kw">where</span>
-        <span class="ident">N2</span>: <span class="ident">Scalar</span>,
-        <span class="ident">R2</span>: <span class="ident">Dim</span>,
-        <span class="ident">C2</span>: <span class="ident">Dim</span>,
-        <span class="ident">S2</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N2</span>, <span class="ident">R2</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
-        <span class="ident">ShapeConstraint</span>: <span class="ident">SameNumberOfRows</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">R2</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">SameNumberOfColumns</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
-    {
-        <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">shape</span>();
-
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            (<span class="ident">nrows</span>, <span class="ident">ncols</span>),
-            <span class="ident">rhs</span>.<span class="ident">shape</span>(),
-            <span class="string">&quot;Matrix simultaneous traversal error: dimension mismatch.&quot;</span>
-        );
-
-        <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">ncols</span> {
-            <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">nrows</span> {
-                <span class="kw">unsafe</span> {
-                    <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_mut</span>(<span class="ident">i</span>, <span class="ident">j</span>);
-                    <span class="kw">let</span> <span class="ident">rhs</span> <span class="op">=</span> <span class="ident">rhs</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>();
-                    <span class="kw-2">*</span><span class="ident">e</span> <span class="op">=</span> <span class="ident">f</span>(<span class="ident">e</span>.<span class="ident">inlined_clone</span>(), <span class="ident">rhs</span>)
-                }
-            }
-        }
-    }
-
-    <span class="doccomment">/// Replaces each component of `self` by the result of a closure `f` applied on its components</span>
-    <span class="doccomment">/// joined with the components from `b` and `c`.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">zip_zip_apply</span><span class="op">&lt;</span><span class="ident">N2</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">S2</span>, <span class="ident">N3</span>, <span class="ident">R3</span>, <span class="ident">C3</span>, <span class="ident">S3</span><span class="op">&gt;</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N2</span>, <span class="ident">R2</span>, <span class="ident">C2</span>, <span class="ident">S2</span><span class="op">&gt;</span>,
-        <span class="ident">c</span>: <span class="kw-2">&amp;</span><span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N3</span>, <span class="ident">R3</span>, <span class="ident">C3</span>, <span class="ident">S3</span><span class="op">&gt;</span>,
-        <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnMut</span>(<span class="ident">N</span>, <span class="ident">N2</span>, <span class="ident">N3</span>) <span class="op">-&gt;</span> <span class="ident">N</span>,
-    ) <span class="kw">where</span>
-        <span class="ident">N2</span>: <span class="ident">Scalar</span>,
-        <span class="ident">R2</span>: <span class="ident">Dim</span>,
-        <span class="ident">C2</span>: <span class="ident">Dim</span>,
-        <span class="ident">S2</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N2</span>, <span class="ident">R2</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
-        <span class="ident">N3</span>: <span class="ident">Scalar</span>,
-        <span class="ident">R3</span>: <span class="ident">Dim</span>,
-        <span class="ident">C3</span>: <span class="ident">Dim</span>,
-        <span class="ident">S3</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N3</span>, <span class="ident">R3</span>, <span class="ident">C3</span><span class="op">&gt;</span>,
-        <span class="ident">ShapeConstraint</span>: <span class="ident">SameNumberOfRows</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">R2</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">SameNumberOfColumns</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
-        <span class="ident">ShapeConstraint</span>: <span class="ident">SameNumberOfRows</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">R2</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">SameNumberOfColumns</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
-    {
-        <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">shape</span>();
-
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            (<span class="ident">nrows</span>, <span class="ident">ncols</span>),
-            <span class="ident">b</span>.<span class="ident">shape</span>(),
-            <span class="string">&quot;Matrix simultaneous traversal error: dimension mismatch.&quot;</span>
-        );
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            (<span class="ident">nrows</span>, <span class="ident">ncols</span>),
-            <span class="ident">c</span>.<span class="ident">shape</span>(),
-            <span class="string">&quot;Matrix simultaneous traversal error: dimension mismatch.&quot;</span>
-        );
-
-        <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">ncols</span> {
-            <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">nrows</span> {
-                <span class="kw">unsafe</span> {
-                    <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_mut</span>(<span class="ident">i</span>, <span class="ident">j</span>);
-                    <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">b</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>();
-                    <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">c</span>.<span class="ident">get_unchecked</span>((<span class="ident">i</span>, <span class="ident">j</span>)).<span class="ident">inlined_clone</span>();
-                    <span class="kw-2">*</span><span class="ident">e</span> <span class="op">=</span> <span class="ident">f</span>(<span class="ident">e</span>.<span class="ident">inlined_clone</span>(), <span class="ident">b</span>, <span class="ident">c</span>)
-                }
-            }
-        }
     }
 }
 
@@ -2995,7 +3106,7 @@
             <span class="string">&quot;Incompatible shape for transpose-copy.&quot;</span>
         );
 
-        <span class="comment">// FIXME: optimize that.</span>
+        <span class="comment">// TODO: optimize that.</span>
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">nrows</span> {
             <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">ncols</span> {
                 <span class="kw">unsafe</span> {
@@ -3572,6 +3683,7 @@
     )
 }
 
+<span class="doccomment">/// # Cross product</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">ClosedAdd</span> <span class="op">+</span> <span class="ident">ClosedSub</span> <span class="op">+</span> <span class="ident">ClosedMul</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span>
     <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
 {
@@ -3600,7 +3712,7 @@
         }
     }
 
-    <span class="comment">// FIXME: use specialization instead of an assertion.</span>
+    <span class="comment">// TODO: use specialization instead of an assertion.</span>
     <span class="doccomment">/// The 3D cross product between two vectors.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics if the shape is not 3D vector. In the future, this will be implemented only for</span>
@@ -3624,7 +3736,7 @@
 
         <span class="kw">if</span> <span class="ident">shape</span>.<span class="number">0</span> <span class="op">==</span> <span class="number">3</span> {
             <span class="kw">unsafe</span> {
-                <span class="comment">// FIXME: soooo ugly!</span>
+                <span class="comment">// TODO: soooo ugly!</span>
                 <span class="kw">let</span> <span class="ident">nrows</span> <span class="op">=</span> <span class="ident">SameShapeR</span>::<span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">R2</span><span class="op">&gt;</span>::<span class="ident">from_usize</span>(<span class="number">3</span>);
                 <span class="kw">let</span> <span class="ident">ncols</span> <span class="op">=</span> <span class="ident">SameShapeC</span>::<span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C2</span><span class="op">&gt;</span>::<span class="ident">from_usize</span>(<span class="number">1</span>);
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Matrix</span>::<span class="ident">new_uninitialized_generic</span>(<span class="ident">nrows</span>, <span class="ident">ncols</span>);
@@ -3648,7 +3760,7 @@
             }
         } <span class="kw">else</span> {
             <span class="kw">unsafe</span> {
-                <span class="comment">// FIXME: ugly!</span>
+                <span class="comment">// TODO: ugly!</span>
                 <span class="kw">let</span> <span class="ident">nrows</span> <span class="op">=</span> <span class="ident">SameShapeR</span>::<span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">R2</span><span class="op">&gt;</span>::<span class="ident">from_usize</span>(<span class="number">1</span>);
                 <span class="kw">let</span> <span class="ident">ncols</span> <span class="op">=</span> <span class="ident">SameShapeC</span>::<span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C2</span><span class="op">&gt;</span>::<span class="ident">from_usize</span>(<span class="number">3</span>);
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Matrix</span>::<span class="ident">new_uninitialized_generic</span>(<span class="ident">nrows</span>, <span class="ident">ncols</span>);
@@ -3713,96 +3825,6 @@
             <span class="kw">let</span> <span class="ident">cang</span> <span class="op">=</span> <span class="ident">prod</span>.<span class="ident">simd_real</span>() <span class="op">/</span> (<span class="ident">n1</span> <span class="op">*</span> <span class="ident">n2</span>);
             <span class="ident">cang</span>.<span class="ident">simd_clamp</span>(<span class="op">-</span><span class="ident">N</span>::<span class="ident">SimdRealField</span>::<span class="ident">one</span>(), <span class="ident">N</span>::<span class="ident">SimdRealField</span>::<span class="ident">one</span>())
                 .<span class="ident">simd_acos</span>()
-        }
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">One</span> <span class="op">+</span> <span class="ident">ClosedAdd</span> <span class="op">+</span> <span class="ident">ClosedSub</span> <span class="op">+</span> <span class="ident">ClosedMul</span>, <span class="ident">D</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span>
-    <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span>
-{
-    <span class="doccomment">/// Returns `self * (1.0 - t) + rhs * t`, i.e., the linear blend of the vectors x and y using the scalar value a.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The value for a is not restricted to the range `[0, 1]`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use nalgebra::Vector3;</span>
-    <span class="doccomment">/// let x = Vector3::new(1.0, 2.0, 3.0);</span>
-    <span class="doccomment">/// let y = Vector3::new(10.0, 20.0, 30.0);</span>
-    <span class="doccomment">/// assert_eq!(x.lerp(&amp;y, 0.1), Vector3::new(1.9, 3.8, 5.7));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lerp</span><span class="op">&lt;</span><span class="ident">S2</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S2</span><span class="op">&gt;</span>, <span class="ident">t</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="ident">VectorN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>,
-    {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">clone_owned</span>();
-        <span class="ident">res</span>.<span class="ident">axpy</span>(<span class="ident">t</span>.<span class="ident">inlined_clone</span>(), <span class="ident">rhs</span>, <span class="ident">N</span>::<span class="ident">one</span>() <span class="op">-</span> <span class="ident">t</span>);
-        <span class="ident">res</span>
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span> <span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;&gt;</span> {
-    <span class="doccomment">/// Computes the spherical linear interpolation between two unit vectors.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use nalgebra::{Unit, Vector2};</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let v1 = Unit::new_normalize(Vector2::new(1.0, 2.0));</span>
-    <span class="doccomment">/// let v2 = Unit::new_normalize(Vector2::new(2.0, -3.0));</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let v = v1.slerp(&amp;v2, 1.0);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(v, v2);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slerp</span><span class="op">&lt;</span><span class="ident">S2</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S2</span><span class="op">&gt;&gt;</span>,
-        <span class="ident">t</span>: <span class="ident">N</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">VectorN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>,
-    {
-        <span class="comment">// FIXME: the result is wrong when self and rhs are collinear with opposite direction.</span>
-        <span class="self">self</span>.<span class="ident">try_slerp</span>(<span class="ident">rhs</span>, <span class="ident">t</span>, <span class="ident">N</span>::<span class="ident">default_epsilon</span>())
-            .<span class="ident">unwrap_or</span>(<span class="ident">Unit</span>::<span class="ident">new_unchecked</span>(<span class="self">self</span>.<span class="ident">clone_owned</span>()))
-    }
-
-    <span class="doccomment">/// Computes the spherical linear interpolation between two unit vectors.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns `None` if the two vectors are almost collinear and with opposite direction</span>
-    <span class="doccomment">/// (in this case, there is an infinity of possible results).</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_slerp</span><span class="op">&lt;</span><span class="ident">S2</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S2</span><span class="op">&gt;&gt;</span>,
-        <span class="ident">t</span>: <span class="ident">N</span>,
-        <span class="ident">epsilon</span>: <span class="ident">N</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Unit</span><span class="op">&lt;</span><span class="ident">VectorN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>,
-    {
-        <span class="kw">let</span> <span class="ident">c_hang</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dot</span>(<span class="ident">rhs</span>);
-
-        <span class="comment">// self == other</span>
-        <span class="kw">if</span> <span class="ident">c_hang</span> <span class="op">&gt;=</span> <span class="ident">N</span>::<span class="ident">one</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">Unit</span>::<span class="ident">new_unchecked</span>(<span class="self">self</span>.<span class="ident">clone_owned</span>()));
-        }
-
-        <span class="kw">let</span> <span class="ident">hang</span> <span class="op">=</span> <span class="ident">c_hang</span>.<span class="ident">acos</span>();
-        <span class="kw">let</span> <span class="ident">s_hang</span> <span class="op">=</span> (<span class="ident">N</span>::<span class="ident">one</span>() <span class="op">-</span> <span class="ident">c_hang</span> <span class="op">*</span> <span class="ident">c_hang</span>).<span class="ident">sqrt</span>();
-
-        <span class="comment">// FIXME: what if s_hang is 0.0 ? The result is not well-defined.</span>
-        <span class="kw">if</span> <span class="macro">relative_eq</span><span class="macro">!</span>(<span class="ident">s_hang</span>, <span class="ident">N</span>::<span class="ident">zero</span>(), <span class="ident">epsilon</span> <span class="op">=</span> <span class="ident">epsilon</span>) {
-            <span class="prelude-val">None</span>
-        } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="ident">ta</span> <span class="op">=</span> ((<span class="ident">N</span>::<span class="ident">one</span>() <span class="op">-</span> <span class="ident">t</span>) <span class="op">*</span> <span class="ident">hang</span>).<span class="ident">sin</span>() <span class="op">/</span> <span class="ident">s_hang</span>;
-            <span class="kw">let</span> <span class="ident">tb</span> <span class="op">=</span> (<span class="ident">t</span> <span class="op">*</span> <span class="ident">hang</span>).<span class="ident">sin</span>() <span class="op">/</span> <span class="ident">s_hang</span>;
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">scale</span>(<span class="ident">ta</span>);
-            <span class="ident">res</span>.<span class="ident">axpy</span>(<span class="ident">tb</span>, <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">rhs</span>, <span class="ident">N</span>::<span class="ident">one</span>());
-
-            <span class="prelude-val">Some</span>(<span class="ident">Unit</span>::<span class="ident">new_unchecked</span>(<span class="ident">res</span>))
         }
     }
 }

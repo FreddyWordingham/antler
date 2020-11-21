@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["light","Calculate the lighting factor."]]});
