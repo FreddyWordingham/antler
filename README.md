@@ -24,6 +24,8 @@ Binary specific https://freddywordingham.github.io/antler/
 Supporting library https://freddywordingham.github.io/arctk/
 
 # Examples
+![](./light_and_shadow.png)
+View the <- light and shadow -> calculations.
 ![](./metric.png)
 ![](./data.png)
 Render both <- space and time -> (+ other metrics distance/surface normals/etc.)
