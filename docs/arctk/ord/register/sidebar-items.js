@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Register","Name to index mapping."]]});

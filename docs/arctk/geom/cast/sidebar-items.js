@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["camera","Camera structure."],["camera_builder","Camera builder structure."],["emitter","Optical material."],["emitter_builder","Optical material."]]});

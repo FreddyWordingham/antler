@@ -1,1 +1,0 @@
-initSidebarItems({"trait":[["Valid","Types implementing this trait can be queried for validity."]]});

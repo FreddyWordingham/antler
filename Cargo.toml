@@ -1,102 +1,19 @@
 [package]
-authors = ["Freddy Wordingham <fjmw201@exeter.ac.uk>"]
+authors = ["Freddy Wordingham <freddy@digilab.co.uk>"]
 name = "antler"
-version = "0.7.0"
+version = "1.0.0"
 description = "Antler rendering engine."
 repository = "https://github.com/FreddyWordingham/antler"
 readme = "README.md"
 keywords = ["physics", "mcrt", "rt", "render"]
 categories = ["science", "simulation"]
-edition = "2018"
+edition = "2021"
 license = "MIT OR Apache-2.0"
 documentation = "https://freddywordingham.github.io/antler"
 exclude = ["docs/", "res/", "input/"]
 
 [features]
-# default = ["window"]
-# window = ["minifb"]
 
 [dependencies]
-# arctk = { path = "../arctk", features = ["png", "terminal_size"] }
-# arctk-attr = { path = "../arctk-attr" }
-# arctk-proc = { path = "../arctk-proc" }
-arctk = { version = "0.12.4", features = ["png", "terminal_size"] }
-arctk-attr = "0.2.*"
-arctk-proc = "0.3.*"
-nalgebra = "0.23.*"
-ndarray = "0.13.*"
-ndarray-stats = "0.3.*"
-num_cpus = "1.13.*"
-palette = "0.5.*"
-rand = "0.7.*"
-rayon = "1.5.*"
-serde = { version = "1.0.*", features = ["derive"] }
-minifb = { version = "0.19.*", optional = true }
+arctk = { path = "../arctk" }
 
-# [[bin]]
-# name = "antler-window"
-# required-features = ["window"]
-
-[profile.dev]
-# Development profile: "cargo build".
-opt-level = 0
-debug = true
-rpath = false
-lto = false
-debug-assertions = true
-codegen-units = 16
-panic = 'unwind'
-incremental = true
-overflow-checks = true
-
-# [profile.release]
-# # Release profile: "cargo build --release"
-# # # [DEV RELEASE]
-# opt-level = 3
-# debug = true
-# rpath = false
-# lto = false
-# debug-assertions = true
-# codegen-units = 16
-# panic = "unwind"
-# incremental = false
-# overflow-checks = true
-
-[profile.release]
-# [RELEASE]
-# Release profile: "cargo build --release"
-opt-level = 3
-debug = false
-rpath = false
-lto = "fat"
-debug-assertions = false
-codegen-units = 1
-panic = "abort"
-incremental = false
-overflow-checks = false
-[profile.test]
-# Testing profile: "cargo test"
-opt-level = 0
-debug = 2
-rpath = false
-lto = false
-debug-assertions = true
-codegen-units = 16
-incremental = true
-overflow-checks = true
-
-[profile.bench]
-# Benchmark profile: "cargo bench" (and "cargo test --release)".
-opt-level = 3
-debug = false
-rpath = false
-lto = "fat"
-debug-assertions = false
-codegen-units = 1
-incremental = false
-overflow-checks = false
-
-[package.metadata.docs.rs]
-no-default-features = true
-default-target = "x86_64-apple-darwin"
-targets = ["x86_64-unknown-linux-gnu"]

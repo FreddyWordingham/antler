@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["prelude",""]],"trait":[["IsSliceomorphic","Marker trait used in bounds of `Slice{Flat,Nest,Array}Ext`."],["SliceArrayExt","Permits viewing a slice as an array."],["SliceFlatExt","Permits viewing a slice of arrays as a flat slice."],["SliceNestExt","Permits viewing a slice as a slice of arrays."]]});

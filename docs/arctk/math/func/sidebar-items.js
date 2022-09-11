@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["formula","Formula implementation."],["formula_builder","Formula form implementation."]]});

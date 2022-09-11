@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["prelude","Into- traits for creating parallelized iterators and/or using [`par_azip!`]"]],"struct":[["Parallel","Parallel iterator wrapper."]]});

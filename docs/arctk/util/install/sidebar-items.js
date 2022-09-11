@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["dir","Install directory information."],["exec","Executable information."]]});

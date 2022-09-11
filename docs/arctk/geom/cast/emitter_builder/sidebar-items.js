@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["EmitterBuilder","Ray emission structure."]]});

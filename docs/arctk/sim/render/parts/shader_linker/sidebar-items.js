@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["ShaderLinker","Colouring settings builder."]]});

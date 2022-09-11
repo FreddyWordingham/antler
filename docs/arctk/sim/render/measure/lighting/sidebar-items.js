@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["lighting","Calculate the lighting factor. Zero indicates darkness. Unity indicates fully lit."]]});

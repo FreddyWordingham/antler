@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["multi_thread","Run a multi-threaded render simulation. # Errors if the progress bar can not be locked."],["single_thread","Run a render simulation using a single thread. # Errors if the progress bar can not be locked."]]});

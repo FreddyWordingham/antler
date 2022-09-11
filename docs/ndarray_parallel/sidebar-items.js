@@ -1,1 +1,0 @@
-initSidebarItems({"macro":[["par_azip","Parallel version of the `azip!` macro."]],"mod":[["prelude","Into- traits for creating parallelized iterators."]],"struct":[["Parallel","Parallel iterator wrapper."]],"trait":[["NdarrayIntoParallelIterator",""],["NdarrayIntoParallelRefIterator",""],["NdarrayIntoParallelRefMutIterator",""]]});

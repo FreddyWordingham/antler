@@ -1,1 +1,0 @@
-initSidebarItems({"type":[["Engine","MCRT sampling engine function type."]]});

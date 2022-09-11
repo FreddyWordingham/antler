@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["antler","Calculate the colour of a single tracer."]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Surface","Optical surface."]]});

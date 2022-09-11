@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Cube","Axis-aligned bounding box geometry. Used for spatial partitioning."]]});

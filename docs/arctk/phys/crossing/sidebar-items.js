@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Crossing","Optical interface crossing information. Calculates trajectory information."]]});

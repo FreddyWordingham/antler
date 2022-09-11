@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Histogram","Static range, constant bin width, Histogram."]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"trait":[["Emit","Emit trait implementation. Types implementing this trait can cast Rays."]]});

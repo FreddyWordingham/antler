@@ -1,1 +1,0 @@
-initSidebarItems({"derive":[["FromColor",""],["IntoColor",""],["Pixel",""]]});

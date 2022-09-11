@@ -1,1 +1,0 @@
-initSidebarItems({"trait":[["Link","Types implementing this trait can be linked to a set to produce a referenced type."]]});

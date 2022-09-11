@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["name","Determine the name of the executable. # Errors if the binary name can not be identified."]]});

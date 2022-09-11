@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["lighting","Lighting calculation."],["occlusion","Visibility calculation."],["shadowing","Shadowing calculation."]]});

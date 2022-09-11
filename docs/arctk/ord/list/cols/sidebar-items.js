@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["rgb","Red-Green-Blue colour representation."]]});

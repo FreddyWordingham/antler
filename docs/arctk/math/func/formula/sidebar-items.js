@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["Formula","Mathematical formulae accepting a single scalar argument."]]});

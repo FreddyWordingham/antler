@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["aspect_ratio","Formula implementation."],["colour","Colour alias."],["gradient","Gradient alias."],["gradient_builder","Gradient builder implementation."],["image","Image alias."]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Binner","One-dimensional binning structure."]]});

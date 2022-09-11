@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["alias","Aliases."],["func","Mathematical function module."],["rng","Random-Number-Generation module."],["slice","Ordering functions."],["trans3_builder","Transform form implementation."]]});
