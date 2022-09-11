@@ -16,4 +16,8 @@ exclude = ["docs/", "res/", "input/"]
 
 [dependencies]
 arctk = { path = "../arctk" }
+lazy_static = "1.4.0"
+nalgebra = "0.31.1"
+palette = "0.6.1"
+rand = "0.8.5"
 

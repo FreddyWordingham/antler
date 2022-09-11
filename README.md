@@ -1,3 +1,3 @@
 # ANTLER
 
-A textureless rendering engine written in Rust.
+A textureless rendering engine using [ARCTK](https://github.com/FreddyWordingham/arctk).
