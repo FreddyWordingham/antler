@@ -12,10 +12,8 @@ license = "MIT OR Apache-2.0"
 documentation = "https://freddywordingham.github.io/antler"
 exclude = ["docs/", "res/", "input/"]
 
-[features]
-
 [dependencies]
-arctk = { path = "../arctk" }
+arctk = "2.0.6"
 lazy_static = "1.4.0"
 nalgebra = "0.31.1"
 palette = "0.6.1"
