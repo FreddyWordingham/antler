@@ -5,7 +5,7 @@
 </p>
 
 [![crate](https://img.shields.io/crates/v/antler.svg)](https://crates.io/crates/antler)
-[![documentation](https://docs.rs/antler/badge.svg)](https://docs.rs/antler)
+[![documentation](./resources/badges/docs.svg)](https://freddywordingham.github.io/antler/)
 ![status](https://github.com/FreddyWordingham/antler/actions/workflows/quick_ci.yml/badge.svg)
 ![status](https://github.com/FreddyWordingham/antler/actions/workflows/full_ci.yml/badge.svg)
 [![build with](./resources/badges/arctk.svg)](https://github.com/FreddyWordingham/arctk)
