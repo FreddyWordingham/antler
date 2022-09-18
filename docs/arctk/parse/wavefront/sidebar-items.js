@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["load","Load a mesh from a wavefront file."],["read","Read a Mesh from a wavefront string."]]};

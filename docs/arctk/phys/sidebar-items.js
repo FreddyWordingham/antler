@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["crossing","Electro-magnetic boundary crossing calculator."]]};

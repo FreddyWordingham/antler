@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Linear","A generic standard with linear components."],["LinearFn","Linear color component encoding."]]};

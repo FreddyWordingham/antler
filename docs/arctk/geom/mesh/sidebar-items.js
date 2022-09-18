@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Mesh","Mesh of two-dimensional triangles embedded in space as a three-dimensional mesh."]]};
