@@ -11,4 +11,4 @@
 ![build with](./resources/badges/arctk.svg)
 ![minimum rustc 1.63](https://img.shields.io/badge/rustc-1.63+-red.svg)
 
-A textureless rendering engine using [antler](https://github.com/FreddyWordingham/antler).
+A textureless rendering engine built with the [arctk](https://github.com/FreddyWordingham/arctk) simulation framework.
