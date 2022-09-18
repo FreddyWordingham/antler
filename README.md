@@ -15,4 +15,4 @@ A textureless rendering engine built with the [arctk](https://github.com/FreddyW
 
 ![metric](./resources/images/metric.png)
 
-Output (clockwise from top-left): coloured, time calculate, lighting, surface normal vector ([x,y,z]->[r,g,b])
+Output (clockwise from top-left): coloured, time to calculate, lighting, surface normal vector ([x,y,z]->[r,g,b])
