@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"trait":[["Float","Generic trait for floating point numbers"]]};

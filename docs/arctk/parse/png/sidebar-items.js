@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":[["save","Save an array as a PNG file."]]};

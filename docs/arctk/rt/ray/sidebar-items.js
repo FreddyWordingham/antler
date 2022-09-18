@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":[["Ray","Point and direction."]]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":[["surface","Surface."],["surface_builder","Surface loader."],["tree","Adaptive tree cell scheme."],["tree_builder","Oct-tree construction settings."]]};

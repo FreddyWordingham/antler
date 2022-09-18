@@ -1,6 +1,0 @@
-(function() {var implementors = {};
-implementors["json5"] = [{"text":"impl <a class=\"trait\" href=\"serde/de/trait.Error.html\" title=\"trait serde::de::Error\">Error</a> for <a class=\"enum\" href=\"json5/enum.Error.html\" title=\"enum json5::Error\">Error</a>","synthetic":false,"types":["json5::error::Error"]}];
-implementors["serde"] = [];
-implementors["serde_json"] = [{"text":"impl <a class=\"trait\" href=\"serde/de/trait.Error.html\" title=\"trait serde::de::Error\">Error</a> for <a class=\"struct\" href=\"serde_json/struct.Error.html\" title=\"struct serde_json::Error\">Error</a>","synthetic":false,"types":["serde_json::error::Error"]}];
-implementors["toml"] = [{"text":"impl <a class=\"trait\" href=\"https://docs.rs/serde/1.0.144/serde/de/trait.Error.html\" title=\"trait serde::de::Error\">Error</a> for <a class=\"struct\" href=\"toml/de/struct.Error.html\" title=\"struct toml::de::Error\">Error</a>","synthetic":false,"types":["toml::de::Error"]}];
-if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
