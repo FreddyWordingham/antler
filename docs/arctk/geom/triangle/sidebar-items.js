@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Triangle","Two-dimensional triangle embedded in three-dimensional space. Vertex positions and normals are stored in the same counter-clockwise order. The plane-normal follows the right-hand rule."]]};

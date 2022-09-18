@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["CGemmOption","cgemm/zgemm per-operand options"]],"fn":[["cgemm","General matrix multiplication (complex f32)"],["dgemm","General matrix multiplication (f64)"],["sgemm","General matrix multiplication (f32)"],["zgemm","General matrix multiplication (complex f64)"]]};

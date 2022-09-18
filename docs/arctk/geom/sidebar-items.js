@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["cube","Axis-aligned cuboid."],["mesh","Triangle-mesh."],["triangle","Triangle."]]};

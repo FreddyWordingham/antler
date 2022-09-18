@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Scan","Hit-scan result enumeration."]]};
