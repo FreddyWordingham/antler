@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"macro":[["args","Import command line arguments as specified type."]],"mod":[["dom","Domain partitioning."],["geom","Spatial constructs."],["parse","File format parsers."],["phys","Physics."],["render","Rendering."],["rt","Ray-tracing."],["util","Utility."]]};

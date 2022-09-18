@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["load","Load a type from a JSON file."],["read","Read a type from a JSON string."],["save","Serialise a type in json format."],["write","Serialise a type in json format."]]};

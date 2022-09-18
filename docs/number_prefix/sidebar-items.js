@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["NumberPrefix","The result of trying to apply a prefix to a floating-point value."],["Prefix","A numeric prefix, either binary or decimal."]],"trait":[["Amounts","Traits for floating-point values for both the possible multipliers. They need to be Copy, have defined 1000 and 1024s, and implement a bunch of operators."]]};

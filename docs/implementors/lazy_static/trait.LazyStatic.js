@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["antler"] = [{"text":"impl <a class=\"trait\" href=\"lazy_static/trait.LazyStatic.html\" title=\"trait lazy_static::LazyStatic\">LazyStatic</a> for <a class=\"struct\" href=\"antler/struct.GOLDEN_RATIO.html\" title=\"struct antler::GOLDEN_RATIO\">GOLDEN_RATIO</a>","synthetic":false,"types":["antler::GOLDEN_RATIO"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

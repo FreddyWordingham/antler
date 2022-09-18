@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Cube","Cuboid oriented along the Cartesian axes."]]};
