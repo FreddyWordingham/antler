@@ -37,3 +37,4 @@ def stitch(input_dir, kind):
 if __name__ == "__main__":
     input_dir = sys.argv[1]
     stitch(input_dir, "colour")
+    stitch(input_dir, "time")
