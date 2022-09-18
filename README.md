@@ -11,4 +11,8 @@
 ![minimum rustc 1.63](https://img.shields.io/badge/rustc-1.63+-red.svg)
 [![build with](./resources/badges/arctk.svg)](https://github.com/FreddyWordingham/arctk)
 
-A textureless rendering engine built with the [arctk](https://github.com/FreddyWordingham/arctk) simulation framework.
+A textureless rendering engine built with the [arctk](https://github.com/FreddyWordingham/arctk) simulation framework. Example:
+
+![metric](./resources/images/metric.png)
+
+Output (clockwise from top-left): coloured, time to calculate, lighting, surface normal vector ([x,y,z]->[r,g,b])
