@@ -1,21 +1,11 @@
 [package]
-authors = ["Freddy Wordingham <freddy@digilab.co.uk>"]
 name = "antler"
-version = "1.0.0"
-description = "Antler rendering engine."
-repository = "https://github.com/FreddyWordingham/antler"
-readme = "README.md"
-keywords = ["physics", "mcrt", "rt", "render"]
-categories = ["science", "simulation"]
-edition = "2021"
-license = "MIT OR Apache-2.0"
-documentation = "https://freddywordingham.github.io/antler"
-exclude = ["docs/", "res/", "input/"]
+version = "2.0.0"
+edition = "2024"
 
 [dependencies]
-arctk = "2.0.6"
-lazy_static = "1.4.0"
-nalgebra = "0.31.1"
-palette = "0.6.1"
-rand = "0.8.5"
-
+chromatic = "0.0.5"
+nalgebra = { version = "0.33.2", features = ["rayon"] }
+ndarray = { version = "0.16.1", features = ["rayon"] }
+photo = "3.1.1"
+rayon = "1.10.0"

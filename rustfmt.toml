@@ -1,3 +1,2 @@
-edition = "2021"
-
-imports_granularity="Crate"
+imports_granularity = "Crate"
+max_width = 128
