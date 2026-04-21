@@ -1,0 +1,1 @@
+pub struct ShaderId(usize);
