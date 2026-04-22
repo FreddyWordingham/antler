@@ -100,10 +100,10 @@ impl Pixel for Rgba {
     #[inline]
     fn to_bytes(&self) -> Self::Bytes {
         [
-            (self.0.red * 255.0).round() as u8,
-            (self.0.green * 255.0).round() as u8,
-            (self.0.blue * 255.0).round() as u8,
-            (self.0.alpha * 255.0).round() as u8,
+            (self.0.red.clamp(0.0, 1.0) * 255.0).round() as u8,
+            (self.0.green.clamp(0.0, 1.0) * 255.0).round() as u8,
+            (self.0.blue.clamp(0.0, 1.0) * 255.0).round() as u8,
+            (self.0.alpha.clamp(0.0, 1.0) * 255.0).round() as u8,
         ]
     }
 
@@ -135,7 +135,10 @@ impl Pixel for Rgba {
                 let a = u8::from_str_radix(&hex[6..8], 16).unwrap();
                 Ok(Self::from_bytes([r, g, b, a]))
             }
-            _ => panic!("Invalid RGBA hex colour format"),
+            found => Err(ParseHexError::InvalidLength {
+                expected: &[4, 8],
+                found,
+            }),
         }
     }
 }

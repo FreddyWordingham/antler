@@ -2,7 +2,7 @@ use png::{BitDepth, ColorType};
 
 use crate::errors::ParseHexError;
 
-pub trait Pixel {
+pub trait Pixel: Copy {
     const CHANNELS: usize;
     const PNG_COLOUR_TYPE: ColorType;
     const PNG_BIT_DEPTH: BitDepth = BitDepth::Eight;
@@ -14,22 +14,11 @@ pub trait Pixel {
 
     fn to_hex(&self) -> String {
         let bytes = self.to_bytes();
-        match Self::CHANNELS {
-            3 => format!(
-                "#{:02X}{:02X}{:02X}",
-                bytes.as_ref()[0],
-                bytes.as_ref()[1],
-                bytes.as_ref()[2]
-            ),
-            4 => format!(
-                "#{:02X}{:02X}{:02X}{:02X}",
-                bytes.as_ref()[0],
-                bytes.as_ref()[1],
-                bytes.as_ref()[2],
-                bytes.as_ref()[3]
-            ),
-            _ => unreachable!(),
+        let mut out = String::from("#");
+        for byte in bytes.as_ref() {
+            out.push_str(&format!("{byte:02X}"));
         }
+        out
     }
     fn from_hex(hex: &str) -> Result<Self, ParseHexError>
     where
