@@ -20,10 +20,12 @@ impl ObjectHit {
         world_ray_origin: Point3<f32>,
         object_id: ObjectId,
     ) -> WorldHit {
+        let world_position = transform.transform_point(&self.position);
+
         WorldHit {
             object_id,
-            distance: (self.position - world_ray_origin).norm(),
-            position: transform.transform_point(&self.position),
+            distance: (world_position - world_ray_origin).norm(),
+            position: world_position,
             normal: Unit::new_normalize(transform.transform_vector(&self.normal)),
             uv: self.uv,
         }

@@ -20,7 +20,7 @@ impl Scene {
         let mut nearest: Option<WorldHit> = None;
 
         for (index, object) in self.objects.iter().enumerate() {
-            let object_ray = world_ray.to_object_space(&object.transform);
+            let object_ray = world_ray.to_object_space(&object.inv_transform);
 
             let geometry = world.get_geometry(object.geometry_id);
             let Some(object_hit) = geometry.trace(&object_ray) else {
