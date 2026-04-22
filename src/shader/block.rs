@@ -1,5 +1,6 @@
 use crate::{
     colour::Rgb,
+    lighting::LightSample,
     shader::Shader,
     tracing::{Probe, WorldHit},
 };
@@ -13,7 +14,7 @@ impl Shader for Block {
         Rgb::BLACK
     }
 
-    fn reflected(&self, _probe: &Probe, _hit: &WorldHit) -> Rgb {
+    fn shade(&self, _probe: &Probe, _hit: &WorldHit, _light: &LightSample) -> Rgb {
         self.colour
     }
 }

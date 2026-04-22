@@ -25,7 +25,7 @@ pub fn render(world: &World, scene: &Scene, probe: Probe) -> Rgb {
     let scatter = material.scatter(&probe, &world_hit);
 
     let emitted = shader.emitted(&world_hit);
-    let reflected = shader.reflected(&probe, &world_hit) * (probe.weight * scatter.absorbed);
+    let reflected = shader.shade(&probe, &world_hit) * (probe.weight * scatter.absorbed);
     let local_colour = emitted + reflected;
 
     let bounced_colours = scatter
