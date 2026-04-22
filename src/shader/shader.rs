@@ -9,8 +9,8 @@ pub trait Shader {
 
 pub enum ShaderEnum {}
 
-impl ShaderEnum {
-    pub fn shade(&self, _photon: &Photon, _hit: &Hit) -> Rgb {
+impl Shader for ShaderEnum {
+    fn shade(&self, _photon: &Photon, _hit: &Hit) -> Rgb {
         match self {
             _ => todo!(),
         }

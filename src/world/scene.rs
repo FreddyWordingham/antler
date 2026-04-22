@@ -11,6 +11,6 @@ impl Scene {
     }
 
     pub fn get_object(&self, id: ObjectId) -> &Object {
-        &self.objects[*id]
+        &self.objects[id.index()]
     }
 }

@@ -20,27 +20,27 @@ impl Rgb {
     }
 
     #[inline]
-    fn red(&self) -> f32 {
+    pub fn red(&self) -> f32 {
         self.0.red
     }
 
     #[inline]
-    fn green(&self) -> f32 {
+    pub fn green(&self) -> f32 {
         self.0.green
     }
 
     #[inline]
-    fn blue(&self) -> f32 {
+    pub fn blue(&self) -> f32 {
         self.0.blue
     }
 
     #[inline]
-    fn alpha(&self) -> f32 {
+    pub fn alpha(&self) -> f32 {
         1.0
     }
 
     #[inline]
-    fn to_rgba(&self) -> Rgba {
+    pub fn to_rgba(&self) -> Rgba {
         Rgba::new(self.0.red, self.0.green, self.0.blue, 1.0)
     }
 }
@@ -112,7 +112,7 @@ impl Pixel for Rgb {
     }
 
     #[inline]
-    fn from_hex(hex: &str) -> Self {
+    fn from_hex(hex: &str) -> Result<Self, ParseHexError> {
         let hex = hex.trim_start_matches('#');
         match hex.len() {
             3 => {

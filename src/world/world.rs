@@ -13,14 +13,14 @@ pub struct World {
 
 impl World {
     pub fn get_geometry(&self, id: GeometryId) -> &GeometryEnum {
-        &self.geometries[*id]
+        &self.geometries[id.index()]
     }
 
     pub fn get_shader(&self, id: ShaderId) -> &ShaderEnum {
-        &self.shaders[*id]
+        &self.shaders[id.index()]
     }
 
     pub fn get_material(&self, id: MaterialId) -> &MaterialEnum {
-        &self.materials[*id]
+        &self.materials[id.index()]
     }
 }

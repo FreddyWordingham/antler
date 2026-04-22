@@ -29,5 +29,5 @@ pub trait Pixel {
             _ => unreachable!(),
         }
     }
-    fn from_hex(hex: &str) -> Self;
+    fn from_hex(hex: &str) -> Result<Self, ParseHexError>;
 }

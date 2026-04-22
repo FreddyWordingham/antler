@@ -1,12 +1,14 @@
-use std::ops::Deref;
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct ShaderId(usize);
 
-impl Deref for ShaderId {
-    type Target = usize;
+impl ShaderId {
+    #[inline]
+    pub const fn new(index: usize) -> Self {
+        Self(index)
+    }
 
-    fn deref(&self) -> &Self::Target {
-        &self.0
+    #[inline]
+    pub const fn index(self) -> usize {
+        self.0
     }
 }

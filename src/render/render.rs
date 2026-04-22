@@ -1,5 +1,7 @@
 use crate::{
     colour::Rgb,
+    material::Material,
+    shader::Shader,
     tracing::Photon,
     world::{Scene, World},
 };
