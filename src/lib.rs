@@ -1,6 +1,7 @@
 mod acceleration;
 mod camera;
 mod colour;
+mod errors;
 mod geometry;
 mod id;
 mod material;
@@ -13,15 +14,16 @@ mod world;
 pub mod prelude {
     pub use crate::{
         acceleration::Bvh,
-        camera::Camera,
-        colour::{Colour, Gradient},
-        geometry::{Aabb, Bounded, Geometry, Ray, Sphere, Traceable},
+        camera::{Camera, CameraEnum, Orthographic, Perspective},
+        colour::{Gradient, Pixel, Rgb, Rgba},
+        errors::ParseHexError,
+        geometry::{Aabb, Bounded, Geometry, GeometryEnum, Ray, Sphere, Traceable},
         id::{GeometryId, MaterialId, ObjectId, ShaderId},
-        material::{Material, Scatter},
+        material::{Material, MaterialEnum, Opaque, Scatter},
         render::render,
-        shader::Shader,
-        storage::{Grid, Image},
-        tracing::Photon,
+        shader::{Block, Shader, ShaderEnum},
+        storage::{Grid, Image, RgbImage, RgbaImage},
+        tracing::{ObjectHit, ObjectRay, Probe, WorldHit, WorldRay},
         world::{Object, Scene, World},
     };
 }

@@ -1,13 +1,13 @@
-use crate::geometry::Ray;
+use crate::tracing::WorldRay;
 
-pub struct Photon {
-    pub ray: Ray,
+pub struct Probe {
+    pub ray: WorldRay,
     pub weight: f32,
     pub generation: u32,
 }
 
-impl Photon {
-    pub fn new(ray: Ray) -> Self {
+impl Probe {
+    pub fn new(ray: WorldRay) -> Self {
         Self {
             ray,
             weight: 1.0,
@@ -15,7 +15,7 @@ impl Photon {
         }
     }
 
-    pub fn child(&self, ray: Ray, weight: f32) -> Self {
+    pub fn child(&self, ray: WorldRay, weight: f32) -> Self {
         Self {
             ray,
             weight: self.weight * weight,

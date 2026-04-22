@@ -1,3 +1,5 @@
+mod block;
 mod shader;
 
-pub use shader::Shader;
+pub use block::Block;
+pub use shader::{Shader, ShaderEnum};

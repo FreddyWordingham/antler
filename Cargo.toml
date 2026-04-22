@@ -6,3 +6,4 @@ edition = "2024"
 [dependencies]
 nalgebra = "0.34.2"
 palette = "0.7.6"
+png = "0.18.1"
