@@ -4,7 +4,11 @@ use std::{
 };
 
 use palette::Srgb;
+use png::ColorType;
 
+use crate::colour::{Colour, Rgba};
+
+#[derive(Debug, Clone)]
 pub struct Rgb(Srgb);
 
 impl Rgb {
@@ -16,69 +20,6 @@ impl Rgb {
         assert!(green >= 0.0 && green <= 1.0);
         assert!(blue >= 0.0 && blue <= 1.0);
         Self(Srgb::new(red, green, blue))
-    }
-
-    #[inline]
-    pub const fn from_bytes(bytes: [u8; 3]) -> Self {
-        Self(Srgb::new(
-            bytes[0] as f32 / 255.0,
-            bytes[1] as f32 / 255.0,
-            bytes[2] as f32 / 255.0,
-        ))
-    }
-
-    #[inline]
-    pub fn from_hex(hex: &str) -> Self {
-        let hex = hex.trim_start_matches('#');
-        match hex.len() {
-            3 => {
-                let r = u8::from_str_radix(&hex[0..1].repeat(2), 16).expect("Invalid hex string");
-                let g = u8::from_str_radix(&hex[1..2].repeat(2), 16).expect("Invalid hex string");
-                let b = u8::from_str_radix(&hex[2..3].repeat(2), 16).expect("Invalid hex string");
-                Self::from_bytes([r, g, b])
-            }
-            6 => {
-                let r = u8::from_str_radix(&hex[0..2], 16).expect("Invalid hex string");
-                let g = u8::from_str_radix(&hex[2..4], 16).expect("Invalid hex string");
-                let b = u8::from_str_radix(&hex[4..6], 16).expect("Invalid hex string");
-                Self::from_bytes([r, g, b])
-            }
-            _ => panic!("Hex string must be 3 or 6 characters long"),
-        }
-    }
-
-    #[inline]
-    pub const fn to_bytes(&self) -> [u8; 3] {
-        [
-            (self.0.red * 255.0).round() as u8,
-            (self.0.green * 255.0).round() as u8,
-            (self.0.blue * 255.0).round() as u8,
-        ]
-    }
-
-    #[inline]
-    pub fn to_hex(&self) -> String {
-        format!(
-            "#{:02X}{:02X}{:02X}",
-            (self.0.red * 255.0).round() as u8,
-            (self.0.green * 255.0).round() as u8,
-            (self.0.blue * 255.0).round() as u8
-        )
-    }
-
-    #[inline]
-    pub fn red(&self) -> f32 {
-        self.0.red
-    }
-
-    #[inline]
-    pub fn green(&self) -> f32 {
-        self.0.green
-    }
-
-    #[inline]
-    pub fn blue(&self) -> f32 {
-        self.0.blue
     }
 }
 
@@ -121,5 +62,80 @@ impl MulAssign<f32> for Rgb {
 impl Sum for Rgb {
     fn sum<I: Iterator<Item = Self>>(iter: I) -> Self {
         iter.fold(Self::BLACK, |a, b| a + b)
+    }
+}
+
+impl Colour for Rgb {
+    const CHANNELS: usize = 3;
+    const PNG_COLOUR_TYPE: ColorType = ColorType::Rgb;
+
+    type Bytes = [u8; 3];
+
+    #[inline]
+    fn to_rgb(&self) -> Self {
+        self.clone()
+    }
+
+    #[inline]
+    fn to_rgba(&self) -> Rgba {
+        Rgba::new(self.0.red, self.0.green, self.0.blue, 1.0)
+    }
+
+    #[inline]
+    fn red(&self) -> f32 {
+        self.0.red
+    }
+
+    #[inline]
+    fn green(&self) -> f32 {
+        self.0.green
+    }
+
+    #[inline]
+    fn blue(&self) -> f32 {
+        self.0.blue
+    }
+
+    #[inline]
+    fn alpha(&self) -> f32 {
+        1.0
+    }
+
+    #[inline]
+    fn to_bytes(&self) -> Self::Bytes {
+        [
+            (self.0.red * 255.0).round() as u8,
+            (self.0.green * 255.0).round() as u8,
+            (self.0.blue * 255.0).round() as u8,
+        ]
+    }
+
+    #[inline]
+    fn from_bytes(bytes: Self::Bytes) -> Self {
+        Self(Srgb::new(
+            bytes[0] as f32 / 255.0,
+            bytes[1] as f32 / 255.0,
+            bytes[2] as f32 / 255.0,
+        ))
+    }
+
+    #[inline]
+    fn from_hex(hex: &str) -> Self {
+        let hex = hex.trim_start_matches('#');
+        match hex.len() {
+            3 => {
+                let r = u8::from_str_radix(&hex[0..1].repeat(2), 16).unwrap();
+                let g = u8::from_str_radix(&hex[1..2].repeat(2), 16).unwrap();
+                let b = u8::from_str_radix(&hex[2..3].repeat(2), 16).unwrap();
+                Self::from_bytes([r, g, b])
+            }
+            6 => {
+                let r = u8::from_str_radix(&hex[0..2], 16).unwrap();
+                let g = u8::from_str_radix(&hex[2..4], 16).unwrap();
+                let b = u8::from_str_radix(&hex[4..6], 16).unwrap();
+                Self::from_bytes([r, g, b])
+            }
+            _ => panic!("Invalid RGB hex colour format"),
+        }
     }
 }

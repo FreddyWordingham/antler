@@ -14,7 +14,7 @@ pub mod prelude {
     pub use crate::{
         acceleration::Bvh,
         camera::{Camera, CameraEnum},
-        colour::{Gradient, Rgb, Rgba},
+        colour::{Colour, Gradient, Rgb, Rgba},
         geometry::{Aabb, Bounded, Geometry, GeometryEnum, Ray, Sphere, Traceable},
         id::{GeometryId, MaterialId, ObjectId, ShaderId},
         material::{Material, MaterialEnum, Scatter},
