@@ -1,8 +1,8 @@
-use crate::{geometry::Aabb, id::ObjectId};
+use crate::geometry::Aabb;
 
-pub struct Bvh {
+pub struct Bvh<T> {
     nodes: Vec<BvhNode>,
-    object_ids: Vec<ObjectId>,
+    ids: Vec<T>,
 }
 
 struct BvhNode {

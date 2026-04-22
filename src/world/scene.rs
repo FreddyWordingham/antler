@@ -2,7 +2,7 @@ use crate::{acceleration::Bvh, geometry::Ray, id::ObjectId, tracing::Hit, world:
 
 pub struct Scene {
     objects: Vec<Object>,
-    bvh: Bvh,
+    bvh: Bvh<ObjectId>,
 }
 
 impl Scene {

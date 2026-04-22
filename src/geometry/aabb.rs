@@ -1,5 +1,11 @@
 use nalgebra::{Point3, Similarity3};
 
+use crate::{
+    geometry::{Bounded, Ray, Traceable},
+    tracing::Hit,
+};
+
+#[derive(Debug, Clone)]
 pub struct Aabb {
     pub min: Point3<f32>,
     pub max: Point3<f32>,
@@ -38,5 +44,17 @@ impl Aabb {
             |a, b| Point3::new(a.x.max(b.x), a.y.max(b.y), a.z.max(b.z)),
         );
         Self { min, max }
+    }
+}
+
+impl Bounded for Aabb {
+    fn bounds(&self) -> Aabb {
+        self.clone()
+    }
+}
+
+impl Traceable for Aabb {
+    fn trace(&self, ray: &Ray) -> Option<Hit> {
+        todo!()
     }
 }

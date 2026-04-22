@@ -6,3 +6,5 @@ use crate::{
 pub trait Shader {
     fn shade(&self, photon: &Photon, hit: &Hit) -> Colour;
 }
+
+pub enum ShaderEnum {}

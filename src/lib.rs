@@ -13,13 +13,13 @@ mod world;
 pub mod prelude {
     pub use crate::{
         acceleration::Bvh,
-        camera::Camera,
+        camera::{Camera, CameraEnum},
         colour::{Colour, Gradient},
-        geometry::{Aabb, Bounded, Geometry, Ray, Sphere, Traceable},
+        geometry::{Aabb, Bounded, Geometry, GeometryEnum, Ray, Sphere, Traceable},
         id::{GeometryId, MaterialId, ObjectId, ShaderId},
-        material::{Material, Scatter},
+        material::{Material, MaterialEnum, Scatter},
         render::render,
-        shader::Shader,
+        shader::{Shader, ShaderEnum},
         storage::{Grid, Image},
         tracing::Photon,
         world::{Object, Scene, World},

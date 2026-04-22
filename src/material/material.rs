@@ -6,3 +6,5 @@ use crate::{
 pub trait Material {
     fn scatter(&self, photon: &Photon, hit: &Hit) -> Scatter;
 }
+
+pub enum MaterialEnum {}

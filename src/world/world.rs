@@ -1,14 +1,14 @@
 use crate::{
-    geometry::Geometry,
+    geometry::{Geometry, GeometryEnum},
     id::{GeometryId, MaterialId, ShaderId},
-    material::Material,
-    shader::Shader,
+    material::{Material, MaterialEnum},
+    shader::{Shader, ShaderEnum},
 };
 
 pub struct World {
-    geometries: Vec<Box<dyn Geometry>>,
-    shaders: Vec<Box<dyn Shader>>,
-    materials: Vec<Box<dyn Material>>,
+    geometries: Vec<GeometryEnum>,
+    shaders: Vec<ShaderEnum>,
+    materials: Vec<MaterialEnum>,
 }
 
 impl World {

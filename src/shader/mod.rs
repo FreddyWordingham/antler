@@ -1,3 +1,3 @@
 mod shader;
 
-pub use shader::Shader;
+pub use shader::{Shader, ShaderEnum};
