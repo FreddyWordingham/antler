@@ -1,5 +1,5 @@
 use antler::prelude::*;
-use nalgebra::{Point3, Similarity3, Unit, Vector3};
+use nalgebra::{Point2, Point3, Similarity3, Vector3};
 
 fn main() {
     let width = 400;
@@ -7,9 +7,13 @@ fn main() {
 
     let mut world = World::new();
 
-    let sphere_id = world.add_geometry(GeometryEnum::Sphere(Sphere {
+    let _sphere_id = world.add_geometry(GeometryEnum::Sphere(Sphere {
         centre: Point3::new(0.0, 0.0, 0.0),
         radius: 1.0,
+    }));
+    let aabb_id = world.add_geometry(GeometryEnum::Aabb(Aabb {
+        min: Point3::new(-1.0, -1.0, -1.0),
+        max: Point3::new(1.0, 1.0, 1.0),
     }));
 
     let shader_id = world.add_shader(ShaderEnum::Block(Block {
@@ -19,32 +23,44 @@ fn main() {
     let material_id = world.add_material(MaterialEnum::Opaque(Opaque));
 
     let mut scene = Scene::new();
-    scene.add_object(Object::new(sphere_id, shader_id, material_id, Similarity3::identity()));
+    scene.add_object(Object::new(aabb_id, shader_id, material_id, Similarity3::identity()));
 
     let mut image = RgbImage::filled([width, height], Rgb::BLACK);
 
-    let camera_origin = Point3::new(0.0, 0.0, -3.0);
+    let camera = create_perspective_camera([width, height]);
 
     for y in 0..height {
         for x in 0..width {
-            let u = (x as f32 + 0.5) / width as f32;
-            let v = (y as f32 + 0.5) / height as f32;
-
-            let sx = 2.0 * u - 1.0;
-            let sy = 1.0 - 2.0 * v;
-
-            let direction = Unit::new_normalize(Vector3::new(sx, sy, 1.5));
-
-            let ray = Ray {
-                origin: camera_origin,
-                direction,
-            };
-
-            let probe = Probe::new(WorldRay::new(ray));
-            let colour = render(&world, &scene, probe);
-            image[(x, y)] = colour;
+            let uv = Point2::new((x as f32 + 0.5) / width as f32, (y as f32 + 0.5) / height as f32);
+            let probe = camera.emit(uv);
+            image[(x, y)] = render(&world, &scene, probe);
         }
     }
 
     image.save("output.png").unwrap();
+}
+
+#[allow(dead_code)]
+fn create_perspective_camera(resolution: [usize; 2]) -> Perspective {
+    Perspective::new(
+        Point3::new(2.0, 1.0, -3.0),
+        Point3::new(0.0, 0.0, 0.0),
+        Vector3::y_axis(),
+        60.0_f32.to_radians(),
+        resolution[0] as f32 / resolution[1] as f32,
+    )
+}
+
+#[allow(dead_code)]
+fn create_orthographic_camera(resolution: [usize; 2]) -> Orthographic {
+    let width = 4.0;
+    let height = width * resolution[1] as f32 / resolution[0] as f32;
+
+    Orthographic::new(
+        Point3::new(2.0, 1.0, -3.0),
+        Point3::new(0.0, 0.0, 0.0),
+        Vector3::y_axis(),
+        width,
+        height,
+    )
 }
