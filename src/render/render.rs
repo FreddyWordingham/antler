@@ -7,7 +7,7 @@ use crate::{
 };
 
 const MAX_GENERATION: u32 = 5;
-const MIN_WEIGHT: f32 = 0.01;
+const MIN_WEIGHT: f32 = 1.0e-2;
 
 pub fn render(world: &World, scene: &Scene, probe: Probe) -> Rgb {
     if probe.generation >= MAX_GENERATION || probe.weight <= MIN_WEIGHT {

@@ -1,9 +1,10 @@
 use antler::prelude::*;
-use nalgebra::{Point2, Point3, Similarity3, Vector3};
+use indicatif::ProgressBar;
+use nalgebra::{Point2, Point3, Similarity3, Unit, Vector3};
 
 fn main() {
-    let width = 400;
-    let height = 300;
+    let width = 800;
+    let height = 600;
 
     let mut world = World::new();
 
@@ -16,13 +17,17 @@ fn main() {
         max: Point3::new(1.0, 1.0, 1.0),
     }));
 
-    let shader_id = world.add_shader(ShaderEnum::Block(Block {
+    let shader_id = world.add_shader(ShaderEnum::Lambertion(Lambertion {
         colour: Rgb::new(0.2, 0.8, 0.4),
     }));
 
     let material_id = world.add_material(MaterialEnum::Opaque(Opaque));
 
     let mut scene = Scene::new();
+    scene.add_light(LightEnum::DirectionalLight(DirectionalLight {
+        direction: Unit::new_normalize(Vector3::new(-1.0, -2.0, -3.0)),
+        radiance: Rgb::new(1.0, 1.0, 1.0),
+    }));
     scene.add_object(Object::new(aabb_id, shader_id, material_id, Similarity3::identity()));
     scene.build(&world);
 
@@ -30,13 +35,17 @@ fn main() {
 
     let camera = create_perspective_camera([width, height]);
 
+    let pb = create_progress_bar(width * height);
     for y in 0..height {
         for x in 0..width {
+            pb.inc(1);
+
             let uv = Point2::new((x as f32 + 0.5) / width as f32, (y as f32 + 0.5) / height as f32);
             let probe = camera.emit(uv);
             image[(x, y)] = render(&world, &scene, probe);
         }
     }
+    pb.finish();
 
     image.save("output.png").unwrap();
 }
@@ -44,10 +53,10 @@ fn main() {
 #[allow(dead_code)]
 fn create_perspective_camera(resolution: [usize; 2]) -> Perspective {
     Perspective::new(
-        Point3::new(2.0, 1.0, -3.0),
+        Point3::new(10.0, 10.0, 10.0),
         Point3::new(0.0, 0.0, 0.0),
         Vector3::y_axis(),
-        60.0_f32.to_radians(),
+        15.0_f32.to_radians(),
         resolution[0] as f32 / resolution[1] as f32,
     )
 }
@@ -58,10 +67,20 @@ fn create_orthographic_camera(resolution: [usize; 2]) -> Orthographic {
     let height = width * resolution[1] as f32 / resolution[0] as f32;
 
     Orthographic::new(
-        Point3::new(2.0, 1.0, -3.0),
+        Point3::new(10.0, 10.0, 10.0),
         Point3::new(0.0, 0.0, 0.0),
         Vector3::y_axis(),
         width,
         height,
     )
+}
+
+fn create_progress_bar(total: usize) -> ProgressBar {
+    let progress_bar = ProgressBar::new(total as u64);
+    progress_bar.set_style(
+        indicatif::ProgressStyle::with_template("[{elapsed_precise}] {bar:40.cyan/blue} {pos}/{len} ({percent}%)")
+            .unwrap()
+            .progress_chars("##-"),
+    );
+    progress_bar
 }

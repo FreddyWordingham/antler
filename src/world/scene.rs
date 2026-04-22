@@ -91,8 +91,13 @@ impl Scene {
             .iter()
             .map(|light| {
                 let sample = light.sample(hit);
-                let shadow_ray = WorldRay::from_offset(hit.position, hit.normal, sample.direction);
 
+                let n_dot_l = hit.normal.dot(&sample.direction);
+                if n_dot_l <= 0.0 {
+                    return Rgb::BLACK;
+                }
+
+                let shadow_ray = WorldRay::from_offset(hit.position, hit.normal, sample.direction);
                 if self.occluded(world, &shadow_ray, sample.distance) {
                     Rgb::BLACK
                 } else {

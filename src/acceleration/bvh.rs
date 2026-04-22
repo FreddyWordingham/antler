@@ -67,7 +67,6 @@ impl<T: Copy> Bvh<T> {
     }
 
     #[inline]
-
     pub fn trace_any_filtered<F>(&self, ray: &WorldRay, max_distance: f32, mut test: F) -> bool
     where
         F: FnMut(T) -> bool,
