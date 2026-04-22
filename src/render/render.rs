@@ -1,5 +1,5 @@
 use crate::{
-    colour::Colour,
+    colour::Rgb,
     tracing::Photon,
     world::{Scene, World},
 };
@@ -7,13 +7,13 @@ use crate::{
 const MAX_GENERATION: u32 = 5;
 const MIN_WEIGHT: f32 = 0.01;
 
-pub fn render(world: &World, scene: &Scene, photon: Photon) -> Colour {
+pub fn render(world: &World, scene: &Scene, photon: Photon) -> Rgb {
     if photon.generation >= MAX_GENERATION || photon.weight <= MIN_WEIGHT {
-        return Colour::BLACK;
+        return Rgb::BLACK;
     }
 
     let Some((object_id, hit)) = scene.trace(&photon.ray) else {
-        return Colour::BLACK;
+        return Rgb::BLACK;
     };
 
     let object = scene.get_object(object_id);
@@ -27,7 +27,7 @@ pub fn render(world: &World, scene: &Scene, photon: Photon) -> Colour {
         .children
         .into_iter()
         .map(|child| render(world, scene, child))
-        .fold(Colour::BLACK, |a, b| a + b);
+        .fold(Rgb::BLACK, |a, b| a + b);
 
     local_colour + bounced_colours
 }
