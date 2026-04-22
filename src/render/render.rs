@@ -23,12 +23,15 @@ pub fn render(world: &World, scene: &Scene, photon: Photon) -> Rgb {
     let material = world.get_material(object.material_id);
 
     let scatter = material.scatter(&photon, &hit);
-    let local_colour = shader.shade(&photon, &hit) * scatter.local_weight;
+
+    let emitted = shader.emitted(&hit);
+    let reflected = shader.reflected(&photon, &hit) * (photon.weight * scatter.absorbed);
+    let local_colour = emitted + reflected;
 
     let bounced_colours = scatter
         .children
         .into_iter()
-        .map(|child| render(world, scene, child))
+        .map(|(fraction, child)| render(world, scene, photon.child(child, fraction)))
         .fold(Rgb::BLACK, |a, b| a + b);
 
     local_colour + bounced_colours
