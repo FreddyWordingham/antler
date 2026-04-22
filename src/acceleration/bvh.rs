@@ -38,11 +38,11 @@ impl<T: Copy> Bvh<T> {
         F: FnMut(T, &mut f32) -> bool,
     {
         let mut best_distance = INFINITY;
-        self.trace_with_best(ray, &mut best_distance, visit);
+        self.trace_nearest_with_max(ray, &mut best_distance, visit);
     }
 
     #[inline]
-    pub fn trace_with_best<F>(&self, ray: &WorldRay, best_distance: &mut f32, mut visit: F)
+    pub fn trace_nearest_with_max<F>(&self, ray: &WorldRay, best_distance: &mut f32, mut visit: F)
     where
         F: FnMut(T, &mut f32) -> bool,
     {
@@ -52,17 +52,28 @@ impl<T: Copy> Bvh<T> {
     #[inline]
     pub fn trace_any<F>(&self, ray: &WorldRay, test: F) -> bool
     where
-        F: FnMut(T) -> bool,
+        F: FnMut(T, &mut f32) -> bool,
     {
-        self.trace_any_filtered(ray, INFINITY, test)
+        let mut max_distance = INFINITY;
+        self.trace_any_with_limit(ray, &mut max_distance, test)
     }
 
     #[inline]
+    pub fn trace_any_with_limit<F>(&self, ray: &WorldRay, max_distance: &mut f32, mut test: F) -> bool
+    where
+        F: FnMut(T, &mut f32) -> bool,
+    {
+        self.trace_any_node(0, ray, max_distance, &mut test)
+    }
+
+    #[inline]
+
     pub fn trace_any_filtered<F>(&self, ray: &WorldRay, max_distance: f32, mut test: F) -> bool
     where
         F: FnMut(T) -> bool,
     {
-        self.trace_any_node(0, ray, max_distance, &mut test)
+        let mut max_distance = max_distance;
+        self.trace_any_node(0, ray, &mut max_distance, &mut |id, _max_distance| test(id))
     }
 
     fn build_node(nodes: &mut Vec<BvhNode>, ids: &mut Vec<T>, items: &mut [(Aabb, T)]) -> usize {
@@ -166,23 +177,23 @@ impl<T: Copy> Bvh<T> {
         }
     }
 
-    fn trace_any_node<F>(&self, node_index: usize, ray: &WorldRay, max_distance: f32, test: &mut F) -> bool
+    fn trace_any_node<F>(&self, node_index: usize, ray: &WorldRay, max_distance: &mut f32, test: &mut F) -> bool
     where
-        F: FnMut(T) -> bool,
+        F: FnMut(T, &mut f32) -> bool,
     {
         let node = &self.nodes[node_index];
         let Some((node_t_min, _)) = node.aabb.ray_interval(ray) else {
             return false;
         };
 
-        if node_t_min > max_distance {
+        if node_t_min > *max_distance {
             return false;
         }
 
         match node.kind {
             BvhNodeKind::Leaf { start, count } => {
                 for id in &self.ids[start..start + count] {
-                    if test(*id) {
+                    if test(*id, max_distance) {
                         return true;
                     }
                 }
@@ -204,12 +215,13 @@ impl<T: Copy> Bvh<T> {
                             return true;
                         }
 
-                        if second_t <= max_distance && self.trace_any_node(second, ray, max_distance, test) {
+                        if second_t <= *max_distance && self.trace_any_node(second, ray, max_distance, test) {
                             return true;
                         }
 
                         false
                     }
+
                     (Some(_), None) => self.trace_any_node(left, ray, max_distance, test),
                     (None, Some(_)) => self.trace_any_node(right, ray, max_distance, test),
                     (None, None) => false,

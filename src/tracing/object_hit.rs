@@ -10,10 +10,12 @@ pub struct ObjectHit {
 }
 
 impl ObjectHit {
+    #[inline]
     pub fn is_interior(&self, direction: &Unit<Vector3<f32>>) -> bool {
         self.normal.dot(direction) > 0.0
     }
 
+    #[inline]
     pub fn to_world_space(
         &self,
         transform: &Similarity3<f32>,

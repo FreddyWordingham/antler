@@ -38,16 +38,10 @@ impl Scene {
         let mut nearest = None;
         let mut best_distance = INFINITY;
 
-        bvh.trace_with_best(world_ray, &mut best_distance, |object_id, best_distance| {
-            let object = self.get_object(object_id);
-            let object_ray = world_ray.to_object_space(&object.inv_transform);
-
-            let geometry = world.get_geometry(object.geometry_id);
-            let Some(object_hit) = geometry.trace(&object_ray) else {
+        bvh.trace_nearest_with_max(world_ray, &mut best_distance, |object_id, best_distance| {
+            let Some(world_hit) = self.trace_object(world, object_id, world_ray) else {
                 return true;
             };
-
-            let world_hit = object_hit.to_world_space(&object.transform, world_ray.origin, object_id);
 
             if world_hit.distance < *best_distance {
                 *best_distance = world_hit.distance;
@@ -63,18 +57,18 @@ impl Scene {
     pub fn occluded(&self, world: &World, world_ray: &WorldRay, max_distance: f32) -> bool {
         let bvh = self.bvh.as_ref().expect("Must build BVH before tracing.");
 
-        bvh.trace_any_filtered(world_ray, max_distance, |object_id| {
-            let object = self.get_object(object_id);
-            let object_ray = world_ray.to_object_space(&object.inv_transform);
+        let mut max_distance = max_distance;
 
-            let geometry = world.get_geometry(object.geometry_id);
-            match geometry.trace(&object_ray) {
-                Some(object_hit) => {
-                    let world_hit = object_hit.to_world_space(&object.transform, world_ray.origin, object_id);
-                    world_hit.distance < max_distance
-                }
+        bvh.trace_any_with_limit(world_ray, &mut max_distance, |object_id, max_distance| {
+            let Some(world_hit) = self.trace_object(world, object_id, world_ray) else {
+                return false;
+            };
 
-                None => false,
+            if world_hit.distance < *max_distance {
+                *max_distance = world_hit.distance;
+                true
+            } else {
+                false
             }
         })
     }
@@ -95,5 +89,15 @@ impl Scene {
             .collect();
 
         self.bvh = Some(Bvh::new(items));
+    }
+
+    fn trace_object(&self, world: &World, object_id: ObjectId, world_ray: &WorldRay) -> Option<WorldHit> {
+        let object = self.get_object(object_id);
+        let object_ray = world_ray.to_object_space(&object.inv_transform);
+
+        let geometry = world.get_geometry(object.geometry_id);
+        let object_hit = geometry.trace(&object_ray)?;
+
+        Some(object_hit.to_world_space(&object.transform, world_ray.origin, object_id))
     }
 }
