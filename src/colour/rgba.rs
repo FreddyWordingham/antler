@@ -6,9 +6,9 @@ use std::{
 use palette::Srgba;
 use png::ColorType;
 
-use crate::colour::{Colour, Rgb};
+use crate::colour::{Pixel, Rgb};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub struct Rgba(Srgba);
 
 impl Rgba {
@@ -17,11 +17,32 @@ impl Rgba {
 
     #[inline]
     pub const fn new(red: f32, green: f32, blue: f32, alpha: f32) -> Self {
-        assert!(red >= 0.0 && red <= 1.0);
-        assert!(green >= 0.0 && green <= 1.0);
-        assert!(blue >= 0.0 && blue <= 1.0);
-        assert!(alpha >= 0.0 && alpha <= 1.0);
         Self(Srgba::new(red, green, blue, alpha))
+    }
+
+    #[inline]
+    fn red(&self) -> f32 {
+        self.0.red
+    }
+
+    #[inline]
+    fn green(&self) -> f32 {
+        self.0.green
+    }
+
+    #[inline]
+    fn blue(&self) -> f32 {
+        self.0.blue
+    }
+
+    #[inline]
+    fn alpha(&self) -> f32 {
+        self.0.alpha
+    }
+
+    #[inline]
+    fn to_rgb(&self) -> Rgb {
+        Rgb::new(self.0.red, self.0.green, self.0.blue)
     }
 }
 
@@ -67,41 +88,11 @@ impl Sum for Rgba {
     }
 }
 
-impl Colour for Rgba {
+impl Pixel for Rgba {
     const CHANNELS: usize = 4;
     const PNG_COLOUR_TYPE: ColorType = ColorType::Rgba;
 
     type Bytes = [u8; 4];
-
-    #[inline]
-    fn to_rgb(&self) -> Rgb {
-        Rgb::new(self.0.red, self.0.green, self.0.blue)
-    }
-
-    #[inline]
-    fn to_rgba(&self) -> Self {
-        self.clone()
-    }
-
-    #[inline]
-    fn red(&self) -> f32 {
-        self.0.red
-    }
-
-    #[inline]
-    fn green(&self) -> f32 {
-        self.0.green
-    }
-
-    #[inline]
-    fn blue(&self) -> f32 {
-        self.0.blue
-    }
-
-    #[inline]
-    fn alpha(&self) -> f32 {
-        self.0.alpha
-    }
 
     #[inline]
     fn to_bytes(&self) -> Self::Bytes {

@@ -1,21 +1,11 @@
 use png::{BitDepth, ColorType};
 
-use crate::colour::{Rgb, Rgba};
-
-pub trait Colour {
+pub trait Pixel {
     const CHANNELS: usize;
     const PNG_COLOUR_TYPE: ColorType;
     const PNG_BIT_DEPTH: BitDepth = BitDepth::Eight;
 
-    type Bytes: AsRef<[u8]> + AsMut<[u8]>;
-
-    fn to_rgb(&self) -> Rgb;
-    fn to_rgba(&self) -> Rgba;
-
-    fn red(&self) -> f32;
-    fn green(&self) -> f32;
-    fn blue(&self) -> f32;
-    fn alpha(&self) -> f32;
+    type Bytes: AsRef<[u8]>;
 
     fn to_bytes(&self) -> Self::Bytes;
     fn from_bytes(bytes: Self::Bytes) -> Self;

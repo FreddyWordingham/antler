@@ -8,3 +8,11 @@ pub trait Material {
 }
 
 pub enum MaterialEnum {}
+
+impl MaterialEnum {
+    pub fn scatter(&self, _photon: &Photon, _hit: &Hit) -> Scatter {
+        match self {
+            _ => todo!(),
+        }
+    }
+}

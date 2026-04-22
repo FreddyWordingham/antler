@@ -20,7 +20,7 @@ impl Bounded for Sphere {
 }
 
 impl Traceable for Sphere {
-    fn trace(&self, ray: &Ray) -> Option<Hit> {
+    fn trace(&self, _ray: &Ray) -> Option<Hit> {
         todo!()
     }
 }

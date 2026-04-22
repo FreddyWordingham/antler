@@ -8,7 +8,7 @@ fn main() {
     let mut image = RgbaImage::filled(resolution, colour_a);
 
     for n in 0..resolution[0].min(resolution[1]) {
-        image[(n, n)] = colour_b.clone();
+        image[(n, n)] = colour_b;
     }
 
     image.save("output.png").unwrap();

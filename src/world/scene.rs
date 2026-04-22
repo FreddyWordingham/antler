@@ -6,11 +6,11 @@ pub struct Scene {
 }
 
 impl Scene {
-    pub fn trace(&self, ray: &Ray) -> Option<(ObjectId, Hit)> {
+    pub fn trace(&self, _ray: &Ray) -> Option<(ObjectId, Hit)> {
         todo!()
     }
 
     pub fn get_object(&self, id: ObjectId) -> &Object {
-        todo!()
+        &self.objects[*id]
     }
 }

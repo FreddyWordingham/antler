@@ -8,28 +8,28 @@ use std::{
 use png::Encoder;
 
 use crate::{
-    colour::{Colour, Rgb, Rgba},
+    colour::{Pixel, Rgb, Rgba},
     storage::Grid,
 };
 
-pub struct Image<C: Colour> {
-    pixels: Grid<C>,
+pub struct Image<P: Pixel> {
+    pixels: Grid<P>,
 }
 
 pub type RgbImage = Image<Rgb>;
 pub type RgbaImage = Image<Rgba>;
 
-impl<C: Colour> Image<C> {
-    pub fn filled(size: [usize; 2], colour: C) -> Self
+impl<P: Pixel> Image<P> {
+    pub fn filled(size: [usize; 2], pixel: P) -> Self
     where
-        C: Clone,
+        P: Clone,
     {
         Self {
-            pixels: Grid::from_elem(size, colour),
+            pixels: Grid::from_elem(size, pixel),
         }
     }
 
-    pub fn from_vec(size: [usize; 2], data: Vec<C>) -> Self {
+    pub fn from_vec(size: [usize; 2], data: Vec<P>) -> Self {
         assert_eq!(
             data.len(),
             size[0] * size[1],
@@ -71,7 +71,7 @@ impl<C: Colour> Image<C> {
         let width = u32::try_from(self.width()).expect("image width exceeds u32::MAX");
         let height = u32::try_from(self.height()).expect("image height exceeds u32::MAX");
 
-        let mut bytes = Vec::with_capacity(self.width() * self.height() * C::CHANNELS);
+        let mut bytes = Vec::with_capacity(self.width() * self.height() * P::CHANNELS);
 
         for y in 0..self.height() {
             for x in 0..self.width() {
@@ -83,23 +83,23 @@ impl<C: Colour> Image<C> {
         let writer = BufWriter::new(file);
 
         let mut encoder = Encoder::new(writer, width, height);
-        encoder.set_color(C::PNG_COLOUR_TYPE);
-        encoder.set_depth(C::PNG_BIT_DEPTH);
+        encoder.set_color(P::PNG_COLOUR_TYPE);
+        encoder.set_depth(P::PNG_BIT_DEPTH);
 
         let mut writer = encoder.write_header().map_err(IoError::other)?;
         writer.write_image_data(&bytes).map_err(IoError::other)
     }
 }
 
-impl<C: Colour> Index<(usize, usize)> for Image<C> {
-    type Output = C;
+impl<P: Pixel> Index<(usize, usize)> for Image<P> {
+    type Output = P;
 
     fn index(&self, coord: (usize, usize)) -> &Self::Output {
         &self.pixels[coord]
     }
 }
 
-impl<C: Colour> IndexMut<(usize, usize)> for Image<C> {
+impl<P: Pixel> IndexMut<(usize, usize)> for Image<P> {
     fn index_mut(&mut self, coord: (usize, usize)) -> &mut Self::Output {
         &mut self.pixels[coord]
     }

@@ -1,8 +1,8 @@
 use crate::{
-    geometry::{Geometry, GeometryEnum},
+    geometry::GeometryEnum,
     id::{GeometryId, MaterialId, ShaderId},
-    material::{Material, MaterialEnum},
-    shader::{Shader, ShaderEnum},
+    material::MaterialEnum,
+    shader::ShaderEnum,
 };
 
 pub struct World {
@@ -12,15 +12,15 @@ pub struct World {
 }
 
 impl World {
-    pub fn get_geometry(&self, id: GeometryId) -> &dyn Geometry {
-        todo!()
+    pub fn get_geometry(&self, id: GeometryId) -> &GeometryEnum {
+        &self.geometries[*id]
     }
 
-    pub fn get_shader(&self, id: ShaderId) -> &dyn Shader {
-        todo!()
+    pub fn get_shader(&self, id: ShaderId) -> &ShaderEnum {
+        &self.shaders[*id]
     }
 
-    pub fn get_material(&self, id: MaterialId) -> &dyn Material {
-        todo!()
+    pub fn get_material(&self, id: MaterialId) -> &MaterialEnum {
+        &self.materials[*id]
     }
 }

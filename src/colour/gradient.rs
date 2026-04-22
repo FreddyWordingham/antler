@@ -1,5 +1,3 @@
-use crate::colour::Rgb;
-
-pub struct Gradient {
-    stops: Vec<Rgb>,
+pub struct Gradient<C> {
+    stops: Vec<C>,
 }
