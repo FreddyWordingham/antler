@@ -2,13 +2,17 @@ use std::f32::INFINITY;
 
 use crate::{
     acceleration::Bvh,
+    colour::Rgb,
     geometry::{Bounded, Traceable},
     id::ObjectId,
+    lighting::{Light, LightEnum},
+    shader::Shader,
     tracing::{WorldHit, WorldRay},
     world::{Object, World},
 };
 
 pub struct Scene {
+    lights: Vec<LightEnum>,
     objects: Vec<Object>,
     bvh: Option<Bvh<ObjectId>>,
 }
@@ -16,9 +20,15 @@ pub struct Scene {
 impl Scene {
     pub fn new() -> Self {
         Self {
+            lights: Vec::new(),
             objects: Vec::new(),
             bvh: None,
         }
+    }
+
+    #[inline]
+    pub fn add_light(&mut self, light: LightEnum) {
+        self.lights.push(light);
     }
 
     #[inline]
@@ -71,6 +81,25 @@ impl Scene {
                 false
             }
         })
+    }
+
+    pub fn direct_light(&self, world: &World, world_ray: &WorldRay, hit: &WorldHit) -> Rgb {
+        let object = self.get_object(hit.object_id);
+        let shader = world.get_shader(object.shader_id);
+
+        self.lights
+            .iter()
+            .map(|light| {
+                let sample = light.sample(hit);
+                let shadow_ray = WorldRay::from_offset(hit.position, hit.normal, sample.direction);
+
+                if self.occluded(world, &shadow_ray, sample.distance) {
+                    Rgb::BLACK
+                } else {
+                    shader.shade(world_ray, hit, &sample)
+                }
+            })
+            .sum()
     }
 
     pub fn build(&mut self, world: &World) {
