@@ -1,3 +1,5 @@
+use std::f32::INFINITY;
+
 use crate::{geometry::Aabb, tracing::WorldRay};
 
 const LEAF_SIZE: usize = 4;
@@ -30,10 +32,37 @@ impl<T: Copy> Bvh<T> {
         Self { nodes, ids }
     }
 
-    pub fn trace(&self, ray: &WorldRay) -> Vec<T> {
-        let mut hits = Vec::new();
-        self.trace_node(0, ray, &mut hits);
-        hits
+    #[inline]
+    pub fn trace<F>(&self, ray: &WorldRay, visit: F)
+    where
+        F: FnMut(T, &mut f32) -> bool,
+    {
+        let mut best_distance = INFINITY;
+        self.trace_with_best(ray, &mut best_distance, visit);
+    }
+
+    #[inline]
+    pub fn trace_with_best<F>(&self, ray: &WorldRay, best_distance: &mut f32, mut visit: F)
+    where
+        F: FnMut(T, &mut f32) -> bool,
+    {
+        self.trace_node(0, ray, best_distance, &mut visit);
+    }
+
+    #[inline]
+    pub fn trace_any<F>(&self, ray: &WorldRay, test: F) -> bool
+    where
+        F: FnMut(T) -> bool,
+    {
+        self.trace_any_filtered(ray, INFINITY, test)
+    }
+
+    #[inline]
+    pub fn trace_any_filtered<F>(&self, ray: &WorldRay, max_distance: f32, mut test: F) -> bool
+    where
+        F: FnMut(T) -> bool,
+    {
+        self.trace_any_node(0, ray, max_distance, &mut test)
     }
 
     fn build_node(nodes: &mut Vec<BvhNode>, ids: &mut Vec<T>, items: &mut [(Aabb, T)]) -> usize {
@@ -85,43 +114,106 @@ impl<T: Copy> Bvh<T> {
         node_index
     }
 
-    fn trace_node(&self, node_index: usize, ray: &WorldRay, hits: &mut Vec<T>) {
+    fn trace_node<F>(&self, node_index: usize, ray: &WorldRay, best_distance: &mut f32, visit: &mut F) -> bool
+    where
+        F: FnMut(T, &mut f32) -> bool,
+    {
         let node = &self.nodes[node_index];
+        let Some((node_t_min, _)) = node.aabb.ray_interval(ray) else {
+            return true;
+        };
 
-        if node.aabb.ray_interval(ray).is_none() {
-            return;
+        if node_t_min > *best_distance {
+            return true;
         }
 
         match node.kind {
+            BvhNodeKind::Leaf { start, count } => {
+                for id in &self.ids[start..start + count] {
+                    if !visit(*id, best_distance) {
+                        return false;
+                    }
+                }
+                true
+            }
             BvhNodeKind::Branch { left, right } => {
                 let left_interval = self.nodes[left].aabb.ray_interval(ray);
                 let right_interval = self.nodes[right].aabb.ray_interval(ray);
 
                 match (left_interval, right_interval) {
                     (Some((left_t, _)), Some((right_t, _))) => {
-                        if left_t <= right_t {
-                            self.trace_node(left, ray, hits);
-                            self.trace_node(right, ray, hits);
+                        let (first, second, second_t) = if left_t <= right_t {
+                            (left, right, right_t)
                         } else {
-                            self.trace_node(right, ray, hits);
-                            self.trace_node(left, ray, hits);
+                            (right, left, left_t)
+                        };
+
+                        if !self.trace_node(first, ray, best_distance, visit) {
+                            return false;
                         }
-                    }
 
-                    (Some(_), None) => {
-                        self.trace_node(left, ray, hits);
-                    }
+                        if second_t <= *best_distance && !self.trace_node(second, ray, best_distance, visit) {
+                            return false;
+                        }
 
-                    (None, Some(_)) => {
-                        self.trace_node(right, ray, hits);
+                        true
                     }
-
-                    (None, None) => {}
+                    (Some(_), None) => self.trace_node(left, ray, best_distance, visit),
+                    (None, Some(_)) => self.trace_node(right, ray, best_distance, visit),
+                    (None, None) => true,
                 }
             }
+        }
+    }
 
+    fn trace_any_node<F>(&self, node_index: usize, ray: &WorldRay, max_distance: f32, test: &mut F) -> bool
+    where
+        F: FnMut(T) -> bool,
+    {
+        let node = &self.nodes[node_index];
+        let Some((node_t_min, _)) = node.aabb.ray_interval(ray) else {
+            return false;
+        };
+
+        if node_t_min > max_distance {
+            return false;
+        }
+
+        match node.kind {
             BvhNodeKind::Leaf { start, count } => {
-                hits.extend_from_slice(&self.ids[start..start + count]);
+                for id in &self.ids[start..start + count] {
+                    if test(*id) {
+                        return true;
+                    }
+                }
+                false
+            }
+            BvhNodeKind::Branch { left, right } => {
+                let left_interval = self.nodes[left].aabb.ray_interval(ray);
+                let right_interval = self.nodes[right].aabb.ray_interval(ray);
+
+                match (left_interval, right_interval) {
+                    (Some((left_t, _)), Some((right_t, _))) => {
+                        let (first, second, second_t) = if left_t <= right_t {
+                            (left, right, right_t)
+                        } else {
+                            (right, left, left_t)
+                        };
+
+                        if self.trace_any_node(first, ray, max_distance, test) {
+                            return true;
+                        }
+
+                        if second_t <= max_distance && self.trace_any_node(second, ray, max_distance, test) {
+                            return true;
+                        }
+
+                        false
+                    }
+                    (Some(_), None) => self.trace_any_node(left, ray, max_distance, test),
+                    (None, Some(_)) => self.trace_any_node(right, ray, max_distance, test),
+                    (None, None) => false,
+                }
             }
         }
     }
