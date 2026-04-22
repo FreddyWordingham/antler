@@ -1,6 +1,6 @@
 use crate::{
-    geometry::{Aabb, Bounded, Ray, Sphere, Traceable},
-    tracing::Hit,
+    geometry::{Aabb, Bounded, Sphere, Traceable},
+    tracing::{ObjectHit, ObjectRay},
 };
 
 pub trait Geometry: Bounded + Traceable {}
@@ -21,7 +21,7 @@ impl Bounded for GeometryEnum {
 }
 
 impl Traceable for GeometryEnum {
-    fn trace(&self, ray: &Ray) -> Option<Hit> {
+    fn trace(&self, ray: &ObjectRay) -> Option<ObjectHit> {
         match self {
             GeometryEnum::Aabb(aabb) => aabb.trace(ray),
             GeometryEnum::Sphere(sphere) => sphere.trace(ray),

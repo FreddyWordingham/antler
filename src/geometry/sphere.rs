@@ -3,8 +3,8 @@ use std::f32::consts::{PI, TAU};
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
 use crate::{
-    geometry::{Bounded, Ray, Traceable},
-    tracing::Hit,
+    geometry::{Bounded, Traceable},
+    tracing::{ObjectHit, ObjectRay},
 };
 
 pub struct Sphere {
@@ -22,7 +22,7 @@ impl Bounded for Sphere {
 }
 
 impl Traceable for Sphere {
-    fn trace(&self, ray: &Ray) -> Option<Hit> {
+    fn trace(&self, ray: &ObjectRay) -> Option<ObjectHit> {
         let oc = ray.origin - self.centre;
 
         let a = ray.direction.dot(&ray.direction);
@@ -54,7 +54,7 @@ impl Traceable for Sphere {
         let u = (phi + PI) / TAU;
         let v = theta / PI;
 
-        Some(Hit {
+        Some(ObjectHit {
             distance,
             position,
             normal: outward_normal,

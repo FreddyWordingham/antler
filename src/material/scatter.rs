@@ -1,8 +1,8 @@
-use crate::geometry::Ray;
+use crate::tracing::WorldRay;
 
 pub struct Scatter {
     pub absorbed: f32,
-    pub children: Vec<(f32, Ray)>,
+    pub children: Vec<(f32, WorldRay)>,
 }
 
 impl Scatter {

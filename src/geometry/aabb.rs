@@ -3,8 +3,8 @@ use std::f32::{EPSILON, INFINITY, NEG_INFINITY};
 use nalgebra::{Point2, Point3, Similarity3, Vector3};
 
 use crate::{
-    geometry::{Bounded, Ray, Traceable},
-    tracing::Hit,
+    geometry::{Bounded, Traceable},
+    tracing::{ObjectHit, ObjectRay},
 };
 
 #[derive(Debug, Clone)]
@@ -55,7 +55,7 @@ impl Bounded for Aabb {
 }
 
 impl Traceable for Aabb {
-    fn trace(&self, ray: &Ray) -> Option<Hit> {
+    fn trace(&self, ray: &ObjectRay) -> Option<ObjectHit> {
         let origin = ray.origin;
         let direction = ray.direction.into_inner();
 
@@ -112,7 +112,7 @@ impl Traceable for Aabb {
             Vector3::z_axis()
         };
 
-        Some(Hit {
+        Some(ObjectHit {
             distance,
             position,
             normal,

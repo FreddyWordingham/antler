@@ -1,5 +1,5 @@
-pub use crate::{geometry::Ray, tracing::Hit};
+pub use crate::tracing::{ObjectHit, ObjectRay};
 
 pub trait Traceable {
-    fn trace(&self, ray: &Ray) -> Option<Hit>;
+    fn trace(&self, ray: &ObjectRay) -> Option<ObjectHit>;
 }

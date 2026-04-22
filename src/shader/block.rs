@@ -1,7 +1,7 @@
 use crate::{
     colour::Rgb,
     shader::Shader,
-    tracing::{Hit, Probe},
+    tracing::{Probe, WorldHit},
 };
 
 pub struct Block {
@@ -9,11 +9,11 @@ pub struct Block {
 }
 
 impl Shader for Block {
-    fn emitted(&self, _hit: &Hit) -> Rgb {
+    fn emitted(&self, _hit: &WorldHit) -> Rgb {
         Rgb::BLACK
     }
 
-    fn reflected(&self, _probe: &Probe, _hit: &Hit) -> Rgb {
+    fn reflected(&self, _probe: &Probe, _hit: &WorldHit) -> Rgb {
         self.colour
     }
 }

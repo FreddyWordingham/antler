@@ -14,18 +14,18 @@ pub fn render(world: &World, scene: &Scene, probe: Probe) -> Rgb {
         return Rgb::BLACK;
     }
 
-    let Some((object_id, hit)) = scene.trace(&probe.ray) else {
+    let Some(world_hit) = scene.trace(world, &probe.ray) else {
         return Rgb::BLACK;
     };
 
-    let object = scene.get_object(object_id);
+    let object = scene.get_object(world_hit.object_id);
     let shader = world.get_shader(object.shader_id);
     let material = world.get_material(object.material_id);
 
-    let scatter = material.scatter(&probe, &hit);
+    let scatter = material.scatter(&probe, &world_hit);
 
-    let emitted = shader.emitted(&hit);
-    let reflected = shader.reflected(&probe, &hit) * (probe.weight * scatter.absorbed);
+    let emitted = shader.emitted(&world_hit);
+    let reflected = shader.reflected(&probe, &world_hit) * (probe.weight * scatter.absorbed);
     let local_colour = emitted + reflected;
 
     let bounced_colours = scatter
