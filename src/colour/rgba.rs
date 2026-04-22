@@ -21,6 +21,59 @@ impl Rgba {
     }
 
     #[inline]
+    pub const fn from_bytes(bytes: [u8; 4]) -> Self {
+        Self(Srgba::new(
+            bytes[0] as f32 / 255.0,
+            bytes[1] as f32 / 255.0,
+            bytes[2] as f32 / 255.0,
+            bytes[3] as f32 / 255.0,
+        ))
+    }
+
+    #[inline]
+    pub fn from_hex(hex: &str) -> Self {
+        let hex = hex.trim_start_matches('#');
+        match hex.len() {
+            4 => {
+                let r = u8::from_str_radix(&hex[0..1].repeat(2), 16).expect("Invalid hex string");
+                let g = u8::from_str_radix(&hex[1..2].repeat(2), 16).expect("Invalid hex string");
+                let b = u8::from_str_radix(&hex[2..3].repeat(2), 16).expect("Invalid hex string");
+                let a = u8::from_str_radix(&hex[3..4].repeat(2), 16).expect("Invalid hex string");
+                Self::from_bytes([r, g, b, a])
+            }
+            8 => {
+                let r = u8::from_str_radix(&hex[0..2], 16).expect("Invalid hex string");
+                let g = u8::from_str_radix(&hex[2..4], 16).expect("Invalid hex string");
+                let b = u8::from_str_radix(&hex[4..6], 16).expect("Invalid hex string");
+                let a = u8::from_str_radix(&hex[6..8], 16).expect("Invalid hex string");
+                Self::from_bytes([r, g, b, a])
+            }
+            _ => panic!("Hex string must be 4 or 8 characters long"),
+        }
+    }
+
+    #[inline]
+    pub fn to_bytes(&self) -> [u8; 4] {
+        [
+            (self.0.red * 255.0).round() as u8,
+            (self.0.green * 255.0).round() as u8,
+            (self.0.blue * 255.0).round() as u8,
+            (self.0.alpha * 255.0).round() as u8,
+        ]
+    }
+
+    #[inline]
+    pub fn to_hex(&self) -> String {
+        format!(
+            "#{:02X}{:02X}{:02X}{:02X}",
+            (self.0.red * 255.0).round() as u8,
+            (self.0.green * 255.0).round() as u8,
+            (self.0.blue * 255.0).round() as u8,
+            (self.0.alpha * 255.0).round() as u8
+        )
+    }
+
+    #[inline]
     pub fn red(&self) -> f32 {
         self.0.red
     }

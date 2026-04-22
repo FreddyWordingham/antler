@@ -19,6 +19,54 @@ impl Rgb {
     }
 
     #[inline]
+    pub const fn from_bytes(bytes: [u8; 3]) -> Self {
+        Self(Srgb::new(
+            bytes[0] as f32 / 255.0,
+            bytes[1] as f32 / 255.0,
+            bytes[2] as f32 / 255.0,
+        ))
+    }
+
+    #[inline]
+    pub fn from_hex(hex: &str) -> Self {
+        let hex = hex.trim_start_matches('#');
+        match hex.len() {
+            3 => {
+                let r = u8::from_str_radix(&hex[0..1].repeat(2), 16).expect("Invalid hex string");
+                let g = u8::from_str_radix(&hex[1..2].repeat(2), 16).expect("Invalid hex string");
+                let b = u8::from_str_radix(&hex[2..3].repeat(2), 16).expect("Invalid hex string");
+                Self::from_bytes([r, g, b])
+            }
+            6 => {
+                let r = u8::from_str_radix(&hex[0..2], 16).expect("Invalid hex string");
+                let g = u8::from_str_radix(&hex[2..4], 16).expect("Invalid hex string");
+                let b = u8::from_str_radix(&hex[4..6], 16).expect("Invalid hex string");
+                Self::from_bytes([r, g, b])
+            }
+            _ => panic!("Hex string must be 3 or 6 characters long"),
+        }
+    }
+
+    #[inline]
+    pub const fn to_bytes(&self) -> [u8; 3] {
+        [
+            (self.0.red * 255.0).round() as u8,
+            (self.0.green * 255.0).round() as u8,
+            (self.0.blue * 255.0).round() as u8,
+        ]
+    }
+
+    #[inline]
+    pub fn to_hex(&self) -> String {
+        format!(
+            "#{:02X}{:02X}{:02X}",
+            (self.0.red * 255.0).round() as u8,
+            (self.0.green * 255.0).round() as u8,
+            (self.0.blue * 255.0).round() as u8
+        )
+    }
+
+    #[inline]
     pub fn red(&self) -> f32 {
         self.0.red
     }
