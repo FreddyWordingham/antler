@@ -7,10 +7,12 @@ use crate::{geometry::Ray, tracing::WorldRay};
 pub struct ObjectRay(Ray);
 
 impl ObjectRay {
+    #[inline]
     pub fn new(ray: Ray) -> Self {
         Self(ray)
     }
 
+    #[inline]
     pub fn to_world_space(&self, transform: &Similarity3<f32>) -> WorldRay {
         WorldRay::new(self.0.transform(transform))
     }

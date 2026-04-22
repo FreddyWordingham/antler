@@ -11,6 +11,7 @@ pub struct WorldHit {
 }
 
 impl WorldHit {
+    #[inline]
     pub fn is_interior(&self, direction: &Unit<Vector3<f32>>) -> bool {
         self.normal.dot(direction) > 0.0
     }
