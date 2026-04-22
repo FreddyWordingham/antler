@@ -7,6 +7,8 @@ use crate::{
     tracing::{ObjectHit, ObjectRay},
 };
 
+const FACE_EPSILON: f32 = 1.0e-6;
+
 #[derive(Debug, Clone)]
 pub struct Aabb {
     pub min: Point3<f32>,
@@ -123,15 +125,15 @@ impl Traceable for Aabb {
 
         let position = ray.origin + *ray.direction * distance;
 
-        let normal = if (position.x - self.min.x).abs() < EPSILON {
+        let normal = if (position.x - self.min.x).abs() < FACE_EPSILON {
             -Vector3::x_axis()
-        } else if (position.x - self.max.x).abs() < EPSILON {
+        } else if (position.x - self.max.x).abs() < FACE_EPSILON {
             Vector3::x_axis()
-        } else if (position.y - self.min.y).abs() < EPSILON {
+        } else if (position.y - self.min.y).abs() < FACE_EPSILON {
             -Vector3::y_axis()
-        } else if (position.y - self.max.y).abs() < EPSILON {
+        } else if (position.y - self.max.y).abs() < FACE_EPSILON {
             Vector3::y_axis()
-        } else if (position.z - self.min.z).abs() < EPSILON {
+        } else if (position.z - self.min.z).abs() < FACE_EPSILON {
             -Vector3::z_axis()
         } else {
             Vector3::z_axis()
