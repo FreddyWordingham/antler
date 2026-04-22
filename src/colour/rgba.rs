@@ -122,17 +122,17 @@ impl Pixel for Rgba {
         let hex = hex.trim_start_matches('#');
         match hex.len() {
             4 => {
-                let r = u8::from_str_radix(&hex[0..1].repeat(2), 16).unwrap();
-                let g = u8::from_str_radix(&hex[1..2].repeat(2), 16).unwrap();
-                let b = u8::from_str_radix(&hex[2..3].repeat(2), 16).unwrap();
-                let a = u8::from_str_radix(&hex[3..4].repeat(2), 16).unwrap();
+                let r = u8::from_str_radix(&hex[0..1].repeat(2), 16)?;
+                let g = u8::from_str_radix(&hex[1..2].repeat(2), 16)?;
+                let b = u8::from_str_radix(&hex[2..3].repeat(2), 16)?;
+                let a = u8::from_str_radix(&hex[3..4].repeat(2), 16)?;
                 Ok(Self::from_bytes([r, g, b, a]))
             }
             8 => {
-                let r = u8::from_str_radix(&hex[0..2], 16).unwrap();
-                let g = u8::from_str_radix(&hex[2..4], 16).unwrap();
-                let b = u8::from_str_radix(&hex[4..6], 16).unwrap();
-                let a = u8::from_str_radix(&hex[6..8], 16).unwrap();
+                let r = u8::from_str_radix(&hex[0..2], 16)?;
+                let g = u8::from_str_radix(&hex[2..4], 16)?;
+                let b = u8::from_str_radix(&hex[4..6], 16)?;
+                let a = u8::from_str_radix(&hex[6..8], 16)?;
                 Ok(Self::from_bytes([r, g, b, a]))
             }
             found => Err(ParseHexError::InvalidLength {
