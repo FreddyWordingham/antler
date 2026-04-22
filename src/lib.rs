@@ -14,7 +14,7 @@ mod world;
 pub mod prelude {
     pub use crate::{
         acceleration::Bvh,
-        camera::{Camera, CameraEnum},
+        camera::{Camera, CameraEnum, Orthographic, Perspective},
         colour::{Gradient, Pixel, Rgb, Rgba},
         errors::ParseHexError,
         geometry::{Aabb, Bounded, Geometry, GeometryEnum, Ray, Sphere, Traceable},
