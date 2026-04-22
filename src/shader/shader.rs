@@ -2,12 +2,12 @@ use crate::{
     colour::Rgb,
     lighting::LightSample,
     shader::{Block, Lambertion},
-    tracing::{Probe, WorldHit},
+    tracing::{WorldHit, WorldRay},
 };
 
 pub trait Shader {
     fn emitted(&self, hit: &WorldHit) -> Rgb;
-    fn shade(&self, probe: &Probe, hit: &WorldHit, light: &LightSample) -> Rgb;
+    fn shade(&self, ray: &WorldRay, hit: &WorldHit, light: &LightSample) -> Rgb;
 }
 
 pub enum ShaderEnum {
@@ -23,10 +23,10 @@ impl Shader for ShaderEnum {
         }
     }
 
-    fn shade(&self, probe: &Probe, hit: &WorldHit, light: &LightSample) -> Rgb {
+    fn shade(&self, ray: &WorldRay, hit: &WorldHit, light: &LightSample) -> Rgb {
         match self {
-            ShaderEnum::Block(block) => block.shade(probe, hit, light),
-            ShaderEnum::Lambertion(lambertion) => lambertion.shade(probe, hit, light),
+            ShaderEnum::Block(block) => block.shade(ray, hit, light),
+            ShaderEnum::Lambertion(lambertion) => lambertion.shade(ray, hit, light),
         }
     }
 }

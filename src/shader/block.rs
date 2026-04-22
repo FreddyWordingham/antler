@@ -2,7 +2,7 @@ use crate::{
     colour::Rgb,
     lighting::LightSample,
     shader::Shader,
-    tracing::{Probe, WorldHit},
+    tracing::{WorldHit, WorldRay},
 };
 
 pub struct Block {
@@ -14,7 +14,7 @@ impl Shader for Block {
         Rgb::BLACK
     }
 
-    fn shade(&self, _probe: &Probe, _hit: &WorldHit, _light: &LightSample) -> Rgb {
+    fn shade(&self, _ray: &WorldRay, _hit: &WorldHit, _light: &LightSample) -> Rgb {
         self.colour
     }
 }
