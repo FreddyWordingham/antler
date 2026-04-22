@@ -8,15 +8,33 @@ use crate::{
 
 pub struct Scene {
     objects: Vec<Object>,
-    bvh: Bvh<ObjectId>,
+    bvh: Option<Bvh<ObjectId>>,
 }
 
 impl Scene {
+    pub fn new() -> Self {
+        Self {
+            objects: Vec::new(),
+            bvh: None,
+        }
+    }
+
+    #[inline]
+    pub fn add_object(&mut self, object: Object) {
+        self.objects.push(object);
+        self.bvh = None;
+    }
+
+    #[inline]
     pub fn get_object(&self, id: ObjectId) -> &Object {
         &self.objects[id.index()]
     }
 
     pub fn trace(&self, world: &World, world_ray: &WorldRay) -> Option<WorldHit> {
+        // if self.bvh.is_none() {
+        //     panic!("Must (re)build BVH before tracing!");
+        // }
+
         let mut nearest: Option<WorldHit> = None;
 
         for (index, object) in self.objects.iter().enumerate() {
@@ -35,5 +53,9 @@ impl Scene {
         }
 
         nearest
+    }
+
+    pub fn build_bvh(&mut self, _world: &World) {
+        // TODO: Build BVH from objects and their geometries
     }
 }

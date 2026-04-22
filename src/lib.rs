@@ -23,7 +23,7 @@ pub mod prelude {
         render::render,
         shader::{Block, Shader, ShaderEnum},
         storage::{Grid, Image, RgbImage, RgbaImage},
-        tracing::Probe,
+        tracing::{ObjectHit, ObjectRay, Probe, WorldHit, WorldRay},
         world::{Object, Scene, World},
     };
 }
