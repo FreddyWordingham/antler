@@ -1,5 +1,5 @@
 use crate::{
-    material::Scatter,
+    material::{Opaque, Scatter},
     tracing::{Hit, Probe},
 };
 
@@ -7,12 +7,14 @@ pub trait Material {
     fn scatter(&self, probe: &Probe, hit: &Hit) -> Scatter;
 }
 
-pub enum MaterialEnum {}
+pub enum MaterialEnum {
+    Opaque(Opaque),
+}
 
 impl Material for MaterialEnum {
-    fn scatter(&self, _probe: &Probe, _hit: &Hit) -> Scatter {
+    fn scatter(&self, probe: &Probe, hit: &Hit) -> Scatter {
         match self {
-            _ => todo!(),
+            MaterialEnum::Opaque(opaque) => opaque.scatter(probe, hit),
         }
     }
 }

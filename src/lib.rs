@@ -19,7 +19,7 @@ pub mod prelude {
         errors::ParseHexError,
         geometry::{Aabb, Bounded, Geometry, GeometryEnum, Ray, Sphere, Traceable},
         id::{GeometryId, MaterialId, ObjectId, ShaderId},
-        material::{Material, MaterialEnum, Scatter},
+        material::{Material, MaterialEnum, Opaque, Scatter},
         render::render,
         shader::{Shader, ShaderEnum},
         storage::{Grid, Image, RgbImage, RgbaImage},

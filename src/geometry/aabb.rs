@@ -1,6 +1,6 @@
 use std::f32::{EPSILON, INFINITY, NEG_INFINITY};
 
-use nalgebra::{Point2, Point3, Similarity3, Unit, Vector3};
+use nalgebra::{Point2, Point3, Similarity3, Vector3};
 
 use crate::{
     geometry::{Bounded, Ray, Traceable},
