@@ -4,6 +4,7 @@ mod colour;
 mod errors;
 mod geometry;
 mod id;
+mod lighting;
 mod material;
 mod render;
 mod shader;
@@ -19,6 +20,7 @@ pub mod prelude {
         errors::ParseHexError,
         geometry::{Aabb, Bounded, Geometry, GeometryEnum, Ray, Sphere, Traceable},
         id::{GeometryId, MaterialId, ObjectId, ShaderId},
+        lighting::{DirectionalLight, Light, LightEnum, LightSample},
         material::{Material, MaterialEnum, Opaque, Scatter},
         render::render,
         shader::{Block, Shader, ShaderEnum},
