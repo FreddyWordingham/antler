@@ -1,12 +1,12 @@
 use crate::geometry::Ray;
 
-pub struct Photon {
+pub struct Probe {
     pub ray: Ray,
     pub weight: f32,
     pub generation: u32,
 }
 
-impl Photon {
+impl Probe {
     pub fn new(ray: Ray) -> Self {
         Self {
             ray,

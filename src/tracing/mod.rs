@@ -1,5 +1,5 @@
 mod hit;
-mod photon;
+mod probe;
 
 pub use hit::Hit;
-pub use photon::Photon;
+pub use probe::Probe;
