@@ -1,5 +1,7 @@
 use png::{BitDepth, ColorType};
 
+use crate::errors::ParseHexError;
+
 pub trait Pixel {
     const CHANNELS: usize;
     const PNG_COLOUR_TYPE: ColorType;
@@ -29,5 +31,7 @@ pub trait Pixel {
             _ => unreachable!(),
         }
     }
-    fn from_hex(hex: &str) -> Result<Self, ParseHexError>;
+    fn from_hex(hex: &str) -> Result<Self, ParseHexError>
+    where
+        Self: Sized;
 }

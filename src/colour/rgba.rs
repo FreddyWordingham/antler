@@ -6,7 +6,10 @@ use std::{
 use palette::Srgba;
 use png::ColorType;
 
-use crate::colour::{Pixel, Rgb};
+use crate::{
+    colour::{Pixel, Rgb},
+    errors::ParseHexError,
+};
 
 #[derive(Debug, Clone, Copy)]
 pub struct Rgba(Srgba);
@@ -123,14 +126,14 @@ impl Pixel for Rgba {
                 let g = u8::from_str_radix(&hex[1..2].repeat(2), 16).unwrap();
                 let b = u8::from_str_radix(&hex[2..3].repeat(2), 16).unwrap();
                 let a = u8::from_str_radix(&hex[3..4].repeat(2), 16).unwrap();
-                Self::from_bytes([r, g, b, a])
+                Ok(Self::from_bytes([r, g, b, a]))
             }
             8 => {
                 let r = u8::from_str_radix(&hex[0..2], 16).unwrap();
                 let g = u8::from_str_radix(&hex[2..4], 16).unwrap();
                 let b = u8::from_str_radix(&hex[4..6], 16).unwrap();
                 let a = u8::from_str_radix(&hex[6..8], 16).unwrap();
-                Self::from_bytes([r, g, b, a])
+                Ok(Self::from_bytes([r, g, b, a]))
             }
             _ => panic!("Invalid RGBA hex colour format"),
         }

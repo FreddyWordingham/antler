@@ -1,6 +1,7 @@
 mod acceleration;
 mod camera;
 mod colour;
+mod errors;
 mod geometry;
 mod id;
 mod material;
@@ -15,6 +16,7 @@ pub mod prelude {
         acceleration::Bvh,
         camera::{Camera, CameraEnum},
         colour::{Gradient, Pixel, Rgb, Rgba},
+        errors::ParseHexError,
         geometry::{Aabb, Bounded, Geometry, GeometryEnum, Ray, Sphere, Traceable},
         id::{GeometryId, MaterialId, ObjectId, ShaderId},
         material::{Material, MaterialEnum, Scatter},
