@@ -1,6 +1,6 @@
 use crate::{
     acceleration::Bvh,
-    geometry::Traceable,
+    geometry::{Bounded, Traceable},
     id::ObjectId,
     tracing::{WorldHit, WorldRay},
     world::{Object, World},
@@ -31,13 +31,12 @@ impl Scene {
     }
 
     pub fn trace(&self, world: &World, world_ray: &WorldRay) -> Option<WorldHit> {
-        // if self.bvh.is_none() {
-        //     panic!("Must (re)build BVH before tracing!");
-        // }
+        let bvh = self.bvh.as_ref().expect("Must build BVH before tracing.");
 
         let mut nearest: Option<WorldHit> = None;
 
-        for (index, object) in self.objects.iter().enumerate() {
+        for object_id in bvh.trace(world_ray) {
+            let object = self.get_object(object_id);
             let object_ray = world_ray.to_object_space(&object.inv_transform);
 
             let geometry = world.get_geometry(object.geometry_id);
@@ -45,7 +44,8 @@ impl Scene {
                 continue;
             };
 
-            let world_hit = object_hit.to_world_space(&object.transform, world_ray.origin, ObjectId::new(index));
+            let world_hit = object_hit.to_world_space(&object.transform, world_ray.origin, object_id);
+
             match &nearest {
                 Some(nearest_hit) if nearest_hit.distance <= world_hit.distance => {}
                 _ => nearest = Some(world_hit),
@@ -55,7 +55,21 @@ impl Scene {
         nearest
     }
 
-    pub fn build_bvh(&mut self, _world: &World) {
-        // TODO: Build BVH from objects and their geometries
+    pub fn build(&mut self, world: &World) {
+        let items = self
+            .objects
+            .iter()
+            .enumerate()
+            .map(|(index, object)| {
+                let bounds = world
+                    .get_geometry(object.geometry_id)
+                    .bounds()
+                    .transform(&object.transform);
+
+                (bounds, ObjectId::new(index))
+            })
+            .collect();
+
+        self.bvh = Some(Bvh::new(items));
     }
 }

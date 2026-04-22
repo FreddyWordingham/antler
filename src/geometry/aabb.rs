@@ -21,6 +21,20 @@ impl Aabb {
         Self { min, max }
     }
 
+    pub fn union<I>(mut iter: I) -> Self
+    where
+        I: Iterator<Item = Self>,
+    {
+        let Some(first) = iter.next() else {
+            panic!("Cannot union an empty iterator of AABBs.");
+        };
+
+        iter.fold(first, |a, b| Self {
+            min: Point3::new(a.min.x.min(b.min.x), a.min.y.min(b.min.y), a.min.z.min(b.min.z)),
+            max: Point3::new(a.max.x.max(b.max.x), a.max.y.max(b.max.y), a.max.z.max(b.max.z)),
+        })
+    }
+
     pub fn vertices(&self) -> [Point3<f32>; 8] {
         [
             self.min,
@@ -46,16 +60,13 @@ impl Aabb {
         });
         Self { min, max }
     }
-}
 
-impl Bounded for Aabb {
-    fn bounds(&self) -> Aabb {
-        self.clone()
+    #[inline]
+    pub fn centroid(&self) -> Point3<f32> {
+        (self.min + self.max.coords) / 2.0
     }
-}
 
-impl Traceable for Aabb {
-    fn trace(&self, ray: &ObjectRay) -> Option<ObjectHit> {
+    pub fn ray_interval(&self, ray: &crate::geometry::Ray) -> Option<(f32, f32)> {
         let origin = ray.origin;
         let direction = ray.direction.into_inner();
 
@@ -90,6 +101,20 @@ impl Traceable for Aabb {
                 return None;
             }
         }
+
+        Some((t_min, t_max))
+    }
+}
+
+impl Bounded for Aabb {
+    fn bounds(&self) -> Aabb {
+        self.clone()
+    }
+}
+
+impl Traceable for Aabb {
+    fn trace(&self, ray: &ObjectRay) -> Option<ObjectHit> {
+        let (t_min, t_max) = self.ray_interval(ray)?;
 
         let distance = if t_min > 0.0 { t_min } else { t_max };
         if distance <= 0.0 {

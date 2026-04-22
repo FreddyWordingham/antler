@@ -24,6 +24,7 @@ fn main() {
 
     let mut scene = Scene::new();
     scene.add_object(Object::new(aabb_id, shader_id, material_id, Similarity3::identity()));
+    scene.build(&world);
 
     let mut image = RgbImage::filled([width, height], Rgb::BLACK);
 
