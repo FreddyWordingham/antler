@@ -21,7 +21,7 @@ pub mod prelude {
         id::{GeometryId, MaterialId, ObjectId, ShaderId},
         material::{Material, MaterialEnum, Opaque, Scatter},
         render::render,
-        shader::{Shader, ShaderEnum},
+        shader::{Block, Shader, ShaderEnum},
         storage::{Grid, Image, RgbImage, RgbaImage},
         tracing::Probe,
         world::{Object, Scene, World},
