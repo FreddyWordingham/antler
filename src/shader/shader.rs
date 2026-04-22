@@ -1,8 +1,28 @@
 use crate::{
-    colour::Colour,
-    tracing::{Hit, Photon},
+    colour::Rgb,
+    shader::Block,
+    tracing::{Probe, WorldHit},
 };
 
 pub trait Shader {
-    fn shade(&self, photon: &Photon, hit: &Hit) -> Colour;
+    fn emitted(&self, hit: &WorldHit) -> Rgb;
+    fn reflected(&self, probe: &Probe, hit: &WorldHit) -> Rgb;
+}
+
+pub enum ShaderEnum {
+    Block(Block),
+}
+
+impl Shader for ShaderEnum {
+    fn emitted(&self, hit: &WorldHit) -> Rgb {
+        match self {
+            ShaderEnum::Block(block) => block.emitted(hit),
+        }
+    }
+
+    fn reflected(&self, probe: &Probe, hit: &WorldHit) -> Rgb {
+        match self {
+            ShaderEnum::Block(block) => block.reflected(probe, hit),
+        }
+    }
 }
