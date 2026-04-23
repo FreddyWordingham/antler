@@ -1,6 +1,6 @@
 use std::f32::INFINITY;
 
-use crate::{geometry::Aabb, tracing::WorldRay};
+use crate::geometry::{Aabb, Ray};
 
 const LEAF_SIZE: usize = 4;
 
@@ -33,7 +33,7 @@ impl<T: Copy> Bvh<T> {
     }
 
     #[inline]
-    pub fn trace<F>(&self, ray: &WorldRay, visit: F)
+    pub fn trace<F>(&self, ray: &Ray, visit: F)
     where
         F: FnMut(T, &mut f32) -> bool,
     {
@@ -42,7 +42,7 @@ impl<T: Copy> Bvh<T> {
     }
 
     #[inline]
-    pub fn trace_nearest_with_max<F>(&self, ray: &WorldRay, best_distance: &mut f32, mut visit: F)
+    pub fn trace_nearest_with_max<F>(&self, ray: &Ray, best_distance: &mut f32, mut visit: F)
     where
         F: FnMut(T, &mut f32) -> bool,
     {
@@ -50,7 +50,7 @@ impl<T: Copy> Bvh<T> {
     }
 
     #[inline]
-    pub fn trace_any<F>(&self, ray: &WorldRay, test: F) -> bool
+    pub fn trace_any<F>(&self, ray: &Ray, test: F) -> bool
     where
         F: FnMut(T, &mut f32) -> bool,
     {
@@ -59,7 +59,7 @@ impl<T: Copy> Bvh<T> {
     }
 
     #[inline]
-    pub fn trace_any_with_limit<F>(&self, ray: &WorldRay, max_distance: &mut f32, mut test: F) -> bool
+    pub fn trace_any_with_limit<F>(&self, ray: &Ray, max_distance: &mut f32, mut test: F) -> bool
     where
         F: FnMut(T, &mut f32) -> bool,
     {
@@ -67,7 +67,7 @@ impl<T: Copy> Bvh<T> {
     }
 
     #[inline]
-    pub fn trace_any_filtered<F>(&self, ray: &WorldRay, max_distance: f32, mut test: F) -> bool
+    pub fn trace_any_filtered<F>(&self, ray: &Ray, max_distance: f32, mut test: F) -> bool
     where
         F: FnMut(T) -> bool,
     {
@@ -124,7 +124,7 @@ impl<T: Copy> Bvh<T> {
         node_index
     }
 
-    fn trace_node<F>(&self, node_index: usize, ray: &WorldRay, best_distance: &mut f32, visit: &mut F) -> bool
+    fn trace_node<F>(&self, node_index: usize, ray: &Ray, best_distance: &mut f32, visit: &mut F) -> bool
     where
         F: FnMut(T, &mut f32) -> bool,
     {
@@ -176,7 +176,7 @@ impl<T: Copy> Bvh<T> {
         }
     }
 
-    fn trace_any_node<F>(&self, node_index: usize, ray: &WorldRay, max_distance: &mut f32, test: &mut F) -> bool
+    fn trace_any_node<F>(&self, node_index: usize, ray: &Ray, max_distance: &mut f32, test: &mut F) -> bool
     where
         F: FnMut(T, &mut f32) -> bool,
     {
