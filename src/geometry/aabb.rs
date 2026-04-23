@@ -1,4 +1,4 @@
-use std::f32::{EPSILON, INFINITY, NEG_INFINITY};
+use std::f32::{INFINITY, NEG_INFINITY};
 
 use nalgebra::{Point2, Point3, Similarity3, Vector3};
 
@@ -8,6 +8,7 @@ use crate::{
 };
 
 const FACE_EPSILON: f32 = 1.0e-4;
+const PARALLEL_THRESHOLD: f32 = 1e-8;
 
 #[derive(Debug, Clone)]
 pub struct Aabb {
@@ -81,7 +82,7 @@ impl Aabb {
             let min = self.min[axis];
             let max = self.max[axis];
 
-            if d.abs() < EPSILON {
+            if d.abs() < PARALLEL_THRESHOLD {
                 if o < min || o > max {
                     return None;
                 }
