@@ -3,6 +3,9 @@ use indicatif::ProgressBar;
 use nalgebra::{Point2, Point3, Similarity3, Unit, Vector3};
 
 fn main() {
+    // Create output directory if it doesn't exist
+    std::fs::create_dir_all("output").unwrap();
+
     let width = 800;
     let height = 600;
 
@@ -67,7 +70,7 @@ fn main() {
     }
     pb.finish();
 
-    image.save("output.png").unwrap();
+    image.save("output/output.png").unwrap();
 }
 
 #[allow(dead_code)]
