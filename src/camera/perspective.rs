@@ -9,30 +9,23 @@ use crate::{
 pub struct Perspective {
     pub transform: Isometry3<f32>,
     pub vertical_fov_radians: f32,
-    pub aspect_ratio: f32,
 }
 
 impl Perspective {
-    pub fn new(
-        position: Point3<f32>,
-        look_at: Point3<f32>,
-        up: Unit<Vector3<f32>>,
-        vertical_fov_radians: f32,
-        aspect_ratio: f32,
-    ) -> Self {
+    pub fn new(position: Point3<f32>, look_at: Point3<f32>, up: Unit<Vector3<f32>>, vertical_fov_radians: f32) -> Self {
         Self {
             transform: Isometry3::look_at_rh(&position, &look_at, &up).inverse(),
             vertical_fov_radians,
-            aspect_ratio,
         }
     }
 }
 
 impl Camera for Perspective {
-    fn emit(&self, uv: Point2<f32>) -> Probe {
+    fn emit(&self, uv: Point2<f32>, resolution: [usize; 2]) -> Probe {
+        let aspect_ratio = resolution[0] as f32 / resolution[1] as f32;
         let tan_half_fov = (self.vertical_fov_radians * 0.5).tan();
 
-        let x = (2.0 * uv.x - 1.0) * self.aspect_ratio * tan_half_fov;
+        let x = (2.0 * uv.x - 1.0) * aspect_ratio * tan_half_fov;
         let y = (1.0 - 2.0 * uv.y) * tan_half_fov;
 
         let local_origin = Point3::new(0.0, 0.0, 0.0);

@@ -7,32 +7,41 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     camera::CameraEnum,
-    config::{CameraConfig, GeometryConfig, LightConfig, MaterialConfig, ObjectConfig, RenderConfig, ShaderConfig},
+    config::{
+        GeometryConfig, ImageConfig, LightConfig, MaterialConfig, Named, ObjectConfig, RenderConfig, ShaderConfig,
+    },
     errors::SceneBuildError,
     world::{Object, Scene, World},
 };
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+
 pub struct SceneConfig {
-    pub render: RenderConfig,
-    pub camera: CameraConfig,
     #[serde(default)]
-    pub lights: Vec<LightConfig>,
+    pub image_defs: BTreeMap<String, ImageConfig>,
     #[serde(default)]
-    pub geometries: BTreeMap<String, GeometryConfig>,
+    pub light_defs: BTreeMap<String, LightConfig>,
     #[serde(default)]
-    pub shaders: BTreeMap<String, ShaderConfig>,
+    pub lights: Vec<Named<LightConfig>>,
     #[serde(default)]
-    pub materials: BTreeMap<String, MaterialConfig>,
+    pub geometry_defs: BTreeMap<String, GeometryConfig>,
+    #[serde(default)]
+    pub shader_defs: BTreeMap<String, ShaderConfig>,
+    #[serde(default)]
+    pub material_defs: BTreeMap<String, MaterialConfig>,
     #[serde(default)]
     pub objects: Vec<ObjectConfig>,
+}
+
+pub struct BuiltCamera {
+    pub camera: CameraEnum,
+    pub renders: BTreeMap<String, RenderConfig>,
 }
 
 pub struct BuiltScene {
     pub world: World,
     pub scene: Scene,
-    pub camera: CameraEnum,
-    pub render: RenderConfig,
+    pub cameras: BTreeMap<String, BuiltCamera>,
 }
 
 impl SceneConfig {
@@ -56,12 +65,12 @@ impl SceneConfig {
 
     pub fn build(self) -> Result<BuiltScene, SceneBuildError> {
         let SceneConfig {
-            render,
-            camera,
+            image_defs: image_config,
+            light_defs,
             lights,
-            geometries,
-            shaders,
-            materials,
+            geometry_defs,
+            shader_defs,
+            material_defs,
             objects,
         } = self;
 
@@ -69,13 +78,13 @@ impl SceneConfig {
         let mut scene = Scene::new();
 
         for light in lights {
-            scene.add_light(light.build());
+            scene.add_light(light.resolve(&light_defs)?);
         }
 
         for object in objects {
-            let geometry = object.geometry.resolve(&geometries)?;
-            let shader = object.shader.resolve(&shaders)?;
-            let material = object.material.resolve(&materials)?;
+            let geometry = object.geometry.resolve(&geometry_defs)?;
+            let shader = object.shader.resolve(&shader_defs)?;
+            let material = object.material.resolve(&material_defs)?;
 
             let geometry_id = world.add_geometry(geometry);
             let shader_id = world.add_shader(shader);
@@ -91,14 +100,24 @@ impl SceneConfig {
 
         scene.build(&world);
 
-        let aspect_ratio = render.resolution[0] as f32 / render.resolution[1] as f32;
-        let camera = camera.build(aspect_ratio);
+        let mut cameras = BTreeMap::new();
 
-        Ok(BuiltScene {
-            world,
-            scene,
-            camera,
-            render,
-        })
+        for (camera_name, camera_entry) in image_config {
+            if camera_entry.renders.is_empty() {
+                return Err(SceneBuildError::CameraHasNoRenders(camera_name.clone()));
+            }
+
+            let built_camera = camera_entry.camera.build();
+
+            cameras.insert(
+                camera_name,
+                BuiltCamera {
+                    camera: built_camera,
+                    renders: camera_entry.renders,
+                },
+            );
+        }
+
+        Ok(BuiltScene { world, scene, cameras })
     }
 }

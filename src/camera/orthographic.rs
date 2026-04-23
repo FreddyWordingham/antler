@@ -23,7 +23,7 @@ impl Orthographic {
 }
 
 impl Camera for Orthographic {
-    fn emit(&self, uv: Point2<f32>) -> Probe {
+    fn emit(&self, uv: Point2<f32>, _resolution: [usize; 2]) -> Probe {
         let x = (2.0 * uv.x - 1.0) * self.width * 0.5;
         let y = (1.0 - 2.0 * uv.y) * self.height * 0.5;
 

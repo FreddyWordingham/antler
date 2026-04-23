@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::config::{Vec3, defaults};
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TransformConfig {
     #[serde(default)]
     pub position: Vec3,
@@ -11,6 +11,16 @@ pub struct TransformConfig {
     pub rotation: Vec3,
     #[serde(default = "defaults::one_f32")]
     pub scale: f32,
+}
+
+impl Default for TransformConfig {
+    fn default() -> Self {
+        Self {
+            position: Vec3::default(),
+            rotation: Vec3::default(),
+            scale: defaults::one_f32(),
+        }
+    }
 }
 
 impl From<TransformConfig> for Similarity3<f32> {

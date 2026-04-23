@@ -1,60 +1,100 @@
-[render]
-resolution = [1200, 900]
-super_samples = 4
-background = "#000000"
+lights = ["sun", "fill"]
 
-[camera]
+[light_defs.sun]
+type = "directional"
+direction = [-5.0, -2.0, -2.0]
+radiance = 0xFFFFFF
+
+[light_defs.fill]
+type = "directional"
+direction = [2.0, 1.0, -3.0]
+radiance = 0x404040
+
+[image_defs.main]
 type = "perspective"
 position = [10.0, 10.0, 10.0]
 look_at = [0.0, 0.0, 3.0]
-up = [0.0, 0.0, 1.0]
-vertical_fov_radians = 0.7853981633974483
+vertical_fov_radians = 0.7853982
 
-[[lights]]
-type = "directional"
-direction = [-5.0, -2.0, -2.0]
-radiance = "#FFFFFF"
+[image_defs.main.renders.high]
+resolution = [1200, 900]
+background = "#000000"
+super_samples = 4
 
-[geometries.ground]
+[image_defs.main.renders.preview]
+resolution = [400, 300]
+background = "#000000"
+super_samples = 1
+
+[image_defs.front]
+type = "orthographic"
+position = [0.0, -12.0, 5.0]
+look_at = [0.0, 0.0, 2.0]
+size = [10.0, 7.5]
+
+[image_defs.front.renders.preview]
+resolution = [800, 600]
+background = "#111111"
+super_samples = 2
+
+[geometry_defs.floor]
 type = "quad"
 position = [0.0, 0.0, 0.0]
 normal = [0.0, 0.0, 1.0]
 size = [100.0, 100.0]
 
-[geometries.cube]
+[geometry_defs.cube]
 type = "aabb"
 min = [-1.0, -1.0, -1.0]
 max = [1.0, 1.0, 1.0]
 
-[shaders.green_lambert]
+[shader_defs.green_lambert]
 type = "lambertion"
-colour = "#33CC66"
+colour = 0x33CC66
 
-[shaders.checker]
+[shader_defs.checker]
 type = "checkerboard"
 size = 0.26
-colour_a = "#FF00FF"
-colour_b = "#333333"
+colour_a = 0xFF00FF
+colour_b = 0x333333
 
-[materials.opaque]
+[shader_defs.glow]
+type = "luminous"
+colour = 0xFFAA44
+intensity = 3.0
+
+[material_defs.default]
 type = "opaque"
 
 [[objects]]
-geometry = "ground"
+geometry = "floor"
 shader = "green_lambert"
-material = "opaque"
-
-[objects.transform]
-position = [0.0, 0.0, 0.0]
-rotation = [0.0, 0.0, 0.0]
-scale = 1.0
+material = "default"
 
 [[objects]]
 geometry = "cube"
 shader = "checker"
-material = "opaque"
+material = "default"
+transform = { position = [0.0, 0.0, 2.0], scale = 2.0 }
 
-[objects.transform]
-position = [0.0, 0.0, 2.0]
-rotation = [0.0, 0.0, 0.0]
-scale = 2.0
+[[objects]]
+material = "default"
+transform = { position = [-3.0, 0.0, 1.5] }
+
+[objects.geometry]
+type = "sphere"
+radius = 1.0
+
+[objects.shader]
+type = "block"
+colour = 0x44AAFF
+
+[[objects]]
+shader = "glow"
+material = "default"
+transform = { position = [0.0, -2.5, 5.0] }
+
+[objects.geometry]
+type = "circle"
+normal = [0.0, 0.0, -1.0]
+radius = 1.0
