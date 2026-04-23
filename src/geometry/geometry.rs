@@ -6,37 +6,28 @@ use crate::{
 pub trait Geometry: Bounded + Traceable {}
 impl<T: Bounded + Traceable> Geometry for T {}
 
-pub enum GeometryEnum {
-    Aabb(Aabb),
-    Sphere(Sphere),
-    Circle(Circle),
-    Quad(Quad),
-    Triangle(Triangle),
-    Mesh(Mesh),
+macro_rules! define_geometry_enum {
+    ($name:ident: $($ty:ident),* $(,)?) => {
+        pub enum $name {
+            $($ty($ty),)*
+        }
+
+        impl Bounded for $name {
+            fn bounds(&self) -> Aabb {
+                match self {
+                    $(Self::$ty(inner) => inner.bounds(),)*
+                }
+            }
+        }
+
+        impl Traceable for $name {
+            fn trace(&self, ray: &ObjectRay) -> Option<ObjectHit> {
+                match self {
+                    $(Self::$ty(inner) => inner.trace(ray),)*
+                }
+            }
+        }
+    };
 }
 
-impl Bounded for GeometryEnum {
-    fn bounds(&self) -> Aabb {
-        match self {
-            GeometryEnum::Aabb(aabb) => aabb.bounds(),
-            GeometryEnum::Sphere(sphere) => sphere.bounds(),
-            GeometryEnum::Circle(circle) => circle.bounds(),
-            GeometryEnum::Quad(quad) => quad.bounds(),
-            GeometryEnum::Triangle(triangle) => triangle.bounds(),
-            GeometryEnum::Mesh(mesh) => mesh.bounds(),
-        }
-    }
-}
-
-impl Traceable for GeometryEnum {
-    fn trace(&self, ray: &ObjectRay) -> Option<ObjectHit> {
-        match self {
-            GeometryEnum::Aabb(aabb) => aabb.trace(ray),
-            GeometryEnum::Sphere(sphere) => sphere.trace(ray),
-            GeometryEnum::Circle(circle) => circle.trace(ray),
-            GeometryEnum::Quad(quad) => quad.trace(ray),
-            GeometryEnum::Triangle(triangle) => triangle.trace(ray),
-            GeometryEnum::Mesh(mesh) => mesh.trace(ray),
-        }
-    }
-}
+define_geometry_enum!(GeometryEnum: Aabb, Sphere, Circle, Quad, Triangle, Mesh);
