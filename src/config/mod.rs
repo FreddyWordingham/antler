@@ -1,3 +1,4 @@
+mod built_image;
 mod camera_config;
 mod defaults;
 mod geometry_config;
@@ -13,6 +14,7 @@ mod transform_config;
 mod vec2;
 mod vec3;
 
+pub use built_image::BuiltImage;
 pub use camera_config::CameraConfig;
 pub use geometry_config::GeometryConfig;
 pub use image_config::ImageConfig;

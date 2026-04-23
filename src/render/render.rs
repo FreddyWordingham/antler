@@ -3,7 +3,7 @@ use rayon::prelude::*;
 
 use crate::{
     camera::Camera,
-    colour::Rgba,
+    colour::{Rgb, Rgba},
     material::Material,
     render::RenderSettings,
     shader::Shader,
@@ -25,13 +25,19 @@ struct Tile {
 }
 
 pub fn render_probe(world: &World, scene: &Scene, probe: Probe, settings: RenderSettings) -> Rgba {
-    if probe.generation >= MAX_GENERATION || probe.weight <= MIN_WEIGHT {
-        return Rgba::TRANSPARENT;
-    }
-
-    let Some(world_hit) = scene.trace(world, &probe.ray) else {
+    let Some(colour) = render_probe_rgb(world, scene, probe, settings) else {
         return settings.background;
     };
+
+    colour.to_rgba()
+}
+
+fn render_probe_rgb(world: &World, scene: &Scene, probe: Probe, settings: RenderSettings) -> Option<Rgb> {
+    if probe.generation >= MAX_GENERATION || probe.weight <= MIN_WEIGHT {
+        return Some(Rgb::BLACK);
+    }
+
+    let world_hit = scene.trace(world, &probe.ray)?;
 
     let object = scene.get_object(world_hit.object_id);
     let shader = world.get_shader(object.shader_id);
@@ -41,15 +47,14 @@ pub fn render_probe(world: &World, scene: &Scene, probe: Probe, settings: Render
 
     let emitted = shader.emitted(&world_hit);
     let direct = scene.direct_light(world, &probe.ray, &world_hit) * scatter.local_fraction;
-    let local_colour = emitted + direct;
 
-    let bounced_colours: Rgba = scatter
+    let bounced = scatter
         .children
         .into_iter()
-        .map(|(fraction, child)| render_probe(world, scene, probe.child(child, fraction), settings))
+        .filter_map(|(fraction, child)| render_probe_rgb(world, scene, probe.child(child, fraction), settings))
         .sum();
 
-    local_colour.to_rgba() + bounced_colours
+    Some(emitted + direct + bounced)
 }
 
 pub fn render_image<C>(world: &World, scene: &Scene, camera: &C, settings: RenderSettings) -> RgbaImage
