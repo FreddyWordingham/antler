@@ -19,10 +19,6 @@ pub fn z_axis() -> Vec3 {
     Vec3([0.0, 0.0, 1.0])
 }
 
-pub fn black() -> Rgb {
-    Rgb::BLACK
-}
-
 pub fn transparent() -> Rgba {
     Rgba::TRANSPARENT
 }
