@@ -19,10 +19,11 @@ fn main() {
         min: Point3::new(-1.0, -1.0, -1.0),
         max: Point3::new(1.0, 1.0, 1.0),
     }));
-    let circle_id = world.add_geometry(GeometryEnum::Circle(Circle {
+    let quad_id = world.add_geometry(GeometryEnum::Quad(Quad {
         position: Point3::new(0.0, 0.0, 0.0),
         normal: Vector3::z_axis(),
-        radius: 5.0,
+        width: 10.0,
+        height: 4.0,
     }));
 
     let green_lambertion_shader_id = world.add_shader(ShaderEnum::Lambertion(Lambertion {
@@ -46,7 +47,7 @@ fn main() {
         Similarity3::identity(),
     ));
     scene.add_object(Object::new(
-        circle_id,
+        quad_id,
         green_lambertion_shader_id,
         material_id,
         Similarity3::new(Vector3::new(0.0, 0.0, -1.0), Vector3::zeros(), 1.0),
