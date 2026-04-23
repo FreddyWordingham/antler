@@ -126,12 +126,7 @@ impl Traceable for Triangle {
 
         let alpha = 1.0 - beta - gamma;
 
-        let alpha = alpha.clamp(0.0, 1.0);
-        let beta = beta.clamp(0.0, 1.0);
-        let gamma = gamma.clamp(0.0, 1.0);
-
-        let sum = alpha + beta + gamma;
-        let bary = Vector3::new(alpha, beta, gamma) / sum;
+        let bary = Vector3::new(alpha, beta, gamma);
 
         let position = self.interpolate_position(bary);
         let mut normal = self.interpolate_normal(bary);
