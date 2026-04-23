@@ -27,6 +27,14 @@ macro_rules! define_geometry_enum {
                 }
             }
         }
+
+        $(
+            impl From<$ty> for $name {
+                fn from(value: $ty) -> Self {
+                    Self::$ty(value)
+                }
+            }
+        )*
     };
 }
 
