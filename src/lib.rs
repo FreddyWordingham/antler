@@ -17,7 +17,7 @@ pub mod prelude {
         acceleration::Bvh,
         camera::{Camera, CameraEnum, Orthographic, Perspective},
         colour::{Gradient, Pixel, Rgb, Rgba},
-        errors::ParseHexError,
+        errors::{MeshLoadError, ParseHexError},
         geometry::{Aabb, Bounded, Circle, Geometry, GeometryEnum, Mesh, Quad, Ray, Sphere, Traceable, Triangle},
         id::{GeometryId, MaterialId, ObjectId, ShaderId},
         lighting::{DirectionalLight, Light, LightEnum, LightSample},
