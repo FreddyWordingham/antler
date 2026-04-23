@@ -24,19 +24,19 @@ impl From<LoadError> for MeshLoadError {
 impl Display for MeshLoadError {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         match self {
-            Self::Obj(err) => write!(f, "failed to load OBJ: {err}"),
-            Self::EmptyMesh => write!(f, "mesh is empty"),
+            Self::Obj(err) => write!(f, "Failed to load OBJ: {err}"),
+            Self::EmptyMesh => write!(f, "OBJ produced no triangles"),
             Self::MissingPositionIndex { model_name, index } => {
-                write!(f, "model '{model_name}' referenced missing vertex index {index}")
+                write!(f, "Model '{model_name}' referenced missing vertex index {index}")
             }
             Self::MissingNormalIndex { model_name, index } => {
-                write!(f, "model '{model_name}' referenced missing normal index {index}")
+                write!(f, "Model '{model_name}' referenced missing normal index {index}")
             }
             Self::MissingTexcoordIndex { model_name, index } => {
-                write!(f, "model '{model_name}' referenced missing texcoord index {index}")
+                write!(f, "Model '{model_name}' referenced missing texcoord index {index}")
             }
             Self::InvalidIndexCount { model_name, count } => {
-                write!(f, "model '{model_name}' has non-triangle index count {count}")
+                write!(f, "Model '{model_name}' has non-triangle index count {count}")
             }
         }
     }
