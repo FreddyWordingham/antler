@@ -176,14 +176,48 @@ impl<T: Copy> Bvh<T> {
             return;
         };
 
-        let _ = self.traverse(&tray, *best_distance, 0, root_t_min, |primitive_range| {
-            for i in primitive_range {
-                if !visit(self.primitive_ids[i], best_distance) {
-                    return ControlFlow::Break(false);
+        let mut stack = SmallStack::<TRAVERSAL_STACK_SIZE>::new();
+        stack.push(TraversalEntry {
+            node_index: 0,
+            t_min: root_t_min,
+        });
+
+        while let Some(TraversalEntry { node_index, t_min }) = stack.pop() {
+            if t_min > *best_distance {
+                continue;
+            }
+
+            let node = &self.nodes[node_index];
+
+            if node.is_leaf() {
+                for i in node.primitive_range() {
+                    if !visit(self.primitive_ids[i], best_distance) {
+                        return;
+                    }
+                }
+                continue;
+            }
+
+            let (near, far) = node.near_far_children(&tray);
+
+            if let Some((far_t, _)) = self.nodes[far].ray_interval(&tray) {
+                if far_t <= *best_distance {
+                    stack.push(TraversalEntry {
+                        node_index: far,
+                        t_min: far_t,
+                    });
                 }
             }
-            ControlFlow::Continue(())
-        });
+
+            if let Some((near_t, _)) = self.nodes[near].ray_interval(&tray) {
+                if near_t <= *best_distance {
+                    stack.push(TraversalEntry {
+                        node_index: near,
+                        t_min: near_t,
+                    });
+                }
+            }
+        }
     }
 
     #[inline]
@@ -195,6 +229,7 @@ impl<T: Copy> Bvh<T> {
         self.trace_any_with_limit(ray, &mut max_distance, test)
     }
 
+    #[inline]
     pub fn trace_any_with_limit<F>(&self, ray: &Ray, max_distance: &mut f32, mut test: F) -> bool
     where
         F: FnMut(T, &mut f32) -> bool,
@@ -205,17 +240,16 @@ impl<T: Copy> Bvh<T> {
             return false;
         };
 
-        match self.traverse(&tray, *max_distance, 0, root_t_min, |primitive_range| {
+        self.traverse_any(0, root_t_min, &tray, max_distance, |primitive_range, max_distance| {
             for i in primitive_range {
                 if test(self.primitive_ids[i], max_distance) {
                     return ControlFlow::Break(true);
                 }
             }
             ControlFlow::Continue(())
-        }) {
-            ControlFlow::Break(found) => found,
-            ControlFlow::Continue(()) => false,
-        }
+        })
+        .break_value()
+        .unwrap_or(false)
     }
 
     #[inline]
@@ -229,30 +263,31 @@ impl<T: Copy> Bvh<T> {
             return false;
         };
 
-        match self.traverse(&tray, max_distance, 0, root_t_min, |primitive_range| {
+        let mut max_distance = max_distance;
+
+        self.traverse_any(0, root_t_min, &tray, &mut max_distance, |primitive_range, _| {
             for i in primitive_range {
                 if test(self.primitive_ids[i]) {
                     return ControlFlow::Break(true);
                 }
             }
             ControlFlow::Continue(())
-        }) {
-            ControlFlow::Break(found) => found,
-            ControlFlow::Continue(()) => false,
-        }
+        })
+        .break_value()
+        .unwrap_or(false)
     }
 
     #[inline]
-    fn traverse<L>(
+    fn traverse_any<L>(
         &self,
-        tray: &TraversalRay,
-        limit: f32,
         root_index: usize,
         root_t_min: f32,
+        tray: &TraversalRay,
+        max_distance: &mut f32,
         mut visit_leaf: L,
     ) -> ControlFlow<bool, ()>
     where
-        L: FnMut(std::ops::Range<usize>) -> ControlFlow<bool, ()>,
+        L: FnMut(std::ops::Range<usize>, &mut f32) -> ControlFlow<bool, ()>,
     {
         let mut stack = SmallStack::<TRAVERSAL_STACK_SIZE>::new();
         stack.push(TraversalEntry {
@@ -261,14 +296,14 @@ impl<T: Copy> Bvh<T> {
         });
 
         while let Some(TraversalEntry { node_index, t_min }) = stack.pop() {
-            if t_min > limit {
+            if t_min > *max_distance {
                 continue;
             }
 
             let node = &self.nodes[node_index];
 
             if node.is_leaf() {
-                match visit_leaf(node.primitive_range()) {
+                match visit_leaf(node.primitive_range(), max_distance) {
                     ControlFlow::Break(value) => return ControlFlow::Break(value),
                     ControlFlow::Continue(()) => continue,
                 }
@@ -277,7 +312,7 @@ impl<T: Copy> Bvh<T> {
             let (near, far) = node.near_far_children(tray);
 
             if let Some((far_t, _)) = self.nodes[far].ray_interval(tray) {
-                if far_t <= limit {
+                if far_t <= *max_distance {
                     stack.push(TraversalEntry {
                         node_index: far,
                         t_min: far_t,
@@ -286,7 +321,7 @@ impl<T: Copy> Bvh<T> {
             }
 
             if let Some((near_t, _)) = self.nodes[near].ray_interval(tray) {
-                if near_t <= limit {
+                if near_t <= *max_distance {
                     stack.push(TraversalEntry {
                         node_index: near,
                         t_min: near_t,
