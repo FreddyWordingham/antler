@@ -1,5 +1,6 @@
 mod defaults;
 mod geometry_config;
+mod light_config;
 mod manifest;
 mod material_config;
 mod object_config;
@@ -9,6 +10,7 @@ mod vec2;
 mod vec3;
 
 pub use geometry_config::GeometryConfig;
+pub use light_config::LightConfig;
 pub use manifest::Manifest;
 pub use material_config::MaterialConfig;
 pub use object_config::ObjectConfig;
