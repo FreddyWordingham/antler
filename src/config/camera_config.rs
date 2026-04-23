@@ -1,6 +1,9 @@
 use serde::{Deserialize, Serialize};
 
-use crate::config::{Vec3, defaults};
+use crate::{
+    camera::{CameraEnum, Orthographic, Perspective},
+    config::{Vec3, defaults},
+};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
@@ -19,4 +22,31 @@ pub enum CameraConfig {
         up: Vec3,
         size: [f32; 2],
     },
+}
+
+impl CameraConfig {
+    pub fn build(self, aspect_ratio: f32) -> CameraEnum {
+        match self {
+            CameraConfig::Perspective {
+                position,
+                look_at,
+                up,
+                vertical_fov_radians,
+            } => Perspective::new(
+                position.into(),
+                look_at.into(),
+                up.into(),
+                vertical_fov_radians,
+                aspect_ratio,
+            )
+            .into(),
+
+            CameraConfig::Orthographic {
+                position,
+                look_at,
+                up,
+                size,
+            } => Orthographic::new(position.into(), look_at.into(), up.into(), size[0], size[1]).into(),
+        }
+    }
 }
