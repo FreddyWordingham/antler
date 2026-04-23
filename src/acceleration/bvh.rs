@@ -1,4 +1,6 @@
-use std::{cmp::Ordering, f32::INFINITY};
+use std::f32::INFINITY;
+
+use nalgebra::Point3;
 
 use crate::geometry::{Aabb, Ray};
 
@@ -7,19 +9,49 @@ const SAH_BUCKETS: usize = 12;
 const TRAVERSAL_COST: f32 = 1.0;
 const INTERSECTION_COST: f32 = 1.0;
 
-pub struct Bvh<T: Copy> {
-    nodes: Vec<BvhNode>,
-    ids: Vec<T>,
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+
+struct PackedBvhNode {
+    min: Point3<f32>,
+    max: Point3<f32>,
+    left_or_first: u32,
+    right_or_count: u32,
+    axis: u8,
+    is_leaf: u8,
+    _pad: [u8; 2],
 }
 
-struct BvhNode {
-    aabb: Aabb,
-    kind: BvhNodeKind,
-}
+impl PackedBvhNode {
+    #[inline]
+    fn aabb(&self) -> Aabb {
+        Aabb {
+            min: self.min,
+            max: self.max,
+        }
+    }
 
-enum BvhNodeKind {
-    Branch { left: usize, right: usize },
-    Leaf { start: usize, count: usize },
+    #[inline]
+    fn is_leaf(&self) -> bool {
+        self.is_leaf != 0
+    }
+
+    #[inline]
+    fn primitive_range(&self) -> std::ops::Range<usize> {
+        let start = self.left_or_first as usize;
+        let count = self.right_or_count as usize;
+        start..start + count
+    }
+
+    #[inline]
+    fn left_child(&self) -> usize {
+        self.left_or_first as usize
+    }
+
+    #[inline]
+    fn right_child(&self) -> usize {
+        self.right_or_count as usize
+    }
 }
 
 #[derive(Clone)]
@@ -42,17 +74,22 @@ impl Bucket {
     }
 }
 
+pub struct Bvh<T: Copy> {
+    nodes: Vec<PackedBvhNode>,
+    primitive_ids: Vec<T>,
+}
+
 impl<T: Copy> Bvh<T> {
     pub fn new(aabbs: Vec<(Aabb, T)>) -> Self {
         assert!(!aabbs.is_empty(), "Cannot build a BVH with no items.");
 
         let mut items = aabbs;
-        let mut nodes = Vec::new();
-        let mut ids = Vec::new();
+        let mut nodes = Vec::with_capacity(items.len() * 2);
+        let mut primitive_ids = Vec::with_capacity(items.len());
 
-        Self::build_node(&mut nodes, &mut ids, &mut items);
+        Self::build_node(&mut nodes, &mut primitive_ids, &mut items);
 
-        Self { nodes, ids }
+        Self { nodes, primitive_ids }
     }
 
     #[inline]
@@ -69,7 +106,7 @@ impl<T: Copy> Bvh<T> {
     where
         F: FnMut(T, &mut f32) -> bool,
     {
-        let Some((root_t_min, _)) = self.nodes[0].aabb.ray_interval(ray) else {
+        let Some((root_t_min, _)) = self.nodes[0].aabb().ray_interval(ray) else {
             return;
         };
 
@@ -90,7 +127,7 @@ impl<T: Copy> Bvh<T> {
     where
         F: FnMut(T, &mut f32) -> bool,
     {
-        let Some((root_t_min, _)) = self.nodes[0].aabb.ray_interval(ray) else {
+        let Some((root_t_min, _)) = self.nodes[0].aabb().ray_interval(ray) else {
             return false;
         };
 
@@ -102,7 +139,7 @@ impl<T: Copy> Bvh<T> {
     where
         F: FnMut(T) -> bool,
     {
-        let Some((root_t_min, _)) = self.nodes[0].aabb.ray_interval(ray) else {
+        let Some((root_t_min, _)) = self.nodes[0].aabb().ray_interval(ray) else {
             return false;
         };
 
@@ -110,17 +147,22 @@ impl<T: Copy> Bvh<T> {
         self.trace_any_node(0, ray, &mut max_distance, &mut |id, _| test(id), root_t_min)
     }
 
-    fn build_node(nodes: &mut Vec<BvhNode>, ids: &mut Vec<T>, items: &mut [(Aabb, T)]) -> usize {
-        let node_index = nodes.len();
+    fn build_node(nodes: &mut Vec<PackedBvhNode>, primitive_ids: &mut Vec<T>, items: &mut [(Aabb, T)]) -> usize {
         let node_aabb = Aabb::union(items.iter().map(|(aabb, _)| aabb.clone()));
+        let node_index = nodes.len();
 
-        nodes.push(BvhNode {
-            aabb: node_aabb.clone(),
-            kind: BvhNodeKind::Leaf { start: 0, count: 0 },
+        nodes.push(PackedBvhNode {
+            min: node_aabb.min,
+            max: node_aabb.max,
+            left_or_first: 0,
+            right_or_count: 0,
+            axis: 0,
+            is_leaf: 0,
+            _pad: [0; 2],
         });
 
         if items.len() <= LEAF_SIZE {
-            return Self::make_leaf(nodes, ids, node_index, items);
+            return Self::make_leaf(nodes, primitive_ids, node_index, items);
         }
 
         let centroid_bounds = Aabb::union(items.iter().map(|(aabb, _)| {
@@ -131,7 +173,7 @@ impl<T: Copy> Bvh<T> {
         let centroid_extent = centroid_bounds.max - centroid_bounds.min;
 
         let mut best_axis = None;
-        let mut best_bucket_split = 0usize;
+        let mut best_bucket_split = 0;
         let mut best_cost = INFINITY;
 
         for axis in 0..3 {
@@ -149,12 +191,12 @@ impl<T: Copy> Bvh<T> {
                 buckets[bucket].add(bounds.clone());
             }
 
-            let mut left_counts = [0usize; SAH_BUCKETS - 1];
-            let mut right_counts = [0usize; SAH_BUCKETS - 1];
+            let mut left_counts = [0; SAH_BUCKETS - 1];
+            let mut right_counts = [0; SAH_BUCKETS - 1];
             let mut left_bounds: [Option<Aabb>; SAH_BUCKETS - 1] = std::array::from_fn(|_| None);
             let mut right_bounds: [Option<Aabb>; SAH_BUCKETS - 1] = std::array::from_fn(|_| None);
 
-            let mut count = 0usize;
+            let mut count = 0;
             let mut bounds = None::<Aabb>;
             for i in 0..(SAH_BUCKETS - 1) {
                 count += buckets[i].count;
@@ -182,6 +224,8 @@ impl<T: Copy> Bvh<T> {
                 right_bounds[i - 1] = bounds.clone();
             }
 
+            let parent_area = node_aabb.surface_area();
+
             for i in 0..(SAH_BUCKETS - 1) {
                 let Some(left_b) = &left_bounds[i] else {
                     continue;
@@ -190,13 +234,11 @@ impl<T: Copy> Bvh<T> {
                     continue;
                 };
 
-                let left_area = left_b.surface_area();
-                let right_area = right_b.surface_area();
-                let parent_area = node_aabb.surface_area();
-
                 let cost = TRAVERSAL_COST
                     + INTERSECTION_COST
-                        * ((left_counts[i] as f32 * left_area + right_counts[i] as f32 * right_area) / parent_area);
+                        * ((left_counts[i] as f32 * left_b.surface_area()
+                            + right_counts[i] as f32 * right_b.surface_area())
+                            / parent_area);
 
                 if cost < best_cost {
                     best_cost = cost;
@@ -209,19 +251,19 @@ impl<T: Copy> Bvh<T> {
         let leaf_cost = INTERSECTION_COST * items.len() as f32;
 
         let Some(axis) = best_axis else {
-            return Self::make_leaf(nodes, ids, node_index, items);
+            return Self::make_leaf(nodes, primitive_ids, node_index, items);
         };
 
         if best_cost >= leaf_cost {
-            return Self::make_leaf(nodes, ids, node_index, items);
+            return Self::make_leaf(nodes, primitive_ids, node_index, items);
         }
 
         let axis_extent = centroid_extent[axis];
-        let min_axis = centroid_bounds.min[axis];
+        let axis_min = centroid_bounds.min[axis];
 
         let mid = partition_in_place(items, |(bounds, _)| {
             let centroid = bounds.centroid()[axis];
-            let mut bucket = (((centroid - min_axis) / axis_extent) * SAH_BUCKETS as f32) as usize;
+            let mut bucket = (((centroid - axis_min) / axis_extent) * SAH_BUCKETS as f32) as usize;
             bucket = bucket.min(SAH_BUCKETS - 1);
             bucket <= best_bucket_split
         });
@@ -230,45 +272,47 @@ impl<T: Copy> Bvh<T> {
             items.sort_by(|(a, _), (b, _)| {
                 a.centroid()[axis]
                     .partial_cmp(&b.centroid()[axis])
-                    .unwrap_or(Ordering::Equal)
+                    .unwrap_or(std::cmp::Ordering::Equal)
             });
-
             let mid = items.len() / 2;
             let (left_items, right_items) = items.split_at_mut(mid);
 
-            let left = Self::build_node(nodes, ids, left_items);
-            let right = Self::build_node(nodes, ids, right_items);
+            let left = Self::build_node(nodes, primitive_ids, left_items);
+            let right = Self::build_node(nodes, primitive_ids, right_items);
 
-            nodes[node_index] = BvhNode {
-                aabb: node_aabb,
-                kind: BvhNodeKind::Branch { left, right },
-            };
+            nodes[node_index].left_or_first = left as u32;
+            nodes[node_index].right_or_count = right as u32;
+            nodes[node_index].axis = axis as u8;
+            nodes[node_index].is_leaf = 0;
 
             return node_index;
         }
 
         let (left_items, right_items) = items.split_at_mut(mid);
+        let left = Self::build_node(nodes, primitive_ids, left_items);
+        let right = Self::build_node(nodes, primitive_ids, right_items);
 
-        let left = Self::build_node(nodes, ids, left_items);
-        let right = Self::build_node(nodes, ids, right_items);
-
-        nodes[node_index] = BvhNode {
-            aabb: node_aabb,
-            kind: BvhNodeKind::Branch { left, right },
-        };
+        nodes[node_index].left_or_first = left as u32;
+        nodes[node_index].right_or_count = right as u32;
+        nodes[node_index].axis = axis as u8;
+        nodes[node_index].is_leaf = 0;
 
         node_index
     }
 
-    fn make_leaf(nodes: &mut [BvhNode], ids: &mut Vec<T>, node_index: usize, items: &[(Aabb, T)]) -> usize {
-        let start = ids.len();
-        ids.extend(items.iter().map(|(_, id)| *id));
-        let count = items.len();
+    fn make_leaf(
+        nodes: &mut [PackedBvhNode],
+        primitive_ids: &mut Vec<T>,
+        node_index: usize,
+        items: &[(Aabb, T)],
+    ) -> usize {
+        let start = primitive_ids.len();
+        primitive_ids.extend(items.iter().map(|(_, id)| *id));
 
-        nodes[node_index] = BvhNode {
-            aabb: nodes[node_index].aabb.clone(),
-            kind: BvhNodeKind::Leaf { start, count },
-        };
+        nodes[node_index].left_or_first = start as u32;
+        nodes[node_index].right_or_count = items.len() as u32;
+        nodes[node_index].axis = 0;
+        nodes[node_index].is_leaf = 1;
 
         node_index
     }
@@ -290,42 +334,42 @@ impl<T: Copy> Bvh<T> {
 
         let node = &self.nodes[node_index];
 
-        match node.kind {
-            BvhNodeKind::Leaf { start, count } => {
-                for id in &self.ids[start..start + count] {
-                    if !visit(*id, best_distance) {
-                        return false;
-                    }
-                }
-                true
-            }
-            BvhNodeKind::Branch { left, right } => {
-                let left_interval = self.nodes[left].aabb.ray_interval(ray);
-                let right_interval = self.nodes[right].aabb.ray_interval(ray);
-
-                match (left_interval, right_interval) {
-                    (Some((left_t, _)), Some((right_t, _))) => {
-                        let (first, first_t, second, second_t) = if left_t <= right_t {
-                            (left, left_t, right, right_t)
-                        } else {
-                            (right, right_t, left, left_t)
-                        };
-
-                        if !self.trace_node(first, ray, best_distance, visit, first_t) {
-                            return false;
-                        }
-
-                        if *best_distance < second_t {
-                            return true;
-                        }
-
-                        self.trace_node(second, ray, best_distance, visit, second_t)
-                    }
-                    (Some((left_t, _)), None) => self.trace_node(left, ray, best_distance, visit, left_t),
-                    (None, Some((right_t, _))) => self.trace_node(right, ray, best_distance, visit, right_t),
-                    (None, None) => true,
+        if node.is_leaf() {
+            for i in node.primitive_range() {
+                if !visit(self.primitive_ids[i], best_distance) {
+                    return false;
                 }
             }
+            return true;
+        }
+
+        let left = node.left_child();
+        let right = node.right_child();
+
+        let left_interval = self.nodes[left].aabb().ray_interval(ray);
+        let right_interval = self.nodes[right].aabb().ray_interval(ray);
+
+        match (left_interval, right_interval) {
+            (Some((left_t, _)), Some((right_t, _))) => {
+                let (first, first_t, second, second_t) = if left_t <= right_t {
+                    (left, left_t, right, right_t)
+                } else {
+                    (right, right_t, left, left_t)
+                };
+
+                if !self.trace_node(first, ray, best_distance, visit, first_t) {
+                    return false;
+                }
+
+                if *best_distance < second_t {
+                    return true;
+                }
+
+                self.trace_node(second, ray, best_distance, visit, second_t)
+            }
+            (Some((left_t, _)), None) => self.trace_node(left, ray, best_distance, visit, left_t),
+            (None, Some((right_t, _))) => self.trace_node(right, ray, best_distance, visit, right_t),
+            (None, None) => true,
         }
     }
 
@@ -346,42 +390,42 @@ impl<T: Copy> Bvh<T> {
 
         let node = &self.nodes[node_index];
 
-        match node.kind {
-            BvhNodeKind::Leaf { start, count } => {
-                for id in &self.ids[start..start + count] {
-                    if test(*id, max_distance) {
-                        return true;
-                    }
-                }
-                false
-            }
-            BvhNodeKind::Branch { left, right } => {
-                let left_interval = self.nodes[left].aabb.ray_interval(ray);
-                let right_interval = self.nodes[right].aabb.ray_interval(ray);
-
-                match (left_interval, right_interval) {
-                    (Some((left_t, _)), Some((right_t, _))) => {
-                        let (first, first_t, second, second_t) = if left_t <= right_t {
-                            (left, left_t, right, right_t)
-                        } else {
-                            (right, right_t, left, left_t)
-                        };
-
-                        if self.trace_any_node(first, ray, max_distance, test, first_t) {
-                            return true;
-                        }
-
-                        if *max_distance < second_t {
-                            return false;
-                        }
-
-                        self.trace_any_node(second, ray, max_distance, test, second_t)
-                    }
-                    (Some((left_t, _)), None) => self.trace_any_node(left, ray, max_distance, test, left_t),
-                    (None, Some((right_t, _))) => self.trace_any_node(right, ray, max_distance, test, right_t),
-                    (None, None) => false,
+        if node.is_leaf() {
+            for i in node.primitive_range() {
+                if test(self.primitive_ids[i], max_distance) {
+                    return true;
                 }
             }
+            return false;
+        }
+
+        let left = node.left_child();
+        let right = node.right_child();
+
+        let left_interval = self.nodes[left].aabb().ray_interval(ray);
+        let right_interval = self.nodes[right].aabb().ray_interval(ray);
+
+        match (left_interval, right_interval) {
+            (Some((left_t, _)), Some((right_t, _))) => {
+                let (first, first_t, second, second_t) = if left_t <= right_t {
+                    (left, left_t, right, right_t)
+                } else {
+                    (right, right_t, left, left_t)
+                };
+
+                if self.trace_any_node(first, ray, max_distance, test, first_t) {
+                    return true;
+                }
+
+                if *max_distance < second_t {
+                    return false;
+                }
+
+                self.trace_any_node(second, ray, max_distance, test, second_t)
+            }
+            (Some((left_t, _)), None) => self.trace_any_node(left, ray, max_distance, test, left_t),
+            (None, Some((right_t, _))) => self.trace_any_node(right, ray, max_distance, test, right_t),
+            (None, None) => false,
         }
     }
 }
