@@ -63,6 +63,12 @@ impl Aabb {
         })
     }
 
+    #[inline]
+    pub fn surface_area(&self) -> f32 {
+        let extent = self.max - self.min;
+        2.0 * (extent.x * extent.y + extent.y * extent.z + extent.z * extent.x)
+    }
+
     pub fn vertices(&self) -> [Point3<f32>; 8] {
         [
             self.min,

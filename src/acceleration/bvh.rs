@@ -3,6 +3,9 @@ use std::{cmp::Ordering, f32::INFINITY};
 use crate::geometry::{Aabb, Ray};
 
 const LEAF_SIZE: usize = 4;
+const SAH_BUCKETS: usize = 12;
+const TRAVERSAL_COST: f32 = 1.0;
+const INTERSECTION_COST: f32 = 1.0;
 
 pub struct Bvh<T: Copy> {
     nodes: Vec<BvhNode>,
@@ -17,6 +20,26 @@ struct BvhNode {
 enum BvhNodeKind {
     Branch { left: usize, right: usize },
     Leaf { start: usize, count: usize },
+}
+
+#[derive(Clone)]
+struct Bucket {
+    count: usize,
+    bounds: Option<Aabb>,
+}
+
+impl Bucket {
+    fn empty() -> Self {
+        Self { count: 0, bounds: None }
+    }
+
+    fn add(&mut self, bounds: Aabb) {
+        self.count += 1;
+        self.bounds = Some(match self.bounds.take() {
+            Some(existing) => Aabb::union([existing, bounds].into_iter()),
+            None => bounds,
+        });
+    }
 }
 
 impl<T: Copy> Bvh<T> {
@@ -84,56 +107,167 @@ impl<T: Copy> Bvh<T> {
         };
 
         let mut max_distance = max_distance;
-        self.trace_any_node(0, ray, &mut max_distance, &mut |id, _max_distance| test(id), root_t_min)
+        self.trace_any_node(0, ray, &mut max_distance, &mut |id, _| test(id), root_t_min)
     }
 
     fn build_node(nodes: &mut Vec<BvhNode>, ids: &mut Vec<T>, items: &mut [(Aabb, T)]) -> usize {
         let node_index = nodes.len();
-
         let node_aabb = Aabb::union(items.iter().map(|(aabb, _)| aabb.clone()));
 
         nodes.push(BvhNode {
-            aabb: node_aabb,
+            aabb: node_aabb.clone(),
             kind: BvhNodeKind::Leaf { start: 0, count: 0 },
         });
 
         if items.len() <= LEAF_SIZE {
-            let start = ids.len();
-            ids.extend(items.iter().map(|(_, id)| *id));
-            let count = items.len();
+            return Self::make_leaf(nodes, ids, node_index, items);
+        }
+
+        let centroid_bounds = Aabb::union(items.iter().map(|(aabb, _)| {
+            let c = aabb.centroid();
+            Aabb::new(c, c)
+        }));
+
+        let centroid_extent = centroid_bounds.max - centroid_bounds.min;
+
+        let mut best_axis = None;
+        let mut best_bucket_split = 0usize;
+        let mut best_cost = INFINITY;
+
+        for axis in 0..3 {
+            let axis_extent = centroid_extent[axis];
+            if axis_extent <= 0.0 {
+                continue;
+            }
+
+            let mut buckets = vec![Bucket::empty(); SAH_BUCKETS];
+
+            for (bounds, _) in items.iter() {
+                let centroid = bounds.centroid()[axis];
+                let mut bucket = (((centroid - centroid_bounds.min[axis]) / axis_extent) * SAH_BUCKETS as f32) as usize;
+                bucket = bucket.min(SAH_BUCKETS - 1);
+                buckets[bucket].add(bounds.clone());
+            }
+
+            let mut left_counts = [0usize; SAH_BUCKETS - 1];
+            let mut right_counts = [0usize; SAH_BUCKETS - 1];
+            let mut left_bounds: [Option<Aabb>; SAH_BUCKETS - 1] = std::array::from_fn(|_| None);
+            let mut right_bounds: [Option<Aabb>; SAH_BUCKETS - 1] = std::array::from_fn(|_| None);
+
+            let mut count = 0usize;
+            let mut bounds = None::<Aabb>;
+            for i in 0..(SAH_BUCKETS - 1) {
+                count += buckets[i].count;
+                if let Some(b) = buckets[i].bounds.clone() {
+                    bounds = Some(match bounds.take() {
+                        Some(existing) => Aabb::union([existing, b].into_iter()),
+                        None => b,
+                    });
+                }
+                left_counts[i] = count;
+                left_bounds[i] = bounds.clone();
+            }
+
+            count = 0;
+            bounds = None;
+            for i in (1..SAH_BUCKETS).rev() {
+                count += buckets[i].count;
+                if let Some(b) = buckets[i].bounds.clone() {
+                    bounds = Some(match bounds.take() {
+                        Some(existing) => Aabb::union([existing, b].into_iter()),
+                        None => b,
+                    });
+                }
+                right_counts[i - 1] = count;
+                right_bounds[i - 1] = bounds.clone();
+            }
+
+            for i in 0..(SAH_BUCKETS - 1) {
+                let Some(left_b) = &left_bounds[i] else {
+                    continue;
+                };
+                let Some(right_b) = &right_bounds[i] else {
+                    continue;
+                };
+
+                let left_area = left_b.surface_area();
+                let right_area = right_b.surface_area();
+                let parent_area = node_aabb.surface_area();
+
+                let cost = TRAVERSAL_COST
+                    + INTERSECTION_COST
+                        * ((left_counts[i] as f32 * left_area + right_counts[i] as f32 * right_area) / parent_area);
+
+                if cost < best_cost {
+                    best_cost = cost;
+                    best_axis = Some(axis);
+                    best_bucket_split = i;
+                }
+            }
+        }
+
+        let leaf_cost = INTERSECTION_COST * items.len() as f32;
+
+        let Some(axis) = best_axis else {
+            return Self::make_leaf(nodes, ids, node_index, items);
+        };
+
+        if best_cost >= leaf_cost {
+            return Self::make_leaf(nodes, ids, node_index, items);
+        }
+
+        let axis_extent = centroid_extent[axis];
+        let min_axis = centroid_bounds.min[axis];
+
+        let mid = partition_in_place(items, |(bounds, _)| {
+            let centroid = bounds.centroid()[axis];
+            let mut bucket = (((centroid - min_axis) / axis_extent) * SAH_BUCKETS as f32) as usize;
+            bucket = bucket.min(SAH_BUCKETS - 1);
+            bucket <= best_bucket_split
+        });
+
+        if mid == 0 || mid == items.len() {
+            items.sort_by(|(a, _), (b, _)| {
+                a.centroid()[axis]
+                    .partial_cmp(&b.centroid()[axis])
+                    .unwrap_or(Ordering::Equal)
+            });
+
+            let mid = items.len() / 2;
+            let (left_items, right_items) = items.split_at_mut(mid);
+
+            let left = Self::build_node(nodes, ids, left_items);
+            let right = Self::build_node(nodes, ids, right_items);
 
             nodes[node_index] = BvhNode {
-                aabb: nodes[node_index].aabb.clone(),
-                kind: BvhNodeKind::Leaf { start, count },
+                aabb: node_aabb,
+                kind: BvhNodeKind::Branch { left, right },
             };
 
             return node_index;
         }
 
-        let extent = nodes[node_index].aabb.max - nodes[node_index].aabb.min;
-        let axis = if extent.x >= extent.y && extent.x >= extent.z {
-            0
-        } else if extent.y >= extent.z {
-            1
-        } else {
-            2
-        };
-
-        items.sort_by(|(a, _), (b, _)| {
-            a.centroid()[axis]
-                .partial_cmp(&b.centroid()[axis])
-                .unwrap_or(Ordering::Equal)
-        });
-
-        let mid = items.len() / 2;
         let (left_items, right_items) = items.split_at_mut(mid);
 
         let left = Self::build_node(nodes, ids, left_items);
         let right = Self::build_node(nodes, ids, right_items);
 
         nodes[node_index] = BvhNode {
-            aabb: nodes[node_index].aabb.clone(),
+            aabb: node_aabb,
             kind: BvhNodeKind::Branch { left, right },
+        };
+
+        node_index
+    }
+
+    fn make_leaf(nodes: &mut [BvhNode], ids: &mut Vec<T>, node_index: usize, items: &[(Aabb, T)]) -> usize {
+        let start = ids.len();
+        ids.extend(items.iter().map(|(_, id)| *id));
+        let count = items.len();
+
+        nodes[node_index] = BvhNode {
+            aabb: nodes[node_index].aabb.clone(),
+            kind: BvhNodeKind::Leaf { start, count },
         };
 
         node_index
@@ -250,4 +384,20 @@ impl<T: Copy> Bvh<T> {
             }
         }
     }
+}
+
+fn partition_in_place<T>(items: &mut [T], mut pred: impl FnMut(&T) -> bool) -> usize {
+    let mut i = 0;
+    let mut j = items.len();
+
+    while i < j {
+        if pred(&items[i]) {
+            i += 1;
+        } else {
+            j -= 1;
+            items.swap(i, j);
+        }
+    }
+
+    i
 }
