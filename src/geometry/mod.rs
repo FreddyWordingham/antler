@@ -7,6 +7,7 @@ mod quad;
 mod ray;
 mod sphere;
 mod traceable;
+mod traversal_ray;
 mod triangle;
 
 pub use aabb::Aabb;
@@ -18,4 +19,5 @@ pub use quad::Quad;
 pub use ray::Ray;
 pub use sphere::Sphere;
 pub use traceable::Traceable;
+pub use traversal_ray::TraversalRay;
 pub use triangle::Triangle;
