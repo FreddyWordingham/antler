@@ -70,14 +70,18 @@ impl Bounded for Triangle {
             self.vertices[0].y.min(self.vertices[1].y).min(self.vertices[2].y),
             self.vertices[0].z.min(self.vertices[1].z).min(self.vertices[2].z),
         );
-
         let max = Point3::new(
             self.vertices[0].x.max(self.vertices[1].x).max(self.vertices[2].x),
             self.vertices[0].y.max(self.vertices[1].y).max(self.vertices[2].y),
             self.vertices[0].z.max(self.vertices[1].z).max(self.vertices[2].z),
         );
 
-        let padding = Vector3::new(BOUNDS_PADDING, BOUNDS_PADDING, BOUNDS_PADDING);
+        let scale = self
+            .vertices
+            .iter()
+            .map(|p| p.coords.abs().max())
+            .fold(1.0_f32, f32::max);
+        let padding = Vector3::new(BOUNDS_PADDING, BOUNDS_PADDING, BOUNDS_PADDING) * scale;
 
         Aabb {
             min: min - padding,
@@ -121,7 +125,13 @@ impl Traceable for Triangle {
         }
 
         let alpha = 1.0 - beta - gamma;
-        let bary = Vector3::new(alpha, beta, gamma);
+
+        let alpha = alpha.clamp(0.0, 1.0);
+        let beta = beta.clamp(0.0, 1.0);
+        let gamma = gamma.clamp(0.0, 1.0);
+
+        let sum = alpha + beta + gamma;
+        let bary = Vector3::new(alpha, beta, gamma) / sum;
 
         let position = self.interpolate_position(bary);
         let mut normal = self.interpolate_normal(bary);
