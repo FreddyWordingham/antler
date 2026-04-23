@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     config::{Vec3, defaults},
+    errors::MeshLoadError,
     geometry::{Aabb, Circle, GeometryEnum, Mesh, Quad, Sphere},
 };
 
@@ -39,18 +40,20 @@ pub enum GeometryConfig {
     },
 }
 
-impl From<GeometryConfig> for GeometryEnum {
-    fn from(config: GeometryConfig) -> Self {
-        match config {
-            GeometryConfig::Aabb { min, max } => Aabb::new(min.into(), max.into()).into(),
-            GeometryConfig::Sphere { centre, radius } => Sphere::new(centre.into(), radius).into(),
+impl GeometryConfig {
+    pub fn build(self) -> Result<GeometryEnum, MeshLoadError> {
+        match self {
+            GeometryConfig::Aabb { min, max } => Ok(Aabb::new(min.into(), max.into()).into()),
+            GeometryConfig::Sphere { centre, radius } => Ok(Sphere::new(centre.into(), radius).into()),
             GeometryConfig::Circle {
                 position,
                 normal,
                 radius,
-            } => Circle::new(position.into(), normal.into(), radius).into(),
-            GeometryConfig::Quad { position, normal, size } => Quad::new(position.into(), normal.into(), size).into(),
-            GeometryConfig::Mesh { path } => Mesh::load(&path).expect("Failed to load mesh").into(),
+            } => Ok(Circle::new(position.into(), normal.into(), radius).into()),
+            GeometryConfig::Quad { position, normal, size } => {
+                Ok(Quad::new(position.into(), normal.into(), size).into())
+            }
+            GeometryConfig::Mesh { path } => Ok(Mesh::load(&path)?.into()),
         }
     }
 }

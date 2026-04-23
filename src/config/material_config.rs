@@ -8,10 +8,10 @@ pub enum MaterialConfig {
     Opaque,
 }
 
-impl From<MaterialConfig> for MaterialEnum {
-    fn from(config: MaterialConfig) -> Self {
-        match config {
-            MaterialConfig::Opaque => Opaque::new().into(),
+impl MaterialConfig {
+    pub fn build(self) -> MaterialEnum {
+        match self {
+            MaterialConfig::Opaque => Opaque.into(),
         }
     }
 }

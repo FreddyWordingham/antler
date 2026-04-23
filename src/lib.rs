@@ -18,7 +18,7 @@ pub mod prelude {
         camera::{Orthographic, Perspective},
         colour::{Gradient, Rgb, Rgba},
         config::*,
-        errors::{MeshLoadError, ParseHexError},
+        errors::{MeshLoadError, ParseHexError, SceneBuildError},
         geometry::{Aabb, Bounded, Circle, Geometry, Mesh, Quad, Ray, Sphere, Triangle},
         lighting::DirectionalLight,
         material::Opaque,
