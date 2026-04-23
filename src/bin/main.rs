@@ -4,8 +4,8 @@ use nalgebra::{Point3, Similarity3, Unit, Vector3};
 fn main() {
     std::fs::create_dir_all("output").unwrap();
 
-    let width = 1200;
-    let height = 900;
+    let width = 12000;
+    let height = 9000;
     let super_samples = 4;
 
     let mut world = World::new();
