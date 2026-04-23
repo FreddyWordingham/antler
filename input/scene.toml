@@ -1,0 +1,60 @@
+[render]
+resolution = [1200, 900]
+super_samples = 4
+background = "#000000"
+
+[camera]
+type = "perspective"
+position = [10.0, 10.0, 10.0]
+look_at = [0.0, 0.0, 3.0]
+up = [0.0, 0.0, 1.0]
+vertical_fov_radians = 0.7853981633974483
+
+[[lights]]
+type = "directional"
+direction = [-5.0, -2.0, -2.0]
+radiance = "#FFFFFF"
+
+[geometries.ground]
+type = "quad"
+position = [0.0, 0.0, 0.0]
+normal = [0.0, 0.0, 1.0]
+size = [100.0, 100.0]
+
+[geometries.cube]
+type = "aabb"
+min = [-1.0, -1.0, -1.0]
+max = [1.0, 1.0, 1.0]
+
+[shaders.green_lambert]
+type = "lambertion"
+colour = "#33CC66"
+
+[shaders.checker]
+type = "checkerboard"
+size = 0.26
+colour_a = "#FF00FF"
+colour_b = "#333333"
+
+[materials.opaque]
+type = "opaque"
+
+[[objects]]
+geometry = "ground"
+shader = "green_lambert"
+material = "opaque"
+
+[objects.transform]
+position = [0.0, 0.0, 0.0]
+rotation = [0.0, 0.0, 0.0]
+scale = 1.0
+
+[[objects]]
+geometry = "cube"
+shader = "checker"
+material = "opaque"
+
+[objects.transform]
+position = [0.0, 0.0, 2.0]
+rotation = [0.0, 0.0, 0.0]
+scale = 2.0
