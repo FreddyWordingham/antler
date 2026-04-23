@@ -15,6 +15,14 @@ pub struct Circle {
 }
 
 impl Circle {
+    pub fn new(position: Point3<f32>, normal: Unit<Vector3<f32>>, radius: f32) -> Self {
+        Self {
+            position,
+            normal,
+            radius,
+        }
+    }
+
     #[inline]
     fn tangent_frame(&self) -> (Unit<Vector3<f32>>, Unit<Vector3<f32>>) {
         let helper = if self.normal.x.abs() < 0.9 {

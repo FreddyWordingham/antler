@@ -12,6 +12,12 @@ pub struct Sphere {
     pub radius: f32,
 }
 
+impl Sphere {
+    pub fn new(centre: Point3<f32>, radius: f32) -> Self {
+        Self { centre, radius }
+    }
+}
+
 impl Bounded for Sphere {
     fn bounds(&self) -> crate::geometry::Aabb {
         crate::geometry::Aabb {

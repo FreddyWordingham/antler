@@ -34,7 +34,7 @@ impl Mesh {
         &self.triangles[index]
     }
 
-    pub fn load_obj(path: impl AsRef<Path>) -> Result<Self, MeshLoadError> {
+    pub fn load(path: impl AsRef<Path>) -> Result<Self, MeshLoadError> {
         let (models, _materials) = tobj::load_obj(
             path.as_ref(),
             &tobj::LoadOptions {
