@@ -8,6 +8,7 @@ fn main() {
 
     let width = 1200;
     let height = 900;
+    let super_samples: i32 = 4;
 
     let mut world = World::new();
 
@@ -61,13 +62,21 @@ fn main() {
     // let camera = create_orthographic_camera([width, height]);
 
     let pb = create_progress_bar(width * height);
+    let super_sample_delta = 1.0 / super_samples as f32;
     for y in 0..height {
         for x in 0..width {
             pb.inc(1);
-
-            let uv = Point2::new((x as f32 + 0.5) / width as f32, (y as f32 + 0.5) / height as f32);
-            let probe = camera.emit(uv);
-            image[(x, y)] = render(&world, &scene, probe);
+            for sy in 0..super_samples {
+                for sx in 0..super_samples {
+                    let uv = Point2::new(
+                        (x as f32 + (sx as f32 + 0.5) * super_sample_delta) / width as f32,
+                        (y as f32 + (sy as f32 + 0.5) * super_sample_delta) / height as f32,
+                    );
+                    let probe = camera.emit(uv);
+                    image[(x, y)] += render(&world, &scene, probe);
+                }
+            }
+            image[(x, y)] /= super_samples.pow(2) as f32;
         }
     }
     pb.finish();
