@@ -1,19 +1,44 @@
 use std::f32::{INFINITY, NEG_INFINITY};
 
-use nalgebra::{Point2, Point3, Similarity3, Vector3};
+use nalgebra::{Point2, Point3, Similarity3, Unit, Vector3};
 
 use crate::{
     geometry::{Bounded, Traceable},
     tracing::{ObjectHit, ObjectRay},
 };
 
-const FACE_EPSILON: f32 = 1.0e-4;
 const PARALLEL_THRESHOLD: f32 = 1e-8;
 
 #[derive(Debug, Clone)]
 pub struct Aabb {
     pub min: Point3<f32>,
     pub max: Point3<f32>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+
+pub enum AabbFace {
+    MinX,
+    MaxX,
+    MinY,
+    MaxY,
+    MinZ,
+    MaxZ,
+}
+
+impl AabbFace {
+    #[inline]
+
+    pub fn normal(self) -> Unit<Vector3<f32>> {
+        match self {
+            Self::MinX => -Vector3::x_axis(),
+            Self::MaxX => Vector3::x_axis(),
+            Self::MinY => -Vector3::y_axis(),
+            Self::MaxY => Vector3::y_axis(),
+            Self::MinZ => -Vector3::z_axis(),
+            Self::MaxZ => Vector3::z_axis(),
+        }
+    }
 }
 
 impl Aabb {
@@ -69,12 +94,20 @@ impl Aabb {
         (self.min + self.max.coords) / 2.0
     }
 
+    #[inline]
     pub fn ray_interval(&self, ray: &crate::geometry::Ray) -> Option<(f32, f32)> {
+        self.ray_intersection(ray).map(|(t_min, t_max, _, _)| (t_min, t_max))
+    }
+
+    pub fn ray_intersection(&self, ray: &crate::geometry::Ray) -> Option<(f32, f32, AabbFace, AabbFace)> {
         let origin = ray.origin;
         let direction = ray.direction.into_inner();
 
         let mut t_min = NEG_INFINITY;
         let mut t_max = INFINITY;
+
+        let mut entry_face = AabbFace::MinX;
+        let mut exit_face = AabbFace::MaxX;
 
         for axis in 0..3 {
             let o = origin[axis];
@@ -93,19 +126,35 @@ impl Aabb {
             let mut t0 = (min - o) * inv_d;
             let mut t1 = (max - o) * inv_d;
 
-            if t0 > t1 {
+            let (face0, face1) = match axis {
+                0 => (AabbFace::MinX, AabbFace::MaxX),
+                1 => (AabbFace::MinY, AabbFace::MaxY),
+                _ => (AabbFace::MinZ, AabbFace::MaxZ),
+            };
+
+            let (near_face, far_face) = if t0 <= t1 {
+                (face0, face1)
+            } else {
                 std::mem::swap(&mut t0, &mut t1);
+                (face1, face0)
+            };
+
+            if t0 > t_min {
+                t_min = t0;
+                entry_face = near_face;
             }
 
-            t_min = t_min.max(t0);
-            t_max = t_max.min(t1);
+            if t1 < t_max {
+                t_max = t1;
+                exit_face = far_face;
+            }
 
             if t_max < t_min {
                 return None;
             }
         }
 
-        Some((t_min, t_max))
+        Some((t_min, t_max, entry_face, exit_face))
     }
 }
 
@@ -117,28 +166,19 @@ impl Bounded for Aabb {
 
 impl Traceable for Aabb {
     fn trace(&self, ray: &ObjectRay) -> Option<ObjectHit> {
-        let (t_min, t_max) = self.ray_interval(ray)?;
+        let (t_min, t_max, entry_face, exit_face) = self.ray_intersection(ray)?;
 
-        let distance = if t_min > 0.0 { t_min } else { t_max };
+        let (distance, normal) = if t_min > 0.0 {
+            (t_min, entry_face.normal())
+        } else {
+            (t_max, exit_face.normal())
+        };
+
         if distance <= 0.0 {
             return None;
         }
 
         let position = ray.origin + *ray.direction * distance;
-
-        let normal = if (position.x - self.min.x).abs() < FACE_EPSILON {
-            -Vector3::x_axis()
-        } else if (position.x - self.max.x).abs() < FACE_EPSILON {
-            Vector3::x_axis()
-        } else if (position.y - self.min.y).abs() < FACE_EPSILON {
-            -Vector3::y_axis()
-        } else if (position.y - self.max.y).abs() < FACE_EPSILON {
-            Vector3::y_axis()
-        } else if (position.z - self.min.z).abs() < FACE_EPSILON {
-            -Vector3::z_axis()
-        } else {
-            Vector3::z_axis()
-        };
 
         Some(ObjectHit {
             distance,
