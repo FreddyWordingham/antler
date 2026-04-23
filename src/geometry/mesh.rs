@@ -80,15 +80,15 @@ impl Mesh {
                     None
                 } else {
                     Some([
-                        read_normal(&mesh.normals, i0).ok_or_else(|| MeshLoadError::MissingPositionIndex {
+                        read_normal(&mesh.normals, i0).ok_or_else(|| MeshLoadError::MissingNormalIndex {
                             model_name: model.name.clone(),
                             index: i0,
                         })?,
-                        read_normal(&mesh.normals, i1).ok_or_else(|| MeshLoadError::MissingPositionIndex {
+                        read_normal(&mesh.normals, i1).ok_or_else(|| MeshLoadError::MissingNormalIndex {
                             model_name: model.name.clone(),
                             index: i1,
                         })?,
-                        read_normal(&mesh.normals, i2).ok_or_else(|| MeshLoadError::MissingPositionIndex {
+                        read_normal(&mesh.normals, i2).ok_or_else(|| MeshLoadError::MissingNormalIndex {
                             model_name: model.name.clone(),
                             index: i2,
                         })?,
@@ -99,15 +99,15 @@ impl Mesh {
                     None
                 } else {
                     Some([
-                        read_uv(&mesh.texcoords, i0).ok_or_else(|| MeshLoadError::MissingPositionIndex {
+                        read_uv(&mesh.texcoords, i0).ok_or_else(|| MeshLoadError::MissingTexcoordIndex {
                             model_name: model.name.clone(),
                             index: i0,
                         })?,
-                        read_uv(&mesh.texcoords, i1).ok_or_else(|| MeshLoadError::MissingPositionIndex {
+                        read_uv(&mesh.texcoords, i1).ok_or_else(|| MeshLoadError::MissingTexcoordIndex {
                             model_name: model.name.clone(),
                             index: i1,
                         })?,
-                        read_uv(&mesh.texcoords, i2).ok_or_else(|| MeshLoadError::MissingPositionIndex {
+                        read_uv(&mesh.texcoords, i2).ok_or_else(|| MeshLoadError::MissingTexcoordIndex {
                             model_name: model.name.clone(),
                             index: i2,
                         })?,
@@ -116,6 +116,10 @@ impl Mesh {
 
                 triangles.push(Triangle::new(vertices, normals, uvs));
             }
+        }
+
+        if triangles.is_empty() {
+            return Err(MeshLoadError::EmptyMesh);
         }
 
         Ok(Self::new(triangles))
