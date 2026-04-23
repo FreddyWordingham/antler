@@ -22,8 +22,7 @@ fn main() {
     let quad_id = world.add_geometry(GeometryEnum::Quad(Quad {
         position: Point3::new(0.0, 0.0, 0.0),
         normal: Vector3::z_axis(),
-        width: 10.0,
-        height: 4.0,
+        size: [10.0, 4.0],
     }));
 
     let green_lambertion_shader_id = world.add_shader(ShaderEnum::Lambertion(Lambertion {

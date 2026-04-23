@@ -11,8 +11,7 @@ const BOUNDS_THICKNESS: f32 = 1.0e-4;
 pub struct Quad {
     pub position: Point3<f32>,
     pub normal: Unit<Vector3<f32>>,
-    pub width: f32,
-    pub height: f32,
+    pub size: [f32; 2],
 }
 
 impl Quad {
@@ -35,8 +34,8 @@ impl Bounded for Quad {
     fn bounds(&self) -> Aabb {
         let (tangent, bitangent) = self.tangent_frame();
 
-        let half_width = self.width * 0.5;
-        let half_height = self.height * 0.5;
+        let half_width = self.size[0] * 0.5;
+        let half_height = self.size[1] * 0.5;
 
         let corners = [
             self.position + *tangent * half_width + *bitangent * half_height,
@@ -82,8 +81,8 @@ impl Traceable for Quad {
         let local_x = offset.dot(&tangent);
         let local_y = offset.dot(&bitangent);
 
-        let half_width = self.width * 0.5;
-        let half_height = self.height * 0.5;
+        let half_width = self.size[0] * 0.5;
+        let half_height = self.size[1] * 0.5;
 
         if local_x.abs() > half_width || local_y.abs() > half_height {
             return None;
@@ -91,8 +90,8 @@ impl Traceable for Quad {
 
         let shading_normal = if denom < 0.0 { self.normal } else { -self.normal };
 
-        let u = (local_x / self.width) + 0.5;
-        let v = (local_y / self.height) + 0.5;
+        let u = (local_x / self.size[0]) + 0.5;
+        let v = (local_y / self.size[1]) + 0.5;
 
         Some(ObjectHit {
             distance,
