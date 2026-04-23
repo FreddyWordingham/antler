@@ -1,4 +1,7 @@
-use crate::{colour::Rgb, config::Vec3};
+use crate::{
+    colour::{Rgb, Rgba},
+    config::Vec3,
+};
 
 pub fn one_f32() -> f32 {
     1.0
@@ -18,4 +21,8 @@ pub fn z_axis() -> Vec3 {
 
 pub fn black() -> Rgb {
     Rgb::BLACK
+}
+
+pub fn transparent() -> Rgba {
+    Rgba::TRANSPARENT
 }

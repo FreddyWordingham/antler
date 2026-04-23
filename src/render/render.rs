@@ -3,11 +3,11 @@ use rayon::prelude::*;
 
 use crate::{
     camera::Camera,
-    colour::Rgb,
+    colour::Rgba,
     material::Material,
     render::RenderSettings,
     shader::Shader,
-    storage::RgbImage,
+    storage::RgbaImage,
     tracing::Probe,
     world::{Scene, World},
 };
@@ -24,9 +24,9 @@ struct Tile {
     y1: usize,
 }
 
-pub fn render_probe(world: &World, scene: &Scene, probe: Probe, settings: RenderSettings) -> Rgb {
+pub fn render_probe(world: &World, scene: &Scene, probe: Probe, settings: RenderSettings) -> Rgba {
     if probe.generation >= MAX_GENERATION || probe.weight <= MIN_WEIGHT {
-        return Rgb::BLACK;
+        return Rgba::TRANSPARENT;
     }
 
     let Some(world_hit) = scene.trace(world, &probe.ray) else {
@@ -43,16 +43,16 @@ pub fn render_probe(world: &World, scene: &Scene, probe: Probe, settings: Render
     let direct = scene.direct_light(world, &probe.ray, &world_hit) * scatter.local_fraction;
     let local_colour = emitted + direct;
 
-    let bounced_colours = scatter
+    let bounced_colours: Rgba = scatter
         .children
         .into_iter()
         .map(|(fraction, child)| render_probe(world, scene, probe.child(child, fraction), settings))
         .sum();
 
-    local_colour + bounced_colours
+    local_colour.to_rgba() + bounced_colours
 }
 
-pub fn render_image<C>(world: &World, scene: &Scene, camera: &C, settings: RenderSettings) -> RgbImage
+pub fn render_image<C>(world: &World, scene: &Scene, camera: &C, settings: RenderSettings) -> RgbaImage
 where
     C: Camera + Sync,
 {
@@ -66,7 +66,7 @@ pub fn render_image_with_progress<C>(
     settings: RenderSettings,
     label: impl Into<String>,
     done_label: impl Into<String>,
-) -> RgbImage
+) -> RgbaImage
 where
     C: Camera + Sync,
 {
@@ -92,7 +92,7 @@ fn render_image_inner<C>(
     camera: &C,
     settings: RenderSettings,
     progress: Option<&ProgressBar>,
-) -> RgbImage
+) -> RgbaImage
 where
     C: Camera + Sync,
 {
@@ -104,7 +104,7 @@ where
 
     let tiles = make_tiles(settings.resolution);
 
-    let rendered_tiles: Vec<(Tile, Vec<Rgb>)> = tiles
+    let rendered_tiles: Vec<(Tile, Vec<Rgba>)> = tiles
         .into_par_iter()
         .map(|tile| {
             let tile_width = tile.x1 - tile.x0;
@@ -116,7 +116,7 @@ where
 
                 for local_x in 0..tile_width {
                     let x = tile.x0 + local_x;
-                    let mut colour = Rgb::BLACK;
+                    let mut colour = Rgba::TRANSPARENT;
 
                     for sy in 0..ss {
                         for sx in 0..ss {
@@ -142,7 +142,7 @@ where
         })
         .collect();
 
-    let mut image = RgbImage::filled(settings.resolution, settings.background);
+    let mut image = RgbaImage::filled(settings.resolution, settings.background);
 
     for (tile, pixels) in rendered_tiles {
         let tile_width = tile.x1 - tile.x0;
