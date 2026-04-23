@@ -7,14 +7,28 @@ pub trait Material {
     fn scatter(&self, probe: &Probe, hit: &WorldHit) -> Scatter;
 }
 
-pub enum MaterialEnum {
-    Opaque(Opaque),
+macro_rules! define_material_enum {
+    ($name:ident: $($ty:ident),* $(,)?) => {
+        pub enum $name {
+            $($ty($ty),)*
+        }
+
+        impl Material for $name {
+            fn scatter(&self, probe: &Probe, hit: &WorldHit) -> Scatter {
+                match self {
+                    $(Self::$ty(inner) => inner.scatter(probe, hit),)*
+                }
+            }
+        }
+
+        $(
+            impl From<$ty> for $name {
+                fn from(value: $ty) -> Self {
+                    Self::$ty(value)
+                }
+            }
+        )*
+    };
 }
 
-impl Material for MaterialEnum {
-    fn scatter(&self, probe: &Probe, hit: &WorldHit) -> Scatter {
-        match self {
-            MaterialEnum::Opaque(opaque) => opaque.scatter(probe, hit),
-        }
-    }
-}
+define_material_enum!(MaterialEnum: Opaque);
