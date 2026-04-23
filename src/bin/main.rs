@@ -5,7 +5,7 @@ use antler::prelude::*;
 fn main() {
     let built = SceneConfig::load("input/scene.toml").unwrap().build().unwrap();
 
-    for (image_name, built_camera) in &built.cameras {
+    for (image_name, built_camera) in &built.images {
         for (render_name, render) in &built_camera.renders {
             let dir = format!("output/{image_name}");
             create_dir_all(&dir).unwrap();
