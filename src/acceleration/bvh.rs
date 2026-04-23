@@ -8,6 +8,7 @@ const LEAF_SIZE: usize = 4;
 const SAH_BUCKETS: usize = 12;
 const TRAVERSAL_COST: f32 = 1.0;
 const INTERSECTION_COST: f32 = 1.0;
+const TRAVERSAL_STACK_SIZE: usize = 64;
 
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]
@@ -52,6 +53,58 @@ impl PackedBvhNode {
     fn right_child(&self) -> usize {
         self.right_or_count as usize
     }
+
+    #[inline]
+    fn near_far_children(&self, ray: &Ray) -> (usize, usize) {
+        let left = self.left_child();
+        let right = self.right_child();
+
+        if ray.direction[self.axis as usize] >= 0.0 {
+            (left, right)
+        } else {
+            (right, left)
+        }
+    }
+
+    #[inline]
+    fn ray_interval(&self, ray: &Ray) -> Option<(f32, f32)> {
+        let origin = ray.origin;
+        let direction = ray.direction.into_inner();
+
+        let mut t_min = f32::NEG_INFINITY;
+        let mut t_max = f32::INFINITY;
+
+        for axis in 0..3 {
+            let o = origin[axis];
+            let d = direction[axis];
+            let min = self.min[axis];
+            let max = self.max[axis];
+
+            if d.abs() < 1.0e-8 {
+                if o < min || o > max {
+                    return None;
+                }
+                continue;
+            }
+
+            let inv_d = 1.0 / d;
+            let mut t0 = (min - o) * inv_d;
+            let mut t1 = (max - o) * inv_d;
+
+            if t0 > t1 {
+                std::mem::swap(&mut t0, &mut t1);
+            }
+
+            t_min = t_min.max(t0);
+            t_max = t_max.min(t1);
+
+            if t_max < t_min {
+                return None;
+            }
+        }
+
+        Some((t_min, t_max))
+    }
 }
 
 #[derive(Clone)]
@@ -71,6 +124,47 @@ impl Bucket {
             Some(existing) => Aabb::union([existing, bounds].into_iter()),
             None => bounds,
         });
+    }
+}
+
+#[derive(Debug, Clone, Copy)]
+struct TraversalEntry {
+    node_index: usize,
+    t_min: f32,
+}
+
+struct SmallStack<const N: usize> {
+    entries: [TraversalEntry; N],
+    len: usize,
+}
+
+impl<const N: usize> SmallStack<N> {
+    #[inline]
+    fn new() -> Self {
+        Self {
+            entries: [TraversalEntry {
+                node_index: 0,
+                t_min: 0.0,
+            }; N],
+            len: 0,
+        }
+    }
+
+    #[inline]
+    fn push(&mut self, entry: TraversalEntry) {
+        assert!(self.len < N, "BVH traversal stack overflow");
+        self.entries[self.len] = entry;
+        self.len += 1;
+    }
+
+    #[inline]
+    fn pop(&mut self) -> Option<TraversalEntry> {
+        if self.len == 0 {
+            None
+        } else {
+            self.len -= 1;
+            Some(self.entries[self.len])
+        }
     }
 }
 
@@ -106,7 +200,7 @@ impl<T: Copy> Bvh<T> {
     where
         F: FnMut(T, &mut f32) -> bool,
     {
-        let Some((root_t_min, _)) = self.nodes[0].aabb().ray_interval(ray) else {
+        let Some((root_t_min, _)) = self.nodes[0].ray_interval(ray) else {
             return;
         };
 
@@ -127,7 +221,7 @@ impl<T: Copy> Bvh<T> {
     where
         F: FnMut(T, &mut f32) -> bool,
     {
-        let Some((root_t_min, _)) = self.nodes[0].aabb().ray_interval(ray) else {
+        let Some((root_t_min, _)) = self.nodes[0].ray_interval(ray) else {
             return false;
         };
 
@@ -139,7 +233,7 @@ impl<T: Copy> Bvh<T> {
     where
         F: FnMut(T) -> bool,
     {
-        let Some((root_t_min, _)) = self.nodes[0].aabb().ray_interval(ray) else {
+        let Some((root_t_min, _)) = self.nodes[0].ray_interval(ray) else {
             return false;
         };
 
@@ -328,49 +422,53 @@ impl<T: Copy> Bvh<T> {
     where
         F: FnMut(T, &mut f32) -> bool,
     {
-        if node_t_min > *best_distance {
-            return true;
-        }
+        let mut stack = SmallStack::<TRAVERSAL_STACK_SIZE>::new();
+        stack.push(TraversalEntry {
+            node_index,
+            t_min: node_t_min,
+        });
 
-        let node = &self.nodes[node_index];
+        while let Some(TraversalEntry { node_index, t_min }) = stack.pop() {
+            if t_min > *best_distance {
+                continue;
+            }
 
-        if node.is_leaf() {
-            for i in node.primitive_range() {
-                if !visit(self.primitive_ids[i], best_distance) {
-                    return false;
+            let node = &self.nodes[node_index];
+
+            if node.is_leaf() {
+                for i in node.primitive_range() {
+                    if !visit(self.primitive_ids[i], best_distance) {
+                        return false;
+                    }
+                }
+                continue;
+            }
+
+            let (near, far) = node.near_far_children(ray);
+
+            let near_interval = self.nodes[near].ray_interval(ray);
+            let far_interval = self.nodes[far].ray_interval(ray);
+
+            if let Some((far_t, _)) = far_interval {
+                if far_t <= *best_distance {
+                    stack.push(TraversalEntry {
+                        node_index: far,
+                        t_min: far_t,
+                    });
                 }
             }
-            return true;
-        }
 
-        let left = node.left_child();
-        let right = node.right_child();
-
-        let left_interval = self.nodes[left].aabb().ray_interval(ray);
-        let right_interval = self.nodes[right].aabb().ray_interval(ray);
-
-        match (left_interval, right_interval) {
-            (Some((left_t, _)), Some((right_t, _))) => {
-                let (first, first_t, second, second_t) = if left_t <= right_t {
-                    (left, left_t, right, right_t)
-                } else {
-                    (right, right_t, left, left_t)
-                };
-
-                if !self.trace_node(first, ray, best_distance, visit, first_t) {
-                    return false;
+            if let Some((near_t, _)) = near_interval {
+                if near_t <= *best_distance {
+                    stack.push(TraversalEntry {
+                        node_index: near,
+                        t_min: near_t,
+                    });
                 }
-
-                if *best_distance < second_t {
-                    return true;
-                }
-
-                self.trace_node(second, ray, best_distance, visit, second_t)
             }
-            (Some((left_t, _)), None) => self.trace_node(left, ray, best_distance, visit, left_t),
-            (None, Some((right_t, _))) => self.trace_node(right, ray, best_distance, visit, right_t),
-            (None, None) => true,
         }
+
+        true
     }
 
     fn trace_any_node<F>(
@@ -384,49 +482,53 @@ impl<T: Copy> Bvh<T> {
     where
         F: FnMut(T, &mut f32) -> bool,
     {
-        if node_t_min > *max_distance {
-            return false;
-        }
+        let mut stack = SmallStack::<TRAVERSAL_STACK_SIZE>::new();
+        stack.push(TraversalEntry {
+            node_index,
+            t_min: node_t_min,
+        });
 
-        let node = &self.nodes[node_index];
+        while let Some(TraversalEntry { node_index, t_min }) = stack.pop() {
+            if t_min > *max_distance {
+                continue;
+            }
 
-        if node.is_leaf() {
-            for i in node.primitive_range() {
-                if test(self.primitive_ids[i], max_distance) {
-                    return true;
+            let node = &self.nodes[node_index];
+
+            if node.is_leaf() {
+                for i in node.primitive_range() {
+                    if test(self.primitive_ids[i], max_distance) {
+                        return true;
+                    }
+                }
+                continue;
+            }
+
+            let (near, far) = node.near_far_children(ray);
+
+            let near_interval = self.nodes[near].ray_interval(ray);
+            let far_interval = self.nodes[far].ray_interval(ray);
+
+            if let Some((far_t, _)) = far_interval {
+                if far_t <= *max_distance {
+                    stack.push(TraversalEntry {
+                        node_index: far,
+                        t_min: far_t,
+                    });
                 }
             }
-            return false;
-        }
 
-        let left = node.left_child();
-        let right = node.right_child();
-
-        let left_interval = self.nodes[left].aabb().ray_interval(ray);
-        let right_interval = self.nodes[right].aabb().ray_interval(ray);
-
-        match (left_interval, right_interval) {
-            (Some((left_t, _)), Some((right_t, _))) => {
-                let (first, first_t, second, second_t) = if left_t <= right_t {
-                    (left, left_t, right, right_t)
-                } else {
-                    (right, right_t, left, left_t)
-                };
-
-                if self.trace_any_node(first, ray, max_distance, test, first_t) {
-                    return true;
+            if let Some((near_t, _)) = near_interval {
+                if near_t <= *max_distance {
+                    stack.push(TraversalEntry {
+                        node_index: near,
+                        t_min: near_t,
+                    });
                 }
-
-                if *max_distance < second_t {
-                    return false;
-                }
-
-                self.trace_any_node(second, ray, max_distance, test, second_t)
             }
-            (Some((left_t, _)), None) => self.trace_any_node(left, ray, max_distance, test, left_t),
-            (None, Some((right_t, _))) => self.trace_any_node(right, ray, max_distance, test, right_t),
-            (None, None) => false,
         }
+
+        false
     }
 }
 
