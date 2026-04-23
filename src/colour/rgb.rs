@@ -200,7 +200,7 @@ impl Serialize for Rgb {
     where
         S: Serializer,
     {
-        serializer.serialize_u32(self.to_u32())
+        serializer.serialize_str(&self.to_hex())
     }
 }
 
@@ -218,7 +218,7 @@ impl<'de> Deserialize<'de> for Rgb {
 
         match RgbRepr::deserialize(deserializer)? {
             RgbRepr::Int(value) => Ok(Rgb::from_u32(value)),
-            RgbRepr::Hex(hex) => Rgb::from_hex(&hex).map_err(Error::custom),
+            RgbRepr::Hex(hex) => Rgb::from_hex(&hex).map_err(serde::de::Error::custom),
         }
     }
 }

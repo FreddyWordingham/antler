@@ -206,7 +206,7 @@ impl Serialize for Rgba {
     where
         S: Serializer,
     {
-        serializer.serialize_u32(self.to_u32())
+        serializer.serialize_str(&self.to_hex())
     }
 }
 
