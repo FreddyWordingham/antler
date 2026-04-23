@@ -1,27 +1,29 @@
-use std::collections::BTreeMap;
+use std::{
+    collections::BTreeMap,
+    fs::{read_to_string, write},
+};
 
 use serde::{Deserialize, Serialize};
 
 use crate::{
     camera::CameraEnum,
-    config::{CameraConfig, LightConfig, Named, ObjectConfig, RenderConfig},
+    config::{CameraConfig, GeometryConfig, LightConfig, MaterialConfig, ObjectConfig, RenderConfig, ShaderConfig},
     errors::SceneBuildError,
     world::{Object, Scene, World},
 };
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-
 pub struct SceneConfig {
     pub render: RenderConfig,
     pub camera: CameraConfig,
     #[serde(default)]
     pub lights: Vec<LightConfig>,
     #[serde(default)]
-    pub geometries: BTreeMap<String, crate::config::GeometryConfig>,
+    pub geometries: BTreeMap<String, GeometryConfig>,
     #[serde(default)]
-    pub shaders: BTreeMap<String, crate::config::ShaderConfig>,
+    pub shaders: BTreeMap<String, ShaderConfig>,
     #[serde(default)]
-    pub materials: BTreeMap<String, crate::config::MaterialConfig>,
+    pub materials: BTreeMap<String, MaterialConfig>,
     #[serde(default)]
     pub objects: Vec<ObjectConfig>,
 }
@@ -34,44 +36,46 @@ pub struct BuiltScene {
 }
 
 impl SceneConfig {
+    pub fn from_str(config_str: &str) -> Result<Self, SceneBuildError> {
+        toml::from_str(config_str).map_err(|err| SceneBuildError::ConfigParseError(err.to_string()))
+    }
+
+    pub fn to_string(&self) -> Result<String, SceneBuildError> {
+        toml::to_string(self).map_err(|err| SceneBuildError::ConfigParseError(err.to_string()))
+    }
+
+    pub fn load(path: &str) -> Result<Self, SceneBuildError> {
+        let config_str = read_to_string(path).map_err(|err| SceneBuildError::ConfigParseError(err.to_string()))?;
+        Self::from_str(&config_str)
+    }
+
+    pub fn save(&self, path: &str) -> Result<(), SceneBuildError> {
+        let config_str = self.to_string()?;
+        write(path, config_str).map_err(|err| SceneBuildError::ConfigParseError(err.to_string()))
+    }
+
     pub fn build(self) -> Result<BuiltScene, SceneBuildError> {
+        let SceneConfig {
+            render,
+            camera,
+            lights,
+            geometries,
+            shaders,
+            materials,
+            objects,
+        } = self;
+
         let mut world = World::new();
         let mut scene = Scene::new();
 
-        for light in self.lights {
+        for light in lights {
             scene.add_light(light.build());
         }
 
-        for object in self.objects {
-            let geometry = match object.geometry {
-                Named::Inline(config) => config.build()?,
-                Named::Named(name) => self
-                    .geometries
-                    .get(&name)
-                    .cloned()
-                    .ok_or(SceneBuildError::UnknownGeometry(name))?
-                    .build()?,
-            };
-
-            let shader = match object.shader {
-                Named::Inline(config) => config.build(),
-                Named::Named(name) => self
-                    .shaders
-                    .get(&name)
-                    .cloned()
-                    .ok_or(SceneBuildError::UnknownShader(name))?
-                    .build(),
-            };
-
-            let material = match object.material {
-                Named::Inline(config) => config.build(),
-                Named::Named(name) => self
-                    .materials
-                    .get(&name)
-                    .cloned()
-                    .ok_or(SceneBuildError::UnknownMaterial(name))?
-                    .build(),
-            };
+        for object in objects {
+            let geometry = object.geometry.resolve(&geometries)?;
+            let shader = object.shader.resolve(&shaders)?;
+            let material = object.material.resolve(&materials)?;
 
             let geometry_id = world.add_geometry(geometry);
             let shader_id = world.add_shader(shader);
@@ -87,14 +91,14 @@ impl SceneConfig {
 
         scene.build(&world);
 
-        let aspect_ratio = self.render.resolution[0] as f32 / self.render.resolution[1] as f32;
-        let camera = self.camera.build(aspect_ratio);
+        let aspect_ratio = render.resolution[0] as f32 / render.resolution[1] as f32;
+        let camera = camera.build(aspect_ratio);
 
         Ok(BuiltScene {
             world,
             scene,
             camera,
-            render: self.render,
+            render,
         })
     }
 }
