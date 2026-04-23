@@ -7,14 +7,28 @@ pub trait Light {
     fn sample(&self, hit: &WorldHit) -> LightSample;
 }
 
-pub enum LightEnum {
-    DirectionalLight(DirectionalLight),
+macro_rules! define_light_enum {
+    ($name:ident: $($ty:ident),* $(,)?) => {
+        pub enum $name {
+            $($ty($ty),)*
+        }
+
+        impl Light for $name {
+            fn sample(&self, hit: &WorldHit) -> LightSample {
+                match self {
+                    $(Self::$ty(inner) => inner.sample(hit),)*
+                }
+            }
+        }
+
+        $(
+            impl From<$ty> for $name {
+                fn from(value: $ty) -> Self {
+                    Self::$ty(value)
+                }
+            }
+        )*
+    };
 }
 
-impl Light for LightEnum {
-    fn sample(&self, hit: &WorldHit) -> LightSample {
-        match self {
-            LightEnum::DirectionalLight(light) => light.sample(hit),
-        }
-    }
-}
+define_light_enum!(LightEnum: DirectionalLight);
