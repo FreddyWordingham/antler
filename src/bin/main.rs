@@ -6,24 +6,17 @@ fn main() {
     // Create output directory if it doesn't exist
     std::fs::create_dir_all("output").unwrap();
 
-    let width = 800;
-    let height = 600;
+    let width = 1200;
+    let height = 900;
 
     let mut world = World::new();
 
-    let _sphere_id = world.add_geometry(GeometryEnum::Sphere(Sphere {
-        centre: Point3::new(0.0, 0.0, 0.0),
-        radius: 1.0,
-    }));
-    let aabb_id = world.add_geometry(GeometryEnum::Aabb(Aabb {
-        min: Point3::new(-1.0, -1.0, -1.0),
-        max: Point3::new(1.0, 1.0, 1.0),
-    }));
     let quad_id = world.add_geometry(GeometryEnum::Quad(Quad {
         position: Point3::new(0.0, 0.0, 0.0),
         normal: Vector3::z_axis(),
-        size: [10.0, 4.0],
+        size: [100.0, 100.0],
     }));
+    let mesh_id = world.add_geometry(GeometryEnum::Mesh(Mesh::load_obj("assets/meshes/tree.obj").unwrap()));
 
     let green_lambertion_shader_id = world.add_shader(ShaderEnum::Lambertion(Lambertion {
         colour: Rgb::new(0.2, 0.8, 0.4),
@@ -40,7 +33,7 @@ fn main() {
         radiance: Rgb::new(1.0, 1.0, 1.0),
     }));
     scene.add_object(Object::new(
-        aabb_id,
+        mesh_id,
         grey_lambertion_shader_id,
         material_id,
         Similarity3::identity(),
@@ -49,7 +42,7 @@ fn main() {
         quad_id,
         green_lambertion_shader_id,
         material_id,
-        Similarity3::new(Vector3::new(0.0, 0.0, -1.0), Vector3::zeros(), 1.0),
+        Similarity3::new(Vector3::new(0.0, 0.0, 0.0), Vector3::zeros(), 1.0),
     ));
     scene.build(&world);
 
@@ -77,9 +70,9 @@ fn main() {
 fn create_perspective_camera(resolution: [usize; 2]) -> Perspective {
     Perspective::new(
         Point3::new(10.0, 10.0, 10.0),
-        Point3::new(0.0, 0.0, 0.0),
+        Point3::new(0.0, 0.0, 3.0),
         Vector3::z_axis(),
-        30.0_f32.to_radians(),
+        45.0_f32.to_radians(),
         resolution[0] as f32 / resolution[1] as f32,
     )
 }
@@ -91,7 +84,7 @@ fn create_orthographic_camera(resolution: [usize; 2]) -> Orthographic {
 
     Orthographic::new(
         Point3::new(10.0, 10.0, 10.0),
-        Point3::new(0.0, 0.0, 0.0),
+        Point3::new(0.0, 0.0, 3.0),
         Vector3::z_axis(),
         width,
         height,
