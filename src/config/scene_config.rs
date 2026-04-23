@@ -6,10 +6,7 @@ use std::{
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    config::{
-        BuiltImage, GeometryConfig, ImageConfig, LightConfig, MaterialConfig, Named, ObjectConfig, RenderConfig,
-        ShaderConfig,
-    },
+    config::{BuiltImage, GeometryConfig, ImageConfig, LightConfig, MaterialConfig, Named, ObjectConfig, ShaderConfig},
     errors::SceneBuildError,
     world::{Object, Scene, World},
 };
