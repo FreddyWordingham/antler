@@ -3,9 +3,11 @@ use std::collections::BTreeMap;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    config::{GeometryConfig, MaterialConfig, ShaderConfig},
+    camera::CameraEnum,
+    config::{CameraConfig, GeometryConfig, LightConfig, MaterialConfig, ShaderConfig},
     errors::SceneBuildError,
     geometry::GeometryEnum,
+    lighting::LightEnum,
     material::MaterialEnum,
     shader::ShaderEnum,
 };
@@ -17,11 +19,29 @@ pub enum Named<T> {
     Inline(T),
 }
 
-impl<T> Named<T> {
-    pub fn name(&self) -> Option<&str> {
+impl Named<CameraConfig> {
+    pub fn resolve(self, registry: &BTreeMap<String, CameraConfig>) -> Result<CameraEnum, SceneBuildError> {
         match self {
-            Self::Named(name) => Some(name),
-            Self::Inline(_) => None,
+            Named::Inline(config) => Ok(config.build()),
+            Named::Named(name) => Ok(registry
+                .get(&name)
+                .cloned()
+                .ok_or_else(|| SceneBuildError::UnknownCamera(name))?
+                .build()),
+        }
+    }
+}
+
+impl Named<LightConfig> {
+    pub fn resolve(self, registry: &BTreeMap<String, LightConfig>) -> Result<LightEnum, SceneBuildError> {
+        match self {
+            Named::Inline(config) => Ok(config.build()),
+
+            Named::Named(name) => Ok(registry
+                .get(&name)
+                .cloned()
+                .ok_or_else(|| SceneBuildError::UnknownLight(name))?
+                .build()),
         }
     }
 }

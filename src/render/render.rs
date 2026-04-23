@@ -4,6 +4,7 @@ use crate::{
     camera::Camera,
     colour::Rgb,
     material::Material,
+    render::RenderSettings,
     shader::Shader,
     storage::RgbImage,
     tracing::Probe,
@@ -22,13 +23,13 @@ struct Tile {
     y1: usize,
 }
 
-pub fn render_probe(world: &World, scene: &Scene, probe: Probe) -> Rgb {
+pub fn render_probe(world: &World, scene: &Scene, probe: Probe, settings: RenderSettings) -> Rgb {
     if probe.generation >= MAX_GENERATION || probe.weight <= MIN_WEIGHT {
         return Rgb::BLACK;
     }
 
     let Some(world_hit) = scene.trace(world, &probe.ray) else {
-        return Rgb::BLACK;
+        return settings.background;
     };
 
     let object = scene.get_object(world_hit.object_id);
@@ -44,25 +45,19 @@ pub fn render_probe(world: &World, scene: &Scene, probe: Probe) -> Rgb {
     let bounced_colours = scatter
         .children
         .into_iter()
-        .map(|(fraction, child)| render_probe(world, scene, probe.child(child, fraction)))
+        .map(|(fraction, child)| render_probe(world, scene, probe.child(child, fraction), settings))
         .fold(Rgb::BLACK, |a, b| a + b);
 
     local_colour + bounced_colours
 }
 
-pub fn render_image<C>(
-    world: &World,
-    scene: &Scene,
-    camera: &C,
-    resolution: [usize; 2],
-    super_samples: usize,
-) -> RgbImage
+pub fn render_image<C>(world: &World, scene: &Scene, camera: &C, settings: RenderSettings) -> RgbImage
 where
     C: Camera + Sync,
 {
-    let width = resolution[0];
-    let height = resolution[1];
-    let ss = super_samples.max(1);
+    let width = settings.resolution[0];
+    let height = settings.resolution[1];
+    let ss = settings.super_samples.max(1);
     let ss_delta = 1.0 / ss as f32;
     let inv_samples = 1.0 / (ss * ss) as f32;
 
@@ -103,8 +98,8 @@ where
                                 (y as f32 + (sy as f32 + 0.5) * ss_delta) / height as f32,
                             );
 
-                            let probe = camera.emit(uv);
-                            colour += render_probe(world, scene, probe);
+                            let probe = camera.emit(uv, settings.resolution);
+                            colour += render_probe(world, scene, probe, settings);
                         }
                     }
 
@@ -116,7 +111,7 @@ where
         })
         .collect();
 
-    let mut image = RgbImage::filled(resolution, Rgb::BLACK);
+    let mut image = RgbImage::filled(settings.resolution, settings.background);
 
     for (tile, pixels) in rendered_tiles {
         let tile_width = tile.x1 - tile.x0;

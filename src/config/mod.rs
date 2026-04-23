@@ -1,6 +1,7 @@
 mod camera_config;
 mod defaults;
 mod geometry_config;
+mod image_config;
 mod light_config;
 mod material_config;
 mod named;
@@ -14,6 +15,7 @@ mod vec3;
 
 pub use camera_config::CameraConfig;
 pub use geometry_config::GeometryConfig;
+pub use image_config::ImageConfig;
 pub use light_config::LightConfig;
 pub use material_config::MaterialConfig;
 pub use named::Named;

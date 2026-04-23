@@ -25,21 +25,14 @@ pub enum CameraConfig {
 }
 
 impl CameraConfig {
-    pub fn build(self, aspect_ratio: f32) -> CameraEnum {
+    pub fn build(self) -> CameraEnum {
         match self {
             CameraConfig::Perspective {
                 position,
                 look_at,
                 up,
                 vertical_fov_radians,
-            } => Perspective::new(
-                position.into(),
-                look_at.into(),
-                up.into(),
-                vertical_fov_radians,
-                aspect_ratio,
-            )
-            .into(),
+            } => Perspective::new(position.into(), look_at.into(), up.into(), vertical_fov_radians).into(),
 
             CameraConfig::Orthographic {
                 position,

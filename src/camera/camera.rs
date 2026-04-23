@@ -6,7 +6,7 @@ use crate::{
 };
 
 pub trait Camera {
-    fn emit(&self, uv: Point2<f32>) -> Probe;
+    fn emit(&self, uv: Point2<f32>, resolution: [usize; 2]) -> Probe;
 }
 
 macro_rules! define_camera_enum {
@@ -16,9 +16,9 @@ macro_rules! define_camera_enum {
         }
 
         impl Camera for $name {
-            fn emit(&self, uv: Point2<f32>) -> Probe {
+            fn emit(&self, uv: Point2<f32>, resolution: [usize; 2]) -> Probe {
                 match self {
-                    $(Self::$ty(inner) => inner.emit(uv),)*
+                    $(Self::$ty(inner) => inner.emit(uv, resolution),)*
                 }
             }
         }
