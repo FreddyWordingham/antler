@@ -1,3 +1,4 @@
+use indicatif::{ProgressBar, ProgressStyle};
 use rayon::prelude::*;
 
 use crate::{
@@ -46,12 +47,53 @@ pub fn render_probe(world: &World, scene: &Scene, probe: Probe, settings: Render
         .children
         .into_iter()
         .map(|(fraction, child)| render_probe(world, scene, probe.child(child, fraction), settings))
-        .fold(Rgb::BLACK, |a, b| a + b);
+        .sum();
 
     local_colour + bounced_colours
 }
 
 pub fn render_image<C>(world: &World, scene: &Scene, camera: &C, settings: RenderSettings) -> RgbImage
+where
+    C: Camera + Sync,
+{
+    render_image_inner(world, scene, camera, settings, None)
+}
+
+pub fn render_image_with_progress<C>(
+    world: &World,
+    scene: &Scene,
+    camera: &C,
+    settings: RenderSettings,
+    label: impl Into<String>,
+    done_label: impl Into<String>,
+) -> RgbImage
+where
+    C: Camera + Sync,
+{
+    let tile_count = tile_count(settings.resolution);
+
+    let progress = ProgressBar::new(tile_count as u64);
+    progress.set_message(label.into());
+    progress.set_style(
+        ProgressStyle::with_template("{msg} [{bar:40.cyan/blue}] {pos}/{len} tiles ({elapsed})")
+            .unwrap()
+            .progress_chars("=>-"),
+    );
+
+    let image = render_image_inner(world, scene, camera, settings, Some(&progress));
+
+    progress.finish_with_message(done_label.into());
+
+    image
+}
+
+fn render_image_inner<C>(
+    world: &World,
+    scene: &Scene,
+    camera: &C,
+    settings: RenderSettings,
+    progress: Option<&ProgressBar>,
+) -> RgbImage
 where
     C: Camera + Sync,
 {
@@ -61,28 +103,14 @@ where
     let ss_delta = 1.0 / ss as f32;
     let inv_samples = 1.0 / (ss * ss) as f32;
 
-    let tiles_x = width.div_ceil(TILE_SIZE);
-    let tiles_y = height.div_ceil(TILE_SIZE);
-
-    let tiles: Vec<Tile> = (0..tiles_y)
-        .flat_map(|ty| {
-            (0..tiles_x).map(move |tx| {
-                let x0 = tx * TILE_SIZE;
-                let y0 = ty * TILE_SIZE;
-                let x1 = (x0 + TILE_SIZE).min(width);
-                let y1 = (y0 + TILE_SIZE).min(height);
-
-                Tile { x0, y0, x1, y1 }
-            })
-        })
-        .collect();
+    let tiles = make_tiles(settings.resolution);
 
     let rendered_tiles: Vec<(Tile, Vec<Rgb>)> = tiles
         .into_par_iter()
         .map(|tile| {
             let tile_width = tile.x1 - tile.x0;
             let tile_height = tile.y1 - tile.y0;
-            let mut pixels = vec![Rgb::BLACK; tile_width * tile_height];
+            let mut pixels = vec![settings.background; tile_width * tile_height];
 
             for local_y in 0..tile_height {
                 let y = tile.y0 + local_y;
@@ -107,6 +135,10 @@ where
                 }
             }
 
+            if let Some(progress) = progress {
+                progress.inc(1);
+            }
+
             (tile, pixels)
         })
         .collect();
@@ -128,4 +160,32 @@ where
     }
 
     image
+}
+
+fn make_tiles(resolution: [usize; 2]) -> Vec<Tile> {
+    let width = resolution[0];
+    let height = resolution[1];
+
+    let tiles_x = width.div_ceil(TILE_SIZE);
+    let tiles_y = height.div_ceil(TILE_SIZE);
+
+    (0..tiles_y)
+        .flat_map(|ty| {
+            (0..tiles_x).map(move |tx| {
+                let x0 = tx * TILE_SIZE;
+                let y0 = ty * TILE_SIZE;
+                let x1 = (x0 + TILE_SIZE).min(width);
+                let y1 = (y0 + TILE_SIZE).min(height);
+
+                Tile { x0, y0, x1, y1 }
+            })
+        })
+        .collect()
+}
+
+fn tile_count(resolution: [usize; 2]) -> usize {
+    let tiles_x = resolution[0].div_ceil(TILE_SIZE);
+    let tiles_y = resolution[1].div_ceil(TILE_SIZE);
+
+    tiles_x * tiles_y
 }
