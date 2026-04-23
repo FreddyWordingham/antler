@@ -42,7 +42,6 @@ impl<T: Copy> Bvh<T> {
     }
 
     #[inline]
-
     pub fn trace_nearest_with_max<F>(&self, ray: &Ray, best_distance: &mut f32, mut visit: F)
     where
         F: FnMut(T, &mut f32) -> bool,
