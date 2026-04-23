@@ -11,7 +11,7 @@ pub enum MaterialConfig {
 impl MaterialConfig {
     pub fn build(self) -> MaterialEnum {
         match self {
-            MaterialConfig::Opaque => Opaque.into(),
+            MaterialConfig::Opaque => Opaque::new().into(),
         }
     }
 }

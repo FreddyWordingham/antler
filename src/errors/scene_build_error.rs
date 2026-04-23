@@ -7,6 +7,7 @@ use crate::errors::MeshLoadError;
 
 #[derive(Debug)]
 pub enum SceneBuildError {
+    ConfigParseError(String),
     UnknownGeometry(String),
     UnknownShader(String),
     UnknownMaterial(String),
@@ -22,6 +23,7 @@ impl From<MeshLoadError> for SceneBuildError {
 impl Display for SceneBuildError {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         match self {
+            Self::ConfigParseError(err) => write!(f, "Config parse error: {err}"),
             Self::UnknownGeometry(name) => write!(f, "Unknown geometry reference '{name}'"),
             Self::UnknownShader(name) => write!(f, "Unknown shader reference '{name}'"),
             Self::UnknownMaterial(name) => write!(f, "Unknown material reference '{name}'"),
