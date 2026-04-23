@@ -1,6 +1,8 @@
 use std::{
+    fmt::{Display, Formatter, Result as FmtResult},
     iter::Sum,
     ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign},
+    str::FromStr,
 };
 
 use palette::Srgb;
@@ -167,6 +169,26 @@ impl Pixel for Rgb {
     }
 }
 
+impl From<u32> for Rgb {
+    fn from(value: u32) -> Self {
+        Self::from_u32(value)
+    }
+}
+
+impl Into<u32> for Rgb {
+    fn into(self) -> u32 {
+        self.to_u32()
+    }
+}
+
+impl FromStr for Rgb {
+    type Err = ParseHexError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::from_hex(s)
+    }
+}
+
 impl Serialize for Rgb {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -183,5 +205,11 @@ impl<'de> Deserialize<'de> for Rgb {
     {
         let hex = String::deserialize(deserializer)?;
         Rgb::from_hex(&hex).map_err(Error::custom)
+    }
+}
+
+impl Display for Rgb {
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+        f.write_str(&self.to_hex())
     }
 }
