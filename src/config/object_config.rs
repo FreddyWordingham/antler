@@ -1,9 +1,7 @@
-use nalgebra::Similarity3;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    config::{GeometryConfig, MaterialConfig, ShaderConfig, Vec3, defaults},
-    id::{GeometryId, MaterialId, ShaderId},
+    config::{GeometryConfig, MaterialConfig, ShaderConfig, TransformConfig},
     world::{Object, World},
 };
 
@@ -14,13 +12,7 @@ pub struct ObjectConfig {
     pub material: MaterialConfig,
 
     #[serde(default)]
-    pub position: Vec3,
-
-    #[serde(default)]
-    pub rotation: Vec3,
-
-    #[serde(default = "defaults::one")]
-    pub scale: f32,
+    pub transform: TransformConfig,
 }
 
 impl ObjectConfig {
@@ -28,7 +20,7 @@ impl ObjectConfig {
         let geometry_id = world.add_geometry(self.geometry);
         let shader_id = world.add_shader(self.shader);
         let material_id = world.add_material(self.material);
-        let transform = Similarity3::new(self.position.into(), self.rotation.into(), self.scale);
+        let transform = self.transform.into();
 
         Object::new(geometry_id, shader_id, material_id, transform)
     }
