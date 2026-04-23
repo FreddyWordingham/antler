@@ -1,6 +1,6 @@
 use std::{
     iter::Sum,
-    ops::{Add, AddAssign, Mul, MulAssign},
+    ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign},
 };
 
 use palette::Srgb;
@@ -81,6 +81,20 @@ impl Mul<f32> for Rgb {
 impl MulAssign<f32> for Rgb {
     fn mul_assign(&mut self, rhs: f32) {
         self.0 *= rhs;
+    }
+}
+
+impl Div<f32> for Rgb {
+    type Output = Self;
+
+    fn div(self, rhs: f32) -> Self::Output {
+        Self(self.0 / rhs)
+    }
+}
+
+impl DivAssign<f32> for Rgb {
+    fn div_assign(&mut self, rhs: f32) {
+        self.0 /= rhs;
     }
 }
 
