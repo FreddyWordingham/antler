@@ -5,6 +5,7 @@ use std::{
 
 use palette::Srgba;
 use png::ColorType;
+use serde::{Deserialize, Deserializer, Serialize, Serializer, de::Error};
 
 use crate::{
     colour::{Pixel, Rgb},
@@ -132,6 +133,21 @@ impl Pixel for Rgba {
     }
 
     #[inline]
+    fn to_u32(&self) -> u32 {
+        let bytes = self.to_bytes();
+        ((bytes[0] as u32) << 24) | ((bytes[1] as u32) << 16) | ((bytes[2] as u32) << 8) | (bytes[3] as u32)
+    }
+
+    #[inline]
+    fn from_u32(value: u32) -> Self {
+        let r = ((value >> 24) & 0xFF) as u8;
+        let g = ((value >> 16) & 0xFF) as u8;
+        let b = ((value >> 8) & 0xFF) as u8;
+        let a = (value & 0xFF) as u8;
+        Self::from_bytes([r, g, b, a])
+    }
+
+    #[inline]
     fn from_hex(hex: &str) -> Result<Self, ParseHexError> {
         let hex = hex.trim_start_matches('#');
         match hex.len() {
@@ -154,5 +170,25 @@ impl Pixel for Rgba {
                 found,
             }),
         }
+    }
+}
+
+impl Serialize for Rgba {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_hex())
+    }
+}
+
+impl<'de> Deserialize<'de> for Rgba {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let hex = String::deserialize(deserializer)?;
+
+        Rgba::from_hex(&hex).map_err(Error::custom)
     }
 }

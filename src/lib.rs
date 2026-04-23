@@ -1,6 +1,7 @@
 mod acceleration;
 mod camera;
 mod colour;
+mod config;
 mod errors;
 mod geometry;
 mod id;
@@ -16,6 +17,7 @@ pub mod prelude {
     pub use crate::{
         camera::{Orthographic, Perspective},
         colour::{Gradient, Rgb, Rgba},
+        config::*,
         errors::{MeshLoadError, ParseHexError},
         geometry::{Aabb, Bounded, Circle, Geometry, Mesh, Quad, Ray, Sphere, Triangle},
         lighting::DirectionalLight,
