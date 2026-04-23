@@ -6,8 +6,8 @@ fn main() {
     // Create output directory if it doesn't exist
     std::fs::create_dir_all("output").unwrap();
 
-    let width = 1200;
-    let height = 900;
+    let width = 12000;
+    let height = 9000;
 
     let mut world = World::new();
 
@@ -72,7 +72,7 @@ fn create_perspective_camera(resolution: [usize; 2]) -> Perspective {
         Point3::new(10.0, 10.0, 10.0),
         Point3::new(0.0, 0.0, 3.0),
         Vector3::z_axis(),
-        45.0_f32.to_radians(),
+        15.0_f32.to_radians(),
         resolution[0] as f32 / resolution[1] as f32,
     )
 }
