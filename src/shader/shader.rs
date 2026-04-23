@@ -1,7 +1,7 @@
 use crate::{
     colour::Rgb,
     lighting::LightSample,
-    shader::{Block, Lambertion, Luminous},
+    shader::{Block, Checkerboard, Lambertion, Luminous},
     tracing::{WorldHit, WorldRay},
 };
 
@@ -14,6 +14,7 @@ pub enum ShaderEnum {
     Block(Block),
     Lambertion(Lambertion),
     Luminous(Luminous),
+    Checkerboard(Checkerboard),
 }
 
 impl Shader for ShaderEnum {
@@ -22,6 +23,7 @@ impl Shader for ShaderEnum {
             ShaderEnum::Block(block) => block.emitted(hit),
             ShaderEnum::Lambertion(lambertion) => lambertion.emitted(hit),
             ShaderEnum::Luminous(luminous) => luminous.emitted(hit),
+            ShaderEnum::Checkerboard(checkerboard) => checkerboard.emitted(hit),
         }
     }
 
@@ -30,6 +32,7 @@ impl Shader for ShaderEnum {
             ShaderEnum::Block(block) => block.shade(ray, hit, light),
             ShaderEnum::Lambertion(lambertion) => lambertion.shade(ray, hit, light),
             ShaderEnum::Luminous(luminous) => luminous.shade(ray, hit, light),
+            ShaderEnum::Checkerboard(checkerboard) => checkerboard.shade(ray, hit, light),
         }
     }
 }
