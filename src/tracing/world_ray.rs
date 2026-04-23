@@ -16,10 +16,13 @@ impl WorldRay {
 
     #[inline]
     pub fn from_offset(origin: Point3<f32>, normal: Unit<Vector3<f32>>, direction: Unit<Vector3<f32>>) -> Self {
-        let sign = if direction.dot(&normal) >= 0.0 { 1.0 } else { -1.0 };
-        let biased_origin = origin + *normal * (ORIGIN_BIAS * sign);
+        let scale = origin.coords.abs().max();
+        let bias = ORIGIN_BIAS * scale.max(1.0);
 
-        Self::new(crate::geometry::Ray {
+        let sign = if direction.dot(&normal) >= 0.0 { 1.0 } else { -1.0 };
+        let biased_origin = origin + *normal * (bias * sign);
+
+        Self::new(Ray {
             origin: biased_origin,
             direction,
         })

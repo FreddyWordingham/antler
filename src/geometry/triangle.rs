@@ -7,7 +7,8 @@ use crate::{
     tracing::{ObjectHit, ObjectRay},
 };
 
-const HIT_EPSILON: f32 = 1.0e-6;
+const BOUNDS_PADDING: f32 = 1.0e-6;
+const HIT_EPSILON: f32 = 1.0e-8;
 
 pub struct Triangle {
     pub vertices: [Point3<f32>; 3],
@@ -76,7 +77,12 @@ impl Bounded for Triangle {
             self.vertices[0].z.max(self.vertices[1].z).max(self.vertices[2].z),
         );
 
-        Aabb { min, max }
+        let padding = Vector3::new(BOUNDS_PADDING, BOUNDS_PADDING, BOUNDS_PADDING);
+
+        Aabb {
+            min: min - padding,
+            max: max + padding,
+        }
     }
 }
 
@@ -85,10 +91,13 @@ impl Traceable for Triangle {
         let edge_ab = self.vertices[1] - self.vertices[0];
         let edge_ac = self.vertices[2] - self.vertices[0];
 
+        let scale = edge_ab.norm().max(edge_ac.norm()).max(1.0);
+        let eps = HIT_EPSILON * scale;
+
         let p_vec = ray.direction.cross(&edge_ac);
         let det = edge_ab.dot(&p_vec);
 
-        if det.abs() < HIT_EPSILON {
+        if det.abs() < eps {
             return None;
         }
 
@@ -96,18 +105,18 @@ impl Traceable for Triangle {
         let t_vec = ray.origin - self.vertices[0];
 
         let beta = t_vec.dot(&p_vec) * inv_det;
-        if !(0.0..=1.0).contains(&beta) {
+        if beta < -eps || beta > 1.0 + eps {
             return None;
         }
 
         let q_vec = t_vec.cross(&edge_ab);
         let gamma = ray.direction.dot(&q_vec) * inv_det;
-        if gamma < 0.0 || beta + gamma > 1.0 {
+        if gamma < -eps || beta + gamma > 1.0 + eps {
             return None;
         }
 
         let distance = edge_ac.dot(&q_vec) * inv_det;
-        if distance <= HIT_EPSILON {
+        if distance <= eps {
             return None;
         }
 

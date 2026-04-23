@@ -1,4 +1,4 @@
-use std::f32::INFINITY;
+use std::{cmp::Ordering, f32::INFINITY};
 
 use crate::geometry::{Aabb, Ray};
 
@@ -42,11 +42,16 @@ impl<T: Copy> Bvh<T> {
     }
 
     #[inline]
+
     pub fn trace_nearest_with_max<F>(&self, ray: &Ray, best_distance: &mut f32, mut visit: F)
     where
         F: FnMut(T, &mut f32) -> bool,
     {
-        self.trace_node(0, ray, best_distance, &mut visit);
+        let Some((root_t_min, _)) = self.nodes[0].aabb.ray_interval(ray) else {
+            return;
+        };
+
+        self.trace_node(0, ray, best_distance, &mut visit, root_t_min);
     }
 
     #[inline]
@@ -63,7 +68,11 @@ impl<T: Copy> Bvh<T> {
     where
         F: FnMut(T, &mut f32) -> bool,
     {
-        self.trace_any_node(0, ray, max_distance, &mut test)
+        let Some((root_t_min, _)) = self.nodes[0].aabb.ray_interval(ray) else {
+            return false;
+        };
+
+        self.trace_any_node(0, ray, max_distance, &mut test, root_t_min)
     }
 
     #[inline]
@@ -71,8 +80,12 @@ impl<T: Copy> Bvh<T> {
     where
         F: FnMut(T) -> bool,
     {
+        let Some((root_t_min, _)) = self.nodes[0].aabb.ray_interval(ray) else {
+            return false;
+        };
+
         let mut max_distance = max_distance;
-        self.trace_any_node(0, ray, &mut max_distance, &mut |id, _max_distance| test(id))
+        self.trace_any_node(0, ray, &mut max_distance, &mut |id, _max_distance| test(id), root_t_min)
     }
 
     fn build_node(nodes: &mut Vec<BvhNode>, ids: &mut Vec<T>, items: &mut [(Aabb, T)]) -> usize {
@@ -107,8 +120,11 @@ impl<T: Copy> Bvh<T> {
             2
         };
 
-        items
-            .sort_by(|(aabb_a, _), (aabb_b, _)| aabb_a.centroid()[axis].partial_cmp(&aabb_b.centroid()[axis]).unwrap());
+        items.sort_by(|(a, _), (b, _)| {
+            a.centroid()[axis]
+                .partial_cmp(&b.centroid()[axis])
+                .unwrap_or(Ordering::Equal)
+        });
 
         let mid = items.len() / 2;
         let (left_items, right_items) = items.split_at_mut(mid);
@@ -124,18 +140,22 @@ impl<T: Copy> Bvh<T> {
         node_index
     }
 
-    fn trace_node<F>(&self, node_index: usize, ray: &Ray, best_distance: &mut f32, visit: &mut F) -> bool
+    fn trace_node<F>(
+        &self,
+        node_index: usize,
+        ray: &Ray,
+        best_distance: &mut f32,
+        visit: &mut F,
+        node_t_min: f32,
+    ) -> bool
     where
         F: FnMut(T, &mut f32) -> bool,
     {
-        let node = &self.nodes[node_index];
-        let Some((node_t_min, _)) = node.aabb.ray_interval(ray) else {
-            return true;
-        };
-
         if node_t_min > *best_distance {
             return true;
         }
+
+        let node = &self.nodes[node_index];
 
         match node.kind {
             BvhNodeKind::Leaf { start, count } => {
@@ -152,42 +172,46 @@ impl<T: Copy> Bvh<T> {
 
                 match (left_interval, right_interval) {
                     (Some((left_t, _)), Some((right_t, _))) => {
-                        let (first, second, second_t) = if left_t <= right_t {
-                            (left, right, right_t)
+                        let (first, first_t, second, second_t) = if left_t <= right_t {
+                            (left, left_t, right, right_t)
                         } else {
-                            (right, left, left_t)
+                            (right, right_t, left, left_t)
                         };
 
-                        if !self.trace_node(first, ray, best_distance, visit) {
+                        if !self.trace_node(first, ray, best_distance, visit, first_t) {
                             return false;
                         }
 
-                        if second_t <= *best_distance && !self.trace_node(second, ray, best_distance, visit) {
-                            return false;
+                        if *best_distance < second_t {
+                            return true;
                         }
 
-                        true
+                        self.trace_node(second, ray, best_distance, visit, second_t)
                     }
-                    (Some(_), None) => self.trace_node(left, ray, best_distance, visit),
-                    (None, Some(_)) => self.trace_node(right, ray, best_distance, visit),
+                    (Some((left_t, _)), None) => self.trace_node(left, ray, best_distance, visit, left_t),
+                    (None, Some((right_t, _))) => self.trace_node(right, ray, best_distance, visit, right_t),
                     (None, None) => true,
                 }
             }
         }
     }
 
-    fn trace_any_node<F>(&self, node_index: usize, ray: &Ray, max_distance: &mut f32, test: &mut F) -> bool
+    fn trace_any_node<F>(
+        &self,
+        node_index: usize,
+        ray: &Ray,
+        max_distance: &mut f32,
+        test: &mut F,
+        node_t_min: f32,
+    ) -> bool
     where
         F: FnMut(T, &mut f32) -> bool,
     {
-        let node = &self.nodes[node_index];
-        let Some((node_t_min, _)) = node.aabb.ray_interval(ray) else {
-            return false;
-        };
-
         if node_t_min > *max_distance {
             return false;
         }
+
+        let node = &self.nodes[node_index];
 
         match node.kind {
             BvhNodeKind::Leaf { start, count } => {
@@ -204,25 +228,24 @@ impl<T: Copy> Bvh<T> {
 
                 match (left_interval, right_interval) {
                     (Some((left_t, _)), Some((right_t, _))) => {
-                        let (first, second, second_t) = if left_t <= right_t {
-                            (left, right, right_t)
+                        let (first, first_t, second, second_t) = if left_t <= right_t {
+                            (left, left_t, right, right_t)
                         } else {
-                            (right, left, left_t)
+                            (right, right_t, left, left_t)
                         };
 
-                        if self.trace_any_node(first, ray, max_distance, test) {
+                        if self.trace_any_node(first, ray, max_distance, test, first_t) {
                             return true;
                         }
 
-                        if second_t <= *max_distance && self.trace_any_node(second, ray, max_distance, test) {
-                            return true;
+                        if *max_distance < second_t {
+                            return false;
                         }
 
-                        false
+                        self.trace_any_node(second, ray, max_distance, test, second_t)
                     }
-
-                    (Some(_), None) => self.trace_any_node(left, ray, max_distance, test),
-                    (None, Some(_)) => self.trace_any_node(right, ray, max_distance, test),
+                    (Some((left_t, _)), None) => self.trace_any_node(left, ray, max_distance, test, left_t),
+                    (None, Some((right_t, _))) => self.trace_any_node(right, ray, max_distance, test, right_t),
                     (None, None) => false,
                 }
             }
