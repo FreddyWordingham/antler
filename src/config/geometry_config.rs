@@ -15,7 +15,7 @@ pub enum GeometryConfig {
     Sphere {
         #[serde(default)]
         centre: Vec3,
-        #[serde(default = "defaults::one")]
+        #[serde(default = "defaults::one_f32")]
         radius: f32,
     },
     Circle {
@@ -23,7 +23,7 @@ pub enum GeometryConfig {
         position: Vec3,
         #[serde(default = "defaults::z_axis")]
         normal: Vec3,
-        #[serde(default = "defaults::one")]
+        #[serde(default = "defaults::one_f32")]
         radius: f32,
     },
     Quad {
