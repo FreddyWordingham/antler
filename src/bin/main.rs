@@ -6,8 +6,8 @@ fn main() {
     // Create output directory if it doesn't exist
     std::fs::create_dir_all("output").unwrap();
 
-    let width = 12000;
-    let height = 9000;
+    let width = 1200;
+    let height = 900;
 
     let mut world = World::new();
 
@@ -17,12 +17,20 @@ fn main() {
         size: [100.0, 100.0],
     }));
     let mesh_id = world.add_geometry(GeometryEnum::Mesh(Mesh::load_obj("assets/meshes/tree.obj").unwrap()));
+    let sphere_id = world.add_geometry(GeometryEnum::Sphere(Sphere {
+        centre: Point3::new(0.0, 0.0, 0.0),
+        radius: 1.0,
+    }));
 
     let green_lambertion_shader_id = world.add_shader(ShaderEnum::Lambertion(Lambertion {
         colour: Rgb::new(0.2, 0.8, 0.4),
     }));
     let grey_lambertion_shader_id = world.add_shader(ShaderEnum::Lambertion(Lambertion {
         colour: Rgb::new(0.5, 0.5, 0.5),
+    }));
+    let yellow_luminous_shader_id = world.add_shader(ShaderEnum::Luminous(Luminous {
+        colour: Rgb::new(1.0, 0.8, 0.1),
+        intensity: 4.0,
     }));
 
     let material_id = world.add_material(MaterialEnum::Opaque(Opaque));
@@ -43,6 +51,12 @@ fn main() {
         green_lambertion_shader_id,
         material_id,
         Similarity3::new(Vector3::new(0.0, 0.0, 0.0), Vector3::zeros(), 1.0),
+    ));
+    scene.add_object(Object::new(
+        sphere_id,
+        yellow_luminous_shader_id,
+        material_id,
+        Similarity3::new(Vector3::new(1.0, -2.0, 7.0), Vector3::zeros(), 0.5),
     ));
     scene.build(&world);
 
@@ -72,7 +86,7 @@ fn create_perspective_camera(resolution: [usize; 2]) -> Perspective {
         Point3::new(10.0, 10.0, 10.0),
         Point3::new(0.0, 0.0, 3.0),
         Vector3::z_axis(),
-        15.0_f32.to_radians(),
+        45.0_f32.to_radians(),
         resolution[0] as f32 / resolution[1] as f32,
     )
 }
