@@ -20,10 +20,10 @@ impl Display for ParseHexError {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         match self {
             Self::InvalidLength { expected, found } => {
-                write!(f, "invalid hex length {found}, expected one of {expected:?}")
+                write!(f, "Invalid hex length {found}, expected one of {expected:?}")
             }
             Self::InvalidDigit(err) => {
-                write!(f, "invalid hex digit: {err}")
+                write!(f, "Invalid hex digit: {err}")
             }
         }
     }
