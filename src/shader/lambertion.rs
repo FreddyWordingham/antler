@@ -9,6 +9,12 @@ pub struct Lambertion {
     pub colour: Rgb,
 }
 
+impl Lambertion {
+    pub fn new(colour: Rgb) -> Self {
+        Self { colour }
+    }
+}
+
 impl Shader for Lambertion {
     fn emitted(&self, _hit: &WorldHit) -> Rgb {
         Rgb::BLACK

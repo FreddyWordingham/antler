@@ -1,3 +1,4 @@
+mod camera_config;
 mod defaults;
 mod geometry_config;
 mod light_config;
@@ -9,6 +10,7 @@ mod transform_config;
 mod vec2;
 mod vec3;
 
+pub use camera_config::CameraConfig;
 pub use geometry_config::GeometryConfig;
 pub use light_config::LightConfig;
 pub use manifest::Manifest;

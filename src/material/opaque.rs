@@ -5,6 +5,12 @@ use crate::{
 
 pub struct Opaque;
 
+impl Opaque {
+    pub fn new() -> Self {
+        Self
+    }
+}
+
 impl Material for Opaque {
     fn scatter(&self, _probe: &Probe, _hit: &WorldHit) -> Scatter {
         Scatter {

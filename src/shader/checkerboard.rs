@@ -11,6 +11,16 @@ pub struct Checkerboard {
     pub colour_b: Rgb,
 }
 
+impl Checkerboard {
+    pub fn new(size: f32, colour_a: Rgb, colour_b: Rgb) -> Self {
+        Self {
+            size,
+            colour_a,
+            colour_b,
+        }
+    }
+}
+
 impl Shader for Checkerboard {
     fn emitted(&self, _hit: &WorldHit) -> Rgb {
         Rgb::BLACK

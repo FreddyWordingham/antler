@@ -13,6 +13,12 @@ pub struct DirectionalLight {
     pub radiance: Rgb,
 }
 
+impl DirectionalLight {
+    pub fn new(direction: Unit<Vector3<f32>>, radiance: Rgb) -> Self {
+        Self { direction, radiance }
+    }
+}
+
 impl Light for DirectionalLight {
     fn sample(&self, _hit: &WorldHit) -> LightSample {
         LightSample {
