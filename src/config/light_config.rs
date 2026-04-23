@@ -12,9 +12,9 @@ pub enum LightConfig {
     Directional { direction: Vec3, radiance: Rgb },
 }
 
-impl From<LightConfig> for LightEnum {
-    fn from(config: LightConfig) -> Self {
-        match config {
+impl LightConfig {
+    pub fn build(self) -> LightEnum {
+        match self {
             LightConfig::Directional { direction, radiance } => {
                 DirectionalLight::new(direction.into(), radiance).into()
             }

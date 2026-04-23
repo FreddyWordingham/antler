@@ -28,9 +28,9 @@ pub enum ShaderConfig {
     },
 }
 
-impl From<ShaderConfig> for ShaderEnum {
-    fn from(config: ShaderConfig) -> Self {
-        match config {
+impl ShaderConfig {
+    pub fn build(self) -> ShaderEnum {
+        match self {
             ShaderConfig::Block { colour } => Block::new(colour).into(),
             ShaderConfig::Lambertion { colour } => Lambertion::new(colour).into(),
             ShaderConfig::Luminous { colour, intensity } => Luminous::new(colour, intensity).into(),

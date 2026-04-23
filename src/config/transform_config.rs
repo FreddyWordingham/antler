@@ -7,10 +7,8 @@ use crate::config::{Vec3, defaults};
 pub struct TransformConfig {
     #[serde(default)]
     pub position: Vec3,
-
     #[serde(default)]
     pub rotation: Vec3,
-
     #[serde(default = "defaults::one_f32")]
     pub scale: f32,
 }
