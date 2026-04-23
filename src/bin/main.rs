@@ -16,21 +16,22 @@ fn main() {
         normal: Vector3::z_axis(),
         size: [100.0, 100.0],
     }));
-    let mesh_id = world.add_geometry(GeometryEnum::Mesh(Mesh::load_obj("assets/meshes/tree.obj").unwrap()));
     let sphere_id = world.add_geometry(GeometryEnum::Sphere(Sphere {
         centre: Point3::new(0.0, 0.0, 0.0),
         radius: 1.0,
+    }));
+    let cube_id = world.add_geometry(GeometryEnum::Aabb(Aabb {
+        min: Point3::new(-1.0, -1.0, -1.0),
+        max: Point3::new(1.0, 1.0, 1.0),
     }));
 
     let green_lambertion_shader_id = world.add_shader(ShaderEnum::Lambertion(Lambertion {
         colour: Rgb::new(0.2, 0.8, 0.4),
     }));
-    let grey_lambertion_shader_id = world.add_shader(ShaderEnum::Lambertion(Lambertion {
-        colour: Rgb::new(0.5, 0.5, 0.5),
-    }));
-    let yellow_luminous_shader_id = world.add_shader(ShaderEnum::Luminous(Luminous {
-        colour: Rgb::new(1.0, 0.8, 0.1),
-        intensity: 4.0,
+    let checkerboard_shader_id = world.add_shader(ShaderEnum::Checkerboard(Checkerboard {
+        size: 0.26,
+        colour_a: Rgb::new(1.0, 0.0, 1.0),
+        colour_b: Rgb::new(0.2, 0.2, 0.2),
     }));
 
     let material_id = world.add_material(MaterialEnum::Opaque(Opaque));
@@ -41,22 +42,16 @@ fn main() {
         radiance: Rgb::new(1.0, 1.0, 1.0),
     }));
     scene.add_object(Object::new(
-        mesh_id,
-        grey_lambertion_shader_id,
-        material_id,
-        Similarity3::identity(),
-    ));
-    scene.add_object(Object::new(
         quad_id,
         green_lambertion_shader_id,
         material_id,
         Similarity3::new(Vector3::new(0.0, 0.0, 0.0), Vector3::zeros(), 1.0),
     ));
     scene.add_object(Object::new(
-        sphere_id,
-        yellow_luminous_shader_id,
+        cube_id,
+        checkerboard_shader_id,
         material_id,
-        Similarity3::new(Vector3::new(1.0, -2.0, 7.0), Vector3::zeros(), 0.5),
+        Similarity3::new(Vector3::new(0.0, 0.0, 2.0), Vector3::zeros(), 2.0),
     ));
     scene.build(&world);
 
