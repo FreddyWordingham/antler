@@ -27,8 +27,11 @@ impl Scene {
     }
 
     #[inline]
-    pub fn add_light(&mut self, light: LightEnum) {
-        self.lights.push(light);
+    pub fn add_light<L>(&mut self, light: L)
+    where
+        L: Into<LightEnum>,
+    {
+        self.lights.push(light.into());
     }
 
     #[inline]

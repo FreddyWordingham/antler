@@ -10,34 +10,34 @@ fn main() {
 
     let mut world = World::new();
 
-    let quad_id = world.add_geometry(GeometryEnum::Quad(Quad {
+    let quad_id = world.add_geometry(Quad {
         position: Point3::new(0.0, 0.0, 0.0),
         normal: Vector3::z_axis(),
         size: [100.0, 100.0],
-    }));
+    });
 
-    let cube_id = world.add_geometry(GeometryEnum::Aabb(Aabb {
+    let cube_id = world.add_geometry(Aabb {
         min: Point3::new(-1.0, -1.0, -1.0),
         max: Point3::new(1.0, 1.0, 1.0),
-    }));
+    });
 
-    let green_lambertion_shader_id = world.add_shader(ShaderEnum::Lambertion(Lambertion {
+    let green_lambertion_shader_id = world.add_shader(Lambertion {
         colour: Rgb::new(0.2, 0.8, 0.4),
-    }));
+    });
 
-    let checkerboard_shader_id = world.add_shader(ShaderEnum::Checkerboard(Checkerboard {
+    let checkerboard_shader_id = world.add_shader(Checkerboard {
         size: 0.26,
         colour_a: Rgb::new(1.0, 0.0, 1.0),
         colour_b: Rgb::new(0.2, 0.2, 0.2),
-    }));
+    });
 
-    let material_id = world.add_material(MaterialEnum::Opaque(Opaque));
+    let material_id = world.add_material(Opaque);
 
     let mut scene = Scene::new();
-    scene.add_light(LightEnum::DirectionalLight(DirectionalLight {
+    scene.add_light(DirectionalLight {
         direction: Unit::new_normalize(Vector3::new(-5.0, -2.0, -2.0)),
         radiance: Rgb::new(1.0, 1.0, 1.0),
-    }));
+    });
 
     scene.add_object(Object::new(
         quad_id,
