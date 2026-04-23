@@ -19,7 +19,7 @@ pub use material_config::MaterialConfig;
 pub use named::Named;
 pub use object_config::ObjectConfig;
 pub use render_config::RenderConfig;
-pub use scene_config::SceneConfig;
+pub use scene_config::{BuiltScene, SceneConfig};
 pub use shader_config::ShaderConfig;
 pub use transform_config::TransformConfig;
 pub use vec2::Vec2;
