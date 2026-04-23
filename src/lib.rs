@@ -22,7 +22,7 @@ pub mod prelude {
         id::{GeometryId, MaterialId, ObjectId, ShaderId},
         lighting::{DirectionalLight, Light, LightEnum, LightSample},
         material::{Material, MaterialEnum, Opaque, Scatter},
-        render::render,
+        render::{render_image, render_probe},
         shader::{Block, Checkerboard, Lambertion, Luminous, Shader, ShaderEnum},
         storage::{Grid, Image, RgbImage, RgbaImage},
         tracing::{ObjectHit, ObjectRay, Probe, WorldHit, WorldRay},

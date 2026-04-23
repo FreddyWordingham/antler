@@ -67,6 +67,16 @@ impl<P: Pixel> Image<P> {
         self.pixels.size()[1]
     }
 
+    #[inline]
+    pub fn pixels(&self) -> &[P] {
+        self.pixels.as_slice()
+    }
+
+    #[inline]
+    pub fn pixels_mut(&mut self) -> &mut [P] {
+        self.pixels.as_mut_slice()
+    }
+
     pub fn save(&self, path: impl AsRef<Path>) -> IoResult<()> {
         let width = u32::try_from(self.width()).expect("image width exceeds u32::MAX");
         let height = u32::try_from(self.height()).expect("image height exceeds u32::MAX");
