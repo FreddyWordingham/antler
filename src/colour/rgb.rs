@@ -7,7 +7,7 @@ use std::{
 
 use palette::Srgb;
 use png::ColorType;
-use serde::{Deserialize, Deserializer, Serialize, Serializer, de::Error};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use crate::{
     colour::{Pixel, Rgba},

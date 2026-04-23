@@ -6,13 +6,14 @@ use std::{
 use serde::{Deserialize, Serialize};
 use toml::{de::Error as TomlDeError, ser::Error as TomlSerError};
 
-use crate::colour::Rgb;
+use crate::{colour::Rgb, config::GeometryConfig};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Manifest {
     pub width: usize,
     pub height: usize,
     pub background: Rgb,
+    pub geometry: GeometryConfig,
 }
 
 impl Manifest {
