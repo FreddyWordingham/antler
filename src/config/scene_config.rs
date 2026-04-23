@@ -36,7 +36,7 @@ pub struct SceneConfig {
 pub struct BuiltScene {
     pub world: World,
     pub scene: Scene,
-    pub cameras: BTreeMap<String, BuiltImage>,
+    pub images: BTreeMap<String, BuiltImage>,
 }
 
 impl SceneConfig {
@@ -114,6 +114,10 @@ impl SceneConfig {
             );
         }
 
-        Ok(BuiltScene { world, scene, cameras })
+        Ok(BuiltScene {
+            world,
+            scene,
+            images: cameras,
+        })
     }
 }
