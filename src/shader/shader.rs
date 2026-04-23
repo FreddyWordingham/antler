@@ -1,7 +1,7 @@
 use crate::{
     colour::Rgb,
     lighting::LightSample,
-    shader::{Block, Lambertion},
+    shader::{Block, Lambertion, Luminous},
     tracing::{WorldHit, WorldRay},
 };
 
@@ -13,6 +13,7 @@ pub trait Shader {
 pub enum ShaderEnum {
     Block(Block),
     Lambertion(Lambertion),
+    Luminous(Luminous),
 }
 
 impl Shader for ShaderEnum {
@@ -20,6 +21,7 @@ impl Shader for ShaderEnum {
         match self {
             ShaderEnum::Block(block) => block.emitted(hit),
             ShaderEnum::Lambertion(lambertion) => lambertion.emitted(hit),
+            ShaderEnum::Luminous(luminous) => luminous.emitted(hit),
         }
     }
 
@@ -27,6 +29,7 @@ impl Shader for ShaderEnum {
         match self {
             ShaderEnum::Block(block) => block.shade(ray, hit, light),
             ShaderEnum::Lambertion(lambertion) => lambertion.shade(ray, hit, light),
+            ShaderEnum::Luminous(luminous) => luminous.shade(ray, hit, light),
         }
     }
 }

@@ -23,7 +23,7 @@ pub mod prelude {
         lighting::{DirectionalLight, Light, LightEnum, LightSample},
         material::{Material, MaterialEnum, Opaque, Scatter},
         render::render,
-        shader::{Block, Lambertion, Shader, ShaderEnum},
+        shader::{Block, Lambertion, Luminous, Shader, ShaderEnum},
         storage::{Grid, Image, RgbImage, RgbaImage},
         tracing::{ObjectHit, ObjectRay, Probe, WorldHit, WorldRay},
         world::{Object, Scene, World},
