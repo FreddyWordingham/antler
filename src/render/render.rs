@@ -75,11 +75,10 @@ where
     let progress = ProgressBar::new(tile_count as u64);
     progress.set_message(label.into());
     progress.set_style(
-        ProgressStyle::with_template("{msg} [{bar:40.cyan/blue}] {pos}/{len} tiles ({elapsed})")
+        ProgressStyle::with_template("{msg} [{wide_bar:.cyan/blue}] {pos}/{len} tiles ({elapsed})")
             .unwrap()
             .progress_chars("=>-"),
     );
-
     let image = render_image_inner(world, scene, camera, settings, Some(&progress));
 
     progress.finish_with_message(done_label.into());
