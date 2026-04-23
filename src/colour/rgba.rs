@@ -181,9 +181,9 @@ impl From<u32> for Rgba {
     }
 }
 
-impl Into<u32> for Rgba {
-    fn into(self) -> u32 {
-        self.to_u32()
+impl From<Rgba> for u32 {
+    fn from(value: Rgba) -> Self {
+        value.to_u32()
     }
 }
 

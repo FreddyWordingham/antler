@@ -175,9 +175,9 @@ impl From<u32> for Rgb {
     }
 }
 
-impl Into<u32> for Rgb {
-    fn into(self) -> u32 {
-        self.to_u32()
+impl From<Rgb> for u32 {
+    fn from(value: Rgb) -> Self {
+        value.to_u32()
     }
 }
 
