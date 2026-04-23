@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    config::Vec3,
+    config::{Vec3, defaults},
     geometry::{Aabb, Circle, GeometryEnum, Mesh, Quad, Sphere},
 };
 
@@ -15,23 +15,23 @@ pub enum GeometryConfig {
     Sphere {
         #[serde(default)]
         centre: Vec3,
-        #[serde(default = "one")]
+        #[serde(default = "defaults::one")]
         radius: f32,
     },
     Circle {
         #[serde(default)]
         position: Vec3,
-        #[serde(default = "z_axis")]
+        #[serde(default = "defaults::z_axis")]
         normal: Vec3,
-        #[serde(default = "one")]
+        #[serde(default = "defaults::one")]
         radius: f32,
     },
     Quad {
         #[serde(default)]
         position: Vec3,
-        #[serde(default = "z_axis")]
+        #[serde(default = "defaults::z_axis")]
         normal: Vec3,
-        #[serde(default = "unit_square")]
+        #[serde(default = "defaults::unit_square")]
         size: [f32; 2],
     },
     Mesh {
@@ -55,16 +55,4 @@ impl From<GeometryConfig> for GeometryEnum {
             GeometryConfig::Mesh { path } => GeometryEnum::Mesh(Mesh::load(&path).expect("Failed to load mesh")),
         }
     }
-}
-
-fn one() -> f32 {
-    1.0
-}
-
-fn unit_square() -> [f32; 2] {
-    [1.0, 1.0]
-}
-
-fn z_axis() -> Vec3 {
-    Vec3([0.0, 0.0, 1.0])
 }
