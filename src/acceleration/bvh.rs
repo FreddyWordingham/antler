@@ -2,7 +2,7 @@ use std::f32::INFINITY;
 
 use nalgebra::Point3;
 
-use crate::geometry::{Aabb, Ray};
+use crate::geometry::{Aabb, Ray, TraversalRay};
 
 const LEAF_SIZE: usize = 4;
 const SAH_BUCKETS: usize = 12;
@@ -24,14 +24,6 @@ struct PackedBvhNode {
 }
 
 impl PackedBvhNode {
-    #[inline]
-    fn aabb(&self) -> Aabb {
-        Aabb {
-            min: self.min,
-            max: self.max,
-        }
-    }
-
     #[inline]
     fn is_leaf(&self) -> bool {
         self.is_leaf != 0
@@ -55,11 +47,11 @@ impl PackedBvhNode {
     }
 
     #[inline]
-    fn near_far_children(&self, ray: &Ray) -> (usize, usize) {
+    fn near_far_children(&self, tray: &TraversalRay) -> (usize, usize) {
         let left = self.left_child();
         let right = self.right_child();
 
-        if ray.direction[self.axis as usize] >= 0.0 {
+        if tray.dir_non_negative[self.axis as usize] {
             (left, right)
         } else {
             (right, left)
@@ -67,43 +59,23 @@ impl PackedBvhNode {
     }
 
     #[inline]
-    fn ray_interval(&self, ray: &Ray) -> Option<(f32, f32)> {
-        let origin = ray.origin;
-        let direction = ray.direction.into_inner();
+    fn ray_interval(&self, tray: &TraversalRay) -> Option<(f32, f32)> {
+        let tx0 = (self.min.x - tray.origin.x) * tray.inv_dir.x;
+        let tx1 = (self.max.x - tray.origin.x) * tray.inv_dir.x;
+        let mut t_min = tx0.min(tx1);
+        let mut t_max = tx0.max(tx1);
 
-        let mut t_min = f32::NEG_INFINITY;
-        let mut t_max = f32::INFINITY;
+        let ty0 = (self.min.y - tray.origin.y) * tray.inv_dir.y;
+        let ty1 = (self.max.y - tray.origin.y) * tray.inv_dir.y;
+        t_min = t_min.max(ty0.min(ty1));
+        t_max = t_max.min(ty0.max(ty1));
 
-        for axis in 0..3 {
-            let o = origin[axis];
-            let d = direction[axis];
-            let min = self.min[axis];
-            let max = self.max[axis];
+        let tz0 = (self.min.z - tray.origin.z) * tray.inv_dir.z;
+        let tz1 = (self.max.z - tray.origin.z) * tray.inv_dir.z;
+        t_min = t_min.max(tz0.min(tz1));
+        t_max = t_max.min(tz0.max(tz1));
 
-            if d.abs() < 1.0e-8 {
-                if o < min || o > max {
-                    return None;
-                }
-                continue;
-            }
-
-            let inv_d = 1.0 / d;
-            let mut t0 = (min - o) * inv_d;
-            let mut t1 = (max - o) * inv_d;
-
-            if t0 > t1 {
-                std::mem::swap(&mut t0, &mut t1);
-            }
-
-            t_min = t_min.max(t0);
-            t_max = t_max.min(t1);
-
-            if t_max < t_min {
-                return None;
-            }
-        }
-
-        Some((t_min, t_max))
+        if t_max < t_min { None } else { Some((t_min, t_max)) }
     }
 }
 
@@ -195,16 +167,17 @@ impl<T: Copy> Bvh<T> {
         self.trace_nearest_with_max(ray, &mut best_distance, visit);
     }
 
-    #[inline]
     pub fn trace_nearest_with_max<F>(&self, ray: &Ray, best_distance: &mut f32, mut visit: F)
     where
         F: FnMut(T, &mut f32) -> bool,
     {
-        let Some((root_t_min, _)) = self.nodes[0].ray_interval(ray) else {
+        let tray = TraversalRay::new(ray);
+
+        let Some((root_t_min, _)) = self.nodes[0].ray_interval(&tray) else {
             return;
         };
 
-        self.trace_node(0, ray, best_distance, &mut visit, root_t_min);
+        self.trace_node(0, &tray, best_distance, &mut visit, root_t_min);
     }
 
     #[inline]
@@ -216,16 +189,17 @@ impl<T: Copy> Bvh<T> {
         self.trace_any_with_limit(ray, &mut max_distance, test)
     }
 
-    #[inline]
     pub fn trace_any_with_limit<F>(&self, ray: &Ray, max_distance: &mut f32, mut test: F) -> bool
     where
         F: FnMut(T, &mut f32) -> bool,
     {
-        let Some((root_t_min, _)) = self.nodes[0].ray_interval(ray) else {
+        let tray = TraversalRay::new(ray);
+
+        let Some((root_t_min, _)) = self.nodes[0].ray_interval(&tray) else {
             return false;
         };
 
-        self.trace_any_node(0, ray, max_distance, &mut test, root_t_min)
+        self.trace_any_node(0, &tray, max_distance, &mut test, root_t_min)
     }
 
     #[inline]
@@ -233,12 +207,14 @@ impl<T: Copy> Bvh<T> {
     where
         F: FnMut(T) -> bool,
     {
-        let Some((root_t_min, _)) = self.nodes[0].ray_interval(ray) else {
+        let tray = TraversalRay::new(ray);
+
+        let Some((root_t_min, _)) = self.nodes[0].ray_interval(&tray) else {
             return false;
         };
 
         let mut max_distance = max_distance;
-        self.trace_any_node(0, ray, &mut max_distance, &mut |id, _| test(id), root_t_min)
+        self.trace_any_node(0, &tray, &mut max_distance, &mut |id, _| test(id), root_t_min)
     }
 
     fn build_node(nodes: &mut Vec<PackedBvhNode>, primitive_ids: &mut Vec<T>, items: &mut [(Aabb, T)]) -> usize {
@@ -414,7 +390,7 @@ impl<T: Copy> Bvh<T> {
     fn trace_node<F>(
         &self,
         node_index: usize,
-        ray: &Ray,
+        tray: &TraversalRay,
         best_distance: &mut f32,
         visit: &mut F,
         node_t_min: f32,
@@ -444,10 +420,10 @@ impl<T: Copy> Bvh<T> {
                 continue;
             }
 
-            let (near, far) = node.near_far_children(ray);
+            let (near, far) = node.near_far_children(tray);
 
-            let near_interval = self.nodes[near].ray_interval(ray);
-            let far_interval = self.nodes[far].ray_interval(ray);
+            let near_interval = self.nodes[near].ray_interval(tray);
+            let far_interval = self.nodes[far].ray_interval(tray);
 
             if let Some((far_t, _)) = far_interval {
                 if far_t <= *best_distance {
@@ -474,7 +450,7 @@ impl<T: Copy> Bvh<T> {
     fn trace_any_node<F>(
         &self,
         node_index: usize,
-        ray: &Ray,
+        tray: &TraversalRay,
         max_distance: &mut f32,
         test: &mut F,
         node_t_min: f32,
@@ -504,10 +480,10 @@ impl<T: Copy> Bvh<T> {
                 continue;
             }
 
-            let (near, far) = node.near_far_children(ray);
+            let (near, far) = node.near_far_children(tray);
 
-            let near_interval = self.nodes[near].ray_interval(ray);
-            let far_interval = self.nodes[far].ray_interval(ray);
+            let near_interval = self.nodes[near].ray_interval(tray);
+            let far_interval = self.nodes[far].ray_interval(tray);
 
             if let Some((far_t, _)) = far_interval {
                 if far_t <= *max_distance {
