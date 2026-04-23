@@ -42,17 +42,15 @@ pub enum GeometryConfig {
 impl From<GeometryConfig> for GeometryEnum {
     fn from(config: GeometryConfig) -> Self {
         match config {
-            GeometryConfig::Aabb { min, max } => GeometryEnum::Aabb(Aabb::new(min.into(), max.into())),
-            GeometryConfig::Sphere { centre, radius } => GeometryEnum::Sphere(Sphere::new(centre.into(), radius)),
+            GeometryConfig::Aabb { min, max } => Aabb::new(min.into(), max.into()).into(),
+            GeometryConfig::Sphere { centre, radius } => Sphere::new(centre.into(), radius).into(),
             GeometryConfig::Circle {
                 position,
                 normal,
                 radius,
-            } => GeometryEnum::Circle(Circle::new(position.into(), normal.into(), radius)),
-            GeometryConfig::Quad { position, normal, size } => {
-                GeometryEnum::Quad(Quad::new(position.into(), normal.into(), size))
-            }
-            GeometryConfig::Mesh { path } => GeometryEnum::Mesh(Mesh::load(&path).expect("Failed to load mesh")),
+            } => Circle::new(position.into(), normal.into(), radius).into(),
+            GeometryConfig::Quad { position, normal, size } => Quad::new(position.into(), normal.into(), size).into(),
+            GeometryConfig::Mesh { path } => Mesh::load(&path).expect("Failed to load mesh").into(),
         }
     }
 }

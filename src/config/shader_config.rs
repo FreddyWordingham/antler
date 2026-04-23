@@ -31,18 +31,14 @@ pub enum ShaderConfig {
 impl From<ShaderConfig> for ShaderEnum {
     fn from(config: ShaderConfig) -> Self {
         match config {
-            ShaderConfig::Block { colour } => ShaderEnum::Block(Block { colour }),
-            ShaderConfig::Lambertion { colour } => ShaderEnum::Lambertion(Lambertion { colour }),
-            ShaderConfig::Luminous { colour, intensity } => ShaderEnum::Luminous(Luminous { colour, intensity }),
+            ShaderConfig::Block { colour } => Block::new(colour).into(),
+            ShaderConfig::Lambertion { colour } => Lambertion::new(colour).into(),
+            ShaderConfig::Luminous { colour, intensity } => Luminous::new(colour, intensity).into(),
             ShaderConfig::Checkerboard {
                 size,
                 colour_a,
                 colour_b,
-            } => ShaderEnum::Checkerboard(Checkerboard {
-                size,
-                colour_a,
-                colour_b,
-            }),
+            } => Checkerboard::new(size, colour_a, colour_b).into(),
         }
     }
 }

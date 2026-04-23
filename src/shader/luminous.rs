@@ -10,6 +10,12 @@ pub struct Luminous {
     pub intensity: f32,
 }
 
+impl Luminous {
+    pub fn new(colour: Rgb, intensity: f32) -> Self {
+        Self { colour, intensity }
+    }
+}
+
 impl Shader for Luminous {
     #[inline]
     fn emitted(&self, _hit: &WorldHit) -> Rgb {

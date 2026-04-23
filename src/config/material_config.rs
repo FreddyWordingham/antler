@@ -11,7 +11,7 @@ pub enum MaterialConfig {
 impl From<MaterialConfig> for MaterialEnum {
     fn from(config: MaterialConfig) -> Self {
         match config {
-            MaterialConfig::Opaque => MaterialEnum::Opaque(Opaque),
+            MaterialConfig::Opaque => Opaque::new().into(),
         }
     }
 }

@@ -9,6 +9,12 @@ pub struct Block {
     pub colour: Rgb,
 }
 
+impl Block {
+    pub fn new(colour: Rgb) -> Self {
+        Self { colour }
+    }
+}
+
 impl Shader for Block {
     fn emitted(&self, _hit: &WorldHit) -> Rgb {
         Rgb::BLACK
