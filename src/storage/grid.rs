@@ -51,6 +51,16 @@ impl<T> Grid<T> {
     }
 
     #[inline]
+    pub fn as_slice(&self) -> &[T] {
+        &self.data
+    }
+
+    #[inline]
+    pub fn as_mut_slice(&mut self) -> &mut [T] {
+        &mut self.data
+    }
+
+    #[inline]
     fn index_of(&self, coord: [usize; 2]) -> usize {
         assert!(
             coord[0] < self.size[0],
