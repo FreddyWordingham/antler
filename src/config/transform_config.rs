@@ -11,7 +11,7 @@ pub struct TransformConfig {
     #[serde(default)]
     pub rotation: Vec3,
 
-    #[serde(default = "defaults::one")]
+    #[serde(default = "defaults::one_f32")]
     pub scale: f32,
 }
 

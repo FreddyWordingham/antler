@@ -17,11 +17,11 @@ pub enum ShaderConfig {
     },
     Luminous {
         colour: Rgb,
-        #[serde(default = "defaults::one")]
+        #[serde(default = "defaults::one_f32")]
         intensity: f32,
     },
     Checkerboard {
-        #[serde(default = "defaults::one")]
+        #[serde(default = "defaults::one_f32")]
         size: f32,
         colour_a: Rgb,
         colour_b: Rgb,
