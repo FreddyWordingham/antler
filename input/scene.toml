@@ -17,13 +17,13 @@ look_at = [0.0, 0.0, 3.0]
 vertical_fov_radians = 0.7853982
 
 [image_defs.main.renders.high]
-resolution = [1200, 900]
-background = "#000000"
+resolution = [12000, 9000]
+background = "#00000000"
 super_samples = 4
 
 [image_defs.main.renders.preview]
 resolution = [400, 300]
-background = "#000000"
+background = "#00000000"
 super_samples = 1
 
 [image_defs.front]
@@ -34,7 +34,7 @@ size = [10.0, 7.5]
 
 [image_defs.front.renders.preview]
 resolution = [800, 600]
-background = "#111111"
+background = "#11111100"
 super_samples = 2
 
 [geometry_defs.floor]

@@ -7,6 +7,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     camera::CameraEnum,
+    colour::Rgba,
     config::{
         GeometryConfig, ImageConfig, LightConfig, MaterialConfig, Named, ObjectConfig, RenderConfig, ShaderConfig,
     },
@@ -34,6 +35,7 @@ pub struct SceneConfig {
 }
 
 pub struct BuiltCamera {
+    pub background: Rgba,
     pub camera: CameraEnum,
     pub renders: BTreeMap<String, RenderConfig>,
 }
@@ -112,6 +114,7 @@ impl SceneConfig {
             cameras.insert(
                 camera_name,
                 BuiltCamera {
+                    background: camera_entry.background,
                     camera: built_camera,
                     renders: camera_entry.renders,
                 },
