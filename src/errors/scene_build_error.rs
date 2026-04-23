@@ -14,7 +14,7 @@ pub enum SceneBuildError {
     UnknownShader(String),
     UnknownMaterial(String),
     MeshLoad(MeshLoadError),
-    CameraHasNoRenders(String),
+    ImageHasNoRenders(String),
 }
 
 impl From<MeshLoadError> for SceneBuildError {
@@ -33,7 +33,7 @@ impl Display for SceneBuildError {
             Self::UnknownShader(name) => write!(f, "Unknown shader reference '{name}'"),
             Self::UnknownMaterial(name) => write!(f, "Unknown material reference '{name}'"),
             Self::MeshLoad(err) => write!(f, "{err}"),
-            Self::CameraHasNoRenders(name) => write!(f, "Camera '{name}' has no renders defined"),
+            Self::ImageHasNoRenders(name) => write!(f, "Camera '{name}' has no renders defined"),
         }
     }
 }

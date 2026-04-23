@@ -11,6 +11,12 @@ impl Opaque {
     }
 }
 
+impl Default for Opaque {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Material for Opaque {
     fn scatter(&self, _probe: &Probe, _hit: &WorldHit) -> Scatter {
         Scatter {

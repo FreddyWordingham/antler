@@ -6,10 +6,9 @@ use std::{
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    camera::CameraEnum,
-    colour::Rgba,
     config::{
-        GeometryConfig, ImageConfig, LightConfig, MaterialConfig, Named, ObjectConfig, RenderConfig, ShaderConfig,
+        BuiltImage, GeometryConfig, ImageConfig, LightConfig, MaterialConfig, Named, ObjectConfig, RenderConfig,
+        ShaderConfig,
     },
     errors::SceneBuildError,
     world::{Object, Scene, World},
@@ -34,16 +33,10 @@ pub struct SceneConfig {
     pub objects: Vec<ObjectConfig>,
 }
 
-pub struct BuiltCamera {
-    pub background: Rgba,
-    pub camera: CameraEnum,
-    pub renders: BTreeMap<String, RenderConfig>,
-}
-
 pub struct BuiltScene {
     pub world: World,
     pub scene: Scene,
-    pub cameras: BTreeMap<String, BuiltCamera>,
+    pub cameras: BTreeMap<String, BuiltImage>,
 }
 
 impl SceneConfig {
@@ -106,14 +99,14 @@ impl SceneConfig {
 
         for (camera_name, camera_entry) in image_config {
             if camera_entry.renders.is_empty() {
-                return Err(SceneBuildError::CameraHasNoRenders(camera_name.clone()));
+                return Err(SceneBuildError::ImageHasNoRenders(camera_name.clone()));
             }
 
             let built_camera = camera_entry.camera.build();
 
             cameras.insert(
                 camera_name,
-                BuiltCamera {
+                BuiltImage {
                     background: camera_entry.background,
                     camera: built_camera,
                     renders: camera_entry.renders,

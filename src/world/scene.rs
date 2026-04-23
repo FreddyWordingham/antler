@@ -17,6 +17,12 @@ pub struct Scene {
     bvh: Option<Bvh<ObjectId>>,
 }
 
+impl Default for Scene {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Scene {
     pub fn new() -> Self {
         Self {

@@ -50,6 +50,29 @@ impl Rgba {
     pub fn to_rgb(&self) -> Rgb {
         Rgb::new(self.0.red, self.0.green, self.0.blue)
     }
+
+    #[inline]
+    pub fn over(self, dst: Self) -> Self {
+        let src_a = self.alpha();
+        let dst_a = dst.alpha();
+
+        let out_a = src_a + dst_a * (1.0 - src_a);
+
+        if out_a <= f32::EPSILON {
+            return Self::TRANSPARENT;
+        }
+
+        let r = (self.red() * src_a + dst.red() * dst_a * (1.0 - src_a)) / out_a;
+        let g = (self.green() * src_a + dst.green() * dst_a * (1.0 - src_a)) / out_a;
+        let b = (self.blue() * src_a + dst.blue() * dst_a * (1.0 - src_a)) / out_a;
+
+        Self::new(r, g, b, out_a)
+    }
+
+    #[inline]
+    pub fn with_alpha(self, alpha: f32) -> Self {
+        Self::new(self.red(), self.green(), self.blue(), alpha)
+    }
 }
 
 impl Add for Rgba {
