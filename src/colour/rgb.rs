@@ -5,6 +5,7 @@ use std::{
 
 use palette::Srgb;
 use png::ColorType;
+use serde::{Deserialize, Deserializer, Serialize, Serializer, de::Error};
 
 use crate::{
     colour::{Pixel, Rgba},
@@ -129,6 +130,20 @@ impl Pixel for Rgb {
     }
 
     #[inline]
+    fn to_u32(&self) -> u32 {
+        let bytes = self.to_bytes();
+        ((bytes[0] as u32) << 16) | ((bytes[1] as u32) << 8) | (bytes[2] as u32)
+    }
+
+    #[inline]
+    fn from_u32(value: u32) -> Self {
+        let r = ((value >> 16) & 0xFF) as u8;
+        let g = ((value >> 8) & 0xFF) as u8;
+        let b = (value & 0xFF) as u8;
+        Self::from_bytes([r, g, b])
+    }
+
+    #[inline]
     fn from_hex(hex: &str) -> Result<Self, ParseHexError> {
         let hex = hex.trim_start_matches('#');
         match hex.len() {
@@ -149,5 +164,24 @@ impl Pixel for Rgb {
                 found,
             }),
         }
+    }
+}
+
+impl Serialize for Rgb {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_hex())
+    }
+}
+
+impl<'de> Deserialize<'de> for Rgb {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let hex = String::deserialize(deserializer)?;
+        Rgb::from_hex(&hex).map_err(Error::custom)
     }
 }
