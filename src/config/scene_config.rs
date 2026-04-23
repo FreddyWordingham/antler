@@ -60,7 +60,7 @@ impl SceneConfig {
 
     pub fn build(self) -> Result<BuiltScene, SceneBuildError> {
         let SceneConfig {
-            image_defs: image_config,
+            image_defs: images,
             light_defs,
             lights,
             geometry_defs,
@@ -95,21 +95,18 @@ impl SceneConfig {
 
         scene.build(&world);
 
-        let mut cameras = BTreeMap::new();
-
-        for (camera_name, camera_entry) in image_config {
-            if camera_entry.renders.is_empty() {
-                return Err(SceneBuildError::ImageHasNoRenders(camera_name.clone()));
+        let mut built_images = BTreeMap::new();
+        for (image_name, image_entry) in images {
+            if image_entry.renders.is_empty() {
+                return Err(SceneBuildError::ImageHasNoRenders(image_name.clone()));
             }
 
-            let built_camera = camera_entry.camera.build();
-
-            cameras.insert(
-                camera_name,
+            built_images.insert(
+                image_name,
                 BuiltImage {
-                    background: camera_entry.background,
-                    camera: built_camera,
-                    renders: camera_entry.renders,
+                    background: image_entry.background,
+                    camera: image_entry.camera.build(),
+                    renders: image_entry.renders,
                 },
             );
         }
@@ -117,7 +114,7 @@ impl SceneConfig {
         Ok(BuiltScene {
             world,
             scene,
-            images: cameras,
+            images: built_images,
         })
     }
 }
