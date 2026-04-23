@@ -7,7 +7,7 @@ use crate::{
     tracing::{ObjectHit, ObjectRay},
 };
 
-const FACE_EPSILON: f32 = 1.0e-6;
+const FACE_EPSILON: f32 = 1.0e-4;
 
 #[derive(Debug, Clone)]
 pub struct Aabb {

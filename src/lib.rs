@@ -18,7 +18,7 @@ pub mod prelude {
         camera::{Camera, CameraEnum, Orthographic, Perspective},
         colour::{Gradient, Pixel, Rgb, Rgba},
         errors::ParseHexError,
-        geometry::{Aabb, Bounded, Geometry, GeometryEnum, Ray, Sphere, Traceable},
+        geometry::{Aabb, Bounded, Circle, Geometry, GeometryEnum, Ray, Sphere, Traceable},
         id::{GeometryId, MaterialId, ObjectId, ShaderId},
         lighting::{DirectionalLight, Light, LightEnum, LightSample},
         material::{Material, MaterialEnum, Opaque, Scatter},
