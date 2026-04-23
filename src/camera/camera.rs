@@ -9,16 +9,28 @@ pub trait Camera {
     fn emit(&self, uv: Point2<f32>) -> Probe;
 }
 
-pub enum CameraEnum {
-    Perspective(Perspective),
-    Orthographic(Orthographic),
+macro_rules! define_camera_enum {
+    ($name:ident: $($ty:ident),* $(,)?) => {
+        pub enum $name {
+            $($ty($ty),)*
+        }
+
+        impl Camera for $name {
+            fn emit(&self, uv: Point2<f32>) -> Probe {
+                match self {
+                    $(Self::$ty(inner) => inner.emit(uv),)*
+                }
+            }
+        }
+
+        $(
+            impl From<$ty> for $name {
+                fn from(value: $ty) -> Self {
+                    Self::$ty(value)
+                }
+            }
+        )*
+    };
 }
 
-impl Camera for CameraEnum {
-    fn emit(&self, uv: Point2<f32>) -> Probe {
-        match self {
-            CameraEnum::Perspective(perspective) => perspective.emit(uv),
-            CameraEnum::Orthographic(orthographic) => orthographic.emit(uv),
-        }
-    }
-}
+define_camera_enum!(CameraEnum: Orthographic, Perspective);

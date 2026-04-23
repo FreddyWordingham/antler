@@ -21,23 +21,32 @@ impl World {
     }
 
     #[inline]
-    pub fn add_geometry(&mut self, geometry: GeometryEnum) -> GeometryId {
+    pub fn add_geometry<G>(&mut self, geometry: G) -> GeometryId
+    where
+        G: Into<GeometryEnum>,
+    {
         let id = GeometryId::new(self.geometries.len());
-        self.geometries.push(geometry);
+        self.geometries.push(geometry.into());
         id
     }
 
     #[inline]
-    pub fn add_shader(&mut self, shader: ShaderEnum) -> ShaderId {
+    pub fn add_shader<S>(&mut self, shader: S) -> ShaderId
+    where
+        S: Into<ShaderEnum>,
+    {
         let id = ShaderId::new(self.shaders.len());
-        self.shaders.push(shader);
+        self.shaders.push(shader.into());
         id
     }
 
     #[inline]
-    pub fn add_material(&mut self, material: MaterialEnum) -> MaterialId {
+    pub fn add_material<M>(&mut self, material: M) -> MaterialId
+    where
+        M: Into<MaterialEnum>,
+    {
         let id = MaterialId::new(self.materials.len());
-        self.materials.push(material);
+        self.materials.push(material.into());
         id
     }
 
