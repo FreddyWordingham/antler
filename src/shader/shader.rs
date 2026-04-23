@@ -10,29 +10,34 @@ pub trait Shader {
     fn shade(&self, ray: &WorldRay, hit: &WorldHit, light: &LightSample) -> Rgb;
 }
 
-pub enum ShaderEnum {
-    Block(Block),
-    Lambertion(Lambertion),
-    Luminous(Luminous),
-    Checkerboard(Checkerboard),
+macro_rules! define_shader_enum {
+    ($name:ident: $($ty:ident),* $(,)?) => {
+        pub enum $name {
+            $($ty($ty),)*
+        }
+
+        impl Shader for $name {
+            fn emitted(&self, hit: &WorldHit) -> Rgb {
+                match self {
+                    $(Self::$ty(inner) => inner.emitted(hit),)*
+                }
+            }
+
+            fn shade(&self, ray: &WorldRay, hit: &WorldHit, light: &LightSample) -> Rgb {
+                match self {
+                    $(Self::$ty(inner) => inner.shade(ray, hit, light),)*
+                }
+            }
+        }
+
+        $(
+            impl From<$ty> for $name {
+                fn from(value: $ty) -> Self {
+                    Self::$ty(value)
+                }
+            }
+        )*
+    };
 }
 
-impl Shader for ShaderEnum {
-    fn emitted(&self, hit: &WorldHit) -> Rgb {
-        match self {
-            ShaderEnum::Block(block) => block.emitted(hit),
-            ShaderEnum::Lambertion(lambertion) => lambertion.emitted(hit),
-            ShaderEnum::Luminous(luminous) => luminous.emitted(hit),
-            ShaderEnum::Checkerboard(checkerboard) => checkerboard.emitted(hit),
-        }
-    }
-
-    fn shade(&self, ray: &WorldRay, hit: &WorldHit, light: &LightSample) -> Rgb {
-        match self {
-            ShaderEnum::Block(block) => block.shade(ray, hit, light),
-            ShaderEnum::Lambertion(lambertion) => lambertion.shade(ray, hit, light),
-            ShaderEnum::Luminous(luminous) => luminous.shade(ray, hit, light),
-            ShaderEnum::Checkerboard(checkerboard) => checkerboard.shade(ray, hit, light),
-        }
-    }
-}
+define_shader_enum!(ShaderEnum: Block, Lambertion, Luminous, Checkerboard);
