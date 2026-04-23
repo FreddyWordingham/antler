@@ -25,9 +25,9 @@ pub struct ObjectConfig {
 
 impl ObjectConfig {
     pub fn build(self, world: &mut World) -> Object {
-        let geometry_id = world.add_geometry(self.geometry.into());
-        let shader_id = world.add_shader(self.shader.into());
-        let material_id = world.add_material(self.material.into());
+        let geometry_id = world.add_geometry(self.geometry);
+        let shader_id = world.add_shader(self.shader);
+        let material_id = world.add_material(self.material);
         let transform = Similarity3::new(self.position.into(), self.rotation.into(), self.scale);
 
         Object::new(geometry_id, shader_id, material_id, transform)
