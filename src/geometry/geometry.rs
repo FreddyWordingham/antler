@@ -1,5 +1,5 @@
 use crate::{
-    geometry::{Aabb, Bounded, Circle, Quad, Sphere, Traceable},
+    geometry::{Aabb, Bounded, Circle, Quad, Sphere, Traceable, Triangle},
     tracing::{ObjectHit, ObjectRay},
 };
 
@@ -11,6 +11,7 @@ pub enum GeometryEnum {
     Sphere(Sphere),
     Circle(Circle),
     Quad(Quad),
+    Triangle(Triangle),
 }
 
 impl Bounded for GeometryEnum {
@@ -20,6 +21,7 @@ impl Bounded for GeometryEnum {
             GeometryEnum::Sphere(sphere) => sphere.bounds(),
             GeometryEnum::Circle(circle) => circle.bounds(),
             GeometryEnum::Quad(quad) => quad.bounds(),
+            GeometryEnum::Triangle(triangle) => triangle.bounds(),
         }
     }
 }
@@ -31,6 +33,7 @@ impl Traceable for GeometryEnum {
             GeometryEnum::Sphere(sphere) => sphere.trace(ray),
             GeometryEnum::Circle(circle) => circle.trace(ray),
             GeometryEnum::Quad(quad) => quad.trace(ray),
+            GeometryEnum::Triangle(triangle) => triangle.trace(ray),
         }
     }
 }

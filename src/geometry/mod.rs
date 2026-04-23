@@ -6,6 +6,7 @@ mod quad;
 mod ray;
 mod sphere;
 mod traceable;
+mod triangle;
 
 pub use aabb::Aabb;
 pub use bounded::Bounded;
@@ -15,3 +16,4 @@ pub use quad::Quad;
 pub use ray::Ray;
 pub use sphere::Sphere;
 pub use traceable::Traceable;
+pub use triangle::Triangle;
