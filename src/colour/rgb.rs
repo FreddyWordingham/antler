@@ -189,12 +189,18 @@ impl FromStr for Rgb {
     }
 }
 
+impl Display for Rgb {
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+        f.write_str(&self.to_hex())
+    }
+}
+
 impl Serialize for Rgb {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_hex())
+        serializer.serialize_u32(self.to_u32())
     }
 }
 
@@ -203,13 +209,16 @@ impl<'de> Deserialize<'de> for Rgb {
     where
         D: Deserializer<'de>,
     {
-        let hex = String::deserialize(deserializer)?;
-        Rgb::from_hex(&hex).map_err(Error::custom)
-    }
-}
+        #[derive(Deserialize)]
+        #[serde(untagged)]
+        enum RgbRepr {
+            Int(u32),
+            Hex(String),
+        }
 
-impl Display for Rgb {
-    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
-        f.write_str(&self.to_hex())
+        match RgbRepr::deserialize(deserializer)? {
+            RgbRepr::Int(value) => Ok(Rgb::from_u32(value)),
+            RgbRepr::Hex(hex) => Rgb::from_hex(&hex).map_err(Error::custom),
+        }
     }
 }

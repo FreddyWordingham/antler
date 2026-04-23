@@ -195,12 +195,18 @@ impl FromStr for Rgba {
     }
 }
 
+impl Display for Rgba {
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+        f.write_str(&self.to_hex())
+    }
+}
+
 impl Serialize for Rgba {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_hex())
+        serializer.serialize_u32(self.to_u32())
     }
 }
 
@@ -209,14 +215,16 @@ impl<'de> Deserialize<'de> for Rgba {
     where
         D: Deserializer<'de>,
     {
-        let hex = String::deserialize(deserializer)?;
+        #[derive(Deserialize)]
+        #[serde(untagged)]
+        enum RgbaRepr {
+            Int(u32),
+            Hex(String),
+        }
 
-        Rgba::from_hex(&hex).map_err(Error::custom)
-    }
-}
-
-impl Display for Rgba {
-    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
-        f.write_str(&self.to_hex())
+        match RgbaRepr::deserialize(deserializer)? {
+            RgbaRepr::Int(value) => Ok(Rgba::from_u32(value)),
+            RgbaRepr::Hex(hex) => Rgba::from_hex(&hex).map_err(Error::custom),
+        }
     }
 }
