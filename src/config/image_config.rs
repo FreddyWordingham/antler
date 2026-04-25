@@ -11,7 +11,6 @@ use crate::{
 pub struct ImageConfig {
     #[serde(default = "defaults::transparent")]
     pub background: Rgba,
-    #[serde(flatten)]
     pub camera: CameraConfig,
     #[serde(default)]
     pub renders: BTreeMap<String, RenderConfig>,

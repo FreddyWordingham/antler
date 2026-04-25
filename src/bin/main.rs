@@ -3,7 +3,7 @@ use std::fs::create_dir_all;
 use antler::prelude::*;
 
 fn main() {
-    let built = SceneConfig::load("input/scene.toml").unwrap().build().unwrap();
+    let built = SceneConfig::load("input/scene.ron").unwrap().build().unwrap();
 
     for (image_name, built_camera) in &built.images {
         for (render_name, render) in &built_camera.renders {

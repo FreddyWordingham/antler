@@ -3,6 +3,7 @@ use std::{
     fs::{read_to_string, write},
 };
 
+use ron;
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -38,11 +39,12 @@ pub struct BuiltScene {
 
 impl SceneConfig {
     pub fn from_str(config_str: &str) -> Result<Self, SceneBuildError> {
-        toml::from_str(config_str).map_err(|err| SceneBuildError::ConfigParseError(err.to_string()))
+        ron::from_str(config_str).map_err(|err| SceneBuildError::ConfigParseError(err.to_string()))
     }
 
     pub fn to_string(&self) -> Result<String, SceneBuildError> {
-        toml::to_string(self).map_err(|err| SceneBuildError::ConfigParseError(err.to_string()))
+        ron::ser::to_string_pretty(self, ron::ser::PrettyConfig::default())
+            .map_err(|err| SceneBuildError::ConfigParseError(err.to_string()))
     }
 
     pub fn load(path: &str) -> Result<Self, SceneBuildError> {

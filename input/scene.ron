@@ -1,0 +1,82 @@
+(
+    lights: ["sun", "fill"],
+
+    light_defs: {
+        "sun": Directional(
+            direction: (-5.0, -2.0, -2.0),
+            radiance: 0xFFFFFF,
+        ),
+        "fill": Directional(
+            direction: (2.0, 1.0, -3.0),
+            radiance: 0x404040,
+        ),
+    },
+
+    image_defs: {
+        "main": (
+            background: 0x00000000,
+            camera: Perspective(
+                position: (10.0, 10.0, 10.0),
+                look_at: (0.0, 0.0, 1.5),
+                vertical_fov_radians: 0.4,
+            ),
+            renders: {
+                "preview": (
+                    resolution: (400, 300),
+                    background: Some(0x00000000),
+                    super_samples: 1,
+                ),
+            },
+        ),
+    },
+
+    geometry_defs: {
+        "floor": Quad(
+            position: (0.0, 0.0, 0.0),
+            normal: (0.0, 0.0, 1.0),
+            size: (100.0, 100.0),
+        ),
+        "cube": Aabb(
+            min: (-1.0, -1.0, -1.0),
+            max: (1.0, 1.0, 1.0),
+        ),
+    },
+
+    shader_defs: {
+        "green_lambert": Lambertion(colour: 0x33CC66),
+        "checker": Checkerboard(
+            size: 0.26,
+            colour_a: 0xFF00FF,
+            colour_b: 0x333333,
+        ),
+    },
+
+    material_defs: {
+        "default": Opaque,
+    },
+
+    objects: [
+        (
+            geometry: "floor",
+            shader: "green_lambert",
+            material: "default",
+        ),
+        (
+            geometry: "cube",
+            shader: "checker",
+            material: "default",
+            transform: (
+                position: (0.0, 0.0, 1.5),
+                rotation: (0.0, 0.7853982, 0.0),
+            ),  
+        ),
+        (
+            geometry: Sphere(radius: 1.0),
+            shader: Block(colour: 0x44AAFF),
+            material: "default",
+            transform: (
+                position: (-3.0, 0.0, 1.5),
+            ),
+        ),
+    ],
+)
