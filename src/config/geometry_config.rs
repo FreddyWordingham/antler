@@ -7,7 +7,6 @@ use crate::{
 };
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(tag = "type", rename_all = "snake_case")]
 pub enum GeometryConfig {
     Aabb {
         min: Vec3,

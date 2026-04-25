@@ -6,7 +6,6 @@ use crate::{
 };
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(tag = "type", rename_all = "snake_case")]
 pub enum CameraConfig {
     Perspective {
         position: Vec3,
