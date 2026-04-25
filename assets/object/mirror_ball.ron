@@ -1,0 +1,11 @@
+(
+    geometry: Sphere(
+        radius: 1.0,
+    ),
+    shader: "blue",
+    material: "reflective",
+    transform: (
+        position: (-3.0, 0.0, 2.0),
+        scale: 3.0,
+    ),
+)
