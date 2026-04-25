@@ -21,7 +21,7 @@ pub mod prelude {
         errors::{MeshLoadError, ParseHexError, SceneBuildError},
         geometry::{Aabb, Bounded, Circle, Geometry, Mesh, Quad, Ray, Sphere, Triangle},
         lighting::DirectionalLight,
-        material::{Mirror, Opaque},
+        material::{Mirror, Opaque, Reflective},
         render::{RenderSettings, render_image, render_image_with_progress, render_probe},
         shader::{Block, Checkerboard, Lambertion, Luminous},
         storage::{Grid, Image, RgbImage, RgbaImage},
