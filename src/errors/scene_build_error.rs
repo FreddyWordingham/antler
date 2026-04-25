@@ -8,11 +8,7 @@ use crate::errors::MeshLoadError;
 #[derive(Debug)]
 pub enum SceneBuildError {
     ConfigParseError(String),
-    UnknownCamera(String),
-    UnknownLight(String),
-    UnknownGeometry(String),
-    UnknownShader(String),
-    UnknownMaterial(String),
+    AssetLoadError { path: String, message: String },
     MeshLoad(MeshLoadError),
     ImageHasNoRenders(String),
 }
@@ -27,11 +23,7 @@ impl Display for SceneBuildError {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         match self {
             Self::ConfigParseError(err) => write!(f, "Config parse error: {err}"),
-            Self::UnknownCamera(name) => write!(f, "Unknown camera reference '{name}'"),
-            Self::UnknownLight(name) => write!(f, "Unknown light reference '{name}'"),
-            Self::UnknownGeometry(name) => write!(f, "Unknown geometry reference '{name}'"),
-            Self::UnknownShader(name) => write!(f, "Unknown shader reference '{name}'"),
-            Self::UnknownMaterial(name) => write!(f, "Unknown material reference '{name}'"),
+            Self::AssetLoadError { path, message } => write!(f, "Failed to load asset at '{path}': {message}"),
             Self::MeshLoad(err) => write!(f, "{err}"),
             Self::ImageHasNoRenders(name) => write!(f, "Camera '{name}' has no renders defined"),
         }

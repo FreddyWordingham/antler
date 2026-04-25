@@ -1,16 +1,9 @@
-use std::collections::BTreeMap;
+use std::fs::read_to_string;
 
-use serde::{Deserialize, Serialize};
+use ron;
+use serde::{Deserialize, Serialize, de::DeserializeOwned};
 
-use crate::{
-    camera::CameraEnum,
-    config::{CameraConfig, GeometryConfig, LightConfig, MaterialConfig, ShaderConfig},
-    errors::SceneBuildError,
-    geometry::GeometryEnum,
-    lighting::LightEnum,
-    material::MaterialEnum,
-    shader::ShaderEnum,
-};
+use crate::errors::SceneBuildError;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -19,69 +12,26 @@ pub enum Named<T> {
     Inline(T),
 }
 
-impl Named<CameraConfig> {
-    pub fn resolve(self, registry: &BTreeMap<String, CameraConfig>) -> Result<CameraEnum, SceneBuildError> {
+impl<T> Named<T>
+where
+    T: DeserializeOwned,
+{
+    pub fn resolve(self, asset_type: &str) -> Result<T, SceneBuildError> {
         match self {
-            Named::Inline(config) => Ok(config.build()),
-            Named::Named(name) => Ok(registry
-                .get(&name)
-                .cloned()
-                .ok_or_else(|| SceneBuildError::UnknownCamera(name))?
-                .build()),
-        }
-    }
-}
+            Self::Inline(value) => Ok(value),
+            Self::Named(name) => {
+                let path = format!("assets/{asset_type}/{name}.ron");
 
-impl Named<LightConfig> {
-    pub fn resolve(self, registry: &BTreeMap<String, LightConfig>) -> Result<LightEnum, SceneBuildError> {
-        match self {
-            Named::Inline(config) => Ok(config.build()),
+                let text = read_to_string(&path).map_err(|err| SceneBuildError::AssetLoadError {
+                    path: path.clone(),
+                    message: err.to_string(),
+                })?;
 
-            Named::Named(name) => Ok(registry
-                .get(&name)
-                .cloned()
-                .ok_or_else(|| SceneBuildError::UnknownLight(name))?
-                .build()),
-        }
-    }
-}
-
-impl Named<GeometryConfig> {
-    pub fn resolve(self, registry: &BTreeMap<String, GeometryConfig>) -> Result<GeometryEnum, SceneBuildError> {
-        match self {
-            Named::Inline(config) => Ok(config.build()?),
-            Named::Named(name) => registry
-                .get(&name)
-                .cloned()
-                .ok_or_else(|| SceneBuildError::UnknownGeometry(name))?
-                .build()
-                .map_err(SceneBuildError::from),
-        }
-    }
-}
-
-impl Named<ShaderConfig> {
-    pub fn resolve(self, registry: &BTreeMap<String, ShaderConfig>) -> Result<ShaderEnum, SceneBuildError> {
-        match self {
-            Named::Inline(config) => Ok(config.build()),
-            Named::Named(name) => Ok(registry
-                .get(&name)
-                .cloned()
-                .ok_or_else(|| SceneBuildError::UnknownShader(name))?
-                .build()),
-        }
-    }
-}
-
-impl Named<MaterialConfig> {
-    pub fn resolve(self, registry: &BTreeMap<String, MaterialConfig>) -> Result<MaterialEnum, SceneBuildError> {
-        match self {
-            Named::Inline(config) => Ok(config.build()),
-            Named::Named(name) => Ok(registry
-                .get(&name)
-                .cloned()
-                .ok_or_else(|| SceneBuildError::UnknownMaterial(name))?
-                .build()),
+                ron::from_str(&text).map_err(|err| SceneBuildError::AssetLoadError {
+                    path,
+                    message: err.to_string(),
+                })
+            }
         }
     }
 }
