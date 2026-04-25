@@ -24,15 +24,11 @@ struct Tile {
     y1: usize,
 }
 
-pub fn render_probe(world: &World, scene: &Scene, probe: Probe, settings: RenderSettings) -> Rgba {
-    let Some(colour) = render_probe_rgb(world, scene, probe, settings) else {
-        return settings.background;
-    };
-
-    colour.to_rgba()
+pub fn render_probe(world: &World, scene: &Scene, probe: Probe) -> Option<Rgb> {
+    render_probe_rgb(world, scene, probe)
 }
 
-fn render_probe_rgb(world: &World, scene: &Scene, probe: Probe, settings: RenderSettings) -> Option<Rgb> {
+fn render_probe_rgb(world: &World, scene: &Scene, probe: Probe) -> Option<Rgb> {
     if probe.generation >= MAX_GENERATION || probe.weight <= MIN_WEIGHT {
         return Some(Rgb::BLACK);
     }
@@ -51,7 +47,7 @@ fn render_probe_rgb(world: &World, scene: &Scene, probe: Probe, settings: Render
     let bounced = scatter
         .children
         .into_iter()
-        .filter_map(|(fraction, child)| render_probe_rgb(world, scene, probe.child(child, fraction), settings))
+        .filter_map(|(fraction, child)| render_probe_rgb(world, scene, probe.child(child, fraction)))
         .sum();
 
     Some(emitted + direct + bounced)
@@ -131,7 +127,11 @@ where
                             );
 
                             let probe = camera.emit(uv, settings.resolution);
-                            colour += render_probe(world, scene, probe, settings);
+                            let sample = match render_probe(world, scene, probe) {
+                                Some(rgb) => rgb.to_rgba(),
+                                None => settings.background,
+                            };
+                            colour += sample;
                         }
                     }
 

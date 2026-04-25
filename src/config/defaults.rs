@@ -1,7 +1,4 @@
-use crate::{
-    colour::{Rgb, Rgba},
-    config::Vec3,
-};
+use crate::{colour::Rgba, config::Vec3};
 
 pub fn one_f32() -> f32 {
     1.0

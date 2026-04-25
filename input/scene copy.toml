@@ -17,7 +17,7 @@ look_at = [0.0, 0.0, 3.0]
 vertical_fov_radians = 0.7853982
 
 [image_defs.main.renders.high]
-resolution = [1200, 900]
+resolution = [12000, 9000]
 background = "#00000000"
 super_samples = 4
 
