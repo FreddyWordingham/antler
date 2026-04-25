@@ -1,7 +1,7 @@
 ImageConfig (
     background: 0x00000000,
     camera: Perspective(
-        position: (10.0, 10.0, 10.0),
+        position: (-14.0, 0.0, 7.0),
         look_at: (0.0, 0.0, 2.0),
         vertical_fov: 45.0,
     ),

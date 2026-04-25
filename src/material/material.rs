@@ -1,5 +1,5 @@
 use crate::{
-    material::{Mirror, Opaque, Reflective, Scatter},
+    material::{Mirror, Opaque, Reflective, Refractive, Scatter},
     tracing::{Probe, WorldHit},
 };
 
@@ -31,4 +31,4 @@ macro_rules! define_material_enum {
     };
 }
 
-define_material_enum!(MaterialEnum: Mirror, Opaque, Reflective);
+define_material_enum!(MaterialEnum: Mirror, Opaque, Reflective, Refractive);

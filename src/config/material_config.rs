@@ -1,12 +1,13 @@
 use serde::{Deserialize, Serialize};
 
-use crate::material::{MaterialEnum, Mirror, Opaque, Reflective};
+use crate::material::{MaterialEnum, Mirror, Opaque, Reflective, Refractive};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum MaterialConfig {
     Mirror,
     Opaque,
     Reflective { reflectivity: f32 },
+    Refractive { refractive_index: f32 },
 }
 
 impl MaterialConfig {
@@ -15,6 +16,7 @@ impl MaterialConfig {
             MaterialConfig::Mirror => Mirror::new().into(),
             MaterialConfig::Opaque => Opaque::new().into(),
             MaterialConfig::Reflective { reflectivity } => Reflective::new(reflectivity).into(),
+            MaterialConfig::Refractive { refractive_index } => Refractive::new(refractive_index).into(),
         }
     }
 }
