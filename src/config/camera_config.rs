@@ -12,7 +12,7 @@ pub enum CameraConfig {
         look_at: Vec3,
         #[serde(default = "defaults::z_axis")]
         up: Vec3,
-        vertical_fov_radians: f32,
+        vertical_fov: f32,
     },
     Orthographic {
         position: Vec3,
@@ -30,8 +30,8 @@ impl CameraConfig {
                 position,
                 look_at,
                 up,
-                vertical_fov_radians,
-            } => Perspective::new(position.into(), look_at.into(), up.into(), vertical_fov_radians).into(),
+                vertical_fov,
+            } => Perspective::new(position.into(), look_at.into(), up.into(), vertical_fov.to_radians()).into(),
 
             CameraConfig::Orthographic {
                 position,
