@@ -1,5 +1,5 @@
 (
     images: ["main"],
     lights: ["sun"],
-    objects: ["floor", "test_cube", "mirror_ball"],
+    objects: ["floor", "test_cube", "glass_ball"],
 )
