@@ -3,7 +3,7 @@ ImageConfig (
     camera: Perspective(
         position: (10.0, 10.0, 10.0),
         look_at: (0.0, 0.0, 2.0),
-        vertical_fov_radians: 0.4,
+        vertical_fov: 20.0,
     ),
     renders: {
         "preview": (
