@@ -1,0 +1,9 @@
+(
+    geometry: "cube",
+    shader: "checkerboard",
+    material: "opaque",
+    transform: (
+        position: (0.0, 0.0, 2.0),
+        scale: 1.0,
+    ),
+)

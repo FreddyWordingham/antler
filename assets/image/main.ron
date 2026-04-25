@@ -1,0 +1,15 @@
+ImageConfig (
+    background: 0x00000000,
+    camera: Perspective(
+        position: (10.0, 10.0, 10.0),
+        look_at: (0.0, 0.0, 2.0),
+        vertical_fov_radians: 0.4,
+    ),
+    renders: {
+        "preview": (
+            resolution: (400, 300),
+            background: Some(0x00000000),
+            super_samples: 1
+        ),
+    }
+)

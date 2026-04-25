@@ -7,28 +7,19 @@ use ron;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    config::{BuiltImage, GeometryConfig, ImageConfig, LightConfig, MaterialConfig, Named, ObjectConfig, ShaderConfig},
+    config::{BuiltImage, ImageConfig, LightConfig, Named, ObjectConfig},
     errors::SceneBuildError,
     world::{Object, Scene, World},
 };
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-
 pub struct SceneConfig {
     #[serde(default)]
-    pub image_defs: BTreeMap<String, ImageConfig>,
-    #[serde(default)]
-    pub light_defs: BTreeMap<String, LightConfig>,
+    pub images: Vec<Named<ImageConfig>>,
     #[serde(default)]
     pub lights: Vec<Named<LightConfig>>,
     #[serde(default)]
-    pub geometry_defs: BTreeMap<String, GeometryConfig>,
-    #[serde(default)]
-    pub shader_defs: BTreeMap<String, ShaderConfig>,
-    #[serde(default)]
-    pub material_defs: BTreeMap<String, MaterialConfig>,
-    #[serde(default)]
-    pub objects: Vec<ObjectConfig>,
+    pub objects: Vec<Named<ObjectConfig>>,
 }
 
 pub struct BuiltScene {
@@ -59,12 +50,8 @@ impl SceneConfig {
 
     pub fn build(self) -> Result<BuiltScene, SceneBuildError> {
         let SceneConfig {
-            image_defs: images,
-            light_defs,
+            images,
             lights,
-            geometry_defs,
-            shader_defs,
-            material_defs,
             objects,
         } = self;
 
@@ -72,13 +59,16 @@ impl SceneConfig {
         let mut scene = Scene::new();
 
         for light in lights {
-            scene.add_light(light.resolve(&light_defs)?);
+            let light = light.resolve("light")?;
+            scene.add_light(light.build());
         }
 
         for object in objects {
-            let geometry = object.geometry.resolve(&geometry_defs)?;
-            let shader = object.shader.resolve(&shader_defs)?;
-            let material = object.material.resolve(&material_defs)?;
+            let object = object.resolve("object")?;
+
+            let geometry = object.geometry.resolve("geometry")?.build()?;
+            let shader = object.shader.resolve("shader")?.build();
+            let material = object.material.resolve("material")?.build();
 
             let geometry_id = world.add_geometry(geometry);
             let shader_id = world.add_shader(shader);
@@ -95,17 +85,25 @@ impl SceneConfig {
         scene.build(&world);
 
         let mut built_images = BTreeMap::new();
-        for (image_name, image_entry) in images {
-            if image_entry.renders.is_empty() {
-                return Err(SceneBuildError::ImageHasNoRenders(image_name.clone()));
+
+        for image in images {
+            let image_name = match &image {
+                Named::Named(name) => name.clone(),
+                Named::Inline(_) => format!("image_{}", built_images.len()),
+            };
+
+            let image = image.resolve("image")?;
+
+            if image.renders.is_empty() {
+                return Err(SceneBuildError::ImageHasNoRenders(image_name));
             }
 
             built_images.insert(
                 image_name,
                 BuiltImage {
-                    background: image_entry.background,
-                    camera: image_entry.camera.build(),
-                    renders: image_entry.renders,
+                    background: image.background,
+                    camera: image.camera.build(),
+                    renders: image.renders,
                 },
             );
         }
