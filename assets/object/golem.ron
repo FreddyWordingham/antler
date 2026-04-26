@@ -1,0 +1,11 @@
+(
+    geometry: Mesh(
+        path: "assets/meshes/golem.obj",
+    ),
+    shader: "blue",
+    material: Opaque,
+    transform: (
+        rotation: (0.0, 0.0, 180.0),
+        scale: 1.0,
+    ),
+)

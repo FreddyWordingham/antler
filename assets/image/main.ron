@@ -1,7 +1,7 @@
 ImageConfig (
     background: 0x00000000,
     camera: Perspective(
-        position: (-10.0, 10.0, 10.0),
+        position: (10.0, 10.0, 3.0),
         look_at: (0.0, 0.0, 1.0),
         vertical_fov: 15.0,
     ),
@@ -10,6 +10,11 @@ ImageConfig (
             resolution: (400, 300),
             background: Some(0x00000000),
             super_samples: 1
+        ),
+        "detailed": (
+            resolution: (800, 600),
+            background: Some(0x00000000),
+            super_samples: 4
         ),
     }
 )
