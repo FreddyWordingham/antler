@@ -129,8 +129,7 @@ impl Scene {
             .count();
 
         let occlusion = occluded as f32 / ao.samples as f32;
-
-        1.0 - ao.strength * occlusion
+        (1.0 - ao.strength * occlusion).clamp(0.0, 1.0)
     }
 
     pub fn direct_light(&self, world: &World, world_ray: &WorldRay, hit: &WorldHit) -> Rgb {
