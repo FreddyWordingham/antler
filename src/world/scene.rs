@@ -21,7 +21,6 @@ pub struct Scene {
 }
 
 #[derive(Debug, Clone, Copy)]
-
 pub struct AmbientOcclusion {
     pub samples: usize,
     pub distance: f32,
