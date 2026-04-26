@@ -26,7 +26,11 @@ impl Default for TransformConfig {
 impl From<TransformConfig> for Similarity3<f32> {
     fn from(value: TransformConfig) -> Self {
         let translation = Translation3::from(Vector3::from(value.position));
-        let rotation = UnitQuaternion::from_euler_angles(value.rotation.0[0], value.rotation.0[1], value.rotation.0[2]);
+        let rotation = UnitQuaternion::from_euler_angles(
+            value.rotation.0[0].to_radians(),
+            value.rotation.0[1].to_radians(),
+            value.rotation.0[2].to_radians(),
+        );
 
         Similarity3::from_parts(translation, rotation, value.scale)
     }

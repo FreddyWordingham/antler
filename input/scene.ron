@@ -2,5 +2,5 @@
     images: ["main"],
     ambient: 0x333333,
     lights: ["sun"],
-    objects: ["floor", "test_cube"],
+    objects: ["floor", "golem"],
 )
