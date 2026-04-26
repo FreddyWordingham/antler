@@ -1,6 +1,11 @@
 (
     images: ["main"],
     ambient: 0x333333,
+    ambient_occlusion: Some((
+        samples: 64,
+        distance: 4.0e-1,
+        strength: 1.0e4,
+    )),
     lights: ["sun"],
     objects: ["floor", "golem"],
 )
