@@ -1,10 +1,12 @@
+use rand::Rng;
+
 use crate::{
     lighting::{DirectionalLight, LightSample},
     tracing::WorldHit,
 };
 
 pub trait Light {
-    fn sample(&self, hit: &WorldHit) -> LightSample;
+    fn samples(&self, hit: &WorldHit, rng: &mut impl Rng) -> Vec<LightSample>;
 }
 
 macro_rules! define_light_enum {
@@ -14,9 +16,9 @@ macro_rules! define_light_enum {
         }
 
         impl Light for $name {
-            fn sample(&self, hit: &WorldHit) -> LightSample {
+            fn samples(&self, hit: &WorldHit, rng: &mut impl Rng) -> Vec<LightSample> {
                 match self {
-                    $(Self::$ty(inner) => inner.sample(hit),)*
+                    $(Self::$ty(inner) => inner.samples(hit, rng),)*
                 }
             }
         }

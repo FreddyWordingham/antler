@@ -1,10 +1,6 @@
 use nalgebra::{Isometry3, Point2, Point3, Unit, Vector3};
 
-use crate::{
-    camera::Camera,
-    geometry::Ray,
-    tracing::{Probe, WorldRay},
-};
+use crate::{camera::Camera, geometry::Ray, tracing::WorldRay};
 
 pub struct Orthographic {
     pub transform: Isometry3<f32>,
@@ -23,7 +19,7 @@ impl Orthographic {
 }
 
 impl Camera for Orthographic {
-    fn emit(&self, uv: Point2<f32>, _resolution: [usize; 2]) -> Probe {
+    fn emit(&self, uv: Point2<f32>, _resolution: [usize; 2]) -> WorldRay {
         let x = (2.0 * uv.x - 1.0) * self.width * 0.5;
         let y = (1.0 - 2.0 * uv.y) * self.height * 0.5;
 
@@ -33,9 +29,9 @@ impl Camera for Orthographic {
         let world_origin = self.transform.transform_point(&local_origin);
         let world_direction = Unit::new_normalize(self.transform.transform_vector(&local_direction.into_inner()));
 
-        Probe::new(WorldRay::new(Ray {
+        WorldRay::new(Ray {
             origin: world_origin,
             direction: world_direction,
-        }))
+        })
     }
 }

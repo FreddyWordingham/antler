@@ -2,11 +2,11 @@ use nalgebra::Point2;
 
 use crate::{
     camera::{Orthographic, Perspective},
-    tracing::Probe,
+    tracing::WorldRay,
 };
 
 pub trait Camera {
-    fn emit(&self, uv: Point2<f32>, resolution: [usize; 2]) -> Probe;
+    fn emit(&self, uv: Point2<f32>, resolution: [usize; 2]) -> WorldRay;
 }
 
 macro_rules! define_camera_enum {
@@ -16,7 +16,7 @@ macro_rules! define_camera_enum {
         }
 
         impl Camera for $name {
-            fn emit(&self, uv: Point2<f32>, resolution: [usize; 2]) -> Probe {
+            fn emit(&self, uv: Point2<f32>, resolution: [usize; 2]) -> WorldRay {
                 match self {
                     $(Self::$ty(inner) => inner.emit(uv, resolution),)*
                 }

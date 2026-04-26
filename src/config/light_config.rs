@@ -8,15 +8,29 @@ use crate::{
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum LightConfig {
-    Directional { direction: Vec3, radiance: Rgb },
+    Directional {
+        direction: Vec3,
+        radiance: Rgb,
+        angular_radius: Option<f32>,
+        samples: Option<usize>,
+    },
 }
 
 impl LightConfig {
     pub fn build(self) -> LightEnum {
         match self {
-            LightConfig::Directional { direction, radiance } => {
-                DirectionalLight::new(direction.into(), radiance).into()
-            }
+            LightConfig::Directional {
+                direction,
+                radiance,
+                angular_radius,
+                samples,
+            } => DirectionalLight::new(
+                direction.into(),
+                radiance,
+                angular_radius.map(|ar| ar.to_radians()),
+                samples,
+            )
+            .into(),
         }
     }
 }

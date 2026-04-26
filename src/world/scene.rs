@@ -1,5 +1,7 @@
 use std::f32::INFINITY;
 
+use rand::Rng;
+
 use crate::{
     acceleration::Bvh,
     colour::Rgb,
@@ -104,14 +106,14 @@ impl Scene {
         })
     }
 
-    pub fn ambient_light(&self, world: &World, hit: &WorldHit) -> Rgb {
+    pub fn ambient_light(&self, world: &World, hit: &WorldHit, rng: &mut impl Rng) -> Rgb {
         let object = self.get_object(hit.object_id);
         let shader = world.get_shader(object.shader_id);
 
-        shader.albedo(hit) * self.ambient * self.ambient_occlusion_factor(world, hit)
+        shader.albedo(hit) * self.ambient * self.ambient_occlusion_factor(world, hit, rng)
     }
 
-    fn ambient_occlusion_factor(&self, world: &World, hit: &WorldHit) -> f32 {
+    fn ambient_occlusion_factor(&self, world: &World, hit: &WorldHit, rng: &mut impl Rng) -> f32 {
         let Some(ao) = self.ambient_occlusion else {
             return 1.0;
         };
@@ -121,8 +123,8 @@ impl Scene {
         }
 
         let occluded = (0..ao.samples)
-            .filter(|&i| {
-                let direction = sampling::hemisphere_direction(hit.normal, i, ao.samples);
+            .filter(|_| {
+                let direction = sampling::hemisphere_direction(hit.normal, rng);
                 let ray = WorldRay::from_offset(hit.position, hit.normal, direction);
                 self.occluded(world, &ray, ao.distance)
             })
@@ -132,26 +134,34 @@ impl Scene {
         (1.0 - ao.strength * occlusion).clamp(0.0, 1.0)
     }
 
-    pub fn direct_light(&self, world: &World, world_ray: &WorldRay, hit: &WorldHit) -> Rgb {
+    pub fn direct_light(&self, world: &World, world_ray: &WorldRay, hit: &WorldHit, rng: &mut impl Rng) -> Rgb {
         let object = self.get_object(hit.object_id);
         let shader = world.get_shader(object.shader_id);
 
         self.lights
             .iter()
             .map(|light| {
-                let sample = light.sample(hit);
+                let samples = light.samples(hit, rng);
+                let inv_samples = 1.0 / samples.len().max(1) as f32;
 
-                let n_dot_l = hit.normal.dot(&sample.direction);
-                if n_dot_l <= 0.0 {
-                    return Rgb::BLACK;
-                }
+                samples
+                    .into_iter()
+                    .map(|sample| {
+                        let n_dot_l = hit.normal.dot(&sample.direction);
+                        if n_dot_l <= 0.0 {
+                            return Rgb::BLACK;
+                        }
 
-                let shadow_ray = WorldRay::from_offset(hit.position, hit.normal, sample.direction);
-                if self.occluded(world, &shadow_ray, sample.distance) {
-                    Rgb::BLACK
-                } else {
-                    shader.shade(hit, world_ray, &sample)
-                }
+                        let shadow_ray = WorldRay::from_offset(hit.position, hit.normal, sample.direction);
+
+                        if self.occluded(world, &shadow_ray, sample.distance) {
+                            Rgb::BLACK
+                        } else {
+                            shader.shade(hit, world_ray, &sample)
+                        }
+                    })
+                    .sum::<Rgb>()
+                    * inv_samples
             })
             .sum()
     }

@@ -8,6 +8,7 @@ indicatif = "0.18.4"
 nalgebra = "0.34.2"
 palette = "0.7.6"
 png = "0.18.1"
+rand = "0.10.1"
 rayon = "1.12.0"
 ron = "0.12.1"
 serde = { version = "1.0.228", features = ["derive"] }

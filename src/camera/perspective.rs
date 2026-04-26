@@ -1,10 +1,6 @@
 use nalgebra::{Isometry3, Point2, Point3, Unit, Vector3};
 
-use crate::{
-    camera::Camera,
-    geometry::Ray,
-    tracing::{Probe, WorldRay},
-};
+use crate::{camera::Camera, geometry::Ray, tracing::WorldRay};
 
 pub struct Perspective {
     pub transform: Isometry3<f32>,
@@ -21,7 +17,7 @@ impl Perspective {
 }
 
 impl Camera for Perspective {
-    fn emit(&self, uv: Point2<f32>, resolution: [usize; 2]) -> Probe {
+    fn emit(&self, uv: Point2<f32>, resolution: [usize; 2]) -> WorldRay {
         let aspect_ratio = resolution[0] as f32 / resolution[1] as f32;
         let tan_half_fov = (self.vertical_fov_radians * 0.5).tan();
 
@@ -34,9 +30,9 @@ impl Camera for Perspective {
         let world_origin = self.transform.transform_point(&local_origin);
         let world_direction = Unit::new_normalize(self.transform.transform_vector(&local_direction.into_inner()));
 
-        Probe::new(WorldRay::new(Ray {
+        WorldRay::new(Ray {
             origin: world_origin,
             direction: world_direction,
-        }))
+        })
     }
 }
