@@ -1,6 +1,13 @@
 use nalgebra::{Unit, Vector3};
+use rand::{Rng, RngExt};
 
-pub fn hemisphere_direction(normal: Unit<Vector3<f32>>, index: usize, samples: usize) -> Unit<Vector3<f32>> {
+pub fn hemisphere_direction(normal: Unit<Vector3<f32>>, rng: &mut impl Rng) -> Unit<Vector3<f32>> {
+    let u: f32 = rng.random();
+    let v: f32 = rng.random();
+
+    let r = u.sqrt();
+    let theta = std::f32::consts::TAU * v;
+
     let n = normal.into_inner();
 
     let helper = if n.x.abs() < 0.9 {
@@ -12,18 +19,28 @@ pub fn hemisphere_direction(normal: Unit<Vector3<f32>>, index: usize, samples: u
     let tangent = n.cross(&helper).normalize();
     let bitangent = n.cross(&tangent).normalize();
 
-    let i = index as f32;
-    let count = samples.max(1) as f32;
+    Unit::new_normalize(tangent * (r * theta.cos()) + bitangent * (r * theta.sin()) + n * (1.0 - u).sqrt())
+}
 
-    let u = (i + 0.5) / count;
-    let v = ((i * 0.618_034) % 1.0).fract();
+pub fn cone_direction(axis: Unit<Vector3<f32>>, angle: f32, rng: &mut impl Rng) -> Unit<Vector3<f32>> {
+    let u: f32 = rng.random();
+    let v: f32 = rng.random();
 
-    let r = u.sqrt();
-    let theta = std::f32::consts::TAU * v;
+    let cos_max = angle.cos();
+    let cos_theta = 1.0 - u * (1.0 - cos_max);
+    let sin_theta = (1.0 - cos_theta * cos_theta).sqrt();
+    let phi = std::f32::consts::TAU * v;
 
-    let x = r * theta.cos();
-    let y = r * theta.sin();
-    let z = (1.0 - u).sqrt();
+    let n = axis.into_inner();
 
-    Unit::new_normalize(tangent * x + bitangent * y + n * z)
+    let helper = if n.x.abs() < 0.9 {
+        Vector3::x_axis().into_inner()
+    } else {
+        Vector3::y_axis().into_inner()
+    };
+
+    let tangent = n.cross(&helper).normalize();
+    let bitangent = n.cross(&tangent).normalize();
+
+    Unit::new_normalize(tangent * (sin_theta * phi.cos()) + bitangent * (sin_theta * phi.sin()) + n * cos_theta)
 }

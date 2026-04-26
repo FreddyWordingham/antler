@@ -10,7 +10,7 @@ use crate::{
     colour::Rgb,
     config::{AmbientOcclusionConfig, BuiltImage, ImageConfig, LightConfig, Named, ObjectConfig, defaults},
     errors::SceneBuildError,
-    world::{AmbientOcclusion, Object, Scene, World},
+    world::{Object, Scene, World},
 };
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

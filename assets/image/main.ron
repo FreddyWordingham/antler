@@ -12,7 +12,7 @@ ImageConfig (
             super_samples: 1
         ),
         "detailed": (
-            resolution: (800, 600),
+            resolution: (2000, 2000),
             background: Some(0x00000000),
             super_samples: 4
         ),

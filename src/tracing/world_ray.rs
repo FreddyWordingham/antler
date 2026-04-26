@@ -6,6 +6,7 @@ use crate::{geometry::Ray, tracing::ObjectRay};
 
 pub const ORIGIN_BIAS: f32 = 1.0e-4;
 
+#[derive(Debug, Clone, Copy)]
 pub struct WorldRay(Ray);
 
 impl WorldRay {
