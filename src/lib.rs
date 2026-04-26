@@ -26,6 +26,6 @@ pub mod prelude {
         render::{RenderSettings, render_image, render_image_with_progress, render_probe},
         shader::{Block, Checkerboard, Lambertion, Luminous},
         storage::{Grid, Image, RgbImage, RgbaImage},
-        world::{Object, Scene, World},
+        world::{AmbientOcclusion, Object, Scene, World},
     };
 }

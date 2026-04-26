@@ -8,26 +8,37 @@ use crate::{
     lighting::{Light, LightEnum},
     shader::Shader,
     tracing::{WorldHit, WorldRay},
+    utils::sampling,
     world::{Object, World},
 };
 
 pub struct Scene {
     ambient: Rgb,
+    ambient_occlusion: Option<AmbientOcclusion>,
     lights: Vec<LightEnum>,
     objects: Vec<Object>,
     bvh: Option<Bvh<ObjectId>>,
 }
 
+#[derive(Debug, Clone, Copy)]
+
+pub struct AmbientOcclusion {
+    pub samples: usize,
+    pub distance: f32,
+    pub strength: f32,
+}
+
 impl Default for Scene {
     fn default() -> Self {
-        Self::new(Rgb::WHITE)
+        Self::new(Rgb::WHITE, None)
     }
 }
 
 impl Scene {
-    pub fn new(ambient: Rgb) -> Self {
+    pub fn new(ambient: Rgb, ambient_occlusion: Option<AmbientOcclusion>) -> Self {
         Self {
             ambient,
+            ambient_occlusion,
             lights: Vec::new(),
             objects: Vec::new(),
             bvh: None,
@@ -98,7 +109,29 @@ impl Scene {
         let object = self.get_object(hit.object_id);
         let shader = world.get_shader(object.shader_id);
 
-        shader.albedo(hit) * self.ambient
+        shader.albedo(hit) * self.ambient * self.ambient_occlusion_factor(world, hit)
+    }
+
+    fn ambient_occlusion_factor(&self, world: &World, hit: &WorldHit) -> f32 {
+        let Some(ao) = self.ambient_occlusion else {
+            return 1.0;
+        };
+
+        if ao.samples == 0 || ao.distance <= 0.0 || ao.strength <= 0.0 {
+            return 1.0;
+        }
+
+        let occluded = (0..ao.samples)
+            .filter(|&i| {
+                let direction = sampling::hemisphere_direction(hit.normal, i, ao.samples);
+                let ray = WorldRay::from_offset(hit.position, hit.normal, direction);
+                self.occluded(world, &ray, ao.distance)
+            })
+            .count();
+
+        let occlusion = occluded as f32 / ao.samples as f32;
+
+        1.0 - ao.strength * occlusion
     }
 
     pub fn direct_light(&self, world: &World, world_ray: &WorldRay, hit: &WorldHit) -> Rgb {

@@ -8,16 +8,19 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     colour::Rgb,
-    config::{BuiltImage, ImageConfig, LightConfig, Named, ObjectConfig},
+    config::{AmbientOcclusionConfig, BuiltImage, ImageConfig, LightConfig, Named, ObjectConfig, defaults},
     errors::SceneBuildError,
-    world::{Object, Scene, World},
+    world::{AmbientOcclusion, Object, Scene, World},
 };
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SceneConfig {
     #[serde(default)]
     pub images: Vec<Named<ImageConfig>>,
+    #[serde(default = "defaults::white")]
     ambient: Rgb,
+    #[serde(default)]
+    ambient_occlusion: Option<AmbientOcclusionConfig>,
     #[serde(default)]
     pub lights: Vec<Named<LightConfig>>,
     #[serde(default)]
@@ -54,12 +57,13 @@ impl SceneConfig {
         let SceneConfig {
             images,
             ambient,
+            ambient_occlusion,
             lights,
             objects,
         } = self;
 
         let mut world = World::new();
-        let mut scene = Scene::new(ambient);
+        let mut scene = Scene::new(ambient, ambient_occlusion.map(|config| config.build()));
 
         for light in lights {
             let light = light.resolve("light")?;
