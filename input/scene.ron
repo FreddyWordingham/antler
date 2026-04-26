@@ -1,5 +1,6 @@
 (
     images: ["main"],
+    ambient: 0x333333,
     lights: ["sun"],
-    objects: ["floor", "test_cube", "glass_ball"],
+    objects: ["floor", "test_cube"],
 )

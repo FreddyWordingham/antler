@@ -18,12 +18,17 @@ impl Luminous {
 
 impl Shader for Luminous {
     #[inline]
-    fn emitted(&self, _hit: &WorldHit) -> Rgb {
-        self.colour * self.intensity
+    fn emitted(&self, hit: &WorldHit) -> Rgb {
+        self.albedo(hit) * self.intensity
     }
 
     #[inline]
-    fn shade(&self, _ray: &WorldRay, _hit: &WorldHit, _light: &LightSample) -> Rgb {
+    fn albedo(&self, _hit: &WorldHit) -> Rgb {
+        self.colour
+    }
+
+    #[inline]
+    fn shade(&self, _hit: &WorldHit, _ray: &WorldRay, _light: &LightSample) -> Rgb {
         Rgb::BLACK
     }
 }

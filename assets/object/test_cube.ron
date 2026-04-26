@@ -3,7 +3,7 @@
     shader: "checkerboard",
     material: "opaque",
     transform: (
-        position: (2.0, 0.0, 2.0),
+        position: (0.0, 0.0, 1.0),
         scale: 1.0,
     ),
 )

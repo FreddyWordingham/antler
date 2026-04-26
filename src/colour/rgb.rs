@@ -18,6 +18,7 @@ use crate::{
 pub struct Rgb(Srgb);
 
 impl Rgb {
+    pub const WHITE: Rgb = Rgb(Srgb::new(1.0, 1.0, 1.0));
     pub const BLACK: Rgb = Rgb(Srgb::new(0.0, 0.0, 0.0));
 
     #[inline]

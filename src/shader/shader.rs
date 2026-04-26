@@ -7,7 +7,8 @@ use crate::{
 
 pub trait Shader {
     fn emitted(&self, hit: &WorldHit) -> Rgb;
-    fn shade(&self, ray: &WorldRay, hit: &WorldHit, light: &LightSample) -> Rgb;
+    fn albedo(&self, hit: &WorldHit) -> Rgb;
+    fn shade(&self, hit: &WorldHit, ray: &WorldRay, light: &LightSample) -> Rgb;
 }
 
 macro_rules! define_shader_enum {
@@ -23,9 +24,15 @@ macro_rules! define_shader_enum {
                 }
             }
 
-            fn shade(&self, ray: &WorldRay, hit: &WorldHit, light: &LightSample) -> Rgb {
+            fn albedo(&self, hit: &WorldHit) -> Rgb {
                 match self {
-                    $(Self::$ty(inner) => inner.shade(ray, hit, light),)*
+                    $(Self::$ty(inner) => inner.albedo(hit),)*
+                }
+            }
+
+            fn shade(&self, hit: &WorldHit,ray: &WorldRay,  light: &LightSample) -> Rgb {
+                match self {
+                    $(Self::$ty(inner) => inner.shade(hit, ray, light),)*
                 }
             }
         }
