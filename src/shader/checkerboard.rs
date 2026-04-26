@@ -22,23 +22,28 @@ impl Checkerboard {
 }
 
 impl Shader for Checkerboard {
+    #[inline]
     fn emitted(&self, _hit: &WorldHit) -> Rgb {
         Rgb::BLACK
     }
 
-    fn shade(&self, _ray: &WorldRay, hit: &WorldHit, light: &LightSample) -> Rgb {
-        let colour = if ((hit.position.x / self.size).floor()
-            + (hit.position.y / self.size).floor()
-            + (hit.position.z / self.size).floor()) as i32
+    #[inline]
+    fn albedo(&self, hit: &WorldHit) -> Rgb {
+        let position = hit.position;
+        if ((position.x / self.size).floor() + (position.y / self.size).floor() + (position.z / self.size).floor())
+            as i32
             % 2
             == 0
         {
             self.colour_a
         } else {
             self.colour_b
-        };
+        }
+    }
 
+    #[inline]
+    fn shade(&self, hit: &WorldHit, _ray: &WorldRay, light: &LightSample) -> Rgb {
         let n_dot_l = hit.normal.dot(&light.direction).max(0.0);
-        colour * light.radiance * n_dot_l
+        self.albedo(hit) * light.radiance * n_dot_l
     }
 }

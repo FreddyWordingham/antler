@@ -16,11 +16,18 @@ impl Block {
 }
 
 impl Shader for Block {
+    #[inline]
     fn emitted(&self, _hit: &WorldHit) -> Rgb {
         Rgb::BLACK
     }
 
-    fn shade(&self, _ray: &WorldRay, _hit: &WorldHit, _light: &LightSample) -> Rgb {
+    #[inline]
+    fn albedo(&self, _hit: &WorldHit) -> Rgb {
         self.colour
+    }
+
+    #[inline]
+    fn shade(&self, hit: &WorldHit, _ray: &WorldRay, _light: &LightSample) -> Rgb {
+        self.albedo(hit)
     }
 }

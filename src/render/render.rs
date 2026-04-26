@@ -42,6 +42,7 @@ fn render_probe_rgb(world: &World, scene: &Scene, probe: Probe) -> Option<Rgb> {
     let scatter = material.scatter(&probe, &world_hit);
 
     let emitted = shader.emitted(&world_hit);
+    let ambient = scene.ambient_light(world, &world_hit) * scatter.local_fraction;
     let direct = scene.direct_light(world, &probe.ray, &world_hit) * scatter.local_fraction;
 
     let bounced = scatter
@@ -50,7 +51,7 @@ fn render_probe_rgb(world: &World, scene: &Scene, probe: Probe) -> Option<Rgb> {
         .filter_map(|(fraction, child)| render_probe_rgb(world, scene, probe.child(child, fraction)))
         .sum();
 
-    Some(emitted + direct + bounced)
+    Some(emitted + ambient + direct + bounced)
 }
 
 pub fn render_image<C>(world: &World, scene: &Scene, camera: &C, settings: RenderSettings) -> RgbaImage

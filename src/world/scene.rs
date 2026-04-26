@@ -12,6 +12,7 @@ use crate::{
 };
 
 pub struct Scene {
+    ambient: Rgb,
     lights: Vec<LightEnum>,
     objects: Vec<Object>,
     bvh: Option<Bvh<ObjectId>>,
@@ -19,13 +20,14 @@ pub struct Scene {
 
 impl Default for Scene {
     fn default() -> Self {
-        Self::new()
+        Self::new(Rgb::WHITE)
     }
 }
 
 impl Scene {
-    pub fn new() -> Self {
+    pub fn new(ambient: Rgb) -> Self {
         Self {
+            ambient,
             lights: Vec::new(),
             objects: Vec::new(),
             bvh: None,
@@ -92,6 +94,13 @@ impl Scene {
         })
     }
 
+    pub fn ambient_light(&self, world: &World, hit: &WorldHit) -> Rgb {
+        let object = self.get_object(hit.object_id);
+        let shader = world.get_shader(object.shader_id);
+
+        shader.albedo(hit) * self.ambient
+    }
+
     pub fn direct_light(&self, world: &World, world_ray: &WorldRay, hit: &WorldHit) -> Rgb {
         let object = self.get_object(hit.object_id);
         let shader = world.get_shader(object.shader_id);
@@ -110,7 +119,7 @@ impl Scene {
                 if self.occluded(world, &shadow_ray, sample.distance) {
                     Rgb::BLACK
                 } else {
-                    shader.shade(world_ray, hit, &sample)
+                    shader.shade(hit, world_ray, &sample)
                 }
             })
             .sum()

@@ -7,6 +7,7 @@ use ron;
 use serde::{Deserialize, Serialize};
 
 use crate::{
+    colour::Rgb,
     config::{BuiltImage, ImageConfig, LightConfig, Named, ObjectConfig},
     errors::SceneBuildError,
     world::{Object, Scene, World},
@@ -16,6 +17,7 @@ use crate::{
 pub struct SceneConfig {
     #[serde(default)]
     pub images: Vec<Named<ImageConfig>>,
+    ambient: Rgb,
     #[serde(default)]
     pub lights: Vec<Named<LightConfig>>,
     #[serde(default)]
@@ -51,12 +53,13 @@ impl SceneConfig {
     pub fn build(self) -> Result<BuiltScene, SceneBuildError> {
         let SceneConfig {
             images,
+            ambient,
             lights,
             objects,
         } = self;
 
         let mut world = World::new();
-        let mut scene = Scene::new();
+        let mut scene = Scene::new(ambient);
 
         for light in lights {
             let light = light.resolve("light")?;
