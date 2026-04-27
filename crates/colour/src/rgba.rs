@@ -195,7 +195,7 @@ impl DivAssign<f32> for Rgba {
 
 impl Sum for Rgba {
     fn sum<I: Iterator<Item = Self>>(iter: I) -> Self {
-        iter.fold(Self::BLACK, |a, b| a + b)
+        iter.fold(Self::TRANSPARENT, |a, b| a + b)
     }
 }
 
