@@ -1,6 +1,0 @@
-Directional(
-    direction: (-5.0, -2.0, -2.0),
-    radiance: 0xFFFFFF,
-    angular_radius: Some(2.5),
-    samples: Some(64),
-)

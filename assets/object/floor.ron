@@ -1,5 +1,0 @@
-(
-    geometry: "floor",
-    shader: "green",
-    material: "opaque"
-)

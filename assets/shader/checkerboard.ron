@@ -1,5 +1,0 @@
-Checkerboard(
-    size: 0.26,
-    colour_a: 0xFF00FF,
-    colour_b: 0x333333,
-)

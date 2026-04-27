@@ -1,9 +1,0 @@
-GradientShader(
-    stops: [
-        0x2C1E4A,
-        0x6A2C70,
-        0xB83B5E,
-        0xF08A5D,
-        0xF9ED69
-    ],
-)
