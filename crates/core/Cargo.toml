@@ -4,8 +4,11 @@ version = "2.0.0"
 edition = "2024"
 
 [dependencies]
+antler-camera = { path = "../camera" }
 antler-colour = { path = "../colour" }
+antler-geometry = { path = "../geometry" }
 antler-image = { path = "../image" }
+nalgebra = { workspace = true }
 
 [lints]
 workspace = true
