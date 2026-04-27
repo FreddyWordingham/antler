@@ -13,3 +13,6 @@ rayon = "1.12.0"
 ron = "0.12.1"
 serde = { version = "1.0.228", features = ["derive"] }
 tobj = "4.0.3"
+
+[profile.release]
+debug = true
