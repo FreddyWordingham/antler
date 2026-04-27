@@ -10,7 +10,10 @@ pub struct Capsule {
 
 impl Capsule {
     #[must_use]
-    pub const fn new(a: Point3<f32>, b: Point3<f32>, radius: f32) -> Self {
+    pub fn new(a: Point3<f32>, b: Point3<f32>, radius: f32) -> Self {
+        assert!((b - a).norm_squared() > 1.0e-12, "Capsule endpoints must differ");
+        assert!(radius > 0.0, "Capsule radius must be positive");
+
         Self { a, b, radius }
     }
 
