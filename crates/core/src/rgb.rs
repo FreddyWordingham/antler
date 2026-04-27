@@ -1,3 +1,8 @@
+use std::{
+    iter::Sum,
+    ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign},
+};
+
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Rgb {
     pub red: f32,
@@ -16,5 +21,91 @@ impl Rgb {
         assert!(0.0 <= blue && blue <= 1.0, "Blue value must be between 0.0 and 1.0.");
 
         Self { red, green, blue }
+    }
+}
+
+impl Add for Rgb {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Self {
+            red: self.red + rhs.red,
+            green: self.green + rhs.green,
+            blue: self.blue + rhs.blue,
+        }
+    }
+}
+
+impl AddAssign for Rgb {
+    fn add_assign(&mut self, rhs: Self) {
+        self.red += rhs.red;
+        self.green += rhs.green;
+        self.blue += rhs.blue;
+    }
+}
+
+impl Mul<f32> for Rgb {
+    type Output = Self;
+
+    fn mul(self, rhs: f32) -> Self::Output {
+        Self {
+            red: self.red * rhs,
+            green: self.green * rhs,
+            blue: self.blue * rhs,
+        }
+    }
+}
+
+impl Mul for Rgb {
+    type Output = Self;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        Self {
+            red: self.red * rhs.red,
+            green: self.green * rhs.green,
+            blue: self.blue * rhs.blue,
+        }
+    }
+}
+
+impl MulAssign<f32> for Rgb {
+    fn mul_assign(&mut self, rhs: f32) {
+        self.red *= rhs;
+        self.green *= rhs;
+        self.blue *= rhs;
+    }
+}
+
+impl MulAssign for Rgb {
+    fn mul_assign(&mut self, rhs: Self) {
+        self.red *= rhs.red;
+        self.green *= rhs.green;
+        self.blue *= rhs.blue;
+    }
+}
+
+impl Div<f32> for Rgb {
+    type Output = Self;
+
+    fn div(self, rhs: f32) -> Self::Output {
+        Self {
+            red: self.red / rhs,
+            green: self.green / rhs,
+            blue: self.blue / rhs,
+        }
+    }
+}
+
+impl DivAssign<f32> for Rgb {
+    fn div_assign(&mut self, rhs: f32) {
+        self.red /= rhs;
+        self.green /= rhs;
+        self.blue /= rhs;
+    }
+}
+
+impl Sum for Rgb {
+    fn sum<I: Iterator<Item = Self>>(iter: I) -> Self {
+        iter.fold(Self::BLACK, |a, b| a + b)
     }
 }
