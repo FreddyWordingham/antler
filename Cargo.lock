@@ -31,7 +31,6 @@ version = "2.0.0"
 name = "antler-geometry"
 version = "2.0.0"
 dependencies = [
- "antler-id",
  "nalgebra",
 ]
 
