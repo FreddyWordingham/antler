@@ -22,6 +22,10 @@ name = "antler-image"
 version = "2.0.0"
 
 [[package]]
+name = "antler-material"
+version = "2.0.0"
+
+[[package]]
 name = "antler-render"
 version = "2.0.0"
 
