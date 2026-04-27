@@ -4,6 +4,7 @@ members = [
     "crates/config",
     "crates/geometry",
     "crates/image",
+    "crates/scene",
     "crates/render",
 ]
 resolver = "2"
