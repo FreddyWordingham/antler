@@ -1,3 +1,5 @@
-use antler_geometry;
+mod rgb;
 
-pub mod prelude {}
+pub mod prelude {
+    pub use crate::rgb::Rgb;
+}
