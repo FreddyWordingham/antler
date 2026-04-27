@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "crates/camera",
     "crates/colour",
     "crates/config",
     "crates/core",
