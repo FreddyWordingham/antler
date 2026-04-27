@@ -16,3 +16,7 @@ dependencies = [
 [[package]]
 name = "antler-geometry"
 version = "2.0.0"
+
+[[package]]
+name = "antler-render"
+version = "2.0.0"
