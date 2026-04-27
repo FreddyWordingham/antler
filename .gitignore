@@ -1,8 +1,103 @@
+# =========================
+# Rust / Cargo
+# =========================
 /target
+**/target
+debug
+release
 
+# Cargo.lock
+# Keep for binaries, ignore for libraries (uncomment if needed)
+# Cargo.lock
 
-# Added by cargo
-#
-# already existing elements were commented out
+# Backup files from rustfmt
+**/*.rs.bk
 
-#/target
+# Mutation testing
+**/mutants.out*/
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# macOS thumbnails
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# =========================
+# IDE / Editor
+# =========================
+
+# VSCode
+.vscode/
+
+# JetBrains (RustRover, IntelliJ, CLion)
+.idea/
+*.iml
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+*~
+
+# =========================
+# Logs / Temp
+# =========================
+*.log
+*.tmp
+*.temp
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Build / Coverage / Profiling
+# =========================
+*.prof
+*.gcda
+*.gcno
+*.gcov
+coverage/
+dist/
+
+# =========================
+# Node (if you have frontend tooling)
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+
+# =========================
+# Python (if scripting / tooling)
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# =========================
+# Misc
+# =========================
+*.bak
+*.old
+*.orig
