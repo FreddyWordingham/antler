@@ -1,3 +1,8 @@
+use std::{
+    iter::Sum,
+    ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign},
+};
+
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Rgba {
     pub red: f32,
@@ -24,5 +29,98 @@ impl Rgba {
             blue,
             alpha,
         }
+    }
+}
+
+impl Add for Rgba {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Self {
+            red: self.red + rhs.red,
+            green: self.green + rhs.green,
+            blue: self.blue + rhs.blue,
+            alpha: self.alpha + rhs.alpha,
+        }
+    }
+}
+
+impl AddAssign for Rgba {
+    fn add_assign(&mut self, rhs: Self) {
+        self.red += rhs.red;
+        self.green += rhs.green;
+        self.blue += rhs.blue;
+    }
+}
+
+impl Mul<f32> for Rgba {
+    type Output = Self;
+
+    fn mul(self, rhs: f32) -> Self::Output {
+        Self {
+            red: self.red * rhs,
+            green: self.green * rhs,
+            blue: self.blue * rhs,
+            alpha: self.alpha * rhs,
+        }
+    }
+}
+
+impl Mul for Rgba {
+    type Output = Self;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        Self {
+            red: self.red * rhs.red,
+            green: self.green * rhs.green,
+            blue: self.blue * rhs.blue,
+            alpha: self.alpha * rhs.alpha,
+        }
+    }
+}
+
+impl MulAssign<f32> for Rgba {
+    fn mul_assign(&mut self, rhs: f32) {
+        self.red *= rhs;
+        self.green *= rhs;
+        self.blue *= rhs;
+        self.alpha *= rhs;
+    }
+}
+
+impl MulAssign for Rgba {
+    fn mul_assign(&mut self, rhs: Self) {
+        self.red *= rhs.red;
+        self.green *= rhs.green;
+        self.blue *= rhs.blue;
+        self.alpha *= rhs.alpha;
+    }
+}
+
+impl Div<f32> for Rgba {
+    type Output = Self;
+
+    fn div(self, rhs: f32) -> Self::Output {
+        Self {
+            red: self.red / rhs,
+            green: self.green / rhs,
+            blue: self.blue / rhs,
+            alpha: self.alpha / rhs,
+        }
+    }
+}
+
+impl DivAssign<f32> for Rgba {
+    fn div_assign(&mut self, rhs: f32) {
+        self.red /= rhs;
+        self.green /= rhs;
+        self.blue /= rhs;
+        self.alpha /= rhs;
+    }
+}
+
+impl Sum for Rgba {
+    fn sum<I: Iterator<Item = Self>>(iter: I) -> Self {
+        iter.fold(Self::BLACK, |a, b| a + b)
     }
 }
