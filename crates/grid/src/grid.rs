@@ -50,7 +50,7 @@ impl<T, const D: usize> Grid<T, D> {
     }
 
     #[inline]
-    pub const fn data(&self) -> &Vec<T> {
+    pub fn data(&self) -> &[T] {
         &self.data
     }
 
