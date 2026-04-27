@@ -1,7 +1,7 @@
 use nalgebra::Unit;
 
 use crate::{
-    material::{Material, Scatter},
+    material::Material,
     tracing::{Probe, WorldHit, WorldRay},
     utils::physics,
 };
@@ -19,7 +19,7 @@ impl Refractive {
 }
 
 impl Material for Refractive {
-    fn scatter(&self, probe: &Probe, hit: &WorldHit) -> Scatter {
+    fn scatter(&self, probe: &Probe, hit: &WorldHit, mut emit_child: impl FnMut(f32, WorldRay)) -> f32 {
         let incoming = probe.ray.direction.into_inner();
         let mut normal = hit.normal.into_inner();
 
@@ -42,16 +42,15 @@ impl Material for Refractive {
             physics::refract(incoming, normal, eta, cos_theta)
         };
 
-        Scatter {
-            local_fraction: 0.0,
-            children: vec![(
-                1.0,
-                WorldRay::from_offset(
-                    hit.position,
-                    Unit::new_normalize(normal),
-                    Unit::new_normalize(direction),
-                ),
-            )],
-        }
+        emit_child(
+            1.0,
+            WorldRay::from_offset(
+                hit.position,
+                Unit::new_normalize(normal),
+                Unit::new_normalize(direction),
+            ),
+        );
+
+        0.0
     }
 }

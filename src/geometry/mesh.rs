@@ -153,6 +153,29 @@ impl Traceable for Mesh {
 
         nearest
     }
+
+    #[inline]
+    fn trace_distance(&self, ray: &ObjectRay) -> Option<f32> {
+        let mut best_distance = f32::INFINITY;
+        let mut hit = false;
+
+        self.bvh
+            .trace_any_with_limit(ray, &mut best_distance, |triangle_index, best_distance| {
+                let Some(distance) = self.triangle(triangle_index).trace_distance(ray) else {
+                    return false;
+                };
+
+                if distance <= *best_distance {
+                    *best_distance = distance;
+                    hit = true;
+                    true // early exit
+                } else {
+                    false
+                }
+            });
+
+        hit.then_some(best_distance)
+    }
 }
 
 fn read_position(data: &[f32], index: usize) -> Option<Point3<f32>> {

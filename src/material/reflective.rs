@@ -1,5 +1,5 @@
 use crate::{
-    material::{Material, Scatter},
+    material::Material,
     tracing::{Probe, WorldHit, WorldRay},
 };
 
@@ -17,17 +17,16 @@ impl Reflective {
 }
 
 impl Material for Reflective {
-    fn scatter(&self, probe: &Probe, hit: &WorldHit) -> Scatter {
+    fn scatter(&self, probe: &Probe, hit: &WorldHit, mut emit_child: impl FnMut(f32, WorldRay)) -> f32 {
         let incoming = probe.ray.direction.into_inner();
         let normal = hit.normal.into_inner();
         let reflected = incoming - 2.0 * incoming.dot(&normal) * normal;
 
-        Scatter {
-            local_fraction: 1.0 - self.reflectivity,
-            children: vec![(
-                self.reflectivity,
-                WorldRay::from_offset(hit.position, hit.normal, nalgebra::Unit::new_normalize(reflected)),
-            )],
-        }
+        emit_child(
+            self.reflectivity,
+            WorldRay::from_offset(hit.position, hit.normal, nalgebra::Unit::new_normalize(reflected)),
+        );
+
+        1.0 - self.reflectivity
     }
 }

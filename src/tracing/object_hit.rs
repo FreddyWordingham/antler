@@ -23,13 +23,14 @@ impl ObjectHit {
         object_id: ObjectId,
     ) -> WorldHit {
         let world_position = transform.transform_point(&self.position);
+        let normal = Unit::new_normalize(transform.transform_vector(&self.normal));
 
-        WorldHit {
+        WorldHit::new(
             object_id,
-            distance: (world_position - world_ray_origin).norm(),
-            position: world_position,
-            normal: Unit::new_normalize(transform.transform_vector(&self.normal)),
-            uv: self.uv,
-        }
+            (world_position - world_ray_origin).norm(),
+            world_position,
+            normal,
+            self.uv,
+        )
     }
 }

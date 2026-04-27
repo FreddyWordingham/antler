@@ -3,7 +3,7 @@ use std::f32::consts::{PI, TAU};
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
 use crate::{
-    geometry::{Bounded, Traceable},
+    geometry::{Aabb, Bounded, Traceable},
     tracing::{ObjectHit, ObjectRay},
 };
 
@@ -19,8 +19,8 @@ impl Sphere {
 }
 
 impl Bounded for Sphere {
-    fn bounds(&self) -> crate::geometry::Aabb {
-        crate::geometry::Aabb {
+    fn bounds(&self) -> Aabb {
+        Aabb {
             min: self.centre - Vector3::new(self.radius, self.radius, self.radius),
             max: self.centre + Vector3::new(self.radius, self.radius, self.radius),
         }
@@ -29,27 +29,7 @@ impl Bounded for Sphere {
 
 impl Traceable for Sphere {
     fn trace(&self, ray: &ObjectRay) -> Option<ObjectHit> {
-        let oc = ray.origin - self.centre;
-
-        let a = ray.direction.dot(&ray.direction);
-        let half_b = oc.dot(&ray.direction);
-        let c = oc.dot(&oc) - self.radius * self.radius;
-
-        let discriminant = half_b * half_b - a * c;
-        if discriminant < 0.0 {
-            return None;
-        }
-
-        let sqrt_d = discriminant.sqrt();
-
-        let mut distance = (-half_b - sqrt_d) / a;
-        if distance <= 0.0 {
-            distance = (-half_b + sqrt_d) / a;
-
-            if distance <= 0.0 {
-                return None;
-            }
-        }
+        let distance = self.trace_distance(ray)?;
 
         let position = ray.origin + *ray.direction * distance;
         let outward_normal = Unit::new_normalize(position - self.centre);
@@ -66,5 +46,27 @@ impl Traceable for Sphere {
             normal: outward_normal,
             uv: Point2::new(u, v),
         })
+    }
+
+    #[inline]
+    fn trace_distance(&self, ray: &ObjectRay) -> Option<f32> {
+        let oc = ray.origin - self.centre;
+
+        let half_b = oc.dot(&ray.direction);
+        let c = oc.dot(&oc) - self.radius * self.radius;
+
+        let discriminant = half_b * half_b - c;
+        if discriminant < 0.0 {
+            return None;
+        }
+
+        let sqrt_d = discriminant.sqrt();
+
+        let mut distance = -half_b - sqrt_d;
+        if distance <= 0.0 {
+            distance = -half_b + sqrt_d;
+        }
+
+        (distance > 0.0).then_some(distance)
     }
 }

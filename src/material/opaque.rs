@@ -1,6 +1,6 @@
 use crate::{
-    material::{Material, Scatter},
-    tracing::{Probe, WorldHit},
+    material::Material,
+    tracing::{Probe, WorldHit, WorldRay},
 };
 
 pub struct Opaque;
@@ -18,10 +18,7 @@ impl Default for Opaque {
 }
 
 impl Material for Opaque {
-    fn scatter(&self, _probe: &Probe, _hit: &WorldHit) -> Scatter {
-        Scatter {
-            local_fraction: 1.0,
-            children: Vec::new(),
-        }
+    fn scatter(&self, _probe: &Probe, _hit: &WorldHit, _emit_child: impl FnMut(f32, WorldRay)) -> f32 {
+        1.0
     }
 }

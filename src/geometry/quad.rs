@@ -104,4 +104,30 @@ impl Traceable for Quad {
             uv: Point2::new(u, v),
         })
     }
+
+    #[inline]
+    fn trace_distance(&self, ray: &ObjectRay) -> Option<f32> {
+        let denom = self.normal.dot(&ray.direction);
+        if denom.abs() < PARALLEL_EPSILON {
+            return None;
+        }
+
+        let distance = (self.position - ray.origin).dot(&self.normal) / denom;
+        if distance <= 0.0 {
+            return None;
+        }
+
+        let position = ray.origin + *ray.direction * distance;
+        let offset = position - self.position;
+
+        let (tangent, bitangent) = self.tangent_frame();
+
+        let local_x = offset.dot(&tangent);
+        let local_y = offset.dot(&bitangent);
+
+        let half_width = self.size[0] * 0.5;
+        let half_height = self.size[1] * 0.5;
+
+        (local_x.abs() <= half_width && local_y.abs() <= half_height).then_some(distance)
+    }
 }
