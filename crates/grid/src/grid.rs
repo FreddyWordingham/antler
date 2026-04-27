@@ -50,8 +50,13 @@ impl<T, const D: usize> Grid<T, D> {
     }
 
     #[inline]
-    pub fn data(&self) -> &[T] {
+    pub fn as_slice(&self) -> &[T] {
         &self.data
+    }
+
+    #[inline]
+    pub fn as_mut_slice(&mut self) -> &mut [T] {
+        &mut self.data
     }
 
     #[inline]
