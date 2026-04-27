@@ -81,7 +81,7 @@ impl Pixel for Rgba {
 
     #[inline]
     fn from_hex(hex: &str) -> Result<Self, ParseHexError> {
-        Ok(Self::from_bytes(parse_hex::<4>(hex, &[4, 8])?))
+        Ok(Self::from_bytes(parse_hex::<4>(hex)?))
     }
 }
 

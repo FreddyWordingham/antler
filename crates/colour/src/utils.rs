@@ -1,31 +1,38 @@
 use crate::errors::ParseHexError;
 
-pub fn parse_hex<const N: usize>(hex: &str, expected: &'static [usize]) -> Result<[u8; N], ParseHexError> {
+pub fn parse_hex<const N: usize>(hex: &str) -> Result<[u8; N], ParseHexError> {
     let hex = hex.strip_prefix('#').unwrap_or(hex);
     let bytes = hex.as_bytes();
 
     match bytes.len() {
-        len if len == N => {
-            let mut out = [0u8; N];
-
-            for i in 0..N {
-                let nibble = hex_nibble(bytes[i])?;
-                out[i] = (nibble << 4) | nibble;
-            }
-
-            Ok(out)
-        }
-        len if len == N * 2 => {
-            let mut out = [0u8; N];
-
-            for i in 0..N {
-                out[i] = hex_byte(bytes[i * 2], bytes[i * 2 + 1])?;
-            }
-
-            Ok(out)
-        }
-        found => Err(ParseHexError::InvalidLength { expected, found }),
+        len if len == N => parse_short_hex(bytes),
+        len if len == N * 2 => parse_long_hex(bytes),
+        found => Err(ParseHexError::InvalidLength {
+            expected: [N, N * 2],
+            found,
+        }),
     }
+}
+
+fn parse_short_hex<const N: usize>(bytes: &[u8]) -> Result<[u8; N], ParseHexError> {
+    let mut out = [0u8; N];
+
+    for i in 0..N {
+        let n = hex_nibble(bytes[i])?;
+        out[i] = (n << 4) | n;
+    }
+
+    Ok(out)
+}
+
+fn parse_long_hex<const N: usize>(bytes: &[u8]) -> Result<[u8; N], ParseHexError> {
+    let mut out = [0u8; N];
+
+    for i in 0..N {
+        out[i] = hex_byte(bytes[i * 2], bytes[i * 2 + 1])?;
+    }
+
+    Ok(out)
 }
 
 fn hex_nibble(byte: u8) -> Result<u8, ParseHexError> {
@@ -33,9 +40,7 @@ fn hex_nibble(byte: u8) -> Result<u8, ParseHexError> {
         b'0'..=b'9' => Ok(byte - b'0'),
         b'a'..=b'f' => Ok(byte - b'a' + 10),
         b'A'..=b'F' => Ok(byte - b'A' + 10),
-        _ => u8::from_str_radix(std::str::from_utf8(&[byte]).unwrap_or("�"), 16)
-            .map(|_| unreachable!())
-            .map_err(ParseHexError::from),
+        _ => Err(ParseHexError::InvalidDigit { byte }),
     }
 }
 

@@ -70,7 +70,7 @@ impl Pixel for Rgb {
 
     #[inline]
     fn from_hex(hex: &str) -> Result<Self, ParseHexError> {
-        Ok(Self::from_bytes(parse_hex::<3>(hex, &[3, 6])?))
+        Ok(Self::from_bytes(parse_hex::<3>(hex)?))
     }
 }
 

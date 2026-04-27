@@ -1,19 +1,12 @@
 use std::{
     error::Error,
     fmt::{Display, Formatter, Result as FmtResult},
-    num::ParseIntError,
 };
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ParseHexError {
-    InvalidLength { expected: &'static [usize], found: usize },
-    InvalidDigit(ParseIntError),
-}
-
-impl From<ParseIntError> for ParseHexError {
-    fn from(value: ParseIntError) -> Self {
-        Self::InvalidDigit(value)
-    }
+    InvalidLength { expected: [usize; 2], found: usize },
+    InvalidDigit { byte: u8 },
 }
 
 impl Display for ParseHexError {
@@ -22,8 +15,8 @@ impl Display for ParseHexError {
             Self::InvalidLength { expected, found } => {
                 write!(f, "Invalid hex length {found}, expected one of {expected:?}")
             }
-            Self::InvalidDigit(err) => {
-                write!(f, "Invalid hex digit: {err}")
+            Self::InvalidDigit { byte } => {
+                write!(f, "Invalid hex digit: {:?}", char::from(*byte))
             }
         }
     }
