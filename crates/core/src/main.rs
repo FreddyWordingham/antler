@@ -1,5 +1,5 @@
 use antler::prelude::*;
-use nalgebra::{Point2, Point3, Vector3};
+use nalgebra::{Point2, Point3, Vector2, Vector3};
 
 fn main() {
     let width = 320;
@@ -11,7 +11,8 @@ fn main() {
     // let shape = Mesh::load("assets/meshes/golem.obj").expect("Failed to load mesh");
     // let shape = Torus::new(Point3::new(0.0, 0.0, 0.0), 0.5, 0.25);
     // let shape = Capsule::new(Point3::new(-0.5, 0.0, 0.0), Point3::new(0.5, 0.0, 0.0), 0.05);
-    let shape = Circle::new(Point3::new(0.0, 0.0, 0.0), Vector3::y_axis(), 0.5);
+    // let shape = Circle::new(Point3::new(0.0, 0.0, 0.0), Vector3::y_axis(), 0.5);
+    let shape = Quad::new(Point3::new(0.0, 0.0, 0.0), Vector3::y_axis(), Vector2::new(1.0, 0.4));
 
     let camera = Perspective::new(
         Point3::new(4.0, -4.0, 4.0),
