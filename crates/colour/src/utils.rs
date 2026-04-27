@@ -35,7 +35,7 @@ fn parse_long_hex<const N: usize>(bytes: &[u8]) -> Result<[u8; N], ParseHexError
     Ok(out)
 }
 
-fn hex_nibble(byte: u8) -> Result<u8, ParseHexError> {
+const fn hex_nibble(byte: u8) -> Result<u8, ParseHexError> {
     match byte {
         b'0'..=b'9' => Ok(byte - b'0'),
         b'a'..=b'f' => Ok(byte - b'a' + 10),

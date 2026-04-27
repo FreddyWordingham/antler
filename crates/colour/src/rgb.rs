@@ -20,6 +20,7 @@ impl Rgb {
     pub const BLACK: Self = Self::new(0.0, 0.0, 0.0);
     pub const WHITE: Self = Self::new(1.0, 1.0, 1.0);
 
+    #[must_use]
     #[inline]
     pub const fn new(red: f32, green: f32, blue: f32) -> Self {
         assert!(0.0 <= red && red <= 1.0, "Red value must be between 0.0 and 1.0.");
@@ -48,16 +49,16 @@ impl Pixel for Rgb {
     #[inline]
     fn from_bytes(bytes: Self::Bytes) -> Self {
         Self {
-            red: bytes[0] as f32 / 255.0,
-            green: bytes[1] as f32 / 255.0,
-            blue: bytes[2] as f32 / 255.0,
+            red: f32::from(bytes[0]) / 255.0,
+            green: f32::from(bytes[1]) / 255.0,
+            blue: f32::from(bytes[2]) / 255.0,
         }
     }
 
     #[inline]
     fn to_u32(&self) -> u32 {
         let bytes = self.to_bytes();
-        ((bytes[0] as u32) << 16) | ((bytes[1] as u32) << 8) | (bytes[2] as u32)
+        (u32::from(bytes[0]) << 16) | (u32::from(bytes[1]) << 8) | u32::from(bytes[2])
     }
 
     #[inline]

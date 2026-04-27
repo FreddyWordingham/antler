@@ -15,3 +15,20 @@ resolver = "2"
 
 [workspace.dependencies]
 png = "0.18.1"
+
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+# cargo = { level = "warn", priority = -1 }
+complexity = { level = "warn", priority = -1 }
+correctness = { level = "deny", priority = -1 }
+nursery = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+perf = { level = "warn", priority = -1 }
+style = { level = "warn", priority = -1 }
+suspicious = { level = "warn", priority = -1 }
+
+cast_possible_truncation = "allow"
+cast_sign_loss = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"

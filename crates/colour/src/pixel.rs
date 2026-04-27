@@ -1,3 +1,5 @@
+use std::fmt::Write;
+
 use png::{BitDepth, ColorType};
 
 use crate::errors::ParseHexError;
@@ -20,7 +22,7 @@ pub trait Pixel: Copy {
         let bytes = self.to_bytes();
         let mut out = String::from("#");
         for byte in bytes.as_ref() {
-            out.push_str(&format!("{byte:02X}"));
+            let _ = write!(out, "{byte:02X}");
         }
         out
     }

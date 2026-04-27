@@ -20,6 +20,7 @@ impl<T, const D: usize> Grid<T, D> {
         Self { size, data }
     }
 
+    #[must_use]
     pub fn from_vec(size: [usize; D], data: Vec<T>) -> Self {
         let expected_len = size.iter().product();
 
@@ -34,21 +35,25 @@ impl<T, const D: usize> Grid<T, D> {
         Self { size, data }
     }
 
+    #[must_use]
     #[inline]
     pub const fn len(&self) -> usize {
         self.data.len()
     }
 
+    #[must_use]
     #[inline]
     pub const fn is_empty(&self) -> bool {
         self.data.is_empty()
     }
 
+    #[must_use]
     #[inline]
     pub const fn size(&self) -> [usize; D] {
         self.size
     }
 
+    #[must_use]
     #[inline]
     pub fn as_slice(&self) -> &[T] {
         &self.data
@@ -59,11 +64,13 @@ impl<T, const D: usize> Grid<T, D> {
         &mut self.data
     }
 
+    #[must_use]
     #[inline]
     pub fn into_vec(self) -> Vec<T> {
         self.data
     }
 
+    #[must_use]
     #[inline]
     pub fn get(&self, coord: [usize; D]) -> &T {
         &self.data[self.index_of(coord)]
@@ -83,10 +90,7 @@ impl<T, const D: usize> Grid<T, D> {
         for (axis, (&c, &size)) in coord.iter().zip(self.size.iter()).enumerate() {
             assert!(
                 c < size,
-                "Coordinate on axis {} ({}) must be less than size ({})",
-                axis,
-                c,
-                size
+                "Coordinate on axis {axis} ({c}) must be less than size ({size})"
             );
 
             index += c * stride;

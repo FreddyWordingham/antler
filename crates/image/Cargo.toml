@@ -7,3 +7,6 @@ edition = "2024"
 antler-colour = { path = "../colour" }
 antler-grid = { path = "../grid" }
 png = { workspace = true }
+
+[lints]
+workspace = true

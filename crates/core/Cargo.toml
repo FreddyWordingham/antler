@@ -6,3 +6,6 @@ edition = "2024"
 [dependencies]
 antler-colour = { path = "../colour" }
 antler-image = { path = "../image" }
+
+[lints]
+workspace = true

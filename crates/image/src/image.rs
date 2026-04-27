@@ -26,17 +26,20 @@ impl<P: Pixel> Image<P> {
         }
     }
 
+    #[must_use]
     pub fn from_vec(size: [usize; 2], data: Vec<P>) -> Self {
         Self {
             pixels: SurfaceGrid::from_vec(size, data),
         }
     }
 
+    #[must_use]
     #[inline]
     pub const fn width(&self) -> usize {
         self.pixels.size()[0]
     }
 
+    #[must_use]
     #[inline]
     pub const fn height(&self) -> usize {
         self.pixels.size()[1]
@@ -67,13 +70,13 @@ impl<P: Pixel> Image<P> {
 impl<P: Pixel> Index<(usize, usize)> for Image<P> {
     type Output = P;
 
-    fn index(&self, (x, y): (usize, usize)) -> &Self::Output {
-        &self.pixels[[x, y]]
+    fn index(&self, coord: (usize, usize)) -> &Self::Output {
+        &self.pixels[coord.into()]
     }
 }
 
 impl<P: Pixel> IndexMut<(usize, usize)> for Image<P> {
-    fn index_mut(&mut self, (x, y): (usize, usize)) -> &mut Self::Output {
-        &mut self.pixels[[x, y]]
+    fn index_mut(&mut self, coord: (usize, usize)) -> &mut Self::Output {
+        &mut self.pixels[coord.into()]
     }
 }

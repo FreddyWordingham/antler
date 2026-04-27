@@ -22,6 +22,7 @@ impl Rgba {
     pub const WHITE: Self = Self::new(1.0, 1.0, 1.0, 1.0);
     pub const TRANSPARENT: Self = Self::new(0.0, 0.0, 0.0, 0.0);
 
+    #[must_use]
     #[inline]
     pub const fn new(red: f32, green: f32, blue: f32, alpha: f32) -> Self {
         assert!(0.0 <= red && red <= 1.0, "Red value must be between 0.0 and 1.0.");
@@ -57,17 +58,17 @@ impl Pixel for Rgba {
     #[inline]
     fn from_bytes(bytes: Self::Bytes) -> Self {
         Self {
-            red: bytes[0] as f32 / 255.0,
-            green: bytes[1] as f32 / 255.0,
-            blue: bytes[2] as f32 / 255.0,
-            alpha: bytes[3] as f32 / 255.0,
+            red: f32::from(bytes[0]) / 255.0,
+            green: f32::from(bytes[1]) / 255.0,
+            blue: f32::from(bytes[2]) / 255.0,
+            alpha: f32::from(bytes[3]) / 255.0,
         }
     }
 
     #[inline]
     fn to_u32(&self) -> u32 {
         let bytes = self.to_bytes();
-        ((bytes[0] as u32) << 24) | ((bytes[1] as u32) << 16) | ((bytes[2] as u32) << 8) | (bytes[3] as u32)
+        (u32::from(bytes[0]) << 24) | (u32::from(bytes[1]) << 16) | (u32::from(bytes[2]) << 8) | u32::from(bytes[3])
     }
 
     #[inline]
