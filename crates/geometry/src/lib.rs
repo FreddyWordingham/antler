@@ -1,6 +1,7 @@
 mod aabb;
 mod bounded;
 mod bvh;
+mod capsule;
 pub mod errors;
 mod intersection;
 mod mesh;
@@ -14,6 +15,7 @@ mod triangle;
 pub use aabb::Aabb;
 pub use bounded::Bounded;
 pub use bvh::Bvh;
+pub use capsule::Capsule;
 pub use intersection::Intersection;
 pub use mesh::Mesh;
 pub use ray::Ray;
