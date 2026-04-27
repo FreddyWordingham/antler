@@ -70,7 +70,7 @@ impl Pixel for Rgb {
 
     #[inline]
     fn from_hex(hex: &str) -> Result<Self, ParseHexError> {
-        let hex = hex.trim_start_matches('#');
+        let hex = hex.strip_prefix('#').unwrap_or(hex);
         match hex.len() {
             3 => {
                 let r = u8::from_str_radix(&hex[0..1].repeat(2), 16)?;
