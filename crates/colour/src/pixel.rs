@@ -11,12 +11,19 @@ pub trait Pixel: Copy {
 
     type Bytes: AsRef<[u8]>;
 
+    #[must_use]
     fn to_bytes(&self) -> Self::Bytes;
+
+    #[must_use]
     fn from_bytes(bytes: Self::Bytes) -> Self;
 
+    #[must_use]
     fn to_u32(&self) -> u32;
+
+    #[must_use]
     fn from_u32(value: u32) -> Self;
 
+    #[must_use]
     #[inline]
     fn to_hex(&self) -> String {
         let bytes = self.to_bytes();

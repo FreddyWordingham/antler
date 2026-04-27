@@ -13,14 +13,15 @@ pub struct Aabb {
 impl Aabb {
     #[must_use]
     pub fn new(min: Point3<f32>, max: Point3<f32>) -> Self {
-        assert!(min.x <= max.x);
-        assert!(min.y <= max.y);
-        assert!(min.z <= max.z);
+        assert!(min.x <= max.x, "Aabb min.x must be <= max.x");
+        assert!(min.y <= max.y, "Aabb min.y must be <= max.y");
+        assert!(min.z <= max.z, "Aabb min.z must be <= max.z");
+
         Self { min, max }
     }
 
     #[must_use]
-    pub fn ray_intersection(&self, ray: &Ray) -> Option<(f32, f32, AabbFace, AabbFace)> {
+    fn ray_intersection(&self, ray: &Ray) -> Option<(f32, f32, AabbFace, AabbFace)> {
         let origin = ray.origin;
         let direction = ray.direction.into_inner();
 
@@ -113,7 +114,6 @@ impl Traceable for Aabb {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-
 pub enum AabbFace {
     MinX,
     MaxX,
