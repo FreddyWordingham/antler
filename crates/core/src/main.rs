@@ -8,11 +8,12 @@ fn main() {
 
     // let shape = Aabb::new(Point3::new(-0.5, -0.5, -0.5), Point3::new(0.5, 0.5, 0.5));
     // let shape = Sphere::new(Point3::new(0.0, 0.0, 0.0), 0.5);
-    let shape = Mesh::load("assets/meshes/golem.obj").expect("Failed to load mesh");
+    // let shape = Mesh::load("assets/meshes/golem.obj").expect("Failed to load mesh");
+    let shape = Torus::new(Point3::new(0.0, 0.0, 0.0), 0.5, 0.25);
 
     let camera = Perspective::new(
         Point3::new(4.0, -4.0, 4.0),
-        Point3::new(0.0, 0.0, 0.5),
+        Point3::new(0.0, 0.0, 0.0),
         Vector3::z_axis(),
         15.0f32.to_radians(),
     );
