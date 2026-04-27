@@ -4,6 +4,7 @@ members = [
     "crates/config",
     "crates/geometry",
     "crates/image",
+    "crates/shader",
     "crates/scene",
     "crates/render",
 ]
