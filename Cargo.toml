@@ -3,6 +3,7 @@ members = [
     "crates/core",
     "crates/config",
     "crates/geometry",
+    "crates/colour",
     "crates/image",
     "crates/shader",
     "crates/material",
