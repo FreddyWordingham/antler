@@ -1,4 +1,4 @@
-mod errors;
+pub mod errors;
 mod pixel;
 mod rgb;
 mod rgba;
