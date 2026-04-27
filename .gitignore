@@ -101,3 +101,4 @@ venv/
 *.bak
 *.old
 *.orig
+output.png
