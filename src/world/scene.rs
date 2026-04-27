@@ -138,32 +138,33 @@ impl Scene {
         let object = self.get_object(hit.object_id);
         let shader = world.get_shader(object.shader_id);
 
-        self.lights
-            .iter()
-            .map(|light| {
-                let samples = light.samples(hit, rng);
-                let inv_samples = 1.0 / samples.len().max(1) as f32;
+        let mut total = Rgb::BLACK;
 
-                samples
-                    .into_iter()
-                    .map(|sample| {
-                        let n_dot_l = hit.normal.dot(&sample.direction);
-                        if n_dot_l <= 0.0 {
-                            return Rgb::BLACK;
-                        }
+        for light in &self.lights {
+            let mut light_total = Rgb::BLACK;
+            let mut sample_count = 0usize;
 
-                        let shadow_ray = WorldRay::from_offset(hit.position, hit.normal, sample.direction);
+            light.for_each_sample(hit, rng, |sample| {
+                sample_count += 1;
 
-                        if self.occluded(world, &shadow_ray, sample.distance) {
-                            Rgb::BLACK
-                        } else {
-                            shader.shade(hit, world_ray, &sample)
-                        }
-                    })
-                    .sum::<Rgb>()
-                    * inv_samples
-            })
-            .sum()
+                let n_dot_l = hit.normal.dot(&sample.direction);
+                if n_dot_l <= 0.0 {
+                    return;
+                }
+
+                let shadow_ray = WorldRay::from_offset(hit.position, hit.normal, sample.direction);
+
+                if !self.occluded(world, &shadow_ray, sample.distance) {
+                    light_total += shader.shade(hit, world_ray, &sample);
+                }
+            });
+
+            if sample_count > 0 {
+                total += light_total / sample_count as f32;
+            }
+        }
+
+        total
     }
 
     pub fn build(&mut self, world: &World) {

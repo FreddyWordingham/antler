@@ -6,7 +6,7 @@ use crate::{
 };
 
 pub trait Light {
-    fn samples(&self, hit: &WorldHit, rng: &mut impl Rng) -> Vec<LightSample>;
+    fn for_each_sample(&self, hit: &WorldHit, rng: &mut impl Rng, f: impl FnMut(LightSample));
 }
 
 macro_rules! define_light_enum {
@@ -16,9 +16,14 @@ macro_rules! define_light_enum {
         }
 
         impl Light for $name {
-            fn samples(&self, hit: &WorldHit, rng: &mut impl Rng) -> Vec<LightSample> {
+            fn for_each_sample(
+                &self,
+                hit: &WorldHit,
+                rng: &mut impl Rng,
+                f: impl FnMut(LightSample),
+            ) {
                 match self {
-                    $(Self::$ty(inner) => inner.samples(hit, rng),)*
+                    $(Self::$ty(inner) => inner.for_each_sample(hit, rng, f),)*
                 }
             }
         }

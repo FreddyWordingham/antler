@@ -34,24 +34,25 @@ impl DirectionalLight {
 }
 
 impl Light for DirectionalLight {
-    fn samples(&self, _hit: &WorldHit, rng: &mut impl Rng) -> Vec<LightSample> {
+    fn for_each_sample(&self, _hit: &WorldHit, rng: &mut impl Rng, mut f: impl FnMut(LightSample)) {
         let angular_radius = self.angular_radius.unwrap_or(0.0);
         let samples = self.samples.unwrap_or(1).max(1);
 
         if angular_radius <= 0.0 || samples == 1 {
-            return vec![LightSample {
+            f(LightSample {
                 direction: -self.direction,
                 distance: INFINITY,
                 radiance: self.radiance,
-            }];
+            });
+            return;
         }
 
-        (0..samples)
-            .map(|_| LightSample {
+        for _ in 0..samples {
+            f(LightSample {
                 direction: cone_direction(-self.direction, angular_radius, rng),
                 distance: INFINITY,
                 radiance: self.radiance,
-            })
-            .collect()
+            });
+        }
     }
 }
