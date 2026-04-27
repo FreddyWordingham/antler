@@ -1,6 +1,8 @@
 use std::{
+    fmt::{Display, Formatter, Result as FmtResult},
     iter::Sum,
     ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign},
+    str::FromStr,
 };
 
 use png::ColorType;
@@ -173,5 +175,31 @@ impl DivAssign<f32> for Rgb {
 impl Sum for Rgb {
     fn sum<I: Iterator<Item = Self>>(iter: I) -> Self {
         iter.fold(Self::BLACK, |a, b| a + b)
+    }
+}
+
+impl From<u32> for Rgb {
+    fn from(value: u32) -> Self {
+        Self::from_u32(value)
+    }
+}
+
+impl From<Rgb> for u32 {
+    fn from(value: Rgb) -> Self {
+        value.to_u32()
+    }
+}
+
+impl FromStr for Rgb {
+    type Err = ParseHexError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::from_hex(s)
+    }
+}
+
+impl Display for Rgb {
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+        f.write_str(&self.to_hex())
     }
 }
