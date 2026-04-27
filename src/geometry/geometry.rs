@@ -26,6 +26,12 @@ macro_rules! define_geometry_enum {
                     $(Self::$ty(inner) => inner.trace(ray),)*
                 }
             }
+
+            fn trace_distance(&self, ray: &ObjectRay) -> Option<f32> {
+                match self {
+                    $(Self::$ty(inner) => inner.trace_distance(ray),)*
+                }
+            }
         }
 
         $(

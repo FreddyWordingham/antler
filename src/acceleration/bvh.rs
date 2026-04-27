@@ -157,15 +157,6 @@ impl<T: Copy> Bvh<T> {
         Self { nodes, primitive_ids }
     }
 
-    #[inline]
-    pub fn trace<F>(&self, ray: &Ray, visit: F)
-    where
-        F: FnMut(T, &mut f32) -> bool,
-    {
-        let mut best_distance = INFINITY;
-        self.trace_nearest_with_max(ray, &mut best_distance, visit);
-    }
-
     pub fn trace_nearest_with_max<F>(&self, ray: &Ray, best_distance: &mut f32, mut visit: F)
     where
         F: FnMut(T, &mut f32) -> bool,
@@ -221,15 +212,6 @@ impl<T: Copy> Bvh<T> {
     }
 
     #[inline]
-    pub fn trace_any<F>(&self, ray: &Ray, test: F) -> bool
-    where
-        F: FnMut(T, &mut f32) -> bool,
-    {
-        let mut max_distance = INFINITY;
-        self.trace_any_with_limit(ray, &mut max_distance, test)
-    }
-
-    #[inline]
     pub fn trace_any_with_limit<F>(&self, ray: &Ray, max_distance: &mut f32, mut test: F) -> bool
     where
         F: FnMut(T, &mut f32) -> bool,
@@ -243,31 +225,6 @@ impl<T: Copy> Bvh<T> {
         self.traverse_any(0, root_t_min, &tray, max_distance, |primitive_range, max_distance| {
             for i in primitive_range {
                 if test(self.primitive_ids[i], max_distance) {
-                    return ControlFlow::Break(true);
-                }
-            }
-            ControlFlow::Continue(())
-        })
-        .break_value()
-        .unwrap_or(false)
-    }
-
-    #[inline]
-    pub fn trace_any_filtered<F>(&self, ray: &Ray, max_distance: f32, mut test: F) -> bool
-    where
-        F: FnMut(T) -> bool,
-    {
-        let tray = TraversalRay::new(ray);
-
-        let Some((root_t_min, _)) = self.nodes[0].ray_interval(&tray) else {
-            return false;
-        };
-
-        let mut max_distance = max_distance;
-
-        self.traverse_any(0, root_t_min, &tray, &mut max_distance, |primitive_range, _| {
-            for i in primitive_range {
-                if test(self.primitive_ids[i]) {
                     return ControlFlow::Break(true);
                 }
             }

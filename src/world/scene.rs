@@ -93,12 +93,12 @@ impl Scene {
         let mut max_distance = max_distance;
 
         bvh.trace_any_with_limit(world_ray, &mut max_distance, |object_id, max_distance| {
-            let Some(world_hit) = self.trace_object(world, object_id, world_ray) else {
+            let Some(distance) = self.trace_object_distance(world, object_id, world_ray) else {
                 return false;
             };
 
-            if world_hit.distance < *max_distance {
-                *max_distance = world_hit.distance;
+            if distance <= *max_distance {
+                *max_distance = distance;
                 true
             } else {
                 false
@@ -124,7 +124,7 @@ impl Scene {
 
         let occluded = (0..ao.samples)
             .filter(|_| {
-                let direction = sampling::hemisphere_direction(hit.normal, rng);
+                let direction = sampling::hemisphere_direction(hit.normal, hit.tangent, hit.bitangent, rng);
                 let ray = WorldRay::from_offset(hit.position, hit.normal, direction);
                 self.occluded(world, &ray, ao.distance)
             })
@@ -193,5 +193,18 @@ impl Scene {
         let object_hit = geometry.trace(&object_ray)?;
 
         Some(object_hit.to_world_space(&object.transform, world_ray.origin, object_id))
+    }
+
+    fn trace_object_distance(&self, world: &World, object_id: ObjectId, world_ray: &WorldRay) -> Option<f32> {
+        let object = self.get_object(object_id);
+        let object_ray = world_ray.to_object_space(&object.inv_transform);
+
+        let geometry = world.get_geometry(object.geometry_id);
+        let object_distance = geometry.trace_distance(&object_ray)?;
+
+        let object_position = object_ray.origin + *object_ray.direction * object_distance;
+        let world_position = object.transform.transform_point(&object_position);
+
+        Some((world_position - world_ray.origin).norm())
     }
 }

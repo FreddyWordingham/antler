@@ -1,10 +1,10 @@
 use crate::{
-    material::{Mirror, Opaque, Reflective, Refractive, Scatter},
-    tracing::{Probe, WorldHit},
+    material::{Mirror, Opaque, Reflective, Refractive},
+    tracing::{Probe, WorldHit, WorldRay},
 };
 
 pub trait Material {
-    fn scatter(&self, probe: &Probe, hit: &WorldHit) -> Scatter;
+    fn scatter(&self, probe: &Probe, hit: &WorldHit, emit_child: impl FnMut(f32, WorldRay)) -> f32;
 }
 
 macro_rules! define_material_enum {
@@ -14,9 +14,9 @@ macro_rules! define_material_enum {
         }
 
         impl Material for $name {
-            fn scatter(&self, probe: &Probe, hit: &WorldHit) -> Scatter {
+            fn scatter(&self, probe: &Probe, hit: &WorldHit, emit_child: impl FnMut(f32, WorldRay)) -> f32 {
                 match self {
-                    $(Self::$ty(inner) => inner.scatter(probe, hit),)*
+                    $(Self::$ty(inner) => inner.scatter(probe, hit, emit_child),)*
                 }
             }
         }

@@ -1,4 +1,5 @@
 use indicatif::{ProgressBar, ProgressStyle};
+use rand::{SeedableRng, rngs::SmallRng};
 use rayon::prelude::*;
 
 use crate::{
@@ -25,11 +26,7 @@ struct Tile {
     y1: usize,
 }
 
-pub fn render_probe(world: &World, scene: &Scene, probe: Probe) -> Option<Rgb> {
-    render_probe_rgb(world, scene, probe)
-}
-
-fn render_probe_rgb(world: &World, scene: &Scene, mut probe: Probe) -> Option<Rgb> {
+fn render_probe_rgb(world: &World, scene: &Scene, probe: Probe, rng: &mut SmallRng) -> Option<Rgb> {
     if probe.generation >= MAX_GENERATION || probe.weight <= MIN_WEIGHT {
         return Some(Rgb::BLACK);
     }
@@ -40,21 +37,20 @@ fn render_probe_rgb(world: &World, scene: &Scene, mut probe: Probe) -> Option<Rg
     let shader = world.get_shader(object.shader_id);
     let material = world.get_material(object.material_id);
 
-    let scatter = material.scatter(&probe, &world_hit);
-
     let emitted = shader.emitted(&world_hit);
-    let ambient = scene.ambient_light(world, &world_hit, probe.rng()) * scatter.local_fraction;
-    let direct = scene.direct_light(world, &probe.ray.clone(), &world_hit, probe.rng()) * scatter.local_fraction;
 
     let mut bounced = Rgb::BLACK;
 
-    for (fraction, child_ray) in scatter.children {
-        let child_probe = probe.child(child_ray, fraction);
+    let local_fraction = material.scatter(&probe, &world_hit, |fraction, child_ray| {
+        let child = probe.child(child_ray, fraction);
 
-        if let Some(colour) = render_probe_rgb(world, scene, child_probe) {
+        if let Some(colour) = render_probe_rgb(world, scene, child, rng) {
             bounced += colour;
         }
-    }
+    });
+
+    let ambient = scene.ambient_light(world, &world_hit, rng) * local_fraction;
+    let direct = scene.direct_light(world, &probe.ray, &world_hit, rng) * local_fraction;
 
     Some(emitted + ambient + direct + bounced)
 }
@@ -132,11 +128,13 @@ where
                                 (y as f32 + (sy as f32 + 0.5) * ss_delta) / height as f32,
                             );
 
-                            let probe_seed = seed::pixel_seed([x, y], [sx as usize, sy as usize]);
-                            let world_ray = camera.emit(uv, settings.resolution);
-                            let probe = Probe::with_seed(world_ray, probe_seed);
+                            let probe_seed = seed::pixel_seed([x, y], [sx, sy]);
+                            let mut rng = SmallRng::seed_from_u64(probe_seed);
 
-                            let sample = match render_probe(world, scene, probe) {
+                            let world_ray = camera.emit(uv, settings.resolution);
+                            let probe = Probe::new(world_ray);
+
+                            let sample = match render_probe_rgb(world, scene, probe, &mut rng) {
                                 Some(rgb) => rgb.to_rgba(),
                                 None => settings.background,
                             };

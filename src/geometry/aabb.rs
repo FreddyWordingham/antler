@@ -9,7 +9,7 @@ use crate::{
 
 const PARALLEL_THRESHOLD: f32 = 1e-8;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub struct Aabb {
     pub min: Point3<f32>,
     pub max: Point3<f32>,
@@ -192,5 +192,12 @@ impl Traceable for Aabb {
             normal,
             uv: Point2::new(0.0, 0.0),
         })
+    }
+
+    #[inline]
+    fn trace_distance(&self, ray: &ObjectRay) -> Option<f32> {
+        let (t_min, t_max, _, _) = self.ray_intersection(ray)?;
+        let distance = if t_min > 0.0 { t_min } else { t_max };
+        (distance > 0.0).then_some(distance)
     }
 }

@@ -23,7 +23,7 @@ pub mod prelude {
         geometry::{Aabb, Bounded, Circle, Geometry, Mesh, Quad, Ray, Sphere, Triangle},
         lighting::DirectionalLight,
         material::{Mirror, Opaque, Reflective, Refractive},
-        render::{RenderSettings, render_image, render_image_with_progress, render_probe},
+        render::{RenderSettings, render_image, render_image_with_progress},
         shader::{Block, Checkerboard, Lambertion, Luminous},
         storage::{Grid, Image, RgbImage, RgbaImage},
         world::{AmbientOcclusion, Object, Scene, World},

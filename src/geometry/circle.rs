@@ -94,4 +94,23 @@ impl Traceable for Circle {
             uv: Point2::new(u, v),
         })
     }
+
+    #[inline]
+    fn trace_distance(&self, ray: &ObjectRay) -> Option<f32> {
+        let denom = self.normal.dot(&ray.direction);
+        if denom.abs() < PARALLEL_EPSILON {
+            return None;
+        }
+
+        let distance = (self.position - ray.origin).dot(&self.normal) / denom;
+        if distance <= 0.0 {
+            return None;
+        }
+
+        let position = ray.origin + *ray.direction * distance;
+        let offset = position - self.position;
+
+        let radial_sq = offset.norm_squared() - offset.dot(&self.normal).powi(2);
+        (radial_sq <= self.radius * self.radius).then_some(distance)
+    }
 }

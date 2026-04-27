@@ -61,37 +61,9 @@ impl Triangle {
             None => Point2::new(bary.y, bary.z),
         }
     }
-}
 
-impl Bounded for Triangle {
-    fn bounds(&self) -> Aabb {
-        let min = Point3::new(
-            self.vertices[0].x.min(self.vertices[1].x).min(self.vertices[2].x),
-            self.vertices[0].y.min(self.vertices[1].y).min(self.vertices[2].y),
-            self.vertices[0].z.min(self.vertices[1].z).min(self.vertices[2].z),
-        );
-        let max = Point3::new(
-            self.vertices[0].x.max(self.vertices[1].x).max(self.vertices[2].x),
-            self.vertices[0].y.max(self.vertices[1].y).max(self.vertices[2].y),
-            self.vertices[0].z.max(self.vertices[1].z).max(self.vertices[2].z),
-        );
-
-        let scale = self
-            .vertices
-            .iter()
-            .map(|p| p.coords.abs().max())
-            .fold(1.0_f32, f32::max);
-        let padding = Vector3::new(BOUNDS_PADDING, BOUNDS_PADDING, BOUNDS_PADDING) * scale;
-
-        Aabb {
-            min: min - padding,
-            max: max + padding,
-        }
-    }
-}
-
-impl Traceable for Triangle {
-    fn trace(&self, ray: &ObjectRay) -> Option<ObjectHit> {
+    #[inline]
+    fn intersect(&self, ray: &ObjectRay) -> Option<(f32, Vector3<f32>)> {
         let edge_ab = self.vertices[1] - self.vertices[0];
         let edge_ac = self.vertices[2] - self.vertices[0];
 
@@ -125,8 +97,40 @@ impl Traceable for Triangle {
         }
 
         let alpha = 1.0 - beta - gamma;
+        Some((distance, Vector3::new(alpha, beta, gamma)))
+    }
+}
 
-        let bary = Vector3::new(alpha, beta, gamma);
+impl Bounded for Triangle {
+    fn bounds(&self) -> Aabb {
+        let min = Point3::new(
+            self.vertices[0].x.min(self.vertices[1].x).min(self.vertices[2].x),
+            self.vertices[0].y.min(self.vertices[1].y).min(self.vertices[2].y),
+            self.vertices[0].z.min(self.vertices[1].z).min(self.vertices[2].z),
+        );
+        let max = Point3::new(
+            self.vertices[0].x.max(self.vertices[1].x).max(self.vertices[2].x),
+            self.vertices[0].y.max(self.vertices[1].y).max(self.vertices[2].y),
+            self.vertices[0].z.max(self.vertices[1].z).max(self.vertices[2].z),
+        );
+
+        let scale = self
+            .vertices
+            .iter()
+            .map(|p| p.coords.abs().max())
+            .fold(1.0_f32, f32::max);
+        let padding = Vector3::new(BOUNDS_PADDING, BOUNDS_PADDING, BOUNDS_PADDING) * scale;
+
+        Aabb {
+            min: min - padding,
+            max: max + padding,
+        }
+    }
+}
+
+impl Traceable for Triangle {
+    fn trace(&self, ray: &ObjectRay) -> Option<ObjectHit> {
+        let (distance, bary) = self.intersect(ray)?;
 
         let position = self.interpolate_position(bary);
         let mut normal = self.interpolate_normal(bary);
@@ -135,13 +139,16 @@ impl Traceable for Triangle {
             normal = -normal;
         }
 
-        let uv = self.interpolate_uv(bary);
-
         Some(ObjectHit {
             distance,
             position,
             normal,
-            uv,
+            uv: self.interpolate_uv(bary),
         })
+    }
+
+    #[inline]
+    fn trace_distance(&self, ray: &ObjectRay) -> Option<f32> {
+        self.intersect(ray).map(|(distance, _)| distance)
     }
 }
