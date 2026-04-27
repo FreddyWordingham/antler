@@ -79,6 +79,9 @@ dependencies = [
 [[package]]
 name = "antler-material"
 version = "2.0.0"
+dependencies = [
+ "antler-geometry",
+]
 
 [[package]]
 name = "antler-render"
