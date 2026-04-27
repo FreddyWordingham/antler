@@ -94,6 +94,7 @@ impl Traceable for Aabb {
         (distance > 0.0).then_some(distance)
     }
 
+    #[inline]
     fn hit(&self, ray: &Ray) -> Option<Hit> {
         let (t_min, t_max, entry_face, exit_face) = self.ray_intersection(ray)?;
 
