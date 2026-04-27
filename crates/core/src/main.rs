@@ -6,13 +6,14 @@ fn main() {
     let height = 320;
     let resolution = [width, height];
 
-    let shape = Aabb::new(Point3::new(-0.5, -0.5, -0.5), Point3::new(0.5, 0.5, 0.5));
+    // let shape = Aabb::new(Point3::new(-0.5, -0.5, -0.5), Point3::new(0.5, 0.5, 0.5));
+    let shape = Sphere::new(Point3::new(0.0, 0.0, 0.0), 0.5);
 
     let camera = Perspective::new(
         Point3::new(4.0, -4.0, 4.0),
         Point3::new(0.0, 0.0, 0.0),
         Vector3::z_axis(),
-        45.0f32.to_radians(),
+        15.0f32.to_radians(),
     );
     let mut image = RgbaImage::filled(resolution, Rgba::TRANSPARENT);
 
