@@ -1,3 +1,9 @@
 [workspace]
-members = ["crates/core", "crates/config", "crates/geometry", "crates/render"]
+members = [
+    "crates/core",
+    "crates/config",
+    "crates/geometry",
+    "crates/image",
+    "crates/render",
+]
 resolver = "2"
