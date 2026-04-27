@@ -4,6 +4,4 @@ mod rgb;
 mod rgba;
 mod utils;
 
-pub mod prelude {
-    pub use crate::{errors::ParseHexError, pixel::Pixel, rgb::Rgb, rgba::Rgba};
-}
+pub use crate::{pixel::Pixel, rgb::Rgb, rgba::Rgba};
