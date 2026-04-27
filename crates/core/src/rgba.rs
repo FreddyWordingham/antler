@@ -7,6 +7,10 @@ pub struct Rgba {
 }
 
 impl Rgba {
+    pub const BLACK: Self = Self::new(0.0, 0.0, 0.0, 1.0);
+    pub const WHITE: Self = Self::new(1.0, 1.0, 1.0, 1.0);
+    pub const TRANSPARENT: Self = Self::new(0.0, 0.0, 0.0, 0.0);
+
     #[inline]
     pub const fn new(red: f32, green: f32, blue: f32, alpha: f32) -> Self {
         assert!(0.0 <= red && red <= 1.0, "Red value must be between 0.0 and 1.0.");
