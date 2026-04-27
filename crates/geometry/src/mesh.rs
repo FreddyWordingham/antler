@@ -4,8 +4,8 @@ use nalgebra::{Point2, Point3, Unit, Vector3};
 use tobj::{LoadOptions, load_obj};
 
 use crate::{
-    aabb::Aabb, bounded::Bounded, bvh::Bvh, errors::MeshLoadError, hit::Hit, ray::Ray, traceable::Traceable,
-    triangle::Triangle,
+    aabb::Aabb, bounded::Bounded, bvh::Bvh, errors::MeshLoadError, intersection::Intersection, ray::Ray,
+    traceable::Traceable, triangle::Triangle,
 };
 
 pub struct Mesh {
@@ -138,39 +138,34 @@ impl Traceable for Mesh {
     #[inline]
     fn distance(&self, ray: &Ray) -> Option<f32> {
         let mut best_distance = f32::INFINITY;
-        let mut hit = false;
 
         self.bvh
-            .any_with_limit(ray, &mut best_distance, |triangle_index, best_distance| {
-                let Some(distance) = self.triangle(triangle_index).distance(ray) else {
-                    return false;
-                };
-
-                if distance <= *best_distance {
+            .nearest_with_max(ray, &mut best_distance, |triangle_index, best_distance| {
+                if let Some(distance) = self.triangle(triangle_index).distance(ray)
+                    && distance < *best_distance
+                {
                     *best_distance = distance;
-                    hit = true;
-                    true
-                } else {
-                    false
                 }
+
+                true
             });
 
-        hit.then_some(best_distance)
+        best_distance.is_finite().then_some(best_distance)
     }
 
-    fn hit(&self, ray: &Ray) -> Option<Hit> {
+    fn intersection(&self, ray: &Ray) -> Option<Intersection> {
         let mut nearest = None;
         let mut best_distance = f32::INFINITY;
 
         self.bvh
             .nearest_with_max(ray, &mut best_distance, |triangle_index, best_distance| {
-                let Some(hit) = self.triangle(triangle_index).hit(ray) else {
+                let Some(intersect) = self.triangle(triangle_index).intersection(ray) else {
                     return true;
                 };
 
-                if hit.distance < *best_distance {
-                    *best_distance = hit.distance;
-                    nearest = Some(hit);
+                if intersect.distance < *best_distance {
+                    *best_distance = intersect.distance;
+                    nearest = Some(intersect);
                 }
 
                 true

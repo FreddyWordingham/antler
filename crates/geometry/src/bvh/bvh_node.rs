@@ -63,6 +63,10 @@ impl BvhNode {
         t_min = t_min.max(tz0.min(tz1));
         t_max = t_max.min(tz0.max(tz1));
 
-        if t_max < t_min { None } else { Some((t_min, t_max)) }
+        if t_max < t_min || t_max <= 0.0 {
+            None
+        } else {
+            Some((t_min.max(0.0), t_max))
+        }
     }
 }

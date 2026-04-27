@@ -1,9 +1,9 @@
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
-use crate::{aabb::Aabb, bounded::Bounded, hit::Hit, ray::Ray, traceable::Traceable};
+use crate::{aabb::Aabb, bounded::Bounded, intersection::Intersection, ray::Ray, traceable::Traceable};
 
 const BOUNDS_PADDING: f32 = 1.0e-6;
-const HIT_EPSILON: f32 = 1.0e-8;
+const INTERSECTION_EPSILON: f32 = 1.0e-8;
 
 pub struct Triangle {
     vertices: [Point3<f32>; 3],
@@ -26,7 +26,7 @@ impl Triangle {
         let edge_ac = self.vertices[2] - self.vertices[0];
 
         let scale = edge_ab.norm().max(edge_ac.norm()).max(1.0);
-        let eps = HIT_EPSILON * scale;
+        let eps = INTERSECTION_EPSILON * scale;
 
         let p_vec = ray.direction.cross(&edge_ac);
         let det = edge_ab.dot(&p_vec);
@@ -129,7 +129,7 @@ impl Traceable for Triangle {
     }
 
     #[inline]
-    fn hit(&self, ray: &Ray) -> Option<Hit> {
+    fn intersection(&self, ray: &Ray) -> Option<Intersection> {
         let (distance, bary) = self.intersect(ray)?;
 
         let position = self.interpolate_position(bary);
@@ -139,6 +139,6 @@ impl Traceable for Triangle {
             normal = -normal;
         }
 
-        Some(Hit::new(distance, position, normal, self.interpolate_uv(bary)))
+        Some(Intersection::new(distance, position, normal, self.interpolate_uv(bary)))
     }
 }

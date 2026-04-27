@@ -19,6 +19,7 @@ pub struct Bvh<T: Copy> {
 }
 
 impl<T: Copy> Bvh<T> {
+    #[must_use]
     pub fn new(aabbs: Vec<(Aabb, T)>) -> Self {
         assert!(!aabbs.is_empty(), "Cannot build a BVH with no items.");
 

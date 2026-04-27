@@ -1,6 +1,6 @@
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
-use crate::{bounded::Bounded, hit::Hit, ray::Ray, traceable::Traceable};
+use crate::{bounded::Bounded, intersection::Intersection, ray::Ray, traceable::Traceable};
 
 const PARALLEL_THRESHOLD: f32 = 1e-8;
 
@@ -38,16 +38,18 @@ impl Aabb {
     }
 
     #[inline]
-    #[must_use] 
+    #[must_use]
     pub fn centroid(&self) -> Point3<f32> {
         (self.min + self.max.coords) / 2.0
     }
 
     #[inline]
-    #[must_use] 
+    #[must_use]
     pub fn area(&self) -> f32 {
         let extent = self.max - self.min;
-        2.0 * extent.z.mul_add(extent.x, extent.x.mul_add(extent.y, extent.y * extent.z))
+        2.0 * extent
+            .z
+            .mul_add(extent.x, extent.x.mul_add(extent.y, extent.y * extent.z))
     }
 
     #[must_use]
@@ -125,7 +127,7 @@ impl Traceable for Aabb {
     }
 
     #[inline]
-    fn hit(&self, ray: &Ray) -> Option<Hit> {
+    fn intersection(&self, ray: &Ray) -> Option<Intersection> {
         let (t_min, t_max, entry_face, exit_face) = self.ray_intersection(ray)?;
 
         let (distance, normal) = if t_min > 0.0 {
@@ -140,7 +142,7 @@ impl Traceable for Aabb {
 
         let position = ray.origin + *ray.direction * distance;
 
-        Some(Hit::new(distance, position, normal, Point2::new(0.0, 0.0)))
+        Some(Intersection::new(distance, position, normal, Point2::new(0.0, 0.0)))
     }
 }
 

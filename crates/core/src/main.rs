@@ -22,8 +22,8 @@ fn main() {
             let uv = Point2::new(x as f32 / width as f32, y as f32 / height as f32);
             let ray = camera.emit(resolution, uv);
 
-            if let Some(hit) = shape.hit(&ray) {
-                let normal = hit.normal;
+            if let Some(intersect) = shape.intersection(&ray) {
+                let normal = intersect.normal;
                 image[(x, y)] = Rgba::new(normal.x.abs(), normal.y.abs(), normal.z.abs(), 1.0);
             }
         }

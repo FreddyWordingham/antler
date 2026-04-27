@@ -1,6 +1,6 @@
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
-pub struct Hit {
+pub struct Intersection {
     pub distance: f32,
     pub position: Point3<f32>,
     pub normal: Unit<Vector3<f32>>,
@@ -9,7 +9,7 @@ pub struct Hit {
     pub uv: Point2<f32>,
 }
 
-impl Hit {
+impl Intersection {
     #[must_use]
     #[inline]
     pub fn new(distance: f32, position: Point3<f32>, normal: Unit<Vector3<f32>>, uv: Point2<f32>) -> Self {
