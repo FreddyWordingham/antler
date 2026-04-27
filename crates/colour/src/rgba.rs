@@ -123,6 +123,7 @@ impl AddAssign for Rgba {
         self.red += rhs.red;
         self.green += rhs.green;
         self.blue += rhs.blue;
+        self.alpha += rhs.alpha;
     }
 }
 
