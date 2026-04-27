@@ -8,6 +8,11 @@ pub struct Ray {
 
 impl Ray {
     #[must_use]
+    pub const fn new(origin: Point3<f32>, direction: Unit<Vector3<f32>>) -> Self {
+        Self { origin, direction }
+    }
+
+    #[must_use]
     #[inline]
     pub fn transform(&self, transform: &Similarity3<f32>) -> Self {
         Self {
