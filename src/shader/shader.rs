@@ -1,7 +1,7 @@
 use crate::{
     colour::Rgb,
     lighting::LightSample,
-    shader::{Block, Checkerboard, Lambertion, Luminous},
+    shader::{Block, Checkerboard, GradientShader, Lambertion, Luminous},
     tracing::{WorldHit, WorldRay},
 };
 
@@ -47,4 +47,4 @@ macro_rules! define_shader_enum {
     };
 }
 
-define_shader_enum!(ShaderEnum: Block, Lambertion, Luminous, Checkerboard);
+define_shader_enum!(ShaderEnum: Block, GradientShader, Lambertion, Luminous, Checkerboard);
