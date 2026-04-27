@@ -26,7 +26,12 @@ impl Bounded for Sphere {
 
 impl Traceable for Sphere {
     #[inline]
-    fn distance(&self, ray: &Ray) -> Option<f32> {
+    fn hit(&self, ray: &Ray, max_distance: f32) -> bool {
+        self.distance(ray, max_distance).is_some()
+    }
+
+    #[inline]
+    fn distance(&self, ray: &Ray, max_distance: f32) -> Option<f32> {
         let oc = ray.origin - self.centre;
 
         let half_b = oc.dot(&ray.direction);
@@ -44,12 +49,12 @@ impl Traceable for Sphere {
             distance = -half_b + sqrt_d;
         }
 
-        (distance > 0.0).then_some(distance)
+        (distance > 0.0 && distance < max_distance).then_some(distance)
     }
 
     #[inline]
-    fn intersection(&self, ray: &Ray) -> Option<Intersection> {
-        let distance = self.distance(ray)?;
+    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Intersection> {
+        let distance = self.distance(ray, max_distance)?;
 
         let position = ray.origin + *ray.direction * distance;
         let normal = Unit::new_normalize(position - self.centre);

@@ -120,14 +120,20 @@ impl Bounded for Aabb {
 
 impl Traceable for Aabb {
     #[inline]
-    fn distance(&self, ray: &Ray) -> Option<f32> {
-        let (t_min, t_max, _, _) = self.ray_intersection(ray)?;
-        let distance = if t_min > 0.0 { t_min } else { t_max };
-        (distance > 0.0).then_some(distance)
+    fn hit(&self, ray: &Ray, max_distance: f32) -> bool {
+        self.distance(ray, max_distance).is_some()
     }
 
     #[inline]
-    fn intersection(&self, ray: &Ray) -> Option<Intersection> {
+    fn distance(&self, ray: &Ray, max_distance: f32) -> Option<f32> {
+        let (t_min, t_max, _, _) = self.ray_intersection(ray)?;
+        let distance = if t_min > 0.0 { t_min } else { t_max };
+
+        (distance > 0.0 && distance < max_distance).then_some(distance)
+    }
+
+    #[inline]
+    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Intersection> {
         let (t_min, t_max, entry_face, exit_face) = self.ray_intersection(ray)?;
 
         let (distance, normal) = if t_min > 0.0 {
@@ -136,12 +142,11 @@ impl Traceable for Aabb {
             (t_max, exit_face.normal())
         };
 
-        if distance <= 0.0 {
+        if distance <= 0.0 || distance >= max_distance {
             return None;
         }
 
         let position = ray.origin + *ray.direction * distance;
-
         Some(Intersection::new(distance, position, normal, Point2::new(0.0, 0.0)))
     }
 }

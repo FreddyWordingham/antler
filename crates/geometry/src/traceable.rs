@@ -2,8 +2,11 @@ pub use crate::{intersection::Intersection, ray::Ray};
 
 pub trait Traceable {
     #[must_use]
-    fn distance(&self, ray: &Ray) -> Option<f32>;
+    fn hit(&self, ray: &Ray, max_distance: f32) -> bool;
 
     #[must_use]
-    fn intersection(&self, ray: &Ray) -> Option<Intersection>;
+    fn distance(&self, ray: &Ray, max_distance: f32) -> Option<f32>;
+
+    #[must_use]
+    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Intersection>;
 }

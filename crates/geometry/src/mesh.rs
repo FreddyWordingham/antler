@@ -136,37 +136,43 @@ impl Bounded for Mesh {
 
 impl Traceable for Mesh {
     #[inline]
-    fn distance(&self, ray: &Ray) -> Option<f32> {
-        let mut best_distance = f32::INFINITY;
+    fn hit(&self, ray: &Ray, max_distance: f32) -> bool {
+        let mut limit = max_distance;
+
+        self.bvh.any_with_limit(ray, &mut limit, |triangle_index, limit| {
+            self.triangle(triangle_index).hit(ray, *limit)
+        })
+    }
+
+    #[inline]
+    fn distance(&self, ray: &Ray, max_distance: f32) -> Option<f32> {
+        let mut best_distance = max_distance;
 
         self.bvh
             .nearest_with_max(ray, &mut best_distance, |triangle_index, best_distance| {
-                if let Some(distance) = self.triangle(triangle_index).distance(ray)
-                    && distance < *best_distance
-                {
+                if let Some(distance) = self.triangle(triangle_index).distance(ray, *best_distance) {
                     *best_distance = distance;
                 }
 
                 true
             });
 
-        best_distance.is_finite().then_some(best_distance)
+        (best_distance < max_distance).then_some(best_distance)
     }
 
-    fn intersection(&self, ray: &Ray) -> Option<Intersection> {
+    #[inline]
+    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Intersection> {
         let mut nearest = None;
-        let mut best_distance = f32::INFINITY;
+        let mut best_distance = max_distance;
 
         self.bvh
             .nearest_with_max(ray, &mut best_distance, |triangle_index, best_distance| {
-                let Some(intersect) = self.triangle(triangle_index).intersection(ray) else {
+                let Some(intersection) = self.triangle(triangle_index).intersection(ray, *best_distance) else {
                     return true;
                 };
 
-                if intersect.distance < *best_distance {
-                    *best_distance = intersect.distance;
-                    nearest = Some(intersect);
-                }
+                *best_distance = intersection.distance;
+                nearest = Some(intersection);
 
                 true
             });

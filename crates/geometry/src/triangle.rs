@@ -21,6 +21,17 @@ impl Triangle {
         Self { vertices, normals, uvs }
     }
 
+    #[must_use]
+    #[inline]
+    pub fn face_normal(&self) -> Unit<Vector3<f32>> {
+        Unit::new_normalize((self.vertices[1] - self.vertices[0]).cross(&(self.vertices[2] - self.vertices[0])))
+    }
+
+    #[inline]
+    fn distance_unchecked(&self, ray: &Ray) -> Option<f32> {
+        self.intersect(ray).map(|(distance, _)| distance)
+    }
+
     fn intersect(&self, ray: &Ray) -> Option<(f32, Vector3<f32>)> {
         let edge_ab = self.vertices[1] - self.vertices[0];
         let edge_ac = self.vertices[2] - self.vertices[0];
@@ -56,12 +67,6 @@ impl Triangle {
 
         let alpha = 1.0 - beta - gamma;
         Some((distance, Vector3::new(alpha, beta, gamma)))
-    }
-
-    #[must_use]
-    #[inline]
-    pub fn face_normal(&self) -> Unit<Vector3<f32>> {
-        Unit::new_normalize((self.vertices[1] - self.vertices[0]).cross(&(self.vertices[2] - self.vertices[0])))
     }
 
     #[must_use]
@@ -124,13 +129,22 @@ impl Bounded for Triangle {
 
 impl Traceable for Triangle {
     #[inline]
-    fn distance(&self, ray: &Ray) -> Option<f32> {
-        self.intersect(ray).map(|(distance, _)| distance)
+    fn hit(&self, ray: &Ray, max_distance: f32) -> bool {
+        self.distance(ray, max_distance).is_some()
     }
 
     #[inline]
-    fn intersection(&self, ray: &Ray) -> Option<Intersection> {
+    fn distance(&self, ray: &Ray, max_distance: f32) -> Option<f32> {
+        self.distance_unchecked(ray).filter(|distance| *distance < max_distance)
+    }
+
+    #[inline]
+    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Intersection> {
         let (distance, bary) = self.intersect(ray)?;
+
+        if distance >= max_distance {
+            return None;
+        }
 
         let position = self.interpolate_position(bary);
         let mut normal = self.interpolate_normal(bary);
