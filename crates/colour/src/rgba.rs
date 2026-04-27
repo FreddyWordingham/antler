@@ -7,7 +7,7 @@ use std::{
 
 use png::ColorType;
 
-use crate::{errors::ParseHexError, pixel::Pixel};
+use crate::{errors::ParseHexError, pixel::Pixel, utils::parse_hex};
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Rgba {
@@ -81,27 +81,7 @@ impl Pixel for Rgba {
 
     #[inline]
     fn from_hex(hex: &str) -> Result<Self, ParseHexError> {
-        let hex = hex.strip_prefix('#').unwrap_or(hex);
-        match hex.len() {
-            4 => {
-                let r = u8::from_str_radix(&hex[0..1].repeat(2), 16)?;
-                let g = u8::from_str_radix(&hex[1..2].repeat(2), 16)?;
-                let b = u8::from_str_radix(&hex[2..3].repeat(2), 16)?;
-                let a = u8::from_str_radix(&hex[3..4].repeat(2), 16)?;
-                Ok(Self::from_bytes([r, g, b, a]))
-            }
-            8 => {
-                let r = u8::from_str_radix(&hex[0..2], 16)?;
-                let g = u8::from_str_radix(&hex[2..4], 16)?;
-                let b = u8::from_str_radix(&hex[4..6], 16)?;
-                let a = u8::from_str_radix(&hex[6..8], 16)?;
-                Ok(Self::from_bytes([r, g, b, a]))
-            }
-            found => Err(ParseHexError::InvalidLength {
-                expected: &[4, 8],
-                found,
-            }),
-        }
+        Ok(Self::from_bytes(parse_hex::<4>(hex, &[4, 8])?))
     }
 }
 

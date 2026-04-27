@@ -7,7 +7,7 @@ use std::{
 
 use png::ColorType;
 
-use crate::{errors::ParseHexError, pixel::Pixel};
+use crate::{errors::ParseHexError, pixel::Pixel, utils::parse_hex};
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Rgb {
@@ -70,25 +70,7 @@ impl Pixel for Rgb {
 
     #[inline]
     fn from_hex(hex: &str) -> Result<Self, ParseHexError> {
-        let hex = hex.strip_prefix('#').unwrap_or(hex);
-        match hex.len() {
-            3 => {
-                let r = u8::from_str_radix(&hex[0..1].repeat(2), 16)?;
-                let g = u8::from_str_radix(&hex[1..2].repeat(2), 16)?;
-                let b = u8::from_str_radix(&hex[2..3].repeat(2), 16)?;
-                Ok(Self::from_bytes([r, g, b]))
-            }
-            6 => {
-                let r = u8::from_str_radix(&hex[0..2], 16)?;
-                let g = u8::from_str_radix(&hex[2..4], 16)?;
-                let b = u8::from_str_radix(&hex[4..6], 16)?;
-                Ok(Self::from_bytes([r, g, b]))
-            }
-            found => Err(ParseHexError::InvalidLength {
-                expected: &[3, 6],
-                found,
-            }),
-        }
+        Ok(Self::from_bytes(parse_hex::<3>(hex, &[3, 6])?))
     }
 }
 
