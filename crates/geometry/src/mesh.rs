@@ -3,10 +3,14 @@ use std::path::Path;
 use nalgebra::{Point2, Point3, Unit, Vector3};
 use tobj::{LoadOptions, load_obj};
 
-use crate::{aabb::Aabb, bounded::Bounded, errors::MeshLoadError, triangle::Triangle};
+use crate::{
+    aabb::Aabb, bounded::Bounded, bvh::Bvh, errors::MeshLoadError, hit::Hit, ray::Ray, traceable::Traceable,
+    triangle::Triangle,
+};
 
 pub struct Mesh {
     triangles: Vec<Triangle>,
+    bvh: Bvh<usize>,
 }
 
 impl Mesh {
@@ -14,7 +18,15 @@ impl Mesh {
     pub fn new(triangles: Vec<Triangle>) -> Self {
         assert!(!triangles.is_empty(), "Cannot build a mesh with no triangles.");
 
-        Self { triangles }
+        let bvh = Bvh::new(
+            triangles
+                .iter()
+                .enumerate()
+                .map(|(index, triangle)| (triangle.bounds(), index))
+                .collect(),
+        );
+
+        Self { triangles, bvh }
     }
 
     #[must_use]
@@ -119,6 +131,52 @@ impl Bounded for Mesh {
     #[inline]
     fn bounds(&self) -> Aabb {
         Aabb::union(self.triangles.iter().map(Bounded::bounds))
+    }
+}
+
+impl Traceable for Mesh {
+    #[inline]
+    fn distance(&self, ray: &Ray) -> Option<f32> {
+        let mut best_distance = f32::INFINITY;
+        let mut hit = false;
+
+        self.bvh
+            .any_with_limit(ray, &mut best_distance, |triangle_index, best_distance| {
+                let Some(distance) = self.triangle(triangle_index).distance(ray) else {
+                    return false;
+                };
+
+                if distance <= *best_distance {
+                    *best_distance = distance;
+                    hit = true;
+                    true
+                } else {
+                    false
+                }
+            });
+
+        hit.then_some(best_distance)
+    }
+
+    fn hit(&self, ray: &Ray) -> Option<Hit> {
+        let mut nearest = None;
+        let mut best_distance = f32::INFINITY;
+
+        self.bvh
+            .nearest_with_max(ray, &mut best_distance, |triangle_index, best_distance| {
+                let Some(hit) = self.triangle(triangle_index).hit(ray) else {
+                    return true;
+                };
+
+                if hit.distance < *best_distance {
+                    *best_distance = hit.distance;
+                    nearest = Some(hit);
+                }
+
+                true
+            });
+
+        nearest
     }
 }
 

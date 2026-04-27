@@ -1,11 +1,13 @@
 mod aabb;
 mod bounded;
+mod bvh;
 pub mod errors;
 mod hit;
 mod mesh;
 mod ray;
 mod sphere;
 mod traceable;
+mod traversal_ray;
 mod triangle;
 
 pub use aabb::Aabb;

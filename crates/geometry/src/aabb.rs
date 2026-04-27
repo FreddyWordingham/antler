@@ -6,8 +6,8 @@ const PARALLEL_THRESHOLD: f32 = 1e-8;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Aabb {
-    min: Point3<f32>,
-    max: Point3<f32>,
+    pub min: Point3<f32>,
+    pub max: Point3<f32>,
 }
 
 impl Aabb {
@@ -35,6 +35,19 @@ impl Aabb {
                 Point3::new(a.max.x.max(b.max.x), a.max.y.max(b.max.y), a.max.z.max(b.max.z)),
             )
         })
+    }
+
+    #[inline]
+    #[must_use] 
+    pub fn centroid(&self) -> Point3<f32> {
+        (self.min + self.max.coords) / 2.0
+    }
+
+    #[inline]
+    #[must_use] 
+    pub fn area(&self) -> f32 {
+        let extent = self.max - self.min;
+        2.0 * extent.z.mul_add(extent.x, extent.x.mul_add(extent.y, extent.y * extent.z))
     }
 
     #[must_use]
