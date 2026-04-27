@@ -11,3 +11,6 @@ members = [
     "crates/render",
 ]
 resolver = "2"
+
+[workspace.dependencies]
+png = "0.18.1"
