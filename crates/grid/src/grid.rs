@@ -75,17 +75,17 @@ impl<T, const D: usize> Grid<T, D> {
         let mut index = 0;
         let mut stride = 1;
 
-        for axis in 0..D {
+        for (axis, (&c, &size)) in coord.iter().zip(self.size.iter()).enumerate() {
             assert!(
-                coord[axis] < self.size[axis],
+                c < size,
                 "Coordinate on axis {} ({}) must be less than size ({})",
                 axis,
-                coord[axis],
-                self.size[axis]
+                c,
+                size
             );
 
-            index += coord[axis] * stride;
-            stride *= self.size[axis];
+            index += c * stride;
+            stride *= size;
         }
 
         index
