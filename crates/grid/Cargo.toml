@@ -1,5 +1,5 @@
 [package]
-name = "antler-storage"
+name = "antler-grid"
 version = "2.0.0"
 edition = "2024"
 

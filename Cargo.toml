@@ -8,7 +8,7 @@ members = [
     "crates/shader",
     "crates/material",
     "crates/scene",
-    "crates/storage",
+    "crates/grid",
     "crates/render",
 ]
 resolver = "2"

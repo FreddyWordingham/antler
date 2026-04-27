@@ -31,6 +31,10 @@ name = "antler-geometry"
 version = "2.0.0"
 
 [[package]]
+name = "antler-grid"
+version = "2.0.0"
+
+[[package]]
 name = "antler-image"
 version = "2.0.0"
 
@@ -48,10 +52,6 @@ version = "2.0.0"
 
 [[package]]
 name = "antler-shader"
-version = "2.0.0"
-
-[[package]]
-name = "antler-storage"
 version = "2.0.0"
 
 [[package]]
