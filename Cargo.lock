@@ -9,6 +9,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "320119579fcad9c21884f5c4861d16174d0e06250625266f50fe6898340abefa"
 
 [[package]]
+name = "antler"
+version = "2.0.0"
+dependencies = [
+ "antler-colour",
+ "antler-image",
+]
+
+[[package]]
 name = "antler-colour"
 version = "2.0.0"
 dependencies = [
@@ -18,13 +26,6 @@ dependencies = [
 [[package]]
 name = "antler-config"
 version = "2.0.0"
-
-[[package]]
-name = "antler-core"
-version = "2.0.0"
-dependencies = [
- "antler-geometry",
-]
 
 [[package]]
 name = "antler-geometry"

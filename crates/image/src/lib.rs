@@ -1,5 +1,3 @@
 mod image;
 
-pub mod prelude {
-    pub use crate::image::{Image, RgbImage, RgbaImage};
-}
+pub use image::{Image, RgbImage, RgbaImage};
