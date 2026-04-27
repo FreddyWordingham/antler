@@ -2,7 +2,7 @@
     geometry: Mesh(
         path: "assets/meshes/golem.obj",
     ),
-    shader: "blue",
+    shader: "sunset",
     material: Opaque,
     transform: (
         rotation: (0.0, 0.0, 180.0),

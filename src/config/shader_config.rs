@@ -1,15 +1,18 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    colour::Rgb,
+    colour::{Gradient, Rgb},
     config::defaults,
-    shader::{Block, Checkerboard, Lambertion, Luminous, ShaderEnum},
+    shader::{Block, Checkerboard, GradientShader, Lambertion, Luminous, ShaderEnum},
 };
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum ShaderConfig {
     Block {
         colour: Rgb,
+    },
+    GradientShader {
+        stops: Vec<Rgb>,
     },
     Lambertion {
         colour: Rgb,
@@ -31,6 +34,7 @@ impl ShaderConfig {
     pub fn build(self) -> ShaderEnum {
         match self {
             ShaderConfig::Block { colour } => Block::new(colour).into(),
+            ShaderConfig::GradientShader { stops } => GradientShader::new(Gradient::new(stops)).into(),
             ShaderConfig::Lambertion { colour } => Lambertion::new(colour).into(),
             ShaderConfig::Luminous { colour, intensity } => Luminous::new(colour, intensity).into(),
             ShaderConfig::Checkerboard {

@@ -7,5 +7,5 @@
         strength: 1.0e4,
     )),
     lights: ["sun"],
-    objects: ["floor", "golem"],
+    objects: ["golem"],
 )
