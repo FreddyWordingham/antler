@@ -6,9 +6,9 @@ const BOUNDS_PADDING: f32 = 1.0e-6;
 const HIT_EPSILON: f32 = 1.0e-8;
 
 pub struct Triangle {
-    pub vertices: [Point3<f32>; 3],
-    pub normals: Option<[Unit<Vector3<f32>>; 3]>,
-    pub uvs: Option<[Point2<f32>; 3]>,
+    vertices: [Point3<f32>; 3],
+    normals: Option<[Unit<Vector3<f32>>; 3]>,
+    uvs: Option<[Point2<f32>; 3]>,
 }
 
 impl Triangle {

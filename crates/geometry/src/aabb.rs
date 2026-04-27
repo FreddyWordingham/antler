@@ -20,6 +20,23 @@ impl Aabb {
         Self { min, max }
     }
 
+    #[inline]
+    pub fn union<I>(mut iter: I) -> Self
+    where
+        I: Iterator<Item = Self>,
+    {
+        let Some(first) = iter.next() else {
+            panic!("Cannot union an empty iterator of AABBs.");
+        };
+
+        iter.fold(first, |a, b| {
+            Self::new(
+                Point3::new(a.min.x.min(b.min.x), a.min.y.min(b.min.y), a.min.z.min(b.min.z)),
+                Point3::new(a.max.x.max(b.max.x), a.max.y.max(b.max.y), a.max.z.max(b.max.z)),
+            )
+        })
+    }
+
     #[must_use]
     fn ray_intersection(&self, ray: &Ray) -> Option<(f32, f32, AabbFace, AabbFace)> {
         let origin = ray.origin;

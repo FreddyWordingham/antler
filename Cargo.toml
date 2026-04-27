@@ -18,6 +18,7 @@ resolver = "2"
 [workspace.dependencies]
 nalgebra = "0.34.2"
 png = "0.18.1"
+tobj = "4.0.3"
 
 [workspace.lints.clippy]
 all = { level = "warn", priority = -1 }
