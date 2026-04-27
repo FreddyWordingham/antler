@@ -3,5 +3,12 @@
 version = 4
 
 [[package]]
-name = "antler"
+name = "antler-core"
+version = "2.0.0"
+dependencies = [
+ "antler-geometry",
+]
+
+[[package]]
+name = "antler-geometry"
 version = "2.0.0"
