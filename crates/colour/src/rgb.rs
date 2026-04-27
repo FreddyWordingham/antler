@@ -3,6 +3,10 @@ use std::{
     ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign},
 };
 
+use png::ColorType;
+
+use crate::{errors::ParseHexError, pixel::Pixel};
+
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Rgb {
     pub red: f32,
@@ -21,6 +25,68 @@ impl Rgb {
         assert!(0.0 <= blue && blue <= 1.0, "Blue value must be between 0.0 and 1.0.");
 
         Self { red, green, blue }
+    }
+}
+
+impl Pixel for Rgb {
+    const CHANNELS: usize = 3;
+    const PNG_COLOUR_TYPE: ColorType = ColorType::Rgb;
+
+    type Bytes = [u8; 3];
+
+    #[inline]
+    fn to_bytes(&self) -> Self::Bytes {
+        [
+            (self.red.clamp(0.0, 1.0) * 255.0).round() as u8,
+            (self.green.clamp(0.0, 1.0) * 255.0).round() as u8,
+            (self.blue.clamp(0.0, 1.0) * 255.0).round() as u8,
+        ]
+    }
+
+    #[inline]
+    fn from_bytes(bytes: Self::Bytes) -> Self {
+        Self {
+            red: bytes[0] as f32 / 255.0,
+            green: bytes[1] as f32 / 255.0,
+            blue: bytes[2] as f32 / 255.0,
+        }
+    }
+
+    #[inline]
+    fn to_u32(&self) -> u32 {
+        let bytes = self.to_bytes();
+        ((bytes[0] as u32) << 16) | ((bytes[1] as u32) << 8) | (bytes[2] as u32)
+    }
+
+    #[inline]
+    fn from_u32(value: u32) -> Self {
+        let r = ((value >> 16) & 0xFF) as u8;
+        let g = ((value >> 8) & 0xFF) as u8;
+        let b = (value & 0xFF) as u8;
+        Self::from_bytes([r, g, b])
+    }
+
+    #[inline]
+    fn from_hex(hex: &str) -> Result<Self, ParseHexError> {
+        let hex = hex.trim_start_matches('#');
+        match hex.len() {
+            3 => {
+                let r = u8::from_str_radix(&hex[0..1].repeat(2), 16)?;
+                let g = u8::from_str_radix(&hex[1..2].repeat(2), 16)?;
+                let b = u8::from_str_radix(&hex[2..3].repeat(2), 16)?;
+                Ok(Self::from_bytes([r, g, b]))
+            }
+            6 => {
+                let r = u8::from_str_radix(&hex[0..2], 16)?;
+                let g = u8::from_str_radix(&hex[2..4], 16)?;
+                let b = u8::from_str_radix(&hex[4..6], 16)?;
+                Ok(Self::from_bytes([r, g, b]))
+            }
+            found => Err(ParseHexError::InvalidLength {
+                expected: &[3, 6],
+                found,
+            }),
+        }
     }
 }
 
