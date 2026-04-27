@@ -10,7 +10,8 @@ fn main() {
     // let shape = Sphere::new(Point3::new(0.0, 0.0, 0.0), 0.5);
     // let shape = Mesh::load("assets/meshes/golem.obj").expect("Failed to load mesh");
     // let shape = Torus::new(Point3::new(0.0, 0.0, 0.0), 0.5, 0.25);
-    let shape = Capsule::new(Point3::new(-0.5, 0.0, 0.0), Point3::new(0.5, 0.0, 0.0), 0.05);
+    // let shape = Capsule::new(Point3::new(-0.5, 0.0, 0.0), Point3::new(0.5, 0.0, 0.0), 0.05);
+    let shape = Circle::new(Point3::new(0.0, 0.0, 0.0), Vector3::y_axis(), 0.5);
 
     let camera = Perspective::new(
         Point3::new(4.0, -4.0, 4.0),
