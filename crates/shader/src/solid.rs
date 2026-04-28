@@ -1,7 +1,8 @@
 use antler_colour::Rgb;
 use antler_geometry::{Contact, Ray};
+use antler_light::LightSample;
 
-use crate::{Appearance, light_sample::LightSample};
+use crate::Appearance;
 
 pub struct Solid {
     pub colour: Rgb,

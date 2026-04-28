@@ -1,7 +1,8 @@
 use antler_colour::Rgb;
 use antler_geometry::{Contact, Ray};
+use antler_light::LightSample;
 
-use crate::{appearance::Appearance, light_sample::LightSample};
+use crate::appearance::Appearance;
 
 pub struct Block {
     pub colour: Rgb,

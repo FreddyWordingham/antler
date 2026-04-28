@@ -1,10 +1,8 @@
 use antler_colour::Rgb;
 use antler_geometry::{Contact, Ray};
+use antler_light::LightSample;
 
-use crate::{
-    appearance::Appearance, block::Block, checkerboard::Checkerboard, light_sample::LightSample, luminous::Luminous,
-    solid::Solid,
-};
+use crate::{appearance::Appearance, block::Block, checkerboard::Checkerboard, luminous::Luminous, solid::Solid};
 
 pub enum Shader {
     Block(Block),

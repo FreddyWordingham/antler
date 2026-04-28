@@ -1,7 +1,6 @@
 use antler_colour::Rgb;
 use antler_geometry::{Contact, Ray};
-
-use crate::light_sample::LightSample;
+use antler_light::LightSample;
 
 pub trait Appearance {
     fn emitted(&self, contact: &Contact) -> Rgb;
