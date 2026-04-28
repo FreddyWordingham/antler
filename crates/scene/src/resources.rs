@@ -9,8 +9,15 @@ pub struct Resources {
     shaders: Vec<Shader>,
 }
 
+impl Default for Resources {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Resources {
-    pub fn new() -> Self {
+    #[must_use] 
+    pub const fn new() -> Self {
         Self {
             geometries: Vec::new(),
             materials: Vec::new(),
@@ -49,16 +56,19 @@ impl Resources {
     }
 
     #[inline]
+    #[must_use] 
     pub fn get_geometry(&self, id: GeometryId) -> &Geometry {
         &self.geometries[id.index()]
     }
 
     #[inline]
+    #[must_use] 
     pub fn get_material(&self, id: MaterialId) -> &Material {
         &self.materials[id.index()]
     }
 
     #[inline]
+    #[must_use] 
     pub fn get_shader(&self, id: ShaderId) -> &Shader {
         &self.shaders[id.index()]
     }

@@ -11,7 +11,8 @@ pub struct Checkerboard {
 }
 
 impl Checkerboard {
-    pub fn new(size: f32, colour_a: Rgb, colour_b: Rgb) -> Self {
+    #[must_use] 
+    pub const fn new(size: f32, colour_a: Rgb, colour_b: Rgb) -> Self {
         Self {
             size,
             colour_a,

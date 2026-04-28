@@ -38,9 +38,9 @@ impl Bounded for Circle {
         let n = self.plane.normal.into_inner().abs();
 
         let extent = Vector3::new(
-            self.radius * (1.0 - n.x * n.x).sqrt(),
-            self.radius * (1.0 - n.y * n.y).sqrt(),
-            self.radius * (1.0 - n.z * n.z).sqrt(),
+            self.radius * n.x.mul_add(-n.x, 1.0).sqrt(),
+            self.radius * n.y.mul_add(-n.y, 1.0).sqrt(),
+            self.radius * n.z.mul_add(-n.z, 1.0).sqrt(),
         );
 
         Aabb::new(self.plane.position - extent, self.plane.position + extent)

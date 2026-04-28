@@ -10,7 +10,8 @@ pub struct Luminous {
 }
 
 impl Luminous {
-    pub fn new(colour: Rgb, intensity: f32) -> Self {
+    #[must_use] 
+    pub const fn new(colour: Rgb, intensity: f32) -> Self {
         Self { colour, intensity }
     }
 }

@@ -11,7 +11,8 @@ pub struct Reflective {
 }
 
 impl Reflective {
-    pub fn new(reflectance: f32) -> Self {
+    #[must_use] 
+    pub const fn new(reflectance: f32) -> Self {
         Self {
             reflectance: reflectance.clamp(0.0, 1.0),
         }

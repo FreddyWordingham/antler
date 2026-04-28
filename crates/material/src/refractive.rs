@@ -11,7 +11,8 @@ pub struct Refractive {
 }
 
 impl Refractive {
-    pub fn new(refractive_index: f32) -> Self {
+    #[must_use] 
+    pub const fn new(refractive_index: f32) -> Self {
         Self {
             refractive_index: refractive_index.max(f32::EPSILON),
         }

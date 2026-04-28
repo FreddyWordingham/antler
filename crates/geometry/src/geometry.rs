@@ -18,14 +18,14 @@ impl Bounded for Geometry {
     #[inline]
     fn bounds(&self) -> Aabb {
         match self {
-            Geometry::Aabb(aabb) => aabb.bounds(),
-            Geometry::Capsule(capsule) => capsule.bounds(),
-            Geometry::Circle(circle) => circle.bounds(),
-            Geometry::Mesh(mesh) => mesh.bounds(),
-            Geometry::Quad(quad) => quad.bounds(),
-            Geometry::Sphere(sphere) => sphere.bounds(),
-            Geometry::Torus(torus) => torus.bounds(),
-            Geometry::Triangle(triangle) => triangle.bounds(),
+            Self::Aabb(aabb) => aabb.bounds(),
+            Self::Capsule(capsule) => capsule.bounds(),
+            Self::Circle(circle) => circle.bounds(),
+            Self::Mesh(mesh) => mesh.bounds(),
+            Self::Quad(quad) => quad.bounds(),
+            Self::Sphere(sphere) => sphere.bounds(),
+            Self::Torus(torus) => torus.bounds(),
+            Self::Triangle(triangle) => triangle.bounds(),
         }
     }
 }
@@ -34,42 +34,42 @@ impl Traceable for Geometry {
     #[inline]
     fn hit(&self, ray: &Ray, max_distance: f32) -> bool {
         match self {
-            Geometry::Aabb(aabb) => aabb.hit(ray, max_distance),
-            Geometry::Capsule(capsule) => capsule.hit(ray, max_distance),
-            Geometry::Circle(circle) => circle.hit(ray, max_distance),
-            Geometry::Mesh(mesh) => mesh.hit(ray, max_distance),
-            Geometry::Quad(quad) => quad.hit(ray, max_distance),
-            Geometry::Sphere(sphere) => sphere.hit(ray, max_distance),
-            Geometry::Torus(torus) => torus.hit(ray, max_distance),
-            Geometry::Triangle(triangle) => triangle.hit(ray, max_distance),
+            Self::Aabb(aabb) => aabb.hit(ray, max_distance),
+            Self::Capsule(capsule) => capsule.hit(ray, max_distance),
+            Self::Circle(circle) => circle.hit(ray, max_distance),
+            Self::Mesh(mesh) => mesh.hit(ray, max_distance),
+            Self::Quad(quad) => quad.hit(ray, max_distance),
+            Self::Sphere(sphere) => sphere.hit(ray, max_distance),
+            Self::Torus(torus) => torus.hit(ray, max_distance),
+            Self::Triangle(triangle) => triangle.hit(ray, max_distance),
         }
     }
 
     #[inline]
     fn distance(&self, ray: &Ray, max_distance: f32) -> Option<f32> {
         match self {
-            Geometry::Aabb(aabb) => aabb.distance(ray, max_distance),
-            Geometry::Capsule(capsule) => capsule.distance(ray, max_distance),
-            Geometry::Circle(circle) => circle.distance(ray, max_distance),
-            Geometry::Mesh(mesh) => mesh.distance(ray, max_distance),
-            Geometry::Quad(quad) => quad.distance(ray, max_distance),
-            Geometry::Sphere(sphere) => sphere.distance(ray, max_distance),
-            Geometry::Torus(torus) => torus.distance(ray, max_distance),
-            Geometry::Triangle(triangle) => triangle.distance(ray, max_distance),
+            Self::Aabb(aabb) => aabb.distance(ray, max_distance),
+            Self::Capsule(capsule) => capsule.distance(ray, max_distance),
+            Self::Circle(circle) => circle.distance(ray, max_distance),
+            Self::Mesh(mesh) => mesh.distance(ray, max_distance),
+            Self::Quad(quad) => quad.distance(ray, max_distance),
+            Self::Sphere(sphere) => sphere.distance(ray, max_distance),
+            Self::Torus(torus) => torus.distance(ray, max_distance),
+            Self::Triangle(triangle) => triangle.distance(ray, max_distance),
         }
     }
 
     #[inline]
     fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Contact> {
         match self {
-            Geometry::Aabb(aabb) => aabb.intersection(ray, max_distance),
-            Geometry::Capsule(capsule) => capsule.intersection(ray, max_distance),
-            Geometry::Circle(circle) => circle.intersection(ray, max_distance),
-            Geometry::Mesh(mesh) => mesh.intersection(ray, max_distance),
-            Geometry::Quad(quad) => quad.intersection(ray, max_distance),
-            Geometry::Sphere(sphere) => sphere.intersection(ray, max_distance),
-            Geometry::Torus(torus) => torus.intersection(ray, max_distance),
-            Geometry::Triangle(triangle) => triangle.intersection(ray, max_distance),
+            Self::Aabb(aabb) => aabb.intersection(ray, max_distance),
+            Self::Capsule(capsule) => capsule.intersection(ray, max_distance),
+            Self::Circle(circle) => circle.intersection(ray, max_distance),
+            Self::Mesh(mesh) => mesh.intersection(ray, max_distance),
+            Self::Quad(quad) => quad.intersection(ray, max_distance),
+            Self::Sphere(sphere) => sphere.intersection(ray, max_distance),
+            Self::Torus(torus) => torus.intersection(ray, max_distance),
+            Self::Triangle(triangle) => triangle.intersection(ray, max_distance),
         }
     }
 }

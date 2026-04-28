@@ -14,7 +14,7 @@ impl Emissive for Light {
         f: F,
     ) {
         match self {
-            Light::Directional(directional) => directional.for_each_sample(rng, contact, f),
+            Self::Directional(directional) => directional.for_each_sample(rng, contact, f),
         }
     }
 }

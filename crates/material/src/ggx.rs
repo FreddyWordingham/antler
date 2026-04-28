@@ -15,7 +15,8 @@ pub struct Ggx {
 }
 
 impl Ggx {
-    pub fn new(roughness: f32, reflectance: f32) -> Self {
+    #[must_use] 
+    pub const fn new(roughness: f32, reflectance: f32) -> Self {
         Self {
             roughness: roughness.clamp(0.001, 1.0),
             reflectance: reflectance.clamp(0.0, 1.0),
@@ -50,7 +51,7 @@ fn sample_ggx_half_vector<R: Rng>(rng: &mut R, normal: Unit<Vector3<f32>>, rough
     let alpha = roughness * roughness;
 
     let phi = 2.0 * PI * u1;
-    let cos_theta = ((1.0 - u2) / (1.0 + (alpha * alpha - 1.0) * u2)).sqrt();
+    let cos_theta = ((1.0 - u2) / alpha.mul_add(alpha, -1.0).mul_add(u2, 1.0)).sqrt();
     let sin_theta = (1.0 - cos_theta * cos_theta).sqrt();
 
     let local = Vector3::new(sin_theta * phi.cos(), sin_theta * phi.sin(), cos_theta);

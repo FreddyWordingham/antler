@@ -14,8 +14,15 @@ pub struct Scene {
     bvh: Option<Bvh<ObjectId>>,
 }
 
+impl Default for Scene {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Scene {
-    pub fn new() -> Self {
+    #[must_use] 
+    pub const fn new() -> Self {
         Self {
             ambient: Rgb::WHITE,
             occlusion: None,
@@ -25,11 +32,11 @@ impl Scene {
         }
     }
 
-    pub fn set_ambient(&mut self, ambient: Rgb) {
+    pub const fn set_ambient(&mut self, ambient: Rgb) {
         self.ambient = ambient;
     }
 
-    pub fn set_occlusion(&mut self, occlusion: Option<OcclusionSettings>) {
+    pub const fn set_occlusion(&mut self, occlusion: Option<OcclusionSettings>) {
         self.occlusion = occlusion;
     }
 

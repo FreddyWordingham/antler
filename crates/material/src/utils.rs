@@ -33,7 +33,7 @@ pub fn refract(
 #[inline]
 pub fn schlick(cos_theta: f32, eta: f32) -> f32 {
     let r0 = ((1.0 - eta) / (1.0 + eta)).powi(2);
-    r0 + (1.0 - r0) * (1.0 - cos_theta).powi(5)
+    (1.0 - r0).mul_add((1.0 - cos_theta).powi(5), r0)
 }
 
 #[inline]

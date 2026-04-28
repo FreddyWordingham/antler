@@ -18,12 +18,12 @@ pub enum Material {
 impl Bsdf for Material {
     fn scatter<R: Rng, F: FnMut(Ray, f32)>(&self, rng: &mut R, ray: &Ray, contact: &Contact, emit_child: F) -> f32 {
         match self {
-            Material::Ggx(inner) => inner.scatter(rng, ray, contact, emit_child),
-            Material::Lambertian(inner) => inner.scatter(rng, ray, contact, emit_child),
-            Material::Mirror(inner) => inner.scatter(rng, ray, contact, emit_child),
-            Material::Opaque(inner) => inner.scatter(rng, ray, contact, emit_child),
-            Material::Reflective(inner) => inner.scatter(rng, ray, contact, emit_child),
-            Material::Refractive(inner) => inner.scatter(rng, ray, contact, emit_child),
+            Self::Ggx(inner) => inner.scatter(rng, ray, contact, emit_child),
+            Self::Lambertian(inner) => inner.scatter(rng, ray, contact, emit_child),
+            Self::Mirror(inner) => inner.scatter(rng, ray, contact, emit_child),
+            Self::Opaque(inner) => inner.scatter(rng, ray, contact, emit_child),
+            Self::Reflective(inner) => inner.scatter(rng, ray, contact, emit_child),
+            Self::Refractive(inner) => inner.scatter(rng, ray, contact, emit_child),
         }
     }
 }

@@ -6,7 +6,7 @@ pub fn cone_direction(axis: Unit<Vector3<f32>>, angle: f32, rng: &mut impl Rng) 
     let v: f32 = rng.random();
 
     let cos_max = angle.cos();
-    let cos_theta = 1.0 - u * (1.0 - cos_max);
+    let cos_theta = u.mul_add(-(1.0 - cos_max), 1.0);
     let sin_theta = (1.0 - cos_theta * cos_theta).sqrt();
     let phi = std::f32::consts::TAU * v;
 

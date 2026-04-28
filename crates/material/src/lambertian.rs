@@ -11,7 +11,8 @@ pub struct Lambertian {
 }
 
 impl Lambertian {
-    pub fn new(albedo: f32) -> Self {
+    #[must_use] 
+    pub const fn new(albedo: f32) -> Self {
         Self {
             albedo: albedo.clamp(0.0, 1.0),
         }

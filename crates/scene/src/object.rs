@@ -10,6 +10,7 @@ pub struct Object {
 }
 
 impl Object {
+    #[must_use] 
     pub fn new(
         geometry_id: GeometryId,
         shader_id: ShaderId,

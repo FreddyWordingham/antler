@@ -5,8 +5,15 @@ use crate::bsdf::Bsdf;
 
 pub struct Opaque;
 
+impl Default for Opaque {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Opaque {
-    pub fn new() -> Self {
+    #[must_use] 
+    pub const fn new() -> Self {
         Self
     }
 }

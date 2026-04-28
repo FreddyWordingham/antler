@@ -8,8 +8,15 @@ use crate::{
 
 pub struct Mirror;
 
+impl Default for Mirror {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Mirror {
-    pub fn new() -> Self {
+    #[must_use] 
+    pub const fn new() -> Self {
         Self
     }
 }

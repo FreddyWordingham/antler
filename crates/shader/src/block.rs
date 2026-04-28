@@ -9,7 +9,8 @@ pub struct Block {
 }
 
 impl Block {
-    pub fn new(colour: Rgb) -> Self {
+    #[must_use] 
+    pub const fn new(colour: Rgb) -> Self {
         Self { colour }
     }
 }

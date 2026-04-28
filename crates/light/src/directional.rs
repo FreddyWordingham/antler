@@ -1,5 +1,3 @@
-use std::f32::INFINITY;
-
 use antler_colour::Rgb;
 use antler_geometry::Contact;
 use nalgebra::{Unit, Vector3};
@@ -15,7 +13,8 @@ pub struct Directional {
 }
 
 impl Directional {
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         direction: Unit<Vector3<f32>>,
         radiance: Rgb,
         angular_radius: Option<f32>,
@@ -38,7 +37,7 @@ impl Emissive for Directional {
         if angular_radius <= 0.0 || samples == 1 {
             f(LightSample {
                 direction: -self.direction,
-                distance: INFINITY,
+                distance: f32::INFINITY,
                 radiance: self.radiance,
             });
             return;
@@ -47,7 +46,7 @@ impl Emissive for Directional {
         for _ in 0..samples {
             f(LightSample {
                 direction: cone_direction(-self.direction, angular_radius, rng),
-                distance: INFINITY,
+                distance: f32::INFINITY,
                 radiance: self.radiance,
             });
         }
