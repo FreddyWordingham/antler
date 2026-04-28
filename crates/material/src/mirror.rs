@@ -1,4 +1,5 @@
 use antler_geometry::{Intersection, Ray};
+use rand::Rng;
 
 use crate::{bsdf::Bsdf, utils::reflect};
 
@@ -11,11 +12,17 @@ impl Mirror {
 }
 
 impl Bsdf for Mirror {
-    fn scatter<F: FnMut(Ray, f32)>(&self, ray: &Ray, intersection: &Intersection, mut emit_child: F) -> f32 {
+    fn scatter<R: Rng, F: FnMut(Ray, f32)>(
+        &self,
+        _rng: &mut R,
+        ray: &Ray,
+        intersection: &Intersection,
+        mut emit_child: F,
+    ) -> f32 {
         emit_child(
             Ray {
                 origin: intersection.position,
-                direction: reflect(*ray.direction, *intersection.normal),
+                direction: reflect(ray.direction, intersection.normal),
             },
             1.0,
         );

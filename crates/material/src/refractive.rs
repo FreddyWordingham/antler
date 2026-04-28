@@ -1,4 +1,5 @@
 use antler_geometry::{Intersection, Ray};
+use rand::Rng;
 
 use crate::{
     bsdf::Bsdf,
@@ -18,9 +19,15 @@ impl Refractive {
 }
 
 impl Bsdf for Refractive {
-    fn scatter<F: FnMut(Ray, f32)>(&self, ray: &Ray, intersection: &Intersection, mut emit_child: F) -> f32 {
-        let incident = *ray.direction;
-        let outward_normal = *intersection.normal;
+    fn scatter<R: Rng, F: FnMut(Ray, f32)>(
+        &self,
+        _rng: &mut R,
+        ray: &Ray,
+        intersection: &Intersection,
+        mut emit_child: F,
+    ) -> f32 {
+        let incident = ray.direction;
+        let outward_normal = intersection.normal;
 
         let front_face = incident.dot(&outward_normal) < 0.0;
         let normal = if front_face { outward_normal } else { -outward_normal };
