@@ -11,6 +11,7 @@ members = [
     "crates/material",
     "crates/render",
     "crates/scene",
+    "crates/settings",
     "crates/shader",
 ]
 resolver = "2"

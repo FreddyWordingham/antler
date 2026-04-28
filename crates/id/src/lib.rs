@@ -1,3 +1,3 @@
 mod id;
 
-pub use id::ObjectId;
+pub use id::{GeometryId, MaterialId, ObjectId, ShaderId};

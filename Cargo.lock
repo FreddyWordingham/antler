@@ -102,6 +102,21 @@ version = "2.0.0"
 [[package]]
 name = "antler-scene"
 version = "2.0.0"
+dependencies = [
+ "antler-colour",
+ "antler-geometry",
+ "antler-id",
+ "antler-light",
+ "antler-settings",
+ "nalgebra",
+]
+
+[[package]]
+name = "antler-settings"
+version = "2.0.0"
+dependencies = [
+ "antler-colour",
+]
 
 [[package]]
 name = "antler-shader"
