@@ -1,7 +1,10 @@
 use antler_geometry::{Intersection, Ray};
 use rand::Rng;
 
-use crate::{bsdf::Bsdf, utils::cosine_weighted_hemisphere};
+use crate::{
+    bsdf::Bsdf,
+    utils::{cosine_weighted_hemisphere, offset_origin},
+};
 
 pub struct Lambertian {
     albedo: f32,
@@ -23,10 +26,12 @@ impl Bsdf for Lambertian {
         intersection: &Intersection,
         mut emit_child: F,
     ) -> f32 {
+        let direction = cosine_weighted_hemisphere(rng, intersection.normal);
+
         emit_child(
             Ray {
-                origin: intersection.position,
-                direction: cosine_weighted_hemisphere(rng, intersection.normal),
+                origin: offset_origin(intersection.position, intersection.normal, direction),
+                direction,
             },
             self.albedo,
         );

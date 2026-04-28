@@ -6,7 +6,7 @@ use rand::{Rng, RngExt};
 
 use crate::{
     bsdf::Bsdf,
-    utils::{reflect, tangent_frame},
+    utils::{offset_origin, reflect, tangent_frame},
 };
 
 pub struct Ggx {
@@ -37,7 +37,7 @@ impl Bsdf for Ggx {
         if reflected.dot(&intersection.normal) > 0.0 {
             emit_child(
                 Ray {
-                    origin: intersection.position,
+                    origin: offset_origin(intersection.position, intersection.normal, reflected),
                     direction: reflected,
                 },
                 self.reflectance,

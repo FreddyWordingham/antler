@@ -3,7 +3,7 @@ use rand::Rng;
 
 use crate::{
     bsdf::Bsdf,
-    utils::{reflect, refract, schlick},
+    utils::{offset_origin, reflect, refract, schlick},
 };
 
 pub struct Refractive {
@@ -44,19 +44,23 @@ impl Bsdf for Refractive {
         let cannot_refract = eta * sin_theta > 1.0;
         let reflectance = if cannot_refract { 1.0 } else { schlick(cos_theta, eta) };
 
+        let reflected = reflect(incident, normal);
+
         emit_child(
             Ray {
-                origin: intersection.position,
-                direction: reflect(incident, normal),
+                origin: offset_origin(intersection.position, outward_normal, reflected),
+                direction: reflected,
             },
             reflectance,
         );
 
         if !cannot_refract {
+            let refracted = refract(incident, normal, eta, cos_theta);
+
             emit_child(
                 Ray {
-                    origin: intersection.position,
-                    direction: refract(incident, normal, eta, cos_theta),
+                    origin: offset_origin(intersection.position, outward_normal, refracted),
+                    direction: refracted,
                 },
                 1.0 - reflectance,
             );

@@ -1,7 +1,10 @@
 use antler_geometry::{Intersection, Ray};
 use rand::Rng;
 
-use crate::{bsdf::Bsdf, utils::reflect};
+use crate::{
+    bsdf::Bsdf,
+    utils::{offset_origin, reflect},
+};
 
 pub struct Mirror;
 
@@ -19,10 +22,12 @@ impl Bsdf for Mirror {
         intersection: &Intersection,
         mut emit_child: F,
     ) -> f32 {
+        let direction = reflect(ray.direction, intersection.normal);
+
         emit_child(
             Ray {
-                origin: intersection.position,
-                direction: reflect(ray.direction, intersection.normal),
+                origin: offset_origin(intersection.position, intersection.normal, direction),
+                direction,
             },
             1.0,
         );
