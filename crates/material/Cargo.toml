@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 antler-geometry = { path = "../geometry" }
+nalgebra = { workspace = true }
 
 [lints]
 workspace = true

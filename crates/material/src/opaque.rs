@@ -1,6 +1,6 @@
 use antler_geometry::{Intersection, Ray};
 
-use crate::material::Material;
+use crate::bsdf::Bsdf;
 
 pub struct Opaque;
 
@@ -10,8 +10,8 @@ impl Opaque {
     }
 }
 
-impl Material for Opaque {
-    fn scatter(&self, _ray: &Ray, _intersection: &Intersection, _emit_child: impl FnMut(Ray, f32)) -> f32 {
+impl Bsdf for Opaque {
+    fn scatter<F: FnMut(Ray, f32)>(&self, _ray: &Ray, _intersection: &Intersection, _emit_child: F) -> f32 {
         1.0
     }
 }
