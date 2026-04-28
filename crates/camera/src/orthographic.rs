@@ -1,7 +1,7 @@
 use antler_geometry::Ray;
 use nalgebra::{Isometry3, Point2, Point3, Unit, Vector3};
 
-use crate::camera::Camera;
+use crate::observer::Observer;
 
 pub struct Orthographic {
     pub transform: Isometry3<f32>,
@@ -9,7 +9,7 @@ pub struct Orthographic {
 }
 
 impl Orthographic {
-    #[must_use] 
+    #[must_use]
     pub fn new(position: Point3<f32>, look_at: Point3<f32>, up: Unit<Vector3<f32>>, size: [f32; 2]) -> Self {
         Self {
             transform: Isometry3::look_at_rh(&position, &look_at, &up).inverse(),
@@ -18,7 +18,7 @@ impl Orthographic {
     }
 }
 
-impl Camera for Orthographic {
+impl Observer for Orthographic {
     fn emit(&self, _resolution: [usize; 2], uv: Point2<f32>) -> Ray {
         let x = 2.0f32.mul_add(uv.x, -1.0) * self.size[0] * 0.5;
         let y = 2.0f32.mul_add(-uv.y, 1.0) * self.size[1] * 0.5;

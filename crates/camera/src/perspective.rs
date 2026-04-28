@@ -1,7 +1,7 @@
 use antler_geometry::Ray;
 use nalgebra::{Isometry3, Point2, Point3, Unit, Vector3};
 
-use crate::camera::Camera;
+use crate::observer::Observer;
 
 pub struct Perspective {
     pub transform: Isometry3<f32>,
@@ -18,7 +18,7 @@ impl Perspective {
     }
 }
 
-impl Camera for Perspective {
+impl Observer for Perspective {
     fn emit(&self, resolution: [usize; 2], uv: Point2<f32>) -> Ray {
         let aspect_ratio = resolution[0] as f32 / resolution[1] as f32;
         let tan_half_fov = (self.vertical_fov * 0.5).tan();

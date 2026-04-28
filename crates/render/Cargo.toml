@@ -4,6 +4,17 @@ version = "2.0.0"
 edition = "2024"
 
 [dependencies]
+antler-camera = { path = "../camera" }
+antler-colour = { path = "../colour" }
+antler-geometry = { path = "../geometry" }
+antler-image = { path = "../image" }
+antler-material = { path = "../material" }
+antler-scene = { path = "../scene" }
+antler-settings = { path = "../settings" }
+antler-shader = { path = "../shader" }
+nalgebra = { workspace = true }
+rand = { workspace = true }
+rayon = { workspace = true }
 
 [lints]
 workspace = true

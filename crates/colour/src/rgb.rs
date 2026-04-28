@@ -7,7 +7,7 @@ use std::{
 
 use png::ColorType;
 
-use crate::{errors::ParseHexError, pixel::Pixel, utils::parse_hex};
+use crate::{errors::ParseHexError, pixel::Pixel, rgba::Rgba, utils::parse_hex};
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Rgb {
@@ -28,6 +28,12 @@ impl Rgb {
         assert!(0.0 <= blue && blue <= 1.0, "Blue value must be between 0.0 and 1.0.");
 
         Self { red, green, blue }
+    }
+
+    #[must_use]
+    #[inline]
+    pub const fn to_rgba(&self) -> crate::Rgba {
+        Rgba::new(self.red, self.green, self.blue, 1.0)
     }
 }
 

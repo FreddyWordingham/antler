@@ -9,6 +9,8 @@ use antler_colour::{Pixel, Rgb, Rgba};
 use antler_grid::SurfaceGrid;
 use png::Encoder;
 
+use crate::tile::Tile;
+
 pub struct Image<P: Pixel> {
     pixels: SurfaceGrid<P>,
 }
@@ -33,21 +35,23 @@ impl<P: Pixel> Image<P> {
         }
     }
 
-    #[must_use]
     #[inline]
-    pub const fn width(&self) -> usize {
-        self.pixels.size()[0]
-    }
+    pub fn apply_tile(&mut self, tile: Tile, pixels: &[P]) {
+        let [tile_width, tile_height] = tile.size();
 
-    #[must_use]
-    #[inline]
-    pub const fn height(&self) -> usize {
-        self.pixels.size()[1]
+        for local_y in 0..tile_height {
+            let y = tile.min[1] + local_y;
+
+            for local_x in 0..tile_width {
+                let x = tile.min[0] + local_x;
+                self[(x, y)] = pixels[local_y * tile_width + local_x];
+            }
+        }
     }
 
     pub fn save(&self, path: impl AsRef<Path>) -> IoResult<()> {
-        let width = u32::try_from(self.width()).expect("image width exceeds u32::MAX");
-        let height = u32::try_from(self.height()).expect("image height exceeds u32::MAX");
+        let width = u32::try_from(self.pixels.size()[0]).expect("image width exceeds u32::MAX");
+        let height = u32::try_from(self.pixels.size()[1]).expect("image height exceeds u32::MAX");
 
         let mut bytes = Vec::with_capacity(self.pixels.len() * P::CHANNELS);
 
