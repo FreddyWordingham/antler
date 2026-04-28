@@ -9,7 +9,7 @@ use nalgebra::Point2;
 use rand::{Rng, SeedableRng, rngs::SmallRng};
 use rayon::prelude::*;
 
-use crate::probe::Probe;
+use crate::{probe::Probe, utils::progress_bar};
 
 pub fn render_probe<R: Rng + SeedableRng>(
     rng: &mut R,
@@ -107,9 +107,12 @@ pub fn render_image(
 ) -> RgbaImage {
     let tiles = Tile::create_tiles(image_settings.resolution, image_settings.tile_size);
 
+    let pb = progress_bar(tiles.len() as u64);
     let rendered_tiles = tiles
         .into_par_iter()
         .map(|tile| {
+            pb.inc(1);
+
             let seed = tile_seed(tile.min);
             let mut rng = SmallRng::seed_from_u64(seed);
 
@@ -127,6 +130,7 @@ pub fn render_image(
             )
         })
         .collect::<Vec<_>>();
+    pb.finish();
 
     let mut image = RgbaImage::filled(image_settings.resolution, image_settings.background);
     for (tile, pixels) in rendered_tiles {

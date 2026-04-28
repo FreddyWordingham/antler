@@ -12,6 +12,7 @@ antler-material = { path = "../material" }
 antler-scene = { path = "../scene" }
 antler-settings = { path = "../settings" }
 antler-shader = { path = "../shader" }
+indicatif = { workspace = true }
 nalgebra = { workspace = true }
 rand = { workspace = true }
 rayon = { workspace = true }

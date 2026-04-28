@@ -17,6 +17,7 @@ members = [
 resolver = "2"
 
 [workspace.dependencies]
+indicatif = "0.18.4"
 nalgebra = "0.34.2"
 png = "0.18.1"
 rand = "0.10.1"
