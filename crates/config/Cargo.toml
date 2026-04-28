@@ -4,6 +4,9 @@ version = "2.0.0"
 edition = "2024"
 
 [dependencies]
+antler-geometry = { path = "../geometry" }
+ron = { workspace = true }
+serde = { workspace = true }
 
 [lints]
 workspace = true

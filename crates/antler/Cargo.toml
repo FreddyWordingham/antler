@@ -6,6 +6,7 @@ edition = "2024"
 [dependencies]
 antler-camera = { path = "../camera" }
 antler-colour = { path = "../colour" }
+antler-config = { path = "../config" }
 antler-geometry = { path = "../geometry" }
 antler-image = { path = "../image" }
 antler-light = { path = "../light" }

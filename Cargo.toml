@@ -1,9 +1,9 @@
 [workspace]
 members = [
+    "crates/antler",
     "crates/camera",
     "crates/colour",
     "crates/config",
-    "crates/core",
     "crates/geometry",
     "crates/grid",
     "crates/id",
@@ -22,6 +22,8 @@ nalgebra = "0.34.2"
 png = "0.18.1"
 rand = "0.10.1"
 rayon = "1.12.0"
+ron = "0.12.1"
+serde = { version = "1.0.228", features = ["derive"] }
 tobj = "4.0.3"
 
 [workspace.lints.clippy]

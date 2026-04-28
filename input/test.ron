@@ -1,0 +1,5 @@
+(
+  assets_dir: "assets",
+  output_dir: "output",
+  placeholder: "placeholder.ron"
+)
