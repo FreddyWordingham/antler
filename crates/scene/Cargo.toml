@@ -8,7 +8,9 @@ antler-colour = { path = "../colour" }
 antler-geometry = { path = "../geometry" }
 antler-id = { path = "../id" }
 antler-light = { path = "../light" }
+antler-material = { path = "../material" }
 antler-settings = { path = "../settings" }
+antler-shader = { path = "../shader" }
 nalgebra = { workspace = true }
 
 [lints]

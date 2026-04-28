@@ -1,10 +1,10 @@
 use antler_colour::Rgb;
-use antler_geometry::Bvh;
+use antler_geometry::{Bounded, Bvh};
 use antler_id::ObjectId;
 use antler_light::Light;
 use antler_settings::OcclusionSettings;
 
-use crate::object::Object;
+use crate::{object::Object, resources::Resources};
 
 pub struct Scene {
     ambient: Rgb,
@@ -40,5 +40,23 @@ impl Scene {
     pub fn add_object(&mut self, object: Object) {
         self.objects.push(object);
         self.bvh = None;
+    }
+
+    pub fn build(&mut self, resources: &Resources) {
+        let items = self
+            .objects
+            .iter()
+            .enumerate()
+            .map(|(index, object)| {
+                let bounds = resources
+                    .get_geometry(object.geometry_id)
+                    .bounds()
+                    .transform(&object.transform);
+
+                (bounds, ObjectId::new(index))
+            })
+            .collect();
+
+        self.bvh = Some(Bvh::new(items));
     }
 }

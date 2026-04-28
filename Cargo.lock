@@ -107,7 +107,9 @@ dependencies = [
  "antler-geometry",
  "antler-id",
  "antler-light",
+ "antler-material",
  "antler-settings",
+ "antler-shader",
  "nalgebra",
 ]
 

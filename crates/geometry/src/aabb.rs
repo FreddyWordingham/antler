@@ -1,4 +1,4 @@
-use nalgebra::{Point2, Point3, Unit, Vector3};
+use nalgebra::{Point2, Point3, Similarity3, Unit, Vector3};
 
 use crate::{bounded::Bounded, contact::Contact, ray::Ray, traceable::Traceable};
 
@@ -21,6 +21,7 @@ impl Aabb {
     }
 
     #[inline]
+    #[must_use]
     pub fn union<I>(mut iter: I) -> Self
     where
         I: Iterator<Item = Self>,
@@ -37,19 +38,50 @@ impl Aabb {
         })
     }
 
-    #[inline]
     #[must_use]
+    #[inline]
     pub fn centroid(&self) -> Point3<f32> {
         (self.min + self.max.coords) / 2.0
     }
 
-    #[inline]
     #[must_use]
+    #[inline]
     pub fn area(&self) -> f32 {
         let extent = self.max - self.min;
         2.0 * extent
             .z
             .mul_add(extent.x, extent.x.mul_add(extent.y, extent.y * extent.z))
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn transform(&self, transform: &Similarity3<f32>) -> Self {
+        let transformed_vertices = self.vertices().into_iter().map(|v| transform.transform_point(&v));
+        let min = transformed_vertices
+            .clone()
+            .fold(Point3::new(f32::INFINITY, f32::INFINITY, f32::INFINITY), |a, b| {
+                Point3::new(a.x.min(b.x), a.y.min(b.y), a.z.min(b.z))
+            });
+        let max = transformed_vertices.fold(
+            Point3::new(f32::NEG_INFINITY, f32::NEG_INFINITY, f32::NEG_INFINITY),
+            |a, b| Point3::new(a.x.max(b.x), a.y.max(b.y), a.z.max(b.z)),
+        );
+        Self { min, max }
+    }
+
+    #[must_use]
+    #[inline]
+    fn vertices(&self) -> [Point3<f32>; 8] {
+        [
+            self.min,
+            Point3::new(self.max.x, self.min.y, self.min.z),
+            Point3::new(self.min.x, self.max.y, self.min.z),
+            Point3::new(self.max.x, self.max.y, self.min.z),
+            Point3::new(self.min.x, self.min.y, self.max.z),
+            Point3::new(self.max.x, self.min.y, self.max.z),
+            Point3::new(self.min.x, self.max.y, self.max.z),
+            self.max,
+        ]
     }
 
     #[must_use]
