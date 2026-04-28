@@ -36,7 +36,7 @@ fn main() {
     let solid_id = resources.add_shader(Solid::new(Rgb::new(0.2, 0.8, 0.2)));
 
     // Objects
-    let centrepiece = Object::new(sphere_id, opaque_id, solid_id, Similarity3::identity());
+    let centrepiece = Object::new(sphere_id, mirror_id, luminous_id, Similarity3::identity());
 
     // Scene
     let mut scene = Scene::new();
@@ -50,6 +50,7 @@ fn main() {
         .into(),
     );
     scene.add_object(centrepiece);
+    scene.build(&resources);
 
     // Camera
     let camera = Perspective::new(
