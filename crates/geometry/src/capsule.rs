@@ -1,6 +1,6 @@
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
-use crate::{aabb::Aabb, bounded::Bounded, intersection::Intersection, ray::Ray, traceable::Traceable};
+use crate::{aabb::Aabb, bounded::Bounded, contact::Contact, ray::Ray, traceable::Traceable};
 
 pub struct Capsule {
     a: Point3<f32>,
@@ -96,7 +96,7 @@ impl Traceable for Capsule {
     }
 
     #[inline]
-    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Intersection> {
+    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Contact> {
         let distance = self.distance(ray, max_distance)?;
 
         let position = ray.origin + *ray.direction * distance;
@@ -106,6 +106,6 @@ impl Traceable for Capsule {
             normal = -normal;
         }
 
-        Some(Intersection::new(distance, position, normal, Point2::new(0.0, 0.0)))
+        Some(Contact::new(distance, position, normal, Point2::new(0.0, 0.0)))
     }
 }

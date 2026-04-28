@@ -2,7 +2,7 @@ use std::f32::consts::{PI, TAU};
 
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
-use crate::{aabb::Aabb, bounded::Bounded, intersection::Intersection, ray::Ray, traceable::Traceable};
+use crate::{aabb::Aabb, bounded::Bounded, contact::Contact, ray::Ray, traceable::Traceable};
 
 pub struct Sphere {
     centre: Point3<f32>,
@@ -53,7 +53,7 @@ impl Traceable for Sphere {
     }
 
     #[inline]
-    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Intersection> {
+    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Contact> {
         let distance = self.distance(ray, max_distance)?;
 
         let position = ray.origin + *ray.direction * distance;
@@ -65,6 +65,6 @@ impl Traceable for Sphere {
         let u = (phi + PI) / TAU;
         let v = theta / PI;
 
-        Some(Intersection::new(distance, position, normal, Point2::new(u, v)))
+        Some(Contact::new(distance, position, normal, Point2::new(u, v)))
     }
 }

@@ -1,4 +1,4 @@
-use antler_geometry::{Intersection, Ray};
+use antler_geometry::{Contact, Ray};
 use rand::Rng;
 
 use crate::{
@@ -16,20 +16,14 @@ pub enum Material {
 }
 
 impl Bsdf for Material {
-    fn scatter<R: Rng, F: FnMut(Ray, f32)>(
-        &self,
-        rng: &mut R,
-        ray: &Ray,
-        intersection: &Intersection,
-        emit_child: F,
-    ) -> f32 {
+    fn scatter<R: Rng, F: FnMut(Ray, f32)>(&self, rng: &mut R, ray: &Ray, contact: &Contact, emit_child: F) -> f32 {
         match self {
-            Material::Ggx(inner) => inner.scatter(rng, ray, intersection, emit_child),
-            Material::Lambertian(inner) => inner.scatter(rng, ray, intersection, emit_child),
-            Material::Mirror(inner) => inner.scatter(rng, ray, intersection, emit_child),
-            Material::Opaque(inner) => inner.scatter(rng, ray, intersection, emit_child),
-            Material::Reflective(inner) => inner.scatter(rng, ray, intersection, emit_child),
-            Material::Refractive(inner) => inner.scatter(rng, ray, intersection, emit_child),
+            Material::Ggx(inner) => inner.scatter(rng, ray, contact, emit_child),
+            Material::Lambertian(inner) => inner.scatter(rng, ray, contact, emit_child),
+            Material::Mirror(inner) => inner.scatter(rng, ray, contact, emit_child),
+            Material::Opaque(inner) => inner.scatter(rng, ray, contact, emit_child),
+            Material::Reflective(inner) => inner.scatter(rng, ray, contact, emit_child),
+            Material::Refractive(inner) => inner.scatter(rng, ray, contact, emit_child),
         }
     }
 }

@@ -1,4 +1,4 @@
-use antler_geometry::{Intersection, Ray};
+use antler_geometry::{Contact, Ray};
 use rand::Rng;
 
 use crate::{
@@ -23,11 +23,11 @@ impl Bsdf for Refractive {
         &self,
         _rng: &mut R,
         ray: &Ray,
-        intersection: &Intersection,
+        contact: &Contact,
         mut emit_child: F,
     ) -> f32 {
         let incident = ray.direction;
-        let outward_normal = intersection.normal;
+        let outward_normal = contact.normal;
 
         let front_face = incident.dot(&outward_normal) < 0.0;
         let normal = if front_face { outward_normal } else { -outward_normal };
@@ -48,7 +48,7 @@ impl Bsdf for Refractive {
 
         emit_child(
             Ray {
-                origin: offset_origin(intersection.position, outward_normal, reflected),
+                origin: offset_origin(contact.position, outward_normal, reflected),
                 direction: reflected,
             },
             reflectance,
@@ -59,7 +59,7 @@ impl Bsdf for Refractive {
 
             emit_child(
                 Ray {
-                    origin: offset_origin(intersection.position, outward_normal, refracted),
+                    origin: offset_origin(contact.position, outward_normal, refracted),
                     direction: refracted,
                 },
                 1.0 - reflectance,

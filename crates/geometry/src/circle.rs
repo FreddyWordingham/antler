@@ -1,6 +1,6 @@
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
-use crate::{aabb::Aabb, bounded::Bounded, intersection::Intersection, plane::Plane, ray::Ray, traceable::Traceable};
+use crate::{aabb::Aabb, bounded::Bounded, contact::Contact, plane::Plane, ray::Ray, traceable::Traceable};
 
 pub struct Circle {
     plane: Plane,
@@ -59,17 +59,12 @@ impl Traceable for Circle {
     }
 
     #[inline]
-    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Intersection> {
+    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Contact> {
         let (distance, local) = self.local_hit(ray, max_distance)?;
         let position = ray.origin + *ray.direction * distance;
 
         let uv = Point2::new(0.5 + local.x / (2.0 * self.radius), 0.5 + local.y / (2.0 * self.radius));
 
-        Some(Intersection::new(
-            distance,
-            position,
-            self.plane.normal_for_ray(ray),
-            uv,
-        ))
+        Some(Contact::new(distance, position, self.plane.normal_for_ray(ray), uv))
     }
 }

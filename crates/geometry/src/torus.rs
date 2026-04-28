@@ -1,6 +1,6 @@
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
-use crate::{aabb::Aabb, bounded::Bounded, intersection::Intersection, ray::Ray, traceable::Traceable};
+use crate::{aabb::Aabb, bounded::Bounded, contact::Contact, ray::Ray, traceable::Traceable};
 
 const TORUS_EPSILON: f32 = 1.0e-5;
 const TORUS_SCAN_STEPS: usize = 128;
@@ -49,7 +49,9 @@ impl Torus {
         let y2 = position.y * position.y;
         let z2 = position.z * position.z;
 
-        let s = self.minor_radius.mul_add(-self.minor_radius, r_major.mul_add(r_major, x2 + y2 + z2));
+        let s = self
+            .minor_radius
+            .mul_add(-self.minor_radius, r_major.mul_add(r_major, x2 + y2 + z2));
 
         Unit::new_normalize(Vector3::new(
             4.0 * position.x * (2.0 * r_major).mul_add(-r_major, s),
@@ -157,7 +159,7 @@ impl Traceable for Torus {
     }
 
     #[inline]
-    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Intersection> {
+    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Contact> {
         let distance = self.distance(ray, max_distance)?;
 
         let position = ray.origin + *ray.direction * distance;
@@ -168,6 +170,6 @@ impl Traceable for Torus {
             normal = -normal;
         }
 
-        Some(Intersection::new(distance, position, normal, Point2::new(0.0, 0.0)))
+        Some(Contact::new(distance, position, normal, Point2::new(0.0, 0.0)))
     }
 }

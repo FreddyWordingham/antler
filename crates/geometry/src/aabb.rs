@@ -1,6 +1,6 @@
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
-use crate::{bounded::Bounded, intersection::Intersection, ray::Ray, traceable::Traceable};
+use crate::{bounded::Bounded, contact::Contact, ray::Ray, traceable::Traceable};
 
 const PARALLEL_THRESHOLD: f32 = 1e-8;
 
@@ -133,7 +133,7 @@ impl Traceable for Aabb {
     }
 
     #[inline]
-    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Intersection> {
+    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Contact> {
         let (t_min, t_max, entry_face, exit_face) = self.ray_intersection(ray)?;
 
         let (distance, normal) = if t_min > 0.0 {
@@ -147,7 +147,7 @@ impl Traceable for Aabb {
         }
 
         let position = ray.origin + *ray.direction * distance;
-        Some(Intersection::new(distance, position, normal, Point2::new(0.0, 0.0)))
+        Some(Contact::new(distance, position, normal, Point2::new(0.0, 0.0)))
     }
 }
 

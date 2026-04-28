@@ -1,4 +1,4 @@
-use antler_geometry::{Intersection, Ray};
+use antler_geometry::{Contact, Ray};
 use rand::Rng;
 
 use crate::{
@@ -23,14 +23,14 @@ impl Bsdf for Reflective {
         &self,
         _rng: &mut R,
         ray: &Ray,
-        intersection: &Intersection,
+        contact: &Contact,
         mut emit_child: F,
     ) -> f32 {
-        let direction = reflect(ray.direction, intersection.normal);
+        let direction = reflect(ray.direction, contact.normal);
 
         emit_child(
             Ray {
-                origin: offset_origin(intersection.position, intersection.normal, direction),
+                origin: offset_origin(contact.position, contact.normal, direction),
                 direction,
             },
             self.reflectance,

@@ -1,4 +1,4 @@
-use antler_geometry::{Intersection, Ray};
+use antler_geometry::{Contact, Ray};
 use rand::Rng;
 
 use crate::bsdf::Bsdf;
@@ -12,13 +12,7 @@ impl Opaque {
 }
 
 impl Bsdf for Opaque {
-    fn scatter<R: Rng, F: FnMut(Ray, f32)>(
-        &self,
-        _rng: &mut R,
-        _ray: &Ray,
-        _intersection: &Intersection,
-        _emit_child: F,
-    ) -> f32 {
+    fn scatter<R: Rng, F: FnMut(Ray, f32)>(&self, _rng: &mut R, _ray: &Ray, _contact: &Contact, _emit_child: F) -> f32 {
         1.0
     }
 }

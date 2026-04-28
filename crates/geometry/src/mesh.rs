@@ -4,8 +4,8 @@ use nalgebra::{Point2, Point3, Unit, Vector3};
 use tobj::{LoadOptions, load_obj};
 
 use crate::{
-    aabb::Aabb, bounded::Bounded, bvh::Bvh, errors::MeshLoadError, intersection::Intersection, ray::Ray,
-    traceable::Traceable, triangle::Triangle,
+    aabb::Aabb, bounded::Bounded, bvh::Bvh, contact::Contact, errors::MeshLoadError, ray::Ray, traceable::Traceable,
+    triangle::Triangle,
 };
 
 pub struct Mesh {
@@ -161,18 +161,18 @@ impl Traceable for Mesh {
     }
 
     #[inline]
-    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Intersection> {
+    fn intersection(&self, ray: &Ray, max_distance: f32) -> Option<Contact> {
         let mut nearest = None;
         let mut best_distance = max_distance;
 
         self.bvh
             .nearest_with_max(ray, &mut best_distance, |triangle_index, best_distance| {
-                let Some(intersection) = self.triangle(triangle_index).intersection(ray, *best_distance) else {
+                let Some(contact) = self.triangle(triangle_index).intersection(ray, *best_distance) else {
                     return true;
                 };
 
-                *best_distance = intersection.distance;
-                nearest = Some(intersection);
+                *best_distance = contact.distance;
+                nearest = Some(contact);
 
                 true
             });

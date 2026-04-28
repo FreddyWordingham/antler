@@ -1,6 +1,6 @@
 use std::f32::consts::PI;
 
-use antler_geometry::{Intersection, Ray};
+use antler_geometry::{Contact, Ray};
 use nalgebra::{Unit, Vector3};
 use rand::{Rng, RngExt};
 
@@ -24,20 +24,14 @@ impl Ggx {
 }
 
 impl Bsdf for Ggx {
-    fn scatter<R: Rng, F: FnMut(Ray, f32)>(
-        &self,
-        rng: &mut R,
-        ray: &Ray,
-        intersection: &Intersection,
-        mut emit_child: F,
-    ) -> f32 {
-        let half_vector = sample_ggx_half_vector(rng, intersection.normal, self.roughness);
+    fn scatter<R: Rng, F: FnMut(Ray, f32)>(&self, rng: &mut R, ray: &Ray, contact: &Contact, mut emit_child: F) -> f32 {
+        let half_vector = sample_ggx_half_vector(rng, contact.normal, self.roughness);
         let reflected = reflect(ray.direction, half_vector);
 
-        if reflected.dot(&intersection.normal) > 0.0 {
+        if reflected.dot(&contact.normal) > 0.0 {
             emit_child(
                 Ray {
-                    origin: offset_origin(intersection.position, intersection.normal, reflected),
+                    origin: offset_origin(contact.position, contact.normal, reflected),
                     direction: reflected,
                 },
                 self.reflectance,

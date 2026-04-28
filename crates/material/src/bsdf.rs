@@ -1,12 +1,6 @@
-use antler_geometry::{Intersection, Ray};
+use antler_geometry::{Contact, Ray};
 use rand::Rng;
 
 pub trait Bsdf {
-    fn scatter<R: Rng, F: FnMut(Ray, f32)>(
-        &self,
-        rng: &mut R,
-        ray: &Ray,
-        intersection: &Intersection,
-        emit_child: F,
-    ) -> f32;
+    fn scatter<R: Rng, F: FnMut(Ray, f32)>(&self, rng: &mut R, ray: &Ray, contact: &Contact, emit_child: F) -> f32;
 }

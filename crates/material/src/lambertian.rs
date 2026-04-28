@@ -1,4 +1,4 @@
-use antler_geometry::{Intersection, Ray};
+use antler_geometry::{Contact, Ray};
 use rand::Rng;
 
 use crate::{
@@ -23,14 +23,14 @@ impl Bsdf for Lambertian {
         &self,
         rng: &mut R,
         _ray: &Ray,
-        intersection: &Intersection,
+        contact: &Contact,
         mut emit_child: F,
     ) -> f32 {
-        let direction = cosine_weighted_hemisphere(rng, intersection.normal);
+        let direction = cosine_weighted_hemisphere(rng, contact.normal);
 
         emit_child(
             Ray {
-                origin: offset_origin(intersection.position, intersection.normal, direction),
+                origin: offset_origin(contact.position, contact.normal, direction),
                 direction,
             },
             self.albedo,
