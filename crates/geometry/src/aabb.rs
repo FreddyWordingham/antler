@@ -20,8 +20,8 @@ impl Aabb {
         Self { min, max }
     }
 
-    #[inline]
     #[must_use]
+    #[inline]
     pub fn union<I>(mut iter: I) -> Self
     where
         I: Iterator<Item = Self>,

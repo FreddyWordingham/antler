@@ -16,7 +16,7 @@ impl Default for Resources {
 }
 
 impl Resources {
-    #[must_use] 
+    #[must_use]
     pub const fn new() -> Self {
         Self {
             geometries: Vec::new(),
@@ -55,20 +55,20 @@ impl Resources {
         id
     }
 
+    #[must_use]
     #[inline]
-    #[must_use] 
     pub fn get_geometry(&self, id: GeometryId) -> &Geometry {
         &self.geometries[id.index()]
     }
 
+    #[must_use]
     #[inline]
-    #[must_use] 
     pub fn get_material(&self, id: MaterialId) -> &Material {
         &self.materials[id.index()]
     }
 
+    #[must_use]
     #[inline]
-    #[must_use] 
     pub fn get_shader(&self, id: ShaderId) -> &Shader {
         &self.shaders[id.index()]
     }
