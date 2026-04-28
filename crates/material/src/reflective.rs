@@ -1,17 +1,14 @@
-use antler_geometry::{Contact, Ray};
+use antler_geometry::{Contact, Ray, utils::offset_origin};
 use rand::Rng;
 
-use crate::{
-    bsdf::Bsdf,
-    utils::{offset_origin, reflect},
-};
+use crate::{bsdf::Bsdf, utils::reflect};
 
 pub struct Reflective {
     reflectance: f32,
 }
 
 impl Reflective {
-    #[must_use] 
+    #[must_use]
     pub const fn new(reflectance: f32) -> Self {
         Self {
             reflectance: reflectance.clamp(0.0, 1.0),

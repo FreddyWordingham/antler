@@ -1,10 +1,7 @@
-use antler_geometry::{Contact, Ray};
+use antler_geometry::{Contact, Ray, utils::offset_origin};
 use rand::Rng;
 
-use crate::{
-    bsdf::Bsdf,
-    utils::{offset_origin, reflect},
-};
+use crate::{bsdf::Bsdf, utils::reflect};
 
 pub struct Mirror;
 
@@ -15,7 +12,7 @@ impl Default for Mirror {
 }
 
 impl Mirror {
-    #[must_use] 
+    #[must_use]
     pub const fn new() -> Self {
         Self
     }

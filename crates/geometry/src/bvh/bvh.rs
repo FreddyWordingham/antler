@@ -109,6 +109,7 @@ impl<T: Copy> Bvh<T> {
         .unwrap_or(false)
     }
 
+    #[allow(clippy::too_many_lines)]
     fn build_node(nodes: &mut Vec<BvhNode>, primitive_ids: &mut Vec<T>, items: &mut [(Aabb, T)]) -> usize {
         let node_aabb = Aabb::union(items.iter().map(|(aabb, _)| *aabb));
         let node_index = nodes.len();

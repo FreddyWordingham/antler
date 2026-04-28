@@ -1,13 +1,13 @@
 use std::f32::consts::PI;
 
-use antler_geometry::{Contact, Ray};
+use antler_geometry::{
+    Contact, Ray,
+    utils::{offset_origin, tangent_frame},
+};
 use nalgebra::{Unit, Vector3};
 use rand::{Rng, RngExt};
 
-use crate::{
-    bsdf::Bsdf,
-    utils::{offset_origin, reflect, tangent_frame},
-};
+use crate::{bsdf::Bsdf, utils::reflect};
 
 pub struct Ggx {
     roughness: f32,
@@ -15,7 +15,7 @@ pub struct Ggx {
 }
 
 impl Ggx {
-    #[must_use] 
+    #[must_use]
     pub const fn new(roughness: f32, reflectance: f32) -> Self {
         Self {
             roughness: roughness.clamp(0.001, 1.0),
@@ -58,5 +58,5 @@ fn sample_ggx_half_vector<R: Rng>(rng: &mut R, normal: Unit<Vector3<f32>>, rough
 
     let (tangent, bitangent) = tangent_frame(normal);
 
-    Unit::new_normalize(tangent * local.x + bitangent * local.y + *normal * local.z)
+    Unit::new_normalize(*tangent * local.x + *bitangent * local.y + *normal * local.z)
 }

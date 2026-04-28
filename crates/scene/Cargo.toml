@@ -12,6 +12,7 @@ antler-material = { path = "../material" }
 antler-settings = { path = "../settings" }
 antler-shader = { path = "../shader" }
 nalgebra = { workspace = true }
+rand = { workspace = true }
 
 [lints]
 workspace = true

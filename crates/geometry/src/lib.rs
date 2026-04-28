@@ -15,6 +15,7 @@ mod torus;
 mod traceable;
 mod traversal_ray;
 mod triangle;
+pub mod utils;
 
 pub use aabb::Aabb;
 pub use bounded::Bounded;

@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 nalgebra = { workspace = true }
+rand = { workspace = true }
 tobj = { workspace = true }
 
 [lints]

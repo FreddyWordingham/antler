@@ -1,4 +1,5 @@
 mod bucket;
+#[allow(clippy::module_inception)]
 mod bvh;
 mod bvh_node;
 mod small_stack;

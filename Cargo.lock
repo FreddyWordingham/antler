@@ -56,6 +56,7 @@ name = "antler-geometry"
 version = "2.0.0"
 dependencies = [
  "nalgebra",
+ "rand",
  "tobj",
 ]
 
@@ -111,6 +112,7 @@ dependencies = [
  "antler-settings",
  "antler-shader",
  "nalgebra",
+ "rand",
 ]
 
 [[package]]

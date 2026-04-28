@@ -1,9 +1,9 @@
-use antler_geometry::{Contact, Ray};
+use antler_geometry::{Contact, Ray, utils::offset_origin};
 use rand::Rng;
 
 use crate::{
     bsdf::Bsdf,
-    utils::{offset_origin, reflect, refract, schlick},
+    utils::{reflect, refract, schlick},
 };
 
 pub struct Refractive {
@@ -11,7 +11,7 @@ pub struct Refractive {
 }
 
 impl Refractive {
-    #[must_use] 
+    #[must_use]
     pub const fn new(refractive_index: f32) -> Self {
         Self {
             refractive_index: refractive_index.max(f32::EPSILON),

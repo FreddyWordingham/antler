@@ -1,17 +1,17 @@
-use antler_geometry::{Contact, Ray};
-use rand::Rng;
-
-use crate::{
-    bsdf::Bsdf,
+use antler_geometry::{
+    Contact, Ray,
     utils::{cosine_weighted_hemisphere, offset_origin},
 };
+use rand::Rng;
+
+use crate::bsdf::Bsdf;
 
 pub struct Lambertian {
     albedo: f32,
 }
 
 impl Lambertian {
-    #[must_use] 
+    #[must_use]
     pub const fn new(albedo: f32) -> Self {
         Self {
             albedo: albedo.clamp(0.0, 1.0),
