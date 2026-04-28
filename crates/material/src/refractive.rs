@@ -43,7 +43,11 @@ impl Bsdf for Refractive {
         let sin_theta = (1.0 - cos_theta * cos_theta).sqrt();
 
         let cannot_refract = eta * sin_theta > 1.0;
-        let reflectance = if cannot_refract { 1.0 } else { schlick(cos_theta, eta) };
+        let reflectance = if cannot_refract {
+            1.0
+        } else {
+            schlick(cos_theta, self.refractive_index)
+        };
 
         let reflected = reflect(incident, normal);
 

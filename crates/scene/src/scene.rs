@@ -241,8 +241,9 @@ impl Scene {
                 }
 
                 let shadow_ray = Ray::from_offset(contact.position, contact.normal, sample.direction);
+                let shadow_distance = sample.distance - (shadow_ray.origin - contact.position).norm();
 
-                if self.hit(resources, &shadow_ray, sample.distance).is_none() {
+                if shadow_distance > 0.0 && self.hit(resources, &shadow_ray, shadow_distance).is_none() {
                     light_total += shader.shade(world_ray, contact, &sample);
                 }
             });

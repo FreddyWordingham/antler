@@ -55,15 +55,22 @@ impl Contact {
         let position = transform.transform_point(&self.position);
         let distance = (position - ray_origin).norm();
         let normal = Unit::new_normalize(transform.transform_vector(&self.normal));
-        let (tangent, bi_tangent) = tangent_frame(normal);
+
+        let tangent = self
+            .tangent
+            .map(|t| Unit::new_normalize(transform.transform_vector(&t)));
+
+        let bi_tangent = self
+            .bi_tangent
+            .map(|b| Unit::new_normalize(transform.transform_vector(&b)));
 
         Self {
             distance,
             position,
             normal,
             uv: self.uv,
-            tangent: Some(tangent),
-            bi_tangent: Some(bi_tangent),
+            tangent,
+            bi_tangent,
         }
     }
 
@@ -72,17 +79,7 @@ impl Contact {
             return;
         }
 
-        let n = self.normal.into_inner();
-
-        let helper_axis = if n.x.abs() < 0.9 {
-            Vector3::x_axis().into_inner()
-        } else {
-            Vector3::y_axis().into_inner()
-        };
-
-        let tangent = Unit::new_normalize(helper_axis.cross(&n));
-        let bi_tangent = Unit::new_normalize(n.cross(&tangent));
-
+        let (tangent, bi_tangent) = tangent_frame(self.normal);
         self.tangent = Some(tangent);
         self.bi_tangent = Some(bi_tangent);
     }
