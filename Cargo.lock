@@ -29,6 +29,12 @@ dependencies = [
  "antler-colour",
  "antler-geometry",
  "antler-image",
+ "antler-light",
+ "antler-material",
+ "antler-render",
+ "antler-scene",
+ "antler-settings",
+ "antler-shader",
  "nalgebra",
 ]
 

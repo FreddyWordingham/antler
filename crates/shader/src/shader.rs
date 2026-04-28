@@ -42,3 +42,31 @@ impl Appearance for Shader {
         }
     }
 }
+
+impl Into<Shader> for Block {
+    #[inline]
+    fn into(self) -> Shader {
+        Shader::Block(self)
+    }
+}
+
+impl Into<Shader> for Checkerboard {
+    #[inline]
+    fn into(self) -> Shader {
+        Shader::Checkerboard(self)
+    }
+}
+
+impl Into<Shader> for Luminous {
+    #[inline]
+    fn into(self) -> Shader {
+        Shader::Luminous(self)
+    }
+}
+
+impl Into<Shader> for Solid {
+    #[inline]
+    fn into(self) -> Shader {
+        Shader::Solid(self)
+    }
+}

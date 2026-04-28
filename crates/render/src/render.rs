@@ -98,7 +98,7 @@ pub fn render_tile<R: Rng + SeedableRng>(
 }
 
 #[must_use]
-pub fn render_image<C>(
+pub fn render_image(
     image_settings: &ImageSettings,
     render_settings: &RenderSettings,
     camera: &Camera,

@@ -8,6 +8,12 @@ antler-camera = { path = "../camera" }
 antler-colour = { path = "../colour" }
 antler-geometry = { path = "../geometry" }
 antler-image = { path = "../image" }
+antler-light = { path = "../light" }
+antler-material = { path = "../material" }
+antler-render = { path = "../render" }
+antler-scene = { path = "../scene" }
+antler-settings = { path = "../settings" }
+antler-shader = { path = "../shader" }
 nalgebra = { workspace = true }
 
 [lints]

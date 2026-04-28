@@ -73,3 +73,59 @@ impl Traceable for Geometry {
         }
     }
 }
+
+impl Into<Geometry> for Aabb {
+    #[inline]
+    fn into(self) -> Geometry {
+        Geometry::Aabb(self)
+    }
+}
+
+impl Into<Geometry> for Capsule {
+    #[inline]
+    fn into(self) -> Geometry {
+        Geometry::Capsule(self)
+    }
+}
+
+impl Into<Geometry> for Circle {
+    #[inline]
+    fn into(self) -> Geometry {
+        Geometry::Circle(self)
+    }
+}
+
+impl Into<Geometry> for Mesh {
+    #[inline]
+    fn into(self) -> Geometry {
+        Geometry::Mesh(self)
+    }
+}
+
+impl Into<Geometry> for Quad {
+    #[inline]
+    fn into(self) -> Geometry {
+        Geometry::Quad(self)
+    }
+}
+
+impl Into<Geometry> for Sphere {
+    #[inline]
+    fn into(self) -> Geometry {
+        Geometry::Sphere(self)
+    }
+}
+
+impl Into<Geometry> for Torus {
+    #[inline]
+    fn into(self) -> Geometry {
+        Geometry::Torus(self)
+    }
+}
+
+impl Into<Geometry> for Triangle {
+    #[inline]
+    fn into(self) -> Geometry {
+        Geometry::Triangle(self)
+    }
+}

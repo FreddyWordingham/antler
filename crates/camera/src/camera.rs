@@ -16,3 +16,17 @@ impl Observer for Camera {
         }
     }
 }
+
+impl Into<Camera> for Orthographic {
+    #[inline]
+    fn into(self) -> Camera {
+        Camera::Orthographic(self)
+    }
+}
+
+impl Into<Camera> for Perspective {
+    #[inline]
+    fn into(self) -> Camera {
+        Camera::Perspective(self)
+    }
+}

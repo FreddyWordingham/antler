@@ -18,3 +18,10 @@ impl Emissive for Light {
         }
     }
 }
+
+impl Into<Light> for Directional {
+    #[inline]
+    fn into(self) -> Light {
+        Light::Directional(self)
+    }
+}
