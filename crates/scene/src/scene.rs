@@ -67,6 +67,12 @@ impl Scene {
         &self.objects[object_id.index()]
     }
 
+    #[must_use]
+    #[inline]
+    pub fn bvh(&self) -> &Bvh<ObjectId> {
+        self.bvh.as_ref().expect("Scene BVH is not built")
+    }
+
     pub fn build(&mut self, resources: &Resources) {
         let items = self
             .objects
@@ -88,7 +94,7 @@ impl Scene {
     #[must_use]
     #[inline]
     pub fn hit(&self, resources: &Resources, world_ray: &Ray, max_distance: f32) -> Option<ObjectId> {
-        let bvh = self.bvh.as_ref()?;
+        let bvh = self.bvh();
         let mut limit = max_distance;
         let mut contact = None;
 
@@ -107,7 +113,7 @@ impl Scene {
     #[must_use]
     #[inline]
     pub fn distance(&self, resources: &Resources, world_ray: &Ray, max_distance: f32) -> Option<(ObjectId, f32)> {
-        let bvh = self.bvh.as_ref()?;
+        let bvh = self.bvh();
         let mut nearest = None;
         let mut best_distance = max_distance;
 
@@ -131,7 +137,7 @@ impl Scene {
         world_ray: &Ray,
         max_distance: f32,
     ) -> Option<(ObjectId, Contact)> {
-        let bvh = self.bvh.as_ref()?;
+        let bvh = self.bvh();
         let mut nearest = None;
         let mut best_distance = max_distance;
 

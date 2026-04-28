@@ -63,7 +63,7 @@ fn main() {
     // Image
     let image_settings = ImageSettings {
         background: Rgba::TRANSPARENT,
-        resolution: [320, 320],
+        resolution: [1000, 1000],
         tile_size: [16, 16],
         super_samples: 2,
     };
