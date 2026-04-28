@@ -43,30 +43,30 @@ impl Appearance for Shader {
     }
 }
 
-impl Into<Shader> for Block {
+impl From<Block> for Shader {
     #[inline]
-    fn into(self) -> Shader {
-        Shader::Block(self)
+    fn from(val: Block) -> Self {
+        Self::Block(val)
     }
 }
 
-impl Into<Shader> for Checkerboard {
+impl From<Checkerboard> for Shader {
     #[inline]
-    fn into(self) -> Shader {
-        Shader::Checkerboard(self)
+    fn from(val: Checkerboard) -> Self {
+        Self::Checkerboard(val)
     }
 }
 
-impl Into<Shader> for Luminous {
+impl From<Luminous> for Shader {
     #[inline]
-    fn into(self) -> Shader {
-        Shader::Luminous(self)
+    fn from(val: Luminous) -> Self {
+        Self::Luminous(val)
     }
 }
 
-impl Into<Shader> for Solid {
+impl From<Solid> for Shader {
     #[inline]
-    fn into(self) -> Shader {
-        Shader::Solid(self)
+    fn from(val: Solid) -> Self {
+        Self::Solid(val)
     }
 }

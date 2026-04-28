@@ -17,16 +17,16 @@ impl Observer for Camera {
     }
 }
 
-impl Into<Camera> for Orthographic {
+impl From<Orthographic> for Camera {
     #[inline]
-    fn into(self) -> Camera {
-        Camera::Orthographic(self)
+    fn from(val: Orthographic) -> Self {
+        Self::Orthographic(val)
     }
 }
 
-impl Into<Camera> for Perspective {
+impl From<Perspective> for Camera {
     #[inline]
-    fn into(self) -> Camera {
-        Camera::Perspective(self)
+    fn from(val: Perspective) -> Self {
+        Self::Perspective(val)
     }
 }

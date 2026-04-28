@@ -74,58 +74,58 @@ impl Traceable for Geometry {
     }
 }
 
-impl Into<Geometry> for Aabb {
+impl From<Aabb> for Geometry {
     #[inline]
-    fn into(self) -> Geometry {
-        Geometry::Aabb(self)
+    fn from(val: Aabb) -> Self {
+        Self::Aabb(val)
     }
 }
 
-impl Into<Geometry> for Capsule {
+impl From<Capsule> for Geometry {
     #[inline]
-    fn into(self) -> Geometry {
-        Geometry::Capsule(self)
+    fn from(val: Capsule) -> Self {
+        Self::Capsule(val)
     }
 }
 
-impl Into<Geometry> for Circle {
+impl From<Circle> for Geometry {
     #[inline]
-    fn into(self) -> Geometry {
-        Geometry::Circle(self)
+    fn from(val: Circle) -> Self {
+        Self::Circle(val)
     }
 }
 
-impl Into<Geometry> for Mesh {
+impl From<Mesh> for Geometry {
     #[inline]
-    fn into(self) -> Geometry {
-        Geometry::Mesh(self)
+    fn from(val: Mesh) -> Self {
+        Self::Mesh(val)
     }
 }
 
-impl Into<Geometry> for Quad {
+impl From<Quad> for Geometry {
     #[inline]
-    fn into(self) -> Geometry {
-        Geometry::Quad(self)
+    fn from(val: Quad) -> Self {
+        Self::Quad(val)
     }
 }
 
-impl Into<Geometry> for Sphere {
+impl From<Sphere> for Geometry {
     #[inline]
-    fn into(self) -> Geometry {
-        Geometry::Sphere(self)
+    fn from(val: Sphere) -> Self {
+        Self::Sphere(val)
     }
 }
 
-impl Into<Geometry> for Torus {
+impl From<Torus> for Geometry {
     #[inline]
-    fn into(self) -> Geometry {
-        Geometry::Torus(self)
+    fn from(val: Torus) -> Self {
+        Self::Torus(val)
     }
 }
 
-impl Into<Geometry> for Triangle {
+impl From<Triangle> for Geometry {
     #[inline]
-    fn into(self) -> Geometry {
-        Geometry::Triangle(self)
+    fn from(val: Triangle) -> Self {
+        Self::Triangle(val)
     }
 }

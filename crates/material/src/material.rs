@@ -28,44 +28,44 @@ impl Bsdf for Material {
     }
 }
 
-impl Into<Material> for Ggx {
+impl From<Ggx> for Material {
     #[inline]
-    fn into(self) -> Material {
-        Material::Ggx(self)
+    fn from(val: Ggx) -> Self {
+        Self::Ggx(val)
     }
 }
 
-impl Into<Material> for Lambertian {
+impl From<Lambertian> for Material {
     #[inline]
-    fn into(self) -> Material {
-        Material::Lambertian(self)
+    fn from(val: Lambertian) -> Self {
+        Self::Lambertian(val)
     }
 }
 
-impl Into<Material> for Mirror {
+impl From<Mirror> for Material {
     #[inline]
-    fn into(self) -> Material {
-        Material::Mirror(self)
+    fn from(val: Mirror) -> Self {
+        Self::Mirror(val)
     }
 }
 
-impl Into<Material> for Opaque {
+impl From<Opaque> for Material {
     #[inline]
-    fn into(self) -> Material {
-        Material::Opaque(self)
+    fn from(val: Opaque) -> Self {
+        Self::Opaque(val)
     }
 }
 
-impl Into<Material> for Reflective {
+impl From<Reflective> for Material {
     #[inline]
-    fn into(self) -> Material {
-        Material::Reflective(self)
+    fn from(val: Reflective) -> Self {
+        Self::Reflective(val)
     }
 }
 
-impl Into<Material> for Refractive {
+impl From<Refractive> for Material {
     #[inline]
-    fn into(self) -> Material {
-        Material::Refractive(self)
+    fn from(val: Refractive) -> Self {
+        Self::Refractive(val)
     }
 }

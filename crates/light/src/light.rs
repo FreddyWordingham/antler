@@ -19,9 +19,9 @@ impl Emissive for Light {
     }
 }
 
-impl Into<Light> for Directional {
+impl From<Directional> for Light {
     #[inline]
-    fn into(self) -> Light {
-        Light::Directional(self)
+    fn from(val: Directional) -> Self {
+        Self::Directional(val)
     }
 }

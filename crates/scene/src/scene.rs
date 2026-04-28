@@ -69,7 +69,7 @@ impl Scene {
 
     #[must_use]
     #[inline]
-    pub fn bvh(&self) -> &Bvh<ObjectId> {
+    pub const fn bvh(&self) -> &Bvh<ObjectId> {
         self.bvh.as_ref().expect("Scene BVH is not built")
     }
 
