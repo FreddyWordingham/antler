@@ -7,6 +7,7 @@ mod light_config;
 mod manifest;
 mod material_config;
 mod object_config;
+mod occlusion_config;
 mod probe_config;
 mod scene_config;
 mod shader_config;

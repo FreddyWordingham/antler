@@ -3,45 +3,56 @@
   output_dir: "output",
   scenes: {
     "my_scene": (
-      ambient: 0x333333,
+      ambient: 0x666666,
+      occlusion: Some((
+        samples: 64,
+        distance: 10.0,
+        strength: 1.0
+      )),
       lights: [
         Directional (
           direction: (1.0, 1.0, -3.0),
-          radiance: 0xAAA
+          radiance: 0xFFFFFF,
+          angular_radius: Some(5.0),
+          samples: Some(16)
         )
       ],
       objects: [
         (
-          geometry: Torus (
-            centre: (0.0, 0.0, 0.0)
+          geometry: Mesh (
+            path: "assets/meshes/tree.obj"
           ),
-          material: Opaque,
+          material: Refractive (
+            refractive_index: 1.5
+          ),
           shader: Solid (
-            colour: 0xFF00FF
-          ),
-          transform: (
-            rotation: (90.0, 0.0, 0.0),
-            translation: (0.0, 0.0, 0.4)
+            colour: 0x00FFFF
           )
         ),
         (
           geometry: Circle (
-            radius: 5.0
+            centre: (0.0, 0.0, -1.0e-3),
+            radius: 5.0e1
           ),
           material: Opaque,
-          shader: Block (
-            colour: 0x00FF00
+          shader: Checkerboard (
+            size: 1.0,
+            colour_a: 0x00DD00,
+            colour_b: 0x00AA00
           )
         )
       ],
       captures: {
         "my_capture": (
           camera: Perspective (
-            position: (3.0, -5.0, 3.0)
+            position: (0.0, 1.0e2, 0.5e2),
+            look_at: (0.0, 0.0, 10.0),
+            vertical_fov: 20.0
           ),
           images: {
             "my_image": (
-              resolution: (800, 800)
+              resolution: (640, 640),
+              super_samples: 4
             )
           }
         )

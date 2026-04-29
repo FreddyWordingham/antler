@@ -5,12 +5,16 @@ use antler_parameters::SceneParameters;
 use antler_scene::{Resources, Scene};
 use serde::{Deserialize, Serialize};
 
-use crate::{capture_config::CaptureConfig, light_config::LightConfig, object_config::ObjectConfig};
+use crate::{
+    capture_config::CaptureConfig, light_config::LightConfig, object_config::ObjectConfig,
+    occlusion_config::OcclusionConfig,
+};
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct SceneConfig {
     pub ambient: Rgb,
+    pub occlusion: Option<OcclusionConfig>,
     pub lights: Vec<LightConfig>,
     pub objects: Vec<ObjectConfig>,
     pub captures: BTreeMap<String, CaptureConfig>,
@@ -21,6 +25,10 @@ impl SceneConfig {
         let mut scene = Scene::new();
 
         scene.set_ambient(self.ambient);
+
+        if let Some(occlusion) = self.occlusion {
+            scene.set_occlusion(Some(occlusion.build()));
+        }
 
         for light in self.lights {
             scene.add_light(light.build());

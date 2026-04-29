@@ -37,6 +37,6 @@ impl Bsdf for Lambertian {
             self.albedo,
         );
 
-        0.0
+        self.albedo
     }
 }

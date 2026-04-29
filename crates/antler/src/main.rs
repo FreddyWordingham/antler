@@ -16,7 +16,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             for (image_name, image) in capture.images {
                 println!("    > Image: {image_name}");
 
-                let image = render_image(
+                let (visual_image, temporal_image) = render_image(
                     &image,
                     &parameters.settings,
                     &capture.camera,
@@ -24,10 +24,15 @@ fn main() -> Result<(), Box<dyn Error>> {
                     &scene.scene,
                 );
 
-                let image_path = parameters
+                let visual_image_path = parameters
                     .output_dir
                     .join(format!("{scene_name}-{capture_name}-{image_name}.png"));
-                image.save(&image_path)?;
+                visual_image.save(&visual_image_path)?;
+
+                let temporal_image_path = parameters
+                    .output_dir
+                    .join(format!("{scene_name}-{capture_name}-{image_name}-temporal.png"));
+                temporal_image.save(&temporal_image_path)?;
             }
         }
     }

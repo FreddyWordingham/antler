@@ -1,3 +1,5 @@
+use std::time::{Duration, Instant};
+
 use antler_camera::{Camera, Observer};
 use antler_colour::{Rgb, Rgba};
 use antler_image::{RgbaImage, Tile};
@@ -55,7 +57,7 @@ pub fn render_tile<R: Rng + SeedableRng>(
     resources: &Resources,
     scene: &Scene,
     tile: Tile,
-) -> Vec<Rgba> {
+) -> (Vec<Rgba>, Vec<Duration>) {
     let image_width = image_settings.resolution[0] as f32;
     let image_height = image_settings.resolution[1] as f32;
     let ss = image_settings.super_samples.max(1);
@@ -64,6 +66,7 @@ pub fn render_tile<R: Rng + SeedableRng>(
 
     let [tile_width, tile_height] = tile.size();
     let mut pixels = vec![image_settings.background; tile.num_pixels()];
+    let mut times = Vec::with_capacity(tile.num_pixels());
 
     for local_y in 0..tile_height {
         let y = tile.min[1] + local_y;
@@ -73,6 +76,7 @@ pub fn render_tile<R: Rng + SeedableRng>(
 
             let mut colour = Rgba::TRANSPARENT;
 
+            let mut total_duration = Duration::from_secs(0);
             for sy in 0..ss {
                 for sx in 0..ss {
                     let uv = Point2::new(
@@ -83,18 +87,21 @@ pub fn render_tile<R: Rng + SeedableRng>(
                     let ray = camera.emit(image_settings.resolution, uv);
                     let probe = Probe::new(ray);
 
+                    let start_time = Instant::now();
                     let sample = render_probe(rng, render_settings, resources, scene, probe)
                         .map_or(image_settings.background, |rgb| rgb.to_rgba());
+                    total_duration += start_time.elapsed();
                     colour += sample;
                 }
             }
 
             let index = local_y * tile_width + local_x;
             pixels[index] = colour * inv_samples;
+            times.push(total_duration);
         }
     }
 
-    pixels
+    (pixels, times)
 }
 
 #[must_use]
@@ -104,7 +111,7 @@ pub fn render_image(
     camera: &Camera,
     resources: &Resources,
     scene: &Scene,
-) -> RgbaImage {
+) -> (RgbaImage, RgbaImage) {
     let tiles = Tile::create_tiles(image_settings.resolution, image_settings.tile_size);
 
     let pb = progress_bar(tiles.len() as u64);
@@ -132,12 +139,41 @@ pub fn render_image(
         .collect::<Vec<_>>();
     pb.finish();
 
-    let mut image = RgbaImage::filled(image_settings.resolution, image_settings.background);
-    for (tile, pixels) in rendered_tiles {
-        image.apply_tile(tile, &pixels);
+    let (min_time, max_time) = rendered_tiles
+        .iter()
+        .flat_map(|(_, (_, times))| times.iter())
+        .fold((Duration::MAX, Duration::ZERO), |(min, max), &t| {
+            (min.min(t), max.max(t))
+        });
+
+    let mut visual_image = RgbaImage::filled(image_settings.resolution, image_settings.background);
+    let mut temporal_image = RgbaImage::filled(image_settings.resolution, Rgba::TRANSPARENT);
+
+    for (tile, (pixels, times)) in rendered_tiles {
+        visual_image.apply_tile(tile, &pixels);
+        temporal_image.apply_tile(
+            tile,
+            &times
+                .iter()
+                .map(|time| {
+                    let t = normalise_log_duration(*time, min_time, max_time);
+                    Rgba::new(t, t, t, 1.0)
+                })
+                .collect::<Vec<_>>(),
+        );
     }
 
-    image
+    (visual_image, temporal_image)
+}
+
+#[must_use]
+#[inline]
+fn normalise_log_duration(time: Duration, min: Duration, max: Duration) -> f32 {
+    let min = min.as_secs_f32().max(f32::EPSILON).ln();
+    let max = max.as_secs_f32().max(f32::EPSILON).ln();
+    let value = time.as_secs_f32().max(f32::EPSILON).ln();
+
+    ((value - min) / (max - min).max(f32::EPSILON)).clamp(0.0, 1.0)
 }
 
 #[must_use]
