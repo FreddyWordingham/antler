@@ -4,6 +4,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Debug, Default, Clone, Copy)]
 pub struct Vec3(pub [f32; 3]);
 
+impl Vec3 {
+    pub fn new(x: f32, y: f32, z: f32) -> Self {
+        Self([x, y, z])
+    }
+}
+
 impl From<Vec3> for Point3<f32> {
     fn from(value: Vec3) -> Self {
         Point3::new(value.0[0], value.0[1], value.0[2])

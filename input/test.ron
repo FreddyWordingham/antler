@@ -12,19 +12,21 @@
       ],
       objects: [
         (
-          geometry: Mesh (
-            path: "assets/meshes/golem.obj"
+          geometry: Torus (
+            centre: (0.0, 0.0, 0.0)
           ),
           material: Opaque,
           shader: Solid (
             colour: 0xFF00FF
+          ),
+          transform: (
+            rotation: (90.0, 0.0, 0.0),
+            translation: (0.0, 0.0, 0.4)
           )
         ),
         (
           geometry: Circle (
-            position: (0.0, 0.0, 0.0),
-            normal: (0.0, 0.0, 1.0),
-            radius: 4.0
+            radius: 5.0
           ),
           material: Opaque,
           shader: Block (
@@ -35,33 +37,11 @@
       captures: {
         "my_capture": (
           camera: Perspective (
-            position: (3.0, -5.0, 3.0),
-            look_at: (0.0, 0.0, 0.0),
-            up: (0.0, 0.0, 1.0),
-            vertical_fov: 45.0
+            position: (3.0, -5.0, 3.0)
           ),
           images: {
             "my_image": (
-              background: 0x00000000,
-              resolution: (80, 60),
-              tile_size: (16, 16),
-              super_samples: 1
-            )
-          }
-        ),
-        "my_capture_2": (
-          camera: Perspective (
-            position: (0.0, 0.0, 10.0),
-            look_at: (0.0, 0.0, 0.0),
-            up: (0.0, 1.0, 0.0),
-            vertical_fov: 45.0
-          ),
-          images: {
-            "my_image": (
-              background: 0x00000000,
-              resolution: (800, 600),
-              tile_size: (16, 16),
-              super_samples: 2
+              resolution: (800, 800)
             )
           }
         )

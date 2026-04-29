@@ -4,7 +4,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ProbeConfig {
+    #[serde(default = "default_max_generation")]
     pub max_generation: u32,
+    #[serde(default = "default_min_weight")]
     pub min_weight: f32,
 }
 
@@ -24,4 +26,12 @@ impl Default for ProbeConfig {
             min_weight: 0.01,
         }
     }
+}
+
+fn default_max_generation() -> u32 {
+    5
+}
+
+fn default_min_weight() -> f32 {
+    0.01
 }

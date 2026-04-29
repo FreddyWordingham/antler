@@ -5,9 +5,12 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ImageConfig {
+    #[serde(default = "default_background")]
     pub background: Rgba,
     pub resolution: [usize; 2],
+    #[serde(default = "default_tile_size")]
     pub tile_size: [usize; 2],
+    #[serde(default = "default_super_samples")]
     pub super_samples: usize,
 }
 
@@ -20,4 +23,16 @@ impl ImageConfig {
             super_samples: self.super_samples,
         }
     }
+}
+
+fn default_background() -> Rgba {
+    Rgba::TRANSPARENT
+}
+
+fn default_tile_size() -> [usize; 2] {
+    [16, 16]
+}
+
+fn default_super_samples() -> usize {
+    1
 }

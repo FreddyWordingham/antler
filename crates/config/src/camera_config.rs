@@ -8,14 +8,20 @@ use crate::vec3::Vec3;
 pub enum CameraConfig {
     Orthographic {
         position: Vec3,
+        #[serde(default = "default_look_at")]
         look_at: Vec3,
+        #[serde(default = "default_up")]
         up: Vec3,
+        #[serde(default = "default_size")]
         size: [f32; 2],
     },
     Perspective {
         position: Vec3,
+        #[serde(default = "default_look_at")]
         look_at: Vec3,
+        #[serde(default = "default_up")]
         up: Vec3,
+        #[serde(default = "default_vertical_fov")]
         vertical_fov: f32,
     },
 }
@@ -37,4 +43,20 @@ impl CameraConfig {
             } => Perspective::new(position.into(), look_at.into(), up.into(), vertical_fov.to_radians()).into(),
         }
     }
+}
+
+fn default_look_at() -> Vec3 {
+    Vec3::new(0.0, 0.0, 0.0)
+}
+
+fn default_up() -> Vec3 {
+    Vec3::new(0.0, 0.0, 1.0)
+}
+
+fn default_size() -> [f32; 2] {
+    [10.0, 10.0]
+}
+
+fn default_vertical_fov() -> f32 {
+    45.0
 }

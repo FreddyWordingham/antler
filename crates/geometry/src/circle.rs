@@ -9,11 +9,11 @@ pub struct Circle {
 
 impl Circle {
     #[must_use]
-    pub fn new(position: Point3<f32>, normal: Unit<Vector3<f32>>, radius: f32) -> Self {
+    pub fn new(centre: Point3<f32>, normal: Unit<Vector3<f32>>, radius: f32) -> Self {
         assert!(radius > 0.0, "Circle radius must be positive");
 
         Self {
-            plane: Plane::new(position, normal),
+            plane: Plane::new(centre, normal),
             radius,
         }
     }

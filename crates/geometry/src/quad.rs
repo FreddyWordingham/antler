@@ -9,12 +9,12 @@ pub struct Quad {
 
 impl Quad {
     #[must_use]
-    pub fn new(position: Point3<f32>, normal: Unit<Vector3<f32>>, size: Vector2<f32>) -> Self {
+    pub fn new(centre: Point3<f32>, normal: Unit<Vector3<f32>>, size: Vector2<f32>) -> Self {
         assert!(size.x > 0.0, "Quad width must be positive");
         assert!(size.y > 0.0, "Quad height must be positive");
 
         Self {
-            plane: Plane::new(position, normal),
+            plane: Plane::new(centre, normal),
             size,
         }
     }

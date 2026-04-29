@@ -10,7 +10,9 @@ pub enum LightConfig {
     Directional {
         direction: Vec3,
         radiance: Rgb,
+        #[serde(default)]
         angular_radius: Option<f32>,
+        #[serde(default)]
         samples: Option<usize>,
     },
 }
