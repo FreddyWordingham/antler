@@ -4,7 +4,16 @@ version = "2.0.0"
 edition = "2024"
 
 [dependencies]
+antler-camera = { path = "../camera" }
+antler-colour = { path = "../colour" }
 antler-geometry = { path = "../geometry" }
+antler-light = { path = "../light" }
+antler-material = { path = "../material" }
+antler-parameters = { path = "../parameters" }
+antler-scene = { path = "../scene" }
+antler-settings = { path = "../settings" }
+antler-shader = { path = "../shader" }
+nalgebra = { workspace = true }
 ron = { workspace = true }
 serde = { workspace = true }
 

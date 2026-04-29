@@ -52,13 +52,23 @@ name = "antler-colour"
 version = "2.0.0"
 dependencies = [
  "png",
+ "serde",
 ]
 
 [[package]]
 name = "antler-config"
 version = "2.0.0"
 dependencies = [
+ "antler-camera",
+ "antler-colour",
  "antler-geometry",
+ "antler-light",
+ "antler-material",
+ "antler-parameters",
+ "antler-scene",
+ "antler-settings",
+ "antler-shader",
+ "nalgebra",
  "ron",
  "serde",
 ]
@@ -106,6 +116,17 @@ dependencies = [
  "antler-geometry",
  "nalgebra",
  "rand",
+]
+
+[[package]]
+name = "antler-parameters"
+version = "2.0.0"
+dependencies = [
+ "antler-camera",
+ "antler-colour",
+ "antler-light",
+ "antler-scene",
+ "antler-settings",
 ]
 
 [[package]]

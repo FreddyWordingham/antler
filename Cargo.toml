@@ -9,6 +9,7 @@ members = [
     "crates/id",
     "crates/image",
     "crates/material",
+    "crates/parameters",
     "crates/render",
     "crates/scene",
     "crates/settings",

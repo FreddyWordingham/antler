@@ -1,16 +1,30 @@
 use std::{
     error::Error,
     fmt::{Display, Formatter, Result as FmtResult},
+    io::Error as IoError,
     path::PathBuf,
 };
 
 use antler_geometry::errors::MeshLoadError;
+use ron::error::SpannedError;
 
 #[derive(Debug)]
 pub enum ConfigError {
     ParseError(String),
     AssetLoadError { path: PathBuf, message: String },
     MeshLoad(MeshLoadError),
+}
+
+impl From<IoError> for ConfigError {
+    fn from(value: IoError) -> Self {
+        Self::ParseError(format!("IO error: {value}"))
+    }
+}
+
+impl From<SpannedError> for ConfigError {
+    fn from(value: SpannedError) -> Self {
+        Self::ParseError(format!("RON parse error: {value}"))
+    }
 }
 
 impl From<MeshLoadError> for ConfigError {

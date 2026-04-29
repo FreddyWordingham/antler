@@ -6,6 +6,7 @@ use std::{
 };
 
 use png::ColorType;
+use serde::{Deserialize, Deserializer, Serialize, Serializer, de::Error};
 
 use crate::{errors::ParseHexError, pixel::Pixel, utils::parse_hex};
 
@@ -198,5 +199,33 @@ impl FromStr for Rgba {
 impl Display for Rgba {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         f.write_str(&self.to_hex())
+    }
+}
+
+impl Serialize for Rgba {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_hex())
+    }
+}
+
+impl<'de> Deserialize<'de> for Rgba {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        #[derive(Deserialize)]
+        #[serde(untagged)]
+        enum RgbaRepr {
+            Int(u32),
+            Hex(String),
+        }
+
+        match RgbaRepr::deserialize(deserializer)? {
+            RgbaRepr::Int(value) => Ok(Rgba::from_u32(value)),
+            RgbaRepr::Hex(hex) => Rgba::from_hex(&hex).map_err(Error::custom),
+        }
     }
 }

@@ -1,0 +1,14 @@
+[package]
+name = "antler-parameters"
+version = "2.0.0"
+edition = "2024"
+
+[dependencies]
+antler-camera = { path = "../camera" }
+antler-colour = { path = "../colour" }
+antler-light = { path = "../light" }
+antler-scene = { path = "../scene" }
+antler-settings = { path = "../settings" }
+
+[lints]
+workspace = true

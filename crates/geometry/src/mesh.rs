@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::{fmt::Debug, path::Path};
 
 use nalgebra::{Point2, Point3, Unit, Vector3};
 use tobj::{LoadOptions, load_obj};
@@ -35,9 +35,9 @@ impl Mesh {
         &self.triangles[index]
     }
 
-    pub fn load(path: impl AsRef<Path>) -> Result<Self, MeshLoadError> {
+    pub fn load<P: AsRef<Path> + Debug>(path: P) -> Result<Self, MeshLoadError> {
         let (models, _materials) = load_obj(
-            path.as_ref(),
+            path,
             &LoadOptions {
                 triangulate: true,
                 single_index: true,

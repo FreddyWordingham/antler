@@ -3,7 +3,7 @@ use antler_colour::{Rgb, Rgba};
 use antler_image::{RgbaImage, Tile};
 use antler_material::Bsdf;
 use antler_scene::{Resources, Scene};
-use antler_settings::{ImageSettings, RenderSettings};
+use antler_settings::{ImageSettings, ProbeSettings};
 use antler_shader::Appearance;
 use nalgebra::Point2;
 use rand::{Rng, SeedableRng, rngs::SmallRng};
@@ -13,7 +13,7 @@ use crate::{probe::Probe, utils::progress_bar};
 
 pub fn render_probe<R: Rng + SeedableRng>(
     rng: &mut R,
-    settings: &RenderSettings,
+    settings: &ProbeSettings,
     resources: &Resources,
     scene: &Scene,
     probe: Probe,
@@ -50,7 +50,7 @@ pub fn render_probe<R: Rng + SeedableRng>(
 pub fn render_tile<R: Rng + SeedableRng>(
     rng: &mut R,
     image_settings: &ImageSettings,
-    render_settings: &RenderSettings,
+    render_settings: &ProbeSettings,
     camera: &Camera,
     resources: &Resources,
     scene: &Scene,
@@ -100,7 +100,7 @@ pub fn render_tile<R: Rng + SeedableRng>(
 #[must_use]
 pub fn render_image(
     image_settings: &ImageSettings,
-    render_settings: &RenderSettings,
+    render_settings: &ProbeSettings,
     camera: &Camera,
     resources: &Resources,
     scene: &Scene,

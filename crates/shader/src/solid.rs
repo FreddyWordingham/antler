@@ -5,11 +5,11 @@ use antler_light::LightSample;
 use crate::Appearance;
 
 pub struct Solid {
-    pub colour: Rgb,
+    colour: Rgb,
 }
 
 impl Solid {
-    #[must_use] 
+    #[must_use]
     pub const fn new(colour: Rgb) -> Self {
         Self { colour }
     }

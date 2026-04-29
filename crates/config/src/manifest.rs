@@ -1,15 +1,13 @@
-use std::path::{Path, PathBuf};
+use std::{
+    collections::BTreeMap,
+    fs::read_to_string,
+    path::{Path, PathBuf},
+};
 
+use antler_parameters::SimulationParameters;
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    Config,
-    context::Context,
-    errors::ConfigError,
-    named::Named,
-    placeholder::{Placeholder, ResolvedPlaceholder},
-    resolve::Resolve,
-};
+use crate::{errors::ConfigError, probe_config::ProbeConfig, scene_config::SceneConfig};
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -18,51 +16,34 @@ pub struct Manifest {
     pub assets_dir: PathBuf,
     #[serde(default = "default_output_dir")]
     pub output_dir: PathBuf,
-    pub placeholder: Named<Placeholder>,
-}
-
-#[derive(Debug)]
-pub struct ResolvedManifest {
-    pub assets_dir: PathBuf,
-    pub output_dir: PathBuf,
-    pub placeholder: ResolvedPlaceholder,
+    pub scenes: BTreeMap<String, SceneConfig>,
+    #[serde(default)]
+    pub settings: ProbeConfig,
 }
 
 impl Manifest {
-    pub fn load_resolved(path: impl AsRef<Path>) -> Result<ResolvedManifest, ConfigError> {
-        let path = path.as_ref();
-        let base_dir = path.parent().unwrap_or_else(|| Path::new(".")).to_path_buf();
-
-        let manifest = Self::load(path)?;
-
-        let context = Context {
-            base_dir,
-            assets_dir: manifest.assets_dir.clone(),
-            output_dir: manifest.output_dir.clone(),
-        };
-
-        manifest.resolve(&context)
+    pub fn load<P: AsRef<Path>>(path: P) -> Result<Self, ConfigError> {
+        let contents = read_to_string(&path)?;
+        let manifest = ron::from_str(&contents)?;
+        Ok(manifest)
     }
-}
 
-impl Resolve for Manifest {
-    type Resolved = ResolvedManifest;
+    pub fn build(self) -> SimulationParameters {
+        let mut resources = Default::default();
 
-    fn resolve(self, context: &Context) -> Result<Self::Resolved, ConfigError> {
-        let assets_dir = self.assets_dir;
-        let output_dir = self.output_dir;
+        let scenes = self
+            .scenes
+            .into_iter()
+            .map(|(name, scene)| (name, scene.build(&mut resources)))
+            .collect();
 
-        let context = Context {
-            base_dir: context.base_dir.clone(),
-            assets_dir: assets_dir.clone(),
-            output_dir: output_dir.clone(),
-        };
-
-        Ok(Self::Resolved {
-            assets_dir,
-            output_dir,
-            placeholder: self.placeholder.resolve(&context)?,
-        })
+        SimulationParameters {
+            assets_dir: self.assets_dir,
+            output_dir: self.output_dir,
+            resources,
+            scenes,
+            settings: self.settings.build(),
+        }
     }
 }
 

@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 png = { workspace = true }
+serde = { workspace = true }
 
 [lints]
 workspace = true
