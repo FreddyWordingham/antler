@@ -2,6 +2,7 @@ mod camera_config;
 mod capture_config;
 pub mod errors;
 mod geometry_config;
+mod gradient_config;
 mod image_config;
 mod light_config;
 mod manifest;
