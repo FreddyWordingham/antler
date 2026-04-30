@@ -22,13 +22,8 @@ impl Appearance for Solid {
     }
 
     #[inline]
-    fn albedo(&self, _contact: &Contact) -> Rgb {
-        self.colour
-    }
-
-    #[inline]
     fn shade(&self, _ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
         let n_dot_l = contact.normal.dot(&light.direction).max(0.0);
-        self.albedo(contact) * light.radiance * n_dot_l
+        self.colour * light.radiance * n_dot_l
     }
 }

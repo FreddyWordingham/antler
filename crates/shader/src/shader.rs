@@ -30,18 +30,6 @@ impl Appearance for Shader {
     }
 
     #[inline]
-    fn albedo(&self, contact: &Contact) -> Rgb {
-        match self {
-            Self::Block(block) => block.albedo(contact),
-            Self::Checkerboard(checkerboard) => checkerboard.albedo(contact),
-            Self::Iridescent(iridescent) => iridescent.albedo(contact),
-            Self::Luminous(luminous) => luminous.albedo(contact),
-            Self::Normal(normal) => normal.albedo(contact),
-            Self::Solid(solid) => solid.albedo(contact),
-        }
-    }
-
-    #[inline]
     fn shade(&self, ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
         match self {
             Self::Block(block) => block.shade(ray, contact, light),

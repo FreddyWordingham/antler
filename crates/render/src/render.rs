@@ -42,7 +42,7 @@ pub fn render_probe<R: Rng + SeedableRng>(
     });
 
     let emitted = shader.emitted(&contact);
-    let ambient = scene.ambient_light(rng, resources, object_id, &mut contact) * local_fraction;
+    let ambient = scene.ambient_light(rng, resources, &probe.ray, object_id, &mut contact) * local_fraction;
     let direct = scene.direct_light(rng, resources, &probe.ray, object_id, &mut contact) * local_fraction;
     let local = emitted + ambient + direct;
 

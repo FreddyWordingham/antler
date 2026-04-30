@@ -1,7 +1,7 @@
 use antler_colour::Rgb;
 use antler_geometry::{Bounded, Bvh, Contact, Ray, Traceable, utils::hemisphere_direction};
 use antler_id::ObjectId;
-use antler_light::{Emissive, Light};
+use antler_light::{Emissive, Light, LightSample};
 use antler_settings::OcclusionSettings;
 use antler_shader::Appearance;
 use rand::Rng;
@@ -210,15 +210,21 @@ impl Scene {
         &self,
         rng: &mut R,
         resources: &Resources,
+        world_ray: &Ray,
         object_id: ObjectId,
         contact: &mut Contact,
     ) -> Rgb {
         let object = self.get_object(object_id);
         let shader = resources.get_shader(object.shader_id);
 
-        shader.albedo(contact) * self.ambient * self.occlusion(rng, resources, contact)
-    }
+        let sample = LightSample {
+            direction: contact.normal,
+            radiance: self.ambient,
+            distance: f32::INFINITY,
+        };
 
+        shader.shade(world_ray, contact, &sample) * self.occlusion(rng, resources, contact)
+    }
     #[must_use]
     #[inline]
     pub fn direct_light<R: Rng>(

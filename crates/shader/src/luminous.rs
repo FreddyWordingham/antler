@@ -10,7 +10,7 @@ pub struct Luminous {
 }
 
 impl Luminous {
-    #[must_use] 
+    #[must_use]
     pub const fn new(colour: Rgb, intensity: f32) -> Self {
         Self { colour, intensity }
     }
@@ -18,13 +18,8 @@ impl Luminous {
 
 impl Appearance for Luminous {
     #[inline]
-    fn emitted(&self, contact: &Contact) -> Rgb {
-        self.albedo(contact) * self.intensity
-    }
-
-    #[inline]
-    fn albedo(&self, _contact: &Contact) -> Rgb {
-        self.colour
+    fn emitted(&self, _contact: &Contact) -> Rgb {
+        self.colour * self.intensity
     }
 
     #[inline]

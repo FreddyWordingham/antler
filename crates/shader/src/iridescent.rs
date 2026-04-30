@@ -23,14 +23,10 @@ impl Appearance for Iridescent {
     }
 
     #[inline]
-    fn albedo(&self, _contact: &Contact) -> Rgb {
-        Rgb::WHITE
-    }
-
-    #[inline]
     fn shade(&self, _ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
-        let n_dot_l = contact.normal.dot(&light.direction).max(0.0);
-        let angle = (1.0 - n_dot_l).powf(self.power);
+        let n_dot_l = contact.normal.dot(&light.direction).clamp(0.0, 1.0);
+
+        let angle = (1.0 - n_dot_l).clamp(0.0, 1.0).powf(self.power);
 
         self.gradient.sample(angle) * light.radiance * n_dot_l
     }

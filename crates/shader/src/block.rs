@@ -9,7 +9,7 @@ pub struct Block {
 }
 
 impl Block {
-    #[must_use] 
+    #[must_use]
     pub const fn new(colour: Rgb) -> Self {
         Self { colour }
     }
@@ -22,12 +22,7 @@ impl Appearance for Block {
     }
 
     #[inline]
-    fn albedo(&self, _contact: &Contact) -> Rgb {
+    fn shade(&self, _ray: &Ray, _contact: &Contact, _light: &LightSample) -> Rgb {
         self.colour
-    }
-
-    #[inline]
-    fn shade(&self, _ray: &Ray, contact: &Contact, _light: &LightSample) -> Rgb {
-        self.albedo(contact)
     }
 }

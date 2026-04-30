@@ -11,7 +11,7 @@ pub struct Checkerboard {
 }
 
 impl Checkerboard {
-    #[must_use] 
+    #[must_use]
     pub const fn new(size: f32, colour_a: Rgb, colour_b: Rgb) -> Self {
         Self {
             size,
@@ -28,22 +28,20 @@ impl Appearance for Checkerboard {
     }
 
     #[inline]
-    fn albedo(&self, contact: &Contact) -> Rgb {
+    fn shade(&self, _ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
         let position = contact.position;
-        if ((position.x / self.size).floor() + (position.y / self.size).floor() + (position.z / self.size).floor())
-            as i32
+        let colour = if ((position.x / self.size).floor()
+            + (position.y / self.size).floor()
+            + (position.z / self.size).floor()) as i32
             % 2
             == 0
         {
             self.colour_a
         } else {
             self.colour_b
-        }
-    }
+        };
 
-    #[inline]
-    fn shade(&self, _ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
         let n_dot_l = contact.normal.dot(&light.direction).max(0.0);
-        self.albedo(contact) * light.radiance * n_dot_l
+        colour * light.radiance * n_dot_l
     }
 }
