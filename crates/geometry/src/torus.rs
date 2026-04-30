@@ -1,6 +1,6 @@
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
-use crate::{aabb::Aabb, bounded::Bounded, contact::Contact, ray::Ray, traceable::Traceable};
+use crate::{aabb::Aabb, bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, traceable::Traceable};
 
 const TORUS_EPSILON: f32 = 1.0e-5;
 const TORUS_SCAN_STEPS: usize = 128;
@@ -80,7 +80,7 @@ impl Torus {
             return None;
         }
 
-        let start = t0.max(TORUS_EPSILON);
+        let start = t0.max(TORUS_EPSILON.max(MIN_RAY_DISTANCE));
         let end = t1.min(max_distance);
 
         (start < end).then_some((start, end))
@@ -155,7 +155,7 @@ impl Traceable for Torus {
     #[inline]
     fn distance(&self, ray: &Ray, max_distance: f32) -> Option<f32> {
         self.distance_unchecked(ray, max_distance)
-            .filter(|distance| *distance < max_distance)
+            .filter(|distance| *distance > MIN_RAY_DISTANCE && *distance < max_distance)
     }
 
     #[inline]

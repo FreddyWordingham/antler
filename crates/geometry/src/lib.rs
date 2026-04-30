@@ -3,6 +3,7 @@ mod bounded;
 mod bvh;
 mod capsule;
 mod circle;
+mod config;
 mod contact;
 pub mod errors;
 mod geometry;

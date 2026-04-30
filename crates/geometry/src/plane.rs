@@ -1,8 +1,6 @@
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
-use crate::ray::Ray;
-
-const PLANE_EPSILON: f32 = 1.0e-6;
+use crate::{config::MIN_RAY_DISTANCE, ray::Ray};
 
 #[derive(Debug, Clone, Copy)]
 pub struct Plane {
@@ -38,13 +36,13 @@ impl Plane {
     pub fn ray_distance(&self, ray: &Ray) -> Option<f32> {
         let denom = self.normal.dot(&ray.direction);
 
-        if denom.abs() <= PLANE_EPSILON {
+        if denom.abs() <= MIN_RAY_DISTANCE {
             return None;
         }
 
         let distance = (self.position - ray.origin).dot(&self.normal) / denom;
 
-        (distance > PLANE_EPSILON).then_some(distance)
+        (distance > MIN_RAY_DISTANCE.max(MIN_RAY_DISTANCE)).then_some(distance)
     }
 
     #[inline]

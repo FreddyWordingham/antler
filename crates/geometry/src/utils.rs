@@ -3,15 +3,18 @@ use std::f32::consts::PI;
 use nalgebra::{Point3, Unit, Vector3};
 use rand::{Rng, RngExt};
 
-pub const RAY_BIAS: f32 = 1e-4;
+use crate::config::RAY_BIAS;
 
 #[must_use]
 #[inline]
 pub fn offset_origin(position: Point3<f32>, normal: Unit<Vector3<f32>>, direction: Unit<Vector3<f32>>) -> Point3<f32> {
+    let scale = position.coords.abs().max().max(1.0);
+    let bias = RAY_BIAS * scale;
+
     if direction.dot(&normal) >= 0.0 {
-        position + *normal * RAY_BIAS
+        position + *normal * bias
     } else {
-        position - *normal * RAY_BIAS
+        position - *normal * bias
     }
 }
 

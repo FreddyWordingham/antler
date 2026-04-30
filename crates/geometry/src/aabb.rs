@@ -1,6 +1,12 @@
 use nalgebra::{Point2, Point3, Similarity3, Unit, Vector3};
 
-use crate::{bounded::Bounded, contact::Contact, ray::Ray, traceable::Traceable};
+use crate::{
+    bounded::Bounded,
+    config::MIN_RAY_DISTANCE,
+    contact::Contact,
+    ray::Ray,
+    traceable::Traceable,
+};
 
 const PARALLEL_THRESHOLD: f32 = 1e-8;
 
@@ -161,7 +167,7 @@ impl Traceable for Aabb {
         let (t_min, t_max, _, _) = self.ray_intersection(ray)?;
         let distance = if t_min > 0.0 { t_min } else { t_max };
 
-        (distance > 0.0 && distance < max_distance).then_some(distance)
+        (distance > MIN_RAY_DISTANCE && distance < max_distance).then_some(distance)
     }
 
     #[inline]
@@ -174,7 +180,7 @@ impl Traceable for Aabb {
             (t_max, exit_face.normal())
         };
 
-        if distance <= 0.0 || distance >= max_distance {
+        if distance <= MIN_RAY_DISTANCE || distance >= max_distance {
             return None;
         }
 

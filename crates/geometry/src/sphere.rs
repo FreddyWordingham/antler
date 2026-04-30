@@ -2,7 +2,7 @@ use std::f32::consts::{PI, TAU};
 
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
-use crate::{aabb::Aabb, bounded::Bounded, contact::Contact, ray::Ray, traceable::Traceable};
+use crate::{aabb::Aabb, bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, traceable::Traceable};
 
 pub struct Sphere {
     centre: Point3<f32>,
@@ -49,7 +49,7 @@ impl Traceable for Sphere {
             distance = -half_b + sqrt_d;
         }
 
-        (distance > 0.0 && distance < max_distance).then_some(distance)
+        (distance > MIN_RAY_DISTANCE && distance < max_distance).then_some(distance)
     }
 
     #[inline]

@@ -1,6 +1,6 @@
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
-use crate::{aabb::Aabb, bounded::Bounded, contact::Contact, ray::Ray, traceable::Traceable};
+use crate::{aabb::Aabb, bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, traceable::Traceable};
 
 pub struct Capsule {
     a: Point3<f32>,
@@ -43,7 +43,7 @@ impl Capsule {
         let y = t.mul_add(bard, baoa);
 
         if y > 0.0 && y < baba {
-            return (t > 0.0).then_some(t);
+            return (t > MIN_RAY_DISTANCE).then_some(t);
         }
 
         let oc = if y <= 0.0 { oa } else { ray.origin - self.b };
@@ -58,7 +58,7 @@ impl Capsule {
 
         t = -b - h.sqrt();
 
-        (t > 0.0).then_some(t)
+        (t > MIN_RAY_DISTANCE).then_some(t)
     }
 
     fn normal_at(&self, position: Point3<f32>) -> Unit<Vector3<f32>> {
@@ -92,7 +92,8 @@ impl Traceable for Capsule {
 
     #[inline]
     fn distance(&self, ray: &Ray, max_distance: f32) -> Option<f32> {
-        self.distance_unchecked(ray).filter(|distance| *distance < max_distance)
+        self.distance_unchecked(ray)
+            .filter(|distance| *distance > MIN_RAY_DISTANCE && *distance < max_distance)
     }
 
     #[inline]

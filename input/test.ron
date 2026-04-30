@@ -41,7 +41,8 @@
 
         (
           geometry: Sphere (),
-          material: Reflective (
+          material: Ggx (
+            roughness: 0.5,
             reflectance: 0.5
           ),
           shader: Iridescent (
@@ -77,7 +78,7 @@
           images: {
             "my_image": (
               resolution: (480, 480),
-              super_samples: 4
+              super_samples: 10
             )
           }
         )

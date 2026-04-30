@@ -1,6 +1,6 @@
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
-use crate::{aabb::Aabb, bounded::Bounded, contact::Contact, ray::Ray, traceable::Traceable};
+use crate::{aabb::Aabb, bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, traceable::Traceable};
 
 const BOUNDS_PADDING: f32 = 1.0e-6;
 const CONTACT_EPSILON: f32 = 1.0e-8;
@@ -61,7 +61,7 @@ impl Triangle {
         }
 
         let distance = edge_ac.dot(&q_vec) * inv_det;
-        if distance <= eps {
+        if distance <= eps.max(MIN_RAY_DISTANCE) {
             return None;
         }
 
@@ -135,7 +135,8 @@ impl Traceable for Triangle {
 
     #[inline]
     fn distance(&self, ray: &Ray, max_distance: f32) -> Option<f32> {
-        self.distance_unchecked(ray).filter(|distance| *distance < max_distance)
+        self.distance_unchecked(ray)
+            .filter(|distance| *distance > MIN_RAY_DISTANCE && *distance < max_distance)
     }
 
     #[inline]
