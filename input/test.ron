@@ -15,7 +15,7 @@
     "my_scene": (
       ambient: 0x333333,
       occlusion: Some((
-        samples: 512,
+        samples: 64,
         distance: 1.0,
         strength: 1.0e1,
         falloff: 2.0,
@@ -52,14 +52,8 @@
 
         (
           geometry: Mesh ( path: "assets/meshes/golem.obj" ),
-          material: Wireframe (
-            surface_alpha: 0.3,
-            line_width: 0.02,
-          ),
-          shader: Gradient (
-            gradient: [0xFF0000, 0x0000FF],
-            power: 1.0
-          ),
+          material: Opaque,
+          shader: Block (colour: 0xFF0000),
           transform: (
             scale: 4.0,
             translation: (0.0, 0.0, 0.0),
