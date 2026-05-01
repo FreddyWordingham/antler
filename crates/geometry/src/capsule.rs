@@ -1,3 +1,5 @@
+use std::f32::consts::{PI, TAU};
+
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
 use crate::{aabb::Aabb, bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, traceable::Traceable};
@@ -61,7 +63,7 @@ impl Capsule {
         (t > MIN_RAY_DISTANCE).then_some(t)
     }
 
-    fn normal_at(&self, position: Point3<f32>) -> Unit<Vector3<f32>> {
+    fn normal(&self, position: Point3<f32>) -> Unit<Vector3<f32>> {
         let ba = self.b - self.a;
         let pa = position - self.a;
 
@@ -69,6 +71,35 @@ impl Capsule {
         let closest = self.a + ba * h;
 
         Unit::new_normalize(position - closest)
+    }
+
+    fn uv(&self, position: Point3<f32>) -> Point2<f32> {
+        let axis = self.b - self.a;
+        let length = axis.norm();
+        let axis_dir = axis / length;
+
+        let pa = position - self.a;
+        let h = (pa.dot(&axis_dir) / length).clamp(0.0, 1.0);
+        let centre = self.a + axis * h;
+
+        let radial = Unit::new_normalize(position - centre);
+
+        let helper = if axis_dir.x.abs() < 0.9 {
+            Vector3::x()
+        } else {
+            Vector3::y()
+        };
+
+        let tangent = Unit::new_normalize(helper.cross(&axis_dir));
+        let bitangent = Unit::new_normalize(axis_dir.cross(&tangent));
+
+        let x = radial.dot(&tangent);
+        let y = radial.dot(&bitangent);
+
+        let u = (y.atan2(x) + PI) / TAU;
+        let v = h;
+
+        Point2::new(u, v)
     }
 }
 
@@ -101,12 +132,13 @@ impl Traceable for Capsule {
         let distance = self.distance(ray, max_distance)?;
 
         let position = ray.origin + *ray.direction * distance;
-        let mut normal = self.normal_at(position);
+        let mut normal = self.normal(position);
 
         if normal.dot(&ray.direction) > 0.0 {
             normal = -normal;
         }
 
-        Some(Contact::new(distance, position, normal, Point2::new(0.0, 0.0)))
+        let uv = self.uv(position);
+        Some(Contact::new(distance, position, normal, uv))
     }
 }

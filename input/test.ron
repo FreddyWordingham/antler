@@ -40,9 +40,10 @@
         ),
 
         (
-          geometry: Aabb (
-            min: (-0.5, -0.5, -0.5),
-            max: (0.5, 0.5, 0.5)
+          geometry: Capsule (
+            a: (0.0, 0.0, -0.5),
+            b: (0.0, 0.0, 1.5),
+            radius: 0.5
           ),
           material: Opaque,
           shader: Textured ( path: "assets/textures/mandy.png" ),
