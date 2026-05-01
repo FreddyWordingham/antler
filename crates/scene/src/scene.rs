@@ -206,25 +206,16 @@ impl Scene {
 
     #[must_use]
     #[inline]
-    pub fn ambient_light<R: Rng>(
-        &self,
-        rng: &mut R,
-        resources: &Resources,
-        world_ray: &Ray,
-        object_id: ObjectId,
-        contact: &mut Contact,
-    ) -> Rgb {
-        let object = self.get_object(object_id);
-        let shader = resources.get_shader(object.shader_id);
-
+    pub fn ambient_shade(&self, shader: &impl Appearance, world_ray: &Ray, contact: &Contact) -> Rgb {
         let sample = LightSample {
             direction: contact.normal,
             radiance: self.ambient,
             distance: f32::INFINITY,
         };
 
-        shader.shade(world_ray, contact, &sample) * self.occlusion(rng, resources, contact)
+        shader.shade(world_ray, contact, &sample)
     }
+
     #[must_use]
     #[inline]
     pub fn direct_light<R: Rng>(

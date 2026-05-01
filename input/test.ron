@@ -5,14 +5,15 @@
     "my_scene": (
       ambient: 0x333333,
       occlusion: Some((
-        samples: 640,
-        distance: 1.0e1,
-        strength: 1.0e2
+        samples: 256,
+        distance: 1.25,
+        strength: 1.0,
+        falloff: 3.0,
       )),
       lights: [
         Directional (
           direction: (-3.0, -2.5, -3.0),
-          radiance: 0xFFFFFF,
+          radiance: 0xCCCC00,
           angular_radius: Some(5.0),
           samples: None
         )

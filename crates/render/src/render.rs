@@ -41,9 +41,12 @@ pub fn render_probe<R: Rng + SeedableRng>(
         }
     });
 
+    let ao = scene.occlusion(rng, resources, &mut contact);
+
     let emitted = shader.emitted(&contact);
-    let ambient = scene.ambient_light(rng, resources, &probe.ray, object_id, &mut contact) * local_fraction;
+    let ambient = scene.ambient_shade(shader, &probe.ray, &contact) * ao * local_fraction;
     let direct = scene.direct_light(rng, resources, &probe.ray, object_id, &mut contact) * local_fraction;
+
     let local = emitted + ambient + direct;
 
     Some(local * probe.weight + bounced)
