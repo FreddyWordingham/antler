@@ -125,6 +125,13 @@ impl<P: Pixel> Image<P> {
             }
         }
     }
+
+    #[inline]
+    pub fn tone_map(&mut self) {
+        for pixel in self.pixels.as_mut_slice() {
+            *pixel = pixel.tone_mapped();
+        }
+    }
 }
 
 impl<P: Pixel> Index<(usize, usize)> for Image<P> {

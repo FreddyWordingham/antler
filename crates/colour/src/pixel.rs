@@ -37,4 +37,7 @@ pub trait Pixel: Copy {
     fn from_hex(hex: &str) -> Result<Self, ParseHexError>
     where
         Self: Sized;
+
+    #[must_use]
+    fn tone_mapped(&self) -> Self;
 }

@@ -47,3 +47,9 @@ const fn hex_nibble(byte: u8) -> Result<u8, ParseHexError> {
 fn hex_byte(high: u8, low: u8) -> Result<u8, ParseHexError> {
     Ok((hex_nibble(high)? << 4) | hex_nibble(low)?)
 }
+
+#[must_use]
+#[inline]
+pub const fn reinhard(x: f32) -> f32 {
+    x / (1.0 + x)
+}

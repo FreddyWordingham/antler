@@ -28,6 +28,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 let visual_image_path = parameters
                     .output_dir
                     .join(format!("{scene_name}-{capture_name}-{image_name}.png"));
+                // visual_image.tone_map();
                 visual_image.save(&visual_image_path)?;
 
                 let temporal_image_path = parameters

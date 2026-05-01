@@ -4,31 +4,28 @@ use antler_light::LightSample;
 
 use crate::Appearance;
 
-pub struct Iridescent {
+pub struct Gradient {
     gradient: RgbGradient,
     power: f32,
 }
 
-impl Iridescent {
+impl Gradient {
     #[must_use]
     pub const fn new(gradient: RgbGradient, power: f32) -> Self {
         Self { gradient, power }
     }
 }
 
-impl Appearance for Iridescent {
+impl Appearance for Gradient {
     #[inline]
     fn emitted(&self, _contact: &Contact) -> Rgb {
         Rgb::BLACK
     }
 
     #[inline]
-    fn shade(&self, ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
-        let view = -ray.direction;
-        let n_dot_v = contact.normal.dot(&view).clamp(0.0, 1.0);
-
-        let angle = (1.0 - n_dot_v).powf(self.power);
-        let n_dot_l = contact.normal.dot(&light.direction).max(0.0);
+    fn shade(&self, _ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
+        let n_dot_l = contact.normal.dot(&light.direction).clamp(0.0, 1.0);
+        let angle = (1.0 - n_dot_l).powf(self.power);
 
         self.gradient.sample(angle) * light.radiance * n_dot_l
     }

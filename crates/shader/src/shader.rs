@@ -3,13 +3,14 @@ use antler_geometry::{Contact, Ray};
 use antler_light::LightSample;
 
 use crate::{
-    appearance::Appearance, block::Block, checkerboard::Checkerboard, iridescent::Iridescent, luminous::Luminous,
-    normal::Normal, solid::Solid, textured::Textured,
+    appearance::Appearance, block::Block, checkerboard::Checkerboard, gradient::Gradient, iridescent::Iridescent,
+    luminous::Luminous, normal::Normal, solid::Solid, textured::Textured,
 };
 
 pub enum Shader {
     Block(Block),
     Checkerboard(Checkerboard),
+    Gradient(Gradient),
     Iridescent(Iridescent),
     Luminous(Luminous),
     Normal(Normal),
@@ -23,6 +24,7 @@ impl Appearance for Shader {
         match self {
             Self::Block(block) => block.emitted(contact),
             Self::Checkerboard(checkerboard) => checkerboard.emitted(contact),
+            Self::Gradient(gradient) => gradient.emitted(contact),
             Self::Iridescent(iridescent) => iridescent.emitted(contact),
             Self::Luminous(luminous) => luminous.emitted(contact),
             Self::Normal(normal) => normal.emitted(contact),
@@ -36,6 +38,7 @@ impl Appearance for Shader {
         match self {
             Self::Block(block) => block.shade(ray, contact, light),
             Self::Checkerboard(checkerboard) => checkerboard.shade(ray, contact, light),
+            Self::Gradient(gradient) => gradient.shade(ray, contact, light),
             Self::Iridescent(iridescent) => iridescent.shade(ray, contact, light),
             Self::Luminous(luminous) => luminous.shade(ray, contact, light),
             Self::Normal(normal) => normal.shade(ray, contact, light),
@@ -56,6 +59,13 @@ impl From<Checkerboard> for Shader {
     #[inline]
     fn from(val: Checkerboard) -> Self {
         Self::Checkerboard(val)
+    }
+}
+
+impl From<Gradient> for Shader {
+    #[inline]
+    fn from(val: Gradient) -> Self {
+        Self::Gradient(val)
     }
 }
 

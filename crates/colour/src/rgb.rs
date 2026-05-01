@@ -8,7 +8,12 @@ use std::{
 use png::ColorType;
 use serde::{Deserialize, Deserializer, Serialize, Serializer, de::Error};
 
-use crate::{errors::ParseHexError, pixel::Pixel, rgba::Rgba, utils::parse_hex};
+use crate::{
+    errors::ParseHexError,
+    pixel::Pixel,
+    rgba::Rgba,
+    utils::{parse_hex, reinhard},
+};
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Rgb {
@@ -75,6 +80,15 @@ impl Pixel for Rgb {
     #[inline]
     fn from_hex(hex: &str) -> Result<Self, ParseHexError> {
         Ok(Self::from_bytes(&parse_hex::<3>(hex)?))
+    }
+
+    #[inline]
+    fn tone_mapped(&self) -> Self {
+        Self {
+            red: reinhard(self.red),
+            green: reinhard(self.green),
+            blue: reinhard(self.blue),
+        }
     }
 }
 
