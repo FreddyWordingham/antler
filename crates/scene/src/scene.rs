@@ -279,15 +279,20 @@ impl Scene {
             return 1.0;
         }
 
-        let occluded = (0..ao.samples)
-            .filter(|_| {
-                let direction = hemisphere_direction(rng, contact.normal, contact.tangent(), contact.bi_tangent());
-                let ray = Ray::from_offset(contact.position, contact.normal, direction);
-                self.hit(resources, &ray, ao.distance).is_some()
-            })
-            .count();
+        let mut occlusion = 0.0;
 
-        let occlusion = occluded as f32 / ao.samples as f32;
+        for _ in 0..ao.samples {
+            let direction = hemisphere_direction(rng, contact.normal, contact.tangent(), contact.bi_tangent());
+            let ray = Ray::from_offset(contact.position, contact.normal, direction);
+
+            if let Some((_object_id, distance)) = self.distance(resources, &ray, ao.distance) {
+                let proximity = 1.0 - (distance / ao.distance).clamp(0.0, 1.0);
+                occlusion += proximity.powf(ao.falloff);
+            }
+        }
+
+        let occlusion = occlusion / ao.samples as f32;
+
         ao.strength.mul_add(-occlusion, 1.0).clamp(0.0, 1.0)
     }
 }

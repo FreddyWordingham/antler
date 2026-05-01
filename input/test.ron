@@ -5,9 +5,9 @@
     "my_scene": (
       ambient: 0x333333,
       occlusion: Some((
-        samples: 64,
-        distance: 1.0,
-        strength: 1.0
+        samples: 640,
+        distance: 1.0e1,
+        strength: 1.0e2
       )),
       lights: [
         Directional (
@@ -79,7 +79,7 @@
           images: {
             "my_image": (
               resolution: (480, 480),
-              super_samples: 1
+              super_samples: 2
             )
           }
         )
