@@ -1,12 +1,6 @@
 use nalgebra::{Point2, Point3, Similarity3, Unit, Vector3};
 
-use crate::{
-    bounded::Bounded,
-    config::MIN_RAY_DISTANCE,
-    contact::Contact,
-    ray::Ray,
-    traceable::Traceable,
-};
+use crate::{bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, traceable::Traceable};
 
 const PARALLEL_THRESHOLD: f32 = 1e-8;
 
@@ -185,7 +179,10 @@ impl Traceable for Aabb {
         }
 
         let position = ray.origin + *ray.direction * distance;
-        Some(Contact::new(distance, position, normal, Point2::new(0.0, 0.0)))
+        let face = if t_min > 0.0 { entry_face } else { exit_face };
+        let uv = face.uv(position, self);
+
+        Some(Contact::new(distance, position, normal, uv))
     }
 }
 
@@ -209,6 +206,30 @@ impl AabbFace {
             Self::MaxY => Vector3::y_axis(),
             Self::MinZ => -Vector3::z_axis(),
             Self::MaxZ => Vector3::z_axis(),
+        }
+    }
+
+    #[inline]
+    pub fn uv(self, position: Point3<f32>, aabb: &Aabb) -> Point2<f32> {
+        let size = aabb.max - aabb.min;
+
+        let safe = |x: f32, d: f32| {
+            if d.abs() <= f32::EPSILON { 0.0 } else { x / d }
+        };
+
+        match self {
+            Self::MinX | Self::MaxX => Point2::new(
+                safe(position.z - aabb.min.z, size.z),
+                safe(position.y - aabb.min.y, size.y),
+            ),
+            Self::MinY | Self::MaxY => Point2::new(
+                safe(position.x - aabb.min.x, size.x),
+                safe(position.z - aabb.min.z, size.z),
+            ),
+            Self::MinZ | Self::MaxZ => Point2::new(
+                safe(position.x - aabb.min.x, size.x),
+                safe(position.y - aabb.min.y, size.y),
+            ),
         }
     }
 }

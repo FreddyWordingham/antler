@@ -40,11 +40,11 @@
         ),
 
         (
-          geometry: Sphere (),
-          material: Ggx (
-            roughness: 0.5,
-            reflectance: 0.5
+          geometry: Aabb (
+            min: (-0.5, -0.5, -0.5),
+            max: (0.5, 0.5, 0.5)
           ),
+          material: Opaque,
           shader: Textured ( path: "assets/textures/mandy.png" ),
           transform: (
             scale: 4.0,
@@ -75,7 +75,7 @@
           images: {
             "my_image": (
               resolution: (480, 480),
-              super_samples: 10
+              super_samples: 1
             )
           }
         )
