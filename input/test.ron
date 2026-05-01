@@ -1,6 +1,16 @@
 (
   assets_dir: "assets",
   output_dir: "output",
+  lighting_settings: (
+    emitted: 1.0,
+    ambient: 1.0,
+    direct: 1.0,
+    indirect: 1.0
+  ),
+  probe_settings: (
+    max_generation: 5,
+    min_weight: 1.0e-2
+  ),
   scenes: {
     "my_scene": (
       ambient: 0x333333,

@@ -5,6 +5,7 @@ mod geometry_config;
 mod gradient_config;
 mod image_config;
 mod light_config;
+mod lighting_config;
 mod manifest;
 mod material_config;
 mod object_config;

@@ -1,7 +1,7 @@
 use std::{collections::BTreeMap, path::PathBuf};
 
 use antler_scene::Resources;
-use antler_settings::ProbeSettings;
+use antler_settings::{LightingSettings, ProbeSettings};
 
 use crate::scene_parameters::SceneParameters;
 
@@ -10,5 +10,6 @@ pub struct SimulationParameters {
     pub output_dir: PathBuf,
     pub resources: Resources,
     pub scenes: BTreeMap<String, SceneParameters>,
-    pub settings: ProbeSettings,
+    pub lighting_settings: LightingSettings,
+    pub probe_settings: ProbeSettings,
 }

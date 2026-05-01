@@ -7,7 +7,9 @@ use std::{
 use antler_parameters::SimulationParameters;
 use serde::{Deserialize, Serialize};
 
-use crate::{errors::ConfigError, probe_config::ProbeConfig, scene_config::SceneConfig};
+use crate::{
+    errors::ConfigError, lighting_config::LightingConfig, probe_config::ProbeConfig, scene_config::SceneConfig,
+};
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -18,7 +20,9 @@ pub struct Manifest {
     pub output_dir: PathBuf,
     pub scenes: BTreeMap<String, SceneConfig>,
     #[serde(default)]
-    pub settings: ProbeConfig,
+    pub lighting_settings: LightingConfig,
+    #[serde(default)]
+    pub probe_settings: ProbeConfig,
 }
 
 impl Manifest {
@@ -45,7 +49,8 @@ impl Manifest {
             output_dir: self.output_dir,
             resources,
             scenes,
-            settings: self.settings.build(),
+            lighting_settings: self.lighting_settings.build(),
+            probe_settings: self.probe_settings.build(),
         })
     }
 }

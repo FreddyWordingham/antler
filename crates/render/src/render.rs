@@ -5,7 +5,7 @@ use antler_colour::{Rgb, Rgba};
 use antler_image::{RgbaImage, Tile};
 use antler_material::Bsdf;
 use antler_scene::{Resources, Scene};
-use antler_settings::{ImageSettings, ProbeSettings};
+use antler_settings::{ImageSettings, LightingSettings, ProbeSettings};
 use antler_shader::Appearance;
 use nalgebra::Point2;
 use rand::{Rng, SeedableRng, rngs::SmallRng};
@@ -15,12 +15,13 @@ use crate::{probe::Probe, utils::progress_bar};
 
 pub fn render_probe<R: Rng + SeedableRng>(
     rng: &mut R,
-    settings: &ProbeSettings,
+    lighting_settings: &LightingSettings,
+    probe_settings: &ProbeSettings,
     resources: &Resources,
     scene: &Scene,
     probe: Probe,
 ) -> Option<Rgb> {
-    if probe.generation >= settings.max_generation || probe.weight <= settings.min_weight {
+    if probe.generation >= probe_settings.max_generation || probe.weight <= probe_settings.min_weight {
         return Some(Rgb::BLACK);
     }
 
@@ -36,7 +37,14 @@ pub fn render_probe<R: Rng + SeedableRng>(
     let local_fraction = material.scatter(rng, &probe.ray, &contact, |child_ray, fraction| {
         let child = probe.child(child_ray, fraction);
 
-        if let Some(colour) = render_probe(&mut child_rng, settings, resources, scene, child) {
+        if let Some(colour) = render_probe(
+            &mut child_rng,
+            lighting_settings,
+            probe_settings,
+            resources,
+            scene,
+            child,
+        ) {
             bounced += colour;
         }
     });
@@ -47,15 +55,17 @@ pub fn render_probe<R: Rng + SeedableRng>(
     let ambient = scene.ambient_shade(shader, &probe.ray, &contact) * ao * local_fraction;
     let direct = scene.direct_light(rng, resources, &probe.ray, object_id, &mut contact) * local_fraction;
 
-    let local = emitted + ambient + direct;
+    let local =
+        emitted * lighting_settings.emitted + ambient * lighting_settings.ambient + direct * lighting_settings.direct;
 
-    Some(local * probe.weight + bounced)
+    Some(local * probe.weight + bounced * lighting_settings.indirect)
 }
 
 pub fn render_tile<R: Rng + SeedableRng>(
     rng: &mut R,
     image_settings: &ImageSettings,
-    render_settings: &ProbeSettings,
+    lighting_settings: &LightingSettings,
+    probe_settings: &ProbeSettings,
     camera: &Camera,
     resources: &Resources,
     scene: &Scene,
@@ -91,7 +101,7 @@ pub fn render_tile<R: Rng + SeedableRng>(
                     let probe = Probe::new(ray);
 
                     let start_time = Instant::now();
-                    let sample = render_probe(rng, render_settings, resources, scene, probe)
+                    let sample = render_probe(rng, lighting_settings, probe_settings, resources, scene, probe)
                         .map_or(image_settings.background, |rgb| rgb.to_rgba());
                     total_duration += start_time.elapsed();
                     colour += sample;
@@ -110,7 +120,8 @@ pub fn render_tile<R: Rng + SeedableRng>(
 #[must_use]
 pub fn render_image(
     image_settings: &ImageSettings,
-    render_settings: &ProbeSettings,
+    lighting_settings: &LightingSettings,
+    probe_settings: &ProbeSettings,
     camera: &Camera,
     resources: &Resources,
     scene: &Scene,
@@ -131,7 +142,8 @@ pub fn render_image(
                 render_tile(
                     &mut rng,
                     image_settings,
-                    render_settings,
+                    lighting_settings,
+                    probe_settings,
                     camera,
                     resources,
                     scene,

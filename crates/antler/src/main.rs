@@ -18,7 +18,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
                 let (visual_image, temporal_image) = render_image(
                     &image,
-                    &parameters.settings,
+                    &parameters.lighting_settings,
+                    &parameters.probe_settings,
                     &capture.camera,
                     &parameters.resources,
                     &scene.scene,
