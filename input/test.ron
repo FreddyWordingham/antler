@@ -40,10 +40,10 @@
         ),
 
         (
-          geometry: Capsule (
-            a: (0.0, 0.0, -0.5),
-            b: (0.0, 0.0, 1.5),
-            radius: 0.5
+          geometry: Torus (
+            centre: (0.0, 0.0, 0.0),
+            major_radius: 2.0,
+            minor_radius: 0.5
           ),
           material: Opaque,
           shader: Textured ( path: "assets/textures/mandy.png" ),

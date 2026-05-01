@@ -1,3 +1,5 @@
+use std::f32::consts::{PI, TAU};
+
 use nalgebra::{Point2, Point3, Unit, Vector3};
 
 use crate::{aabb::Aabb, bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, traceable::Traceable};
@@ -42,7 +44,7 @@ impl Torus {
     }
 
     #[inline]
-    fn normal_at_local(&self, position: Vector3<f32>) -> Unit<Vector3<f32>> {
+    fn normal(&self, position: Vector3<f32>) -> Unit<Vector3<f32>> {
         let r_major = self.major_radius;
 
         let x2 = position.x * position.x;
@@ -58,6 +60,20 @@ impl Torus {
             4.0 * position.y * s,
             4.0 * position.z * (2.0 * r_major).mul_add(-r_major, s),
         ))
+    }
+
+    #[inline]
+    fn uv(&self, position: Point3<f32>) -> Point2<f32> {
+        let local = position - self.centre;
+
+        let major_angle = local.z.atan2(local.x);
+        let ring_x = (local.x * local.x + local.z * local.z).sqrt() - self.major_radius;
+        let minor_angle = local.y.atan2(ring_x);
+
+        let u = (major_angle + PI) / TAU;
+        let v = (minor_angle + PI) / TAU;
+
+        Point2::new(u, v)
     }
 
     fn bounding_sphere_interval(&self, ray: &Ray, max_distance: f32) -> Option<(f32, f32)> {
@@ -164,12 +180,13 @@ impl Traceable for Torus {
 
         let position = ray.origin + *ray.direction * distance;
         let local = position - self.centre;
-        let mut normal = self.normal_at_local(local);
+        let mut normal = self.normal(local);
 
         if normal.dot(&ray.direction) > 0.0 {
             normal = -normal;
         }
 
-        Some(Contact::new(distance, position, normal, Point2::new(0.0, 0.0)))
+        let uv = self.uv(position);
+        Some(Contact::new(distance, position, normal, uv))
     }
 }
