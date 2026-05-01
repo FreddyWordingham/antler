@@ -4,7 +4,7 @@ use antler_light::LightSample;
 
 use crate::{
     appearance::Appearance, block::Block, checkerboard::Checkerboard, iridescent::Iridescent, luminous::Luminous,
-    normal::Normal, solid::Solid,
+    normal::Normal, solid::Solid, textured::Textured,
 };
 
 pub enum Shader {
@@ -14,6 +14,7 @@ pub enum Shader {
     Luminous(Luminous),
     Normal(Normal),
     Solid(Solid),
+    Textured(Textured),
 }
 
 impl Appearance for Shader {
@@ -26,6 +27,7 @@ impl Appearance for Shader {
             Self::Luminous(luminous) => luminous.emitted(contact),
             Self::Normal(normal) => normal.emitted(contact),
             Self::Solid(solid) => solid.emitted(contact),
+            Self::Textured(textured) => textured.emitted(contact),
         }
     }
 
@@ -38,6 +40,7 @@ impl Appearance for Shader {
             Self::Luminous(luminous) => luminous.shade(ray, contact, light),
             Self::Normal(normal) => normal.shade(ray, contact, light),
             Self::Solid(solid) => solid.shade(ray, contact, light),
+            Self::Textured(textured) => textured.shade(ray, contact, light),
         }
     }
 }
@@ -81,5 +84,12 @@ impl From<Solid> for Shader {
     #[inline]
     fn from(val: Solid) -> Self {
         Self::Solid(val)
+    }
+}
+
+impl From<Textured> for Shader {
+    #[inline]
+    fn from(val: Textured) -> Self {
+        Self::Textured(val)
     }
 }

@@ -6,6 +6,7 @@ edition = "2024"
 [dependencies]
 antler-colour = { path = "../colour" }
 antler-grid = { path = "../grid" }
+nalgebra = { workspace = true }
 png = { workspace = true }
 
 [lints]

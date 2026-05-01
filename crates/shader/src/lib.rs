@@ -6,6 +6,7 @@ mod luminous;
 mod normal;
 mod shader;
 mod solid;
+mod textured;
 
 pub use appearance::Appearance;
 pub use block::Block;
@@ -15,3 +16,4 @@ pub use luminous::Luminous;
 pub use normal::Normal;
 pub use shader::Shader;
 pub use solid::Solid;
+pub use textured::Textured;

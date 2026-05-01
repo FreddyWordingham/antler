@@ -7,6 +7,7 @@ use std::{
 
 use antler_colour::{Pixel, Rgb, Rgba};
 use antler_grid::SurfaceGrid;
+use nalgebra::Point2;
 use png::{Decoder, Encoder};
 
 use crate::tile::Tile;
@@ -32,20 +33,6 @@ impl<P: Pixel> Image<P> {
     pub fn from_vec(size: [usize; 2], data: Vec<P>) -> Self {
         Self {
             pixels: SurfaceGrid::from_vec(size, data),
-        }
-    }
-
-    #[inline]
-    pub fn apply_tile(&mut self, tile: Tile, pixels: &[P]) {
-        let [tile_width, tile_height] = tile.size();
-
-        for local_y in 0..tile_height {
-            let y = tile.min[1] + local_y;
-
-            for local_x in 0..tile_width {
-                let x = tile.min[0] + local_x;
-                self[(x, y)] = pixels[local_y * tile_width + local_x];
-            }
         }
     }
 
@@ -115,6 +102,35 @@ impl<P: Pixel> Image<P> {
 
         let mut writer = encoder.write_header().map_err(IoError::other)?;
         writer.write_image_data(&bytes).map_err(IoError::other)
+    }
+
+    #[inline]
+    pub fn apply_tile(&mut self, tile: Tile, pixels: &[P]) {
+        let [tile_width, tile_height] = tile.size();
+
+        for local_y in 0..tile_height {
+            let y = tile.min[1] + local_y;
+
+            for local_x in 0..tile_width {
+                let x = tile.min[0] + local_x;
+                self[(x, y)] = pixels[local_y * tile_width + local_x];
+            }
+        }
+    }
+
+    #[must_use]
+    #[inline]
+
+    pub fn sample_nearest(&self, uv: Point2<f32>) -> P {
+        let [width, height] = self.pixels.size();
+
+        let u = uv.x.rem_euclid(1.0);
+        let v = uv.y.rem_euclid(1.0);
+
+        let x = (u * width as f32).floor() as usize;
+        let y = ((1.0 - v) * height as f32).floor() as usize;
+
+        self[(x.min(width - 1), y.min(height - 1))]
     }
 }
 
