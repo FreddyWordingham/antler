@@ -2,7 +2,9 @@ use std::path::PathBuf;
 
 use antler_colour::Rgb;
 use antler_image::RgbImage;
-use antler_shader::{Angular, Block, Checkerboard, Gradient, Iridescent, Luminous, Normal, Shader, Solid, Textured};
+use antler_shader::{
+    Angular, Block, Checkerboard, Gradient, Iridescent, Luminous, Normal, Shader, Solid, Textured, Wireframe,
+};
 use serde::{Deserialize, Serialize};
 
 use crate::{errors::ConfigError, gradient_config::GradientConfig, vec3::Vec3};
@@ -43,6 +45,11 @@ pub enum ShaderConfig {
     Textured {
         path: PathBuf,
     },
+    Wireframe {
+        surface_colour: Rgb,
+        line_colour: Rgb,
+        width: f32,
+    },
 }
 
 impl ShaderConfig {
@@ -65,6 +72,11 @@ impl ShaderConfig {
             Self::Normal => Normal::new().into(),
             Self::Solid { colour } => Solid::new(colour).into(),
             Self::Textured { path } => Textured::new(RgbImage::load(path)?).into(),
+            Self::Wireframe {
+                surface_colour,
+                line_colour,
+                width,
+            } => Wireframe::new(surface_colour, line_colour, width).into(),
         })
     }
 }

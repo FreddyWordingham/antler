@@ -182,7 +182,7 @@ impl Traceable for Aabb {
         let face = if t_min > 0.0 { entry_face } else { exit_face };
         let uv = face.uv(position, self);
 
-        Some(Contact::new(distance, position, normal, uv))
+        Some(Contact::new(distance, position, normal, uv, None))
     }
 }
 

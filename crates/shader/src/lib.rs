@@ -9,6 +9,7 @@ mod normal;
 mod shader;
 mod solid;
 mod textured;
+mod wireframe;
 
 pub use angular::Angular;
 pub use appearance::Appearance;
@@ -21,3 +22,4 @@ pub use normal::Normal;
 pub use shader::Shader;
 pub use solid::Solid;
 pub use textured::Textured;
+pub use wireframe::Wireframe;

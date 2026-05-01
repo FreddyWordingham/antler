@@ -139,6 +139,6 @@ impl Traceable for Capsule {
         }
 
         let uv = self.uv(position);
-        Some(Contact::new(distance, position, normal, uv))
+        Some(Contact::new(distance, position, normal, uv, None))
     }
 }

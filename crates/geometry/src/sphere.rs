@@ -65,6 +65,6 @@ impl Traceable for Sphere {
         let u = (phi + PI) / TAU;
         let v = theta / PI;
 
-        Some(Contact::new(distance, position, normal, Point2::new(u, v)))
+        Some(Contact::new(distance, position, normal, Point2::new(u, v), None))
     }
 }

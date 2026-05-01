@@ -154,6 +154,12 @@ impl Traceable for Triangle {
             normal = -normal;
         }
 
-        Some(Contact::new(distance, position, normal, self.interpolate_uv(bary)))
+        Some(Contact::new(
+            distance,
+            position,
+            normal,
+            self.interpolate_uv(bary),
+            Some(bary),
+        ))
     }
 }

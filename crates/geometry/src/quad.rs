@@ -87,6 +87,12 @@ impl Traceable for Quad {
 
         let uv = Point2::new(0.5 + local.x / self.size.x, 0.5 + local.y / self.size.y);
 
-        Some(Contact::new(distance, position, self.plane.normal_for_ray(ray), uv))
+        Some(Contact::new(
+            distance,
+            position,
+            self.plane.normal_for_ray(ray),
+            uv,
+            None,
+        ))
     }
 }

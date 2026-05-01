@@ -7,6 +7,7 @@ pub struct Contact {
     pub position: Point3<f32>,
     pub normal: Unit<Vector3<f32>>,
     pub uv: Point2<f32>,
+    pub barycentric: Option<Vector3<f32>>,
     tangent: Option<Unit<Vector3<f32>>>,
     bi_tangent: Option<Unit<Vector3<f32>>>,
 }
@@ -14,14 +15,21 @@ pub struct Contact {
 impl Contact {
     #[must_use]
     #[inline]
-    pub const fn new(distance: f32, position: Point3<f32>, normal: Unit<Vector3<f32>>, uv: Point2<f32>) -> Self {
+    pub const fn new(
+        distance: f32,
+        position: Point3<f32>,
+        normal: Unit<Vector3<f32>>,
+        uv: Point2<f32>,
+        barycentric: Option<Vector3<f32>>,
+    ) -> Self {
         Self {
             distance,
             position,
             normal,
+            uv,
+            barycentric,
             tangent: None,
             bi_tangent: None,
-            uv,
         }
     }
 
@@ -69,6 +77,7 @@ impl Contact {
             position,
             normal,
             uv: self.uv,
+            barycentric: self.barycentric,
             tangent,
             bi_tangent,
         }

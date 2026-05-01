@@ -144,6 +144,6 @@ impl Traceable for Torus {
             normal = -normal;
         }
 
-        Some(Contact::new(distance, position, normal, self.uv(position)))
+        Some(Contact::new(distance, position, normal, self.uv(position), None))
     }
 }

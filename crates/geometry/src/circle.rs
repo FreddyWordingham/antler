@@ -65,6 +65,12 @@ impl Traceable for Circle {
 
         let uv = Point2::new(0.5 + local.x / (2.0 * self.radius), 0.5 + local.y / (2.0 * self.radius));
 
-        Some(Contact::new(distance, position, self.plane.normal_for_ray(ray), uv))
+        Some(Contact::new(
+            distance,
+            position,
+            self.plane.normal_for_ray(ray),
+            uv,
+            None,
+        ))
     }
 }
