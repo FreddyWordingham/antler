@@ -46,23 +46,27 @@ impl<P: Pixel> Image<P> {
         let mut buffer = vec![0; output_buffer_size];
         let info = reader.next_frame(&mut buffer).map_err(IoError::other)?;
 
-        if info.color_type != P::PNG_COLOUR_TYPE {
-            return Err(ImageLoadError::ColourTypeMismatch {
-                expected: P::PNG_COLOUR_TYPE,
-                found: info.color_type,
-            });
-        }
+        let source_channels = match info.color_type {
+            png::ColorType::Rgb => 3,
+            png::ColorType::Rgba => 4,
+            found => {
+                return Err(ImageLoadError::ColourTypeMismatch {
+                    expected: P::PNG_COLOUR_TYPE,
+                    found,
+                });
+            }
+        };
 
         let bytes = &buffer[..info.buffer_size()];
 
-        if bytes.len() % P::CHANNELS != 0 {
+        if bytes.len() % source_channels != 0 {
             return Err(ImageLoadError::InvalidByteLength {
                 len: bytes.len(),
-                channels: P::CHANNELS,
+                channels: source_channels,
             });
         }
 
-        let pixels = bytes.chunks_exact(P::CHANNELS).map(P::from_bytes).collect();
+        let pixels = bytes.chunks_exact(source_channels).map(P::from_bytes).collect();
 
         Ok(Self::from_vec(
             [

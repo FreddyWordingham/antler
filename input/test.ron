@@ -45,10 +45,7 @@
             roughness: 0.5,
             reflectance: 0.5
           ),
-          shader: Iridescent (
-            gradient: [0xFF0000, 0xFFFF00],
-            power: 1.0
-          ),
+          shader: Textured ( path: "assets/textures/mandy.png" ),
           transform: (
             scale: 4.0,
             translation: (0.0, 0.0, 5.0),

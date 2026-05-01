@@ -57,7 +57,7 @@ impl Pixel for Rgba {
             red: f32::from(bytes[0]) / 255.0,
             green: f32::from(bytes[1]) / 255.0,
             blue: f32::from(bytes[2]) / 255.0,
-            alpha: f32::from(bytes[3]) / 255.0,
+            alpha: bytes.get(3).map_or(1.0, |a| f32::from(*a) / 255.0),
         }
     }
 
