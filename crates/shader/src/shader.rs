@@ -3,11 +3,12 @@ use antler_geometry::{Contact, Ray};
 use antler_light::LightSample;
 
 use crate::{
-    appearance::Appearance, block::Block, checkerboard::Checkerboard, gradient::Gradient, iridescent::Iridescent,
-    luminous::Luminous, normal::Normal, solid::Solid, textured::Textured,
+    angular::Angular, appearance::Appearance, block::Block, checkerboard::Checkerboard, gradient::Gradient,
+    iridescent::Iridescent, luminous::Luminous, normal::Normal, solid::Solid, textured::Textured,
 };
 
 pub enum Shader {
+    Angular(Angular),
     Block(Block),
     Checkerboard(Checkerboard),
     Gradient(Gradient),
@@ -22,6 +23,7 @@ impl Appearance for Shader {
     #[inline]
     fn emitted(&self, contact: &Contact) -> Rgb {
         match self {
+            Self::Angular(angular) => angular.emitted(contact),
             Self::Block(block) => block.emitted(contact),
             Self::Checkerboard(checkerboard) => checkerboard.emitted(contact),
             Self::Gradient(gradient) => gradient.emitted(contact),
@@ -36,6 +38,7 @@ impl Appearance for Shader {
     #[inline]
     fn shade(&self, ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
         match self {
+            Self::Angular(angular) => angular.shade(ray, contact, light),
             Self::Block(block) => block.shade(ray, contact, light),
             Self::Checkerboard(checkerboard) => checkerboard.shade(ray, contact, light),
             Self::Gradient(gradient) => gradient.shade(ray, contact, light),
@@ -45,6 +48,13 @@ impl Appearance for Shader {
             Self::Solid(solid) => solid.shade(ray, contact, light),
             Self::Textured(textured) => textured.shade(ray, contact, light),
         }
+    }
+}
+
+impl From<Angular> for Shader {
+    #[inline]
+    fn from(val: Angular) -> Self {
+        Self::Angular(val)
     }
 }
 

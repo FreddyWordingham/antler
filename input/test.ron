@@ -57,7 +57,7 @@
             minor_radius: 0.5
           ),
           material: Opaque,
-          shader: Gradient (
+          shader: Angular (
             gradient: [0xFF0000, 0x0000FF],
             power: 1.0
           ),

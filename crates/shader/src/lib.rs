@@ -1,3 +1,4 @@
+mod angular;
 mod appearance;
 mod block;
 mod checkerboard;
@@ -9,6 +10,7 @@ mod shader;
 mod solid;
 mod textured;
 
+pub use angular::Angular;
 pub use appearance::Appearance;
 pub use block::Block;
 pub use checkerboard::Checkerboard;
