@@ -62,6 +62,7 @@ dependencies = [
  "antler-camera",
  "antler-colour",
  "antler-geometry",
+ "antler-image",
  "antler-light",
  "antler-material",
  "antler-parameters",

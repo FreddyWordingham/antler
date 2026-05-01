@@ -10,7 +10,7 @@ use antler_grid::SurfaceGrid;
 use nalgebra::Point2;
 use png::{Decoder, Encoder};
 
-use crate::tile::Tile;
+use crate::{errors::ImageLoadError, tile::Tile};
 
 pub struct Image<P: Pixel> {
     pixels: SurfaceGrid<P>,
@@ -36,40 +36,30 @@ impl<P: Pixel> Image<P> {
         }
     }
 
-    pub fn load(path: impl AsRef<Path>) -> IoResult<Self> {
+    pub fn load(path: impl AsRef<Path>) -> Result<Self, ImageLoadError> {
         let file = File::open(path)?;
         let decoder = Decoder::new(BufReader::new(file));
-        let mut reader = decoder.read_info().map_err(IoError::other)?;
+        let mut reader = decoder.read_info()?;
 
-        let output_buffer_size = reader
-            .output_buffer_size()
-            .ok_or_else(|| IoError::other("PNG output buffer size is unknown"))?;
+        let output_buffer_size = reader.output_buffer_size().ok_or(ImageLoadError::UnknownBufferSize)?;
 
         let mut buffer = vec![0; output_buffer_size];
         let info = reader.next_frame(&mut buffer).map_err(IoError::other)?;
 
         if info.color_type != P::PNG_COLOUR_TYPE {
-            return Err(IoError::other(format!(
-                "PNG colour type mismatch: expected {:?}, got {:?}",
-                P::PNG_COLOUR_TYPE,
-                info.color_type,
-            )));
-        }
-
-        if info.bit_depth != P::PNG_BIT_DEPTH {
-            return Err(IoError::other(format!(
-                "PNG bit depth mismatch: expected {:?}, got {:?}",
-                P::PNG_BIT_DEPTH,
-                info.bit_depth,
-            )));
+            return Err(ImageLoadError::ColourTypeMismatch {
+                expected: P::PNG_COLOUR_TYPE,
+                found: info.color_type,
+            });
         }
 
         let bytes = &buffer[..info.buffer_size()];
 
         if bytes.len() % P::CHANNELS != 0 {
-            return Err(IoError::other(
-                "PNG byte length is not divisible by pixel channel count",
-            ));
+            return Err(ImageLoadError::InvalidByteLength {
+                len: bytes.len(),
+                channels: P::CHANNELS,
+            });
         }
 
         let pixels = bytes.chunks_exact(P::CHANNELS).map(P::from_bytes).collect();
@@ -104,6 +94,20 @@ impl<P: Pixel> Image<P> {
         writer.write_image_data(&bytes).map_err(IoError::other)
     }
 
+    #[must_use]
+    #[inline]
+    pub fn sample_nearest(&self, uv: Point2<f32>) -> P {
+        let [width, height] = self.pixels.size();
+
+        let u = uv.x.rem_euclid(1.0);
+        let v = uv.y.rem_euclid(1.0);
+
+        let x = (u * width as f32).floor() as usize;
+        let y = ((1.0 - v) * height as f32).floor() as usize;
+
+        self[(x.min(width - 1), y.min(height - 1))]
+    }
+
     #[inline]
     pub fn apply_tile(&mut self, tile: Tile, pixels: &[P]) {
         let [tile_width, tile_height] = tile.size();
@@ -116,21 +120,6 @@ impl<P: Pixel> Image<P> {
                 self[(x, y)] = pixels[local_y * tile_width + local_x];
             }
         }
-    }
-
-    #[must_use]
-    #[inline]
-
-    pub fn sample_nearest(&self, uv: Point2<f32>) -> P {
-        let [width, height] = self.pixels.size();
-
-        let u = uv.x.rem_euclid(1.0);
-        let v = uv.y.rem_euclid(1.0);
-
-        let x = (u * width as f32).floor() as usize;
-        let y = ((1.0 - v) * height as f32).floor() as usize;
-
-        self[(x.min(width - 1), y.min(height - 1))]
     }
 }
 

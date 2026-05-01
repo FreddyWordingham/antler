@@ -2,7 +2,8 @@ use antler_scene::{Object, Resources};
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    geometry_config::GeometryConfig, material_config::MaterialConfig, shader_config::ShaderConfig, transform::Transform,
+    errors::ConfigError, geometry_config::GeometryConfig, material_config::MaterialConfig, shader_config::ShaderConfig,
+    transform::Transform,
 };
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -16,11 +17,11 @@ pub struct ObjectConfig {
 }
 
 impl ObjectConfig {
-    pub fn build(self, resources: &mut Resources) -> Object {
-        let geometry_id = resources.add_geometry(self.geometry.build());
-        let shader_id = resources.add_shader(self.shader.build());
+    pub fn build(self, resources: &mut Resources) -> Result<Object, ConfigError> {
+        let geometry_id = resources.add_geometry(self.geometry.build()?);
+        let shader_id = resources.add_shader(self.shader.build()?);
         let material_id = resources.add_material(self.material.build());
 
-        Object::new(geometry_id, shader_id, material_id, self.transform.into())
+        Ok(Object::new(geometry_id, shader_id, material_id, self.transform.into()))
     }
 }

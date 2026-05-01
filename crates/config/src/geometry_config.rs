@@ -3,7 +3,7 @@ use std::path::PathBuf;
 use antler_geometry::{Aabb, Capsule, Circle, Geometry, Mesh, Quad, Sphere, Torus, Triangle};
 use serde::{Deserialize, Serialize};
 
-use crate::{vec2::Vec2, vec3::Vec3};
+use crate::{errors::ConfigError, vec2::Vec2, vec3::Vec3};
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -61,12 +61,12 @@ pub enum GeometryConfig {
 }
 
 impl GeometryConfig {
-    pub fn build(self) -> Geometry {
-        match self {
+    pub fn build(self) -> Result<Geometry, ConfigError> {
+        Ok(match self {
             Self::Aabb { min, max } => Aabb::new(min.into(), max.into()).into(),
             Self::Capsule { a, b, radius } => Capsule::new(a.into(), b.into(), radius).into(),
             Self::Circle { centre, normal, radius } => Circle::new(centre.into(), normal.into(), radius).into(),
-            Self::Mesh { path } => Mesh::load(path).unwrap().into(),
+            Self::Mesh { path } => Mesh::load(path)?.into(),
             Self::Quad { centre, normal, size } => Quad::new(centre.into(), normal.into(), size.into()).into(),
             Self::Sphere { centre, radius } => Sphere::new(centre.into(), radius).into(),
             Self::Torus {
@@ -75,12 +75,12 @@ impl GeometryConfig {
                 minor_radius,
             } => Torus::new(centre.into(), major_radius, minor_radius).into(),
             Self::Triangle { vertices, normals, uvs } => Triangle::new(
-                vertices.map(|v| v.into()),
-                normals.map(|n| n.map(|v| v.into())),
-                uvs.map(|u| u.map(|v| v.into())),
+                vertices.map(Into::into),
+                normals.map(|n| n.map(Into::into)),
+                uvs.map(|u| u.map(Into::into)),
             )
             .into(),
-        }
+        })
     }
 }
 

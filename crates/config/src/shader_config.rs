@@ -1,8 +1,11 @@
+use std::path::PathBuf;
+
 use antler_colour::Rgb;
-use antler_shader::{Block, Checkerboard, Iridescent, Luminous, Normal, Shader, Solid};
+use antler_image::RgbImage;
+use antler_shader::{Block, Checkerboard, Iridescent, Luminous, Normal, Shader, Solid, Textured};
 use serde::{Deserialize, Serialize};
 
-use crate::gradient_config::GradientConfig;
+use crate::{errors::ConfigError, gradient_config::GradientConfig};
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -13,11 +16,12 @@ pub enum ShaderConfig {
     Luminous { colour: Rgb, intensity: f32 },
     Normal,
     Solid { colour: Rgb },
+    Textured { path: PathBuf },
 }
 
 impl ShaderConfig {
-    pub fn build(self) -> Shader {
-        match self {
+    pub fn build(self) -> Result<Shader, ConfigError> {
+        Ok(match self {
             Self::Block { colour } => Block::new(colour).into(),
             Self::Checkerboard {
                 size,
@@ -26,8 +30,9 @@ impl ShaderConfig {
             } => Checkerboard::new(size, colour_a, colour_b).into(),
             Self::Iridescent { gradient, power } => Iridescent::new(gradient.into(), power).into(),
             Self::Luminous { colour, intensity } => Luminous::new(colour, intensity).into(),
-            Self::Normal => Normal.into(),
+            Self::Normal => Normal::new().into(),
             Self::Solid { colour } => Solid::new(colour).into(),
-        }
+            Self::Textured { path } => Textured::new(RgbImage::load(path)?).into(),
+        })
     }
 }

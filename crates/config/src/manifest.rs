@@ -28,22 +28,25 @@ impl Manifest {
         Ok(manifest)
     }
 
-    pub fn build(self) -> SimulationParameters {
+    pub fn build(self) -> Result<SimulationParameters, ConfigError> {
         let mut resources = Default::default();
 
         let scenes = self
             .scenes
             .into_iter()
-            .map(|(name, scene)| (name, scene.build(&mut resources)))
-            .collect();
+            .map(|(name, scene)| {
+                let scene = scene.build(&mut resources)?;
+                Ok((name, scene))
+            })
+            .collect::<Result<_, ConfigError>>()?;
 
-        SimulationParameters {
+        Ok(SimulationParameters {
             assets_dir: self.assets_dir,
             output_dir: self.output_dir,
             resources,
             scenes,
             settings: self.settings.build(),
-        }
+        })
     }
 }
 

@@ -4,7 +4,7 @@ use antler::prelude::*;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let manifest = Manifest::load("input/test.ron")?;
-    let parameters = manifest.build();
+    let parameters = manifest.build()?;
 
     // Create output directory if it doesn't exist
     create_dir_all(&parameters.output_dir)?;

@@ -6,7 +6,7 @@ use antler_scene::{Resources, Scene};
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    capture_config::CaptureConfig, light_config::LightConfig, object_config::ObjectConfig,
+    capture_config::CaptureConfig, errors::ConfigError, light_config::LightConfig, object_config::ObjectConfig,
     occlusion_config::OcclusionConfig,
 };
 
@@ -21,7 +21,7 @@ pub struct SceneConfig {
 }
 
 impl SceneConfig {
-    pub fn build(self, resources: &mut Resources) -> SceneParameters {
+    pub fn build(self, resources: &mut Resources) -> Result<SceneParameters, ConfigError> {
         let mut scene = Scene::new();
 
         scene.set_ambient(self.ambient);
@@ -35,18 +35,18 @@ impl SceneConfig {
         }
 
         for object in self.objects {
-            scene.add_object(object.build(resources));
+            scene.add_object(object.build(resources)?);
         }
 
         scene.build(resources);
 
-        SceneParameters {
+        Ok(SceneParameters {
             scene,
             captures: self
                 .captures
                 .into_iter()
                 .map(|(name, capture)| (name, capture.build()))
                 .collect(),
-        }
+        })
     }
 }

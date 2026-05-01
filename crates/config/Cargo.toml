@@ -7,6 +7,7 @@ edition = "2024"
 antler-camera = { path = "../camera" }
 antler-colour = { path = "../colour" }
 antler-geometry = { path = "../geometry" }
+antler-image = { path = "../image" }
 antler-light = { path = "../light" }
 antler-material = { path = "../material" }
 antler-parameters = { path = "../parameters" }

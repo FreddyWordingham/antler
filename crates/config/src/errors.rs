@@ -6,6 +6,7 @@ use std::{
 };
 
 use antler_geometry::errors::MeshLoadError;
+use antler_image::errors::ImageLoadError;
 use ron::error::SpannedError;
 
 #[derive(Debug)]
@@ -13,6 +14,7 @@ pub enum ConfigError {
     ParseError(String),
     AssetLoadError { path: PathBuf, message: String },
     MeshLoad(MeshLoadError),
+    ImageLoad(ImageLoadError),
 }
 
 impl From<IoError> for ConfigError {
@@ -33,6 +35,12 @@ impl From<MeshLoadError> for ConfigError {
     }
 }
 
+impl From<ImageLoadError> for ConfigError {
+    fn from(value: ImageLoadError) -> Self {
+        Self::ImageLoad(value)
+    }
+}
+
 impl Display for ConfigError {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         match self {
@@ -41,6 +49,7 @@ impl Display for ConfigError {
                 write!(f, "Failed to load asset at '{}': {}", path.display(), message)
             }
             Self::MeshLoad(err) => write!(f, "{err}"),
+            Self::ImageLoad(err) => write!(f, "{err}"),
         }
     }
 }
