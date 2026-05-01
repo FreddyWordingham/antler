@@ -52,11 +52,13 @@
 
         (
           geometry: Mesh ( path: "assets/meshes/golem.obj" ),
-          material: Opaque,
-          shader: Wireframe (
-            surface_colour: 0xFF0000,
-            line_colour: 0x0000FF,
-            width: 0.1
+          material: Wireframe (
+            surface_alpha: 0.3,
+            line_width: 0.02,
+          ),
+          shader: Gradient (
+            gradient: [0xFF0000, 0x0000FF],
+            power: 1.0
           ),
           transform: (
             scale: 4.0,
@@ -86,7 +88,7 @@
           ),
           images: {
             "my_image": (
-              resolution: (480, 480),
+              resolution: (1080, 1080),
               super_samples: 2
             )
           }

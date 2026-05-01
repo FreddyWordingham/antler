@@ -7,6 +7,7 @@ mod opaque;
 mod reflective;
 mod refractive;
 mod utils;
+mod wireframe;
 
 pub use bsdf::Bsdf;
 pub use ggx::Ggx;
@@ -16,3 +17,4 @@ pub use mirror::Mirror;
 pub use opaque::Opaque;
 pub use reflective::Reflective;
 pub use refractive::Refractive;
+pub use wireframe::Wireframe;

@@ -3,7 +3,7 @@ use rand::Rng;
 
 use crate::{
     bsdf::Bsdf, ggx::Ggx, lambertian::Lambertian, mirror::Mirror, opaque::Opaque, reflective::Reflective,
-    refractive::Refractive,
+    refractive::Refractive, wireframe::Wireframe,
 };
 
 pub enum Material {
@@ -13,6 +13,7 @@ pub enum Material {
     Opaque(Opaque),
     Reflective(Reflective),
     Refractive(Refractive),
+    Wireframe(Wireframe),
 }
 
 impl Bsdf for Material {
@@ -24,6 +25,7 @@ impl Bsdf for Material {
             Self::Opaque(inner) => inner.scatter(rng, ray, contact, emit_child),
             Self::Reflective(inner) => inner.scatter(rng, ray, contact, emit_child),
             Self::Refractive(inner) => inner.scatter(rng, ray, contact, emit_child),
+            Self::Wireframe(inner) => inner.scatter(rng, ray, contact, emit_child),
         }
     }
 }
@@ -67,5 +69,12 @@ impl From<Refractive> for Material {
     #[inline]
     fn from(val: Refractive) -> Self {
         Self::Refractive(val)
+    }
+}
+
+impl From<Wireframe> for Material {
+    #[inline]
+    fn from(val: Wireframe) -> Self {
+        Self::Wireframe(val)
     }
 }

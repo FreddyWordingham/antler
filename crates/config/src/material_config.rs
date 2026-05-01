@@ -1,4 +1,4 @@
-use antler_material::{Ggx, Lambertian, Material, Mirror, Opaque, Reflective, Refractive};
+use antler_material::{Ggx, Lambertian, Material, Mirror, Opaque, Reflective, Refractive, Wireframe};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -10,6 +10,7 @@ pub enum MaterialConfig {
     Opaque,
     Reflective { reflectance: f32 },
     Refractive { refractive_index: f32 },
+    Wireframe { surface_alpha: f32, line_width: f32 },
 }
 
 impl MaterialConfig {
@@ -21,6 +22,10 @@ impl MaterialConfig {
             Self::Opaque => Opaque::new().into(),
             Self::Reflective { reflectance } => Reflective::new(reflectance).into(),
             Self::Refractive { refractive_index } => Refractive::new(refractive_index).into(),
+            Self::Wireframe {
+                surface_alpha,
+                line_width,
+            } => Wireframe::new(surface_alpha, line_width).into(),
         }
     }
 }
