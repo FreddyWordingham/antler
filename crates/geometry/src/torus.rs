@@ -4,7 +4,7 @@ use nalgebra::{Point2, Point3, Unit, Vector3};
 
 use crate::{aabb::Aabb, bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, traceable::Traceable};
 
-const TORUS_EPSILON: f32 = 1.0e-5;
+const TORUS_EPSILON: f32 = 1.0e-4;
 const TORUS_SCAN_STEPS: usize = 128;
 const TORUS_BISECTION_STEPS: usize = 32;
 
@@ -96,7 +96,7 @@ impl Torus {
             return None;
         }
 
-        let start = t0.max(TORUS_EPSILON.max(MIN_RAY_DISTANCE));
+        let start = t0.max(MIN_RAY_DISTANCE);
         let end = t1.min(max_distance);
 
         (start < end).then_some((start, end))
@@ -122,6 +122,15 @@ impl Torus {
 
             if previous_value.signum() != value.signum() {
                 return Some(self.refine_root(ray, previous_t, t));
+            }
+
+            if previous_value > 0.0 && value > 0.0 {
+                let mid_t = (previous_t + t) * 0.5;
+                let mid_value = self.implicit(self.local_at(ray, mid_t));
+
+                if mid_value.abs() <= TORUS_EPSILON {
+                    return Some(mid_t);
+                }
             }
 
             previous_t = t;
