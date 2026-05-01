@@ -15,7 +15,7 @@ pub trait Pixel: Copy {
     fn to_bytes(&self) -> Self::Bytes;
 
     #[must_use]
-    fn from_bytes(bytes: Self::Bytes) -> Self;
+    fn from_bytes(bytes: &[u8]) -> Self;
 
     #[must_use]
     fn to_u32(&self) -> u32;

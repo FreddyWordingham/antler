@@ -50,7 +50,7 @@ impl Pixel for Rgb {
     }
 
     #[inline]
-    fn from_bytes(bytes: Self::Bytes) -> Self {
+    fn from_bytes(bytes: &[u8]) -> Self {
         Self {
             red: f32::from(bytes[0]) / 255.0,
             green: f32::from(bytes[1]) / 255.0,
@@ -69,12 +69,12 @@ impl Pixel for Rgb {
         let r = ((value >> 16) & 0xFF) as u8;
         let g = ((value >> 8) & 0xFF) as u8;
         let b = (value & 0xFF) as u8;
-        Self::from_bytes([r, g, b])
+        Self::from_bytes(&[r, g, b])
     }
 
     #[inline]
     fn from_hex(hex: &str) -> Result<Self, ParseHexError> {
-        Ok(Self::from_bytes(parse_hex::<3>(hex)?))
+        Ok(Self::from_bytes(&parse_hex::<3>(hex)?))
     }
 }
 

@@ -1,13 +1,13 @@
 use std::{
     fs::File,
-    io::{BufWriter, Error as IoError, Result as IoResult},
+    io::{BufReader, BufWriter, Error as IoError, Result as IoResult},
     ops::{Index, IndexMut},
     path::Path,
 };
 
 use antler_colour::{Pixel, Rgb, Rgba};
 use antler_grid::SurfaceGrid;
-use png::Encoder;
+use png::{Decoder, Encoder};
 
 use crate::tile::Tile;
 
@@ -47,6 +47,53 @@ impl<P: Pixel> Image<P> {
                 self[(x, y)] = pixels[local_y * tile_width + local_x];
             }
         }
+    }
+
+    pub fn load(path: impl AsRef<Path>) -> IoResult<Self> {
+        let file = File::open(path)?;
+        let decoder = Decoder::new(BufReader::new(file));
+        let mut reader = decoder.read_info().map_err(IoError::other)?;
+
+        let output_buffer_size = reader
+            .output_buffer_size()
+            .ok_or_else(|| IoError::other("PNG output buffer size is unknown"))?;
+
+        let mut buffer = vec![0; output_buffer_size];
+        let info = reader.next_frame(&mut buffer).map_err(IoError::other)?;
+
+        if info.color_type != P::PNG_COLOUR_TYPE {
+            return Err(IoError::other(format!(
+                "PNG colour type mismatch: expected {:?}, got {:?}",
+                P::PNG_COLOUR_TYPE,
+                info.color_type,
+            )));
+        }
+
+        if info.bit_depth != P::PNG_BIT_DEPTH {
+            return Err(IoError::other(format!(
+                "PNG bit depth mismatch: expected {:?}, got {:?}",
+                P::PNG_BIT_DEPTH,
+                info.bit_depth,
+            )));
+        }
+
+        let bytes = &buffer[..info.buffer_size()];
+
+        if bytes.len() % P::CHANNELS != 0 {
+            return Err(IoError::other(
+                "PNG byte length is not divisible by pixel channel count",
+            ));
+        }
+
+        let pixels = bytes.chunks_exact(P::CHANNELS).map(P::from_bytes).collect();
+
+        Ok(Self::from_vec(
+            [
+                usize::try_from(info.width).expect("image width exceeds usize::MAX"),
+                usize::try_from(info.height).expect("image height exceeds usize::MAX"),
+            ],
+            pixels,
+        ))
     }
 
     pub fn save(&self, path: impl AsRef<Path>) -> IoResult<()> {
