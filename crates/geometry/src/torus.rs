@@ -4,9 +4,9 @@ use nalgebra::{Point2, Point3, Unit, Vector3};
 
 use crate::{aabb::Aabb, bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, traceable::Traceable};
 
-const TORUS_EPSILON: f32 = 1.0e-4;
-const TORUS_SCAN_STEPS: usize = 128;
-const TORUS_BISECTION_STEPS: usize = 32;
+const TORUS_MAX_STEPS: usize = 256;
+const TORUS_HIT_EPSILON: f32 = 1.0e-4;
+const TORUS_NORMAL_EPSILON: f32 = 1.0e-3;
 
 pub struct Torus {
     centre: Point3<f32>,
@@ -30,50 +30,11 @@ impl Torus {
     }
 
     #[inline]
-    fn implicit(&self, position: Vector3<f32>) -> f32 {
-        let r_major = self.major_radius;
-        let r_minor = self.minor_radius;
+    fn signed_distance(&self, p: Vector3<f32>) -> f32 {
+        let qx = (p.x * p.x + p.z * p.z).sqrt() - self.major_radius;
+        let qy = p.y;
 
-        let x2 = position.x * position.x;
-        let y2 = position.y * position.y;
-        let z2 = position.z * position.z;
-
-        let s = r_minor.mul_add(-r_minor, r_major.mul_add(r_major, x2 + y2 + z2));
-
-        s.mul_add(s, -(4.0 * r_major * r_major * (x2 + z2)))
-    }
-
-    #[inline]
-    fn normal(&self, position: Vector3<f32>) -> Unit<Vector3<f32>> {
-        let r_major = self.major_radius;
-
-        let x2 = position.x * position.x;
-        let y2 = position.y * position.y;
-        let z2 = position.z * position.z;
-
-        let s = self
-            .minor_radius
-            .mul_add(-self.minor_radius, r_major.mul_add(r_major, x2 + y2 + z2));
-
-        Unit::new_normalize(Vector3::new(
-            4.0 * position.x * (2.0 * r_major).mul_add(-r_major, s),
-            4.0 * position.y * s,
-            4.0 * position.z * (2.0 * r_major).mul_add(-r_major, s),
-        ))
-    }
-
-    #[inline]
-    fn uv(&self, position: Point3<f32>) -> Point2<f32> {
-        let local = position - self.centre;
-
-        let major_angle = local.z.atan2(local.x);
-        let ring_x = (local.x * local.x + local.z * local.z).sqrt() - self.major_radius;
-        let minor_angle = local.y.atan2(ring_x);
-
-        let u = (major_angle + PI) / TAU;
-        let v = (minor_angle + PI) / TAU;
-
-        Point2::new(u, v)
+        (qx * qx + qy * qy).sqrt() - self.minor_radius
     }
 
     fn bounding_sphere_interval(&self, ray: &Ray, max_distance: f32) -> Option<(f32, f32)> {
@@ -92,7 +53,7 @@ impl Torus {
         let t0 = -half_b - sqrt_d;
         let t1 = -half_b + sqrt_d;
 
-        if t1 <= TORUS_EPSILON {
+        if t1 <= MIN_RAY_DISTANCE {
             return None;
         }
 
@@ -103,59 +64,46 @@ impl Torus {
     }
 
     fn distance_unchecked(&self, ray: &Ray, max_distance: f32) -> Option<f32> {
-        let (start, end) = self.bounding_sphere_interval(ray, max_distance)?;
+        let (mut t, end) = self.bounding_sphere_interval(ray, max_distance)?;
 
-        let mut previous_t = start;
-        let mut previous_value = self.implicit(self.local_at(ray, previous_t));
+        for _ in 0..TORUS_MAX_STEPS {
+            let p = self.local_at(ray, t);
+            let distance = self.signed_distance(p);
 
-        if previous_value.abs() <= TORUS_EPSILON {
-            return Some(previous_t);
-        }
-
-        for step in 1..=TORUS_SCAN_STEPS {
-            let t = (end - start).mul_add(step as f32 / TORUS_SCAN_STEPS as f32, start);
-            let value = self.implicit(self.local_at(ray, t));
-
-            if value.abs() <= TORUS_EPSILON {
+            if distance.abs() <= TORUS_HIT_EPSILON {
                 return Some(t);
             }
 
-            if previous_value.signum() != value.signum() {
-                return Some(self.refine_root(ray, previous_t, t));
+            t += distance.max(TORUS_HIT_EPSILON * 0.5);
+
+            if t >= end {
+                return None;
             }
-
-            if previous_value > 0.0 && value > 0.0 {
-                let mid_t = (previous_t + t) * 0.5;
-                let mid_value = self.implicit(self.local_at(ray, mid_t));
-
-                if mid_value.abs() <= TORUS_EPSILON {
-                    return Some(mid_t);
-                }
-            }
-
-            previous_t = t;
-            previous_value = value;
         }
 
         None
     }
 
-    fn refine_root(&self, ray: &Ray, mut lo: f32, mut hi: f32) -> f32 {
-        let mut lo_value = self.implicit(self.local_at(ray, lo));
+    #[inline]
+    fn normal(&self, p: Vector3<f32>) -> Unit<Vector3<f32>> {
+        let e = TORUS_NORMAL_EPSILON;
 
-        for _ in 0..TORUS_BISECTION_STEPS {
-            let mid = (lo + hi) * 0.5;
-            let mid_value = self.implicit(self.local_at(ray, mid));
+        let dx = self.signed_distance(p + Vector3::x() * e) - self.signed_distance(p - Vector3::x() * e);
+        let dy = self.signed_distance(p + Vector3::y() * e) - self.signed_distance(p - Vector3::y() * e);
+        let dz = self.signed_distance(p + Vector3::z() * e) - self.signed_distance(p - Vector3::z() * e);
 
-            if lo_value.signum() == mid_value.signum() {
-                lo = mid;
-                lo_value = mid_value;
-            } else {
-                hi = mid;
-            }
-        }
+        Unit::new_normalize(Vector3::new(dx, dy, dz))
+    }
 
-        (lo + hi) * 0.5
+    #[inline]
+    fn uv(&self, position: Point3<f32>) -> Point2<f32> {
+        let local = position - self.centre;
+
+        let major_angle = local.z.atan2(local.x);
+        let ring_x = (local.x * local.x + local.z * local.z).sqrt() - self.major_radius;
+        let minor_angle = local.y.atan2(ring_x);
+
+        Point2::new((major_angle + PI) / TAU, (minor_angle + PI) / TAU)
     }
 }
 
@@ -189,13 +137,13 @@ impl Traceable for Torus {
 
         let position = ray.origin + *ray.direction * distance;
         let local = position - self.centre;
+
         let mut normal = self.normal(local);
 
         if normal.dot(&ray.direction) > 0.0 {
             normal = -normal;
         }
 
-        let uv = self.uv(position);
-        Some(Contact::new(distance, position, normal, uv))
+        Some(Contact::new(distance, position, normal, self.uv(position)))
     }
 }
