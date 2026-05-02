@@ -83,11 +83,11 @@ impl Sampleable for Geometry {
             Self::Aabb(aabb) => aabb.area(),
             Self::Capsule(capsule) => capsule.area(),
             Self::Circle(circle) => circle.area(),
+            Self::Mesh(mesh) => mesh.area(),
             Self::Quad(quad) => quad.area(),
             Self::Sphere(sphere) => sphere.area(),
             Self::Torus(torus) => torus.area(),
             Self::Triangle(triangle) => triangle.area(),
-            _ => unimplemented!("Area not implemented for this geometry type"),
         }
     }
 
@@ -97,11 +97,11 @@ impl Sampleable for Geometry {
             Self::Aabb(aabb) => aabb.sample(rng),
             Self::Capsule(capsule) => capsule.sample(rng),
             Self::Circle(circle) => circle.sample(rng),
+            Self::Mesh(mesh) => mesh.sample(rng),
             Self::Quad(quad) => quad.sample(rng),
             Self::Sphere(sphere) => sphere.sample(rng),
             Self::Torus(torus) => torus.sample(rng),
             Self::Triangle(triangle) => triangle.sample(rng),
-            _ => unimplemented!("Sampling not implemented for this geometry type"),
         }
     }
 }

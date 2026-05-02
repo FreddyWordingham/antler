@@ -50,7 +50,7 @@ pub fn render_probe<R: Rng + SeedableRng>(
 
     let ao = scene.occlusion(rng, resources, &mut contact);
 
-    let emitted = object.emissive.as_ref().map_or(Rgb::BLACK, |e| e.colour);
+    let emitted = object.emissive.as_ref().map_or(Rgb::BLACK, |e| e.colour * e.intensity);
     let ambient = scene.ambient_shade(shader, &probe.ray, &contact) * ao * local_fraction;
     let direct = scene.direct_light(rng, resources, &probe.ray, object_id, &mut contact) * local_fraction;
 

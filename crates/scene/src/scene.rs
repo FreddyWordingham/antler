@@ -279,6 +279,7 @@ impl Scene {
             };
 
             let geometry = resources.get_geometry(emissive_object.geometry_id);
+            let radiance = emissive.colour * emissive.intensity;
 
             let samples = emissive.samples.max(1);
             let mut light_total = Rgb::BLACK;
@@ -286,7 +287,7 @@ impl Scene {
             for _ in 0..samples {
                 let surface_sample = geometry.sample(rng).transform(&emissive_object.transform);
 
-                let Some(light_sample) = area_light_sample(contact, &surface_sample, emissive.colour) else {
+                let Some(light_sample) = area_light_sample(contact, &surface_sample, radiance) else {
                     continue;
                 };
 

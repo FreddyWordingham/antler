@@ -33,6 +33,7 @@
           shader: Solid ( colour: 0xFFFFFF ),
           emissive: Some((
             colour: 0xFFFFFF,
+            intensity: 4.0,
             samples: 256
           )),
           transform: (
