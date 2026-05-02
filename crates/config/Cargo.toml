@@ -14,6 +14,7 @@ antler-parameters = { path = "../parameters" }
 antler-scene = { path = "../scene" }
 antler-settings = { path = "../settings" }
 antler-shader = { path = "../shader" }
+antler-skybox = { path = "../skybox" }
 nalgebra = { workspace = true }
 ron = { workspace = true }
 serde = { workspace = true }

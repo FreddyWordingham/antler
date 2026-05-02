@@ -6,6 +6,7 @@ use antler_image::{RgbaImage, Tile};
 use antler_material::Bsdf;
 use antler_scene::{Resources, Scene};
 use antler_settings::{ImageSettings, LightingSettings, ProbeSettings};
+use antler_skybox::Sky;
 use nalgebra::Point2;
 use rand::{Rng, SeedableRng, rngs::SmallRng};
 use rayon::prelude::*;
@@ -24,7 +25,9 @@ pub fn render_probe<R: Rng + SeedableRng>(
         return Some(Rgb::BLACK);
     }
 
-    let (object_id, mut contact) = scene.intersection(resources, &probe.ray, f32::INFINITY)?;
+    let Some((object_id, mut contact)) = scene.intersection(resources, &probe.ray, f32::INFINITY) else {
+        return Some(scene.get_skybox().sample(&probe.ray.direction) * probe.weight);
+    };
 
     let object = scene.get_object(object_id);
     let shader = resources.get_shader(object.shader_id);

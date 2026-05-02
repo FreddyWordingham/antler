@@ -5,6 +5,7 @@ use antler_light::{Emissive, Light, LightSample};
 use antler_material::Bsdf;
 use antler_settings::OcclusionSettings;
 use antler_shader::Appearance;
+use antler_skybox::{Constant, Skybox};
 use nalgebra::Unit;
 use rand::Rng;
 
@@ -15,6 +16,7 @@ const VISIBILITY_EPSILON: f32 = 1.0e-3;
 
 pub struct Scene {
     ambient: Rgb,
+    skybox: Skybox,
     occlusion: Option<OcclusionSettings>,
     lights: Vec<Light>,
     objects: Vec<Object>,
@@ -30,15 +32,21 @@ impl Default for Scene {
 
 impl Scene {
     #[must_use]
-    pub const fn new() -> Self {
+    pub fn new() -> Self {
         Self {
             ambient: Rgb::WHITE,
+            skybox: Constant::new(Rgb::WHITE).into(),
             occlusion: None,
             lights: Vec::new(),
             objects: Vec::new(),
             emissive_objects: Vec::new(),
             bvh: None,
         }
+    }
+
+    #[inline]
+    pub fn set_skybox(&mut self, skybox: Skybox) {
+        self.skybox = skybox;
     }
 
     #[inline]
@@ -66,6 +74,11 @@ impl Scene {
 
         self.objects.push(object);
         self.bvh = None;
+    }
+
+    #[must_use]
+    pub fn get_skybox(&self) -> &Skybox {
+        &self.skybox
     }
 
     #[must_use]

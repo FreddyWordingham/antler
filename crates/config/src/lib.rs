@@ -14,6 +14,7 @@ mod occlusion_config;
 mod probe_config;
 mod scene_config;
 mod shader_config;
+mod skybox_config;
 mod transform;
 mod utils;
 mod vec2;

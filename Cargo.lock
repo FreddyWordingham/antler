@@ -69,6 +69,7 @@ dependencies = [
  "antler-scene",
  "antler-settings",
  "antler-shader",
+ "antler-skybox",
  "nalgebra",
  "ron",
  "serde",
@@ -144,6 +145,7 @@ dependencies = [
  "antler-scene",
  "antler-settings",
  "antler-shader",
+ "antler-skybox",
  "indicatif",
  "nalgebra",
  "rand",
@@ -161,6 +163,7 @@ dependencies = [
  "antler-material",
  "antler-settings",
  "antler-shader",
+ "antler-skybox",
  "nalgebra",
  "rand",
 ]
@@ -180,6 +183,15 @@ dependencies = [
  "antler-geometry",
  "antler-image",
  "antler-light",
+ "nalgebra",
+]
+
+[[package]]
+name = "antler-skybox"
+version = "2.0.0"
+dependencies = [
+ "antler-colour",
+ "antler-geometry",
  "nalgebra",
 ]
 

@@ -14,6 +14,17 @@
   scenes: {
     "my_scene": (
       ambient: 0x333333,
+      skybox: Gradient (
+        gradient: [
+          0x99BFFF,
+          0xFFCC4D,
+          0xFF8019,
+          0xCC3319,
+          0x33084D,
+          0x050514,
+        ],
+        power: 1.0
+      ),
       occlusion: Some((
         samples: 64,
         distance: 1.0,
@@ -21,14 +32,9 @@
         falloff: 2.0,
       )),
       lights: [
-        // Directional (
-        //   direction: (0.0, 0.0, -1.0),
-        //   colour: 0x333333
-        // ),
-        Environment (
-          zenith: 0xFFFFFF,
-          horizon: 0x00FFFF,
-          samples: Some(64)
+        Directional (
+          direction: (0.0, 0.0, -1.0),
+          colour: 0x333333
         ),
       ],
       objects: [
@@ -56,8 +62,8 @@
           )
         ),
         (
-          geometry: Mesh ( path: "assets/meshes/tree.obj" ),
-          material: Opaque,
+          geometry: Sphere ( ),
+          material: Mirror,
           shader: Gradient ( gradient: [0xB5651D, 0x673400], power: 1.0 ),
           transform: (
             scale: 1.0,

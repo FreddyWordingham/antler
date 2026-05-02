@@ -7,13 +7,14 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     capture_config::CaptureConfig, errors::ConfigError, light_config::LightConfig, object_config::ObjectConfig,
-    occlusion_config::OcclusionConfig,
+    occlusion_config::OcclusionConfig, skybox_config::SkyboxConfig,
 };
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct SceneConfig {
     pub ambient: Rgb,
+    pub skybox: SkyboxConfig,
     pub occlusion: Option<OcclusionConfig>,
     pub lights: Vec<LightConfig>,
     pub objects: Vec<ObjectConfig>,
@@ -25,6 +26,8 @@ impl SceneConfig {
         let mut scene = Scene::new();
 
         scene.set_ambient(self.ambient);
+
+        scene.set_skybox(self.skybox.build());
 
         if let Some(occlusion) = self.occlusion {
             scene.set_occlusion(Some(occlusion.build()));

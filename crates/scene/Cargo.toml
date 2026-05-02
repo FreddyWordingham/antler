@@ -11,6 +11,7 @@ antler-light = { path = "../light" }
 antler-material = { path = "../material" }
 antler-settings = { path = "../settings" }
 antler-shader = { path = "../shader" }
+antler-skybox = { path = "../skybox" }
 nalgebra = { workspace = true }
 rand = { workspace = true }
 
