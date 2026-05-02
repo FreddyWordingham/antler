@@ -24,17 +24,20 @@ impl Angular {
 
 impl Appearance for Angular {
     #[inline]
+    fn colour(&self, _direction: &Unit<Vector3<f32>>, contact: &Contact) -> Rgb {
+        let n_dot_d = contact.normal.dot(&self.direction);
+        let t = n_dot_d.mul_add(0.5, 0.5).clamp(0.0, 1.0).powf(self.power);
+        self.gradient.sample(t)
+    }
+
+    #[inline]
     fn emitted(&self, _contact: &Contact) -> Rgb {
         Rgb::BLACK
     }
 
     #[inline]
-    fn shade(&self, _ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
-        let n_dot_d = contact.normal.dot(&self.direction);
-        let t = (n_dot_d * 0.5 + 0.5).clamp(0.0, 1.0).powf(self.power);
-
+    fn shade(&self, ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
         let n_dot_l = contact.normal.dot(&light.direction).max(0.0);
-
-        self.gradient.sample(t) * light.radiance * n_dot_l
+        self.colour(&ray.direction, contact) * light.radiance * n_dot_l
     }
 }

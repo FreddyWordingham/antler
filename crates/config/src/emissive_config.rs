@@ -19,14 +19,14 @@ impl EmissiveConfig {
     }
 }
 
-fn default_colour() -> Rgb {
+const fn default_colour() -> Rgb {
     Rgb::WHITE
 }
 
-fn default_intensity() -> f32 {
+const fn default_intensity() -> f32 {
     1.0
 }
 
-fn default_samples() -> usize {
+const fn default_samples() -> usize {
     1
 }

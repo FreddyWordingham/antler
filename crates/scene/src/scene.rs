@@ -156,8 +156,15 @@ impl Scene {
 
             let object = self.get_object(object_id);
             let material = resources.get_material(object.material_id);
+            let shader = resources.get_shader(object.shader_id);
 
-            visibility *= material.visibility();
+            let material_visibility = material.visibility();
+
+            if material_visibility.luminance() <= VISIBILITY_EPSILON {
+                return Rgb::BLACK;
+            }
+
+            visibility *= material_visibility * shader.colour(&ray.direction, &contact);
 
             if visibility.luminance() <= VISIBILITY_EPSILON {
                 return Rgb::BLACK;

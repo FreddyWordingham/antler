@@ -194,7 +194,7 @@ impl Sampleable for Capsule {
             let cap_axis = if hemisphere_pick { -*axis_dir } else { *axis_dir };
 
             let z = rng.random::<f32>();
-            let r = (1.0 - z * z).sqrt();
+            let r = z.mul_add(-z, 1.0).sqrt();
             let theta = TAU * rng.random::<f32>();
 
             let normal =

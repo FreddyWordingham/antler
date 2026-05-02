@@ -30,7 +30,7 @@
         (
           geometry: Mesh ( path: "assets/meshes/leaves.obj" ),
           material: Transparent ( transparency: 0.5 ),
-          shader: Gradient ( gradient: [
+          shader: Iridescent ( gradient: [
             0xFF0000,
             0xFF4000,
             0xFF8000,
@@ -76,7 +76,7 @@
       captures: {
         "my_capture": (
           camera: Perspective (
-            position: (1.0e1, 1.0e1, 7.0),
+            position: (1.0e1, 1.0e1, 17.0),
             look_at: (0.0, 0.0, 2.5),
             vertical_fov: 55.0
           ),

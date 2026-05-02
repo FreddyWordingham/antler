@@ -81,6 +81,6 @@ impl ShaderConfig {
     }
 }
 
-fn default_direction() -> Vec3 {
+const fn default_direction() -> Vec3 {
     Vec3::new(0.0, 0.0, 1.0)
 }

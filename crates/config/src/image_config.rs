@@ -15,7 +15,7 @@ pub struct ImageConfig {
 }
 
 impl ImageConfig {
-    pub fn build(self) -> ImageSettings {
+    pub const fn build(self) -> ImageSettings {
         ImageSettings {
             background: self.background,
             resolution: self.resolution,
@@ -25,14 +25,14 @@ impl ImageConfig {
     }
 }
 
-fn default_background() -> Rgba {
+const fn default_background() -> Rgba {
     Rgba::TRANSPARENT
 }
 
-fn default_tile_size() -> [usize; 2] {
+const fn default_tile_size() -> [usize; 2] {
     [16, 16]
 }
 
-fn default_super_samples() -> usize {
+const fn default_super_samples() -> usize {
     1
 }

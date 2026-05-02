@@ -84,34 +84,34 @@ impl GeometryConfig {
     }
 }
 
-fn default_centre() -> Vec3 {
+const fn default_centre() -> Vec3 {
     Vec3::new(0.0, 0.0, 0.0)
 }
 
-fn default_start_position() -> Vec3 {
+const fn default_start_position() -> Vec3 {
     Vec3::new(0.0, 0.0, 1.0)
 }
 
-fn default_end_position() -> Vec3 {
+const fn default_end_position() -> Vec3 {
     Vec3::new(0.0, 0.0, -1.0)
 }
 
-fn default_normal() -> Vec3 {
+const fn default_normal() -> Vec3 {
     Vec3::new(0.0, 0.0, 1.0)
 }
 
-fn default_radius() -> f32 {
+const fn default_radius() -> f32 {
     1.0
 }
 
-fn default_major_radius() -> f32 {
+const fn default_major_radius() -> f32 {
     1.0
 }
 
-fn default_minor_radius() -> f32 {
+const fn default_minor_radius() -> f32 {
     0.25
 }
 
-fn default_size() -> Vec2 {
+const fn default_size() -> Vec2 {
     Vec2::new(1.0, 1.0)
 }

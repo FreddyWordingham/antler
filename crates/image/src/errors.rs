@@ -35,15 +35,14 @@ impl Display for ImageLoadError {
             Self::Png(err) => write!(f, "PNG decoding error: {err}"),
             Self::UnknownBufferSize => write!(f, "PNG output buffer size is unknown"),
             Self::ColourTypeMismatch { expected, found } => {
-                write!(f, "PNG colour type mismatch: expected {:?}, got {:?}", expected, found)
+                write!(f, "PNG colour type mismatch: expected {expected:?}, got {found:?}")
             }
             Self::BitDepthMismatch { expected, found } => {
-                write!(f, "PNG bit depth mismatch: expected {:?}, got {:?}", expected, found)
+                write!(f, "PNG bit depth mismatch: expected {expected:?}, got {found:?}")
             }
             Self::InvalidByteLength { len, channels } => write!(
                 f,
-                "Invalid byte length for pixel data: expected a multiple of {}, got {}",
-                channels, len
+                "Invalid byte length for pixel data: expected a multiple of {channels}, got {len}"
             ),
         }
     }

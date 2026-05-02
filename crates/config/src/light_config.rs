@@ -28,7 +28,7 @@ impl LightConfig {
             } => Directional::new(
                 direction.into(),
                 radiance,
-                angular_radius.map(|r| r.to_radians()),
+                angular_radius.map(f32::to_radians),
                 samples,
             ),
         }

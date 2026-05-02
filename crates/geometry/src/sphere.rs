@@ -84,7 +84,7 @@ impl Sampleable for Sphere {
         let u1 = rng.random::<f32>();
         let u2 = rng.random::<f32>();
 
-        let z = 1.0 - 2.0 * u1;
+        let z = 2.0f32.mul_add(-u1, 1.0);
         let r = (1.0 - z * z).sqrt();
         let phi = TAU * u2;
 

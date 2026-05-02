@@ -33,10 +33,10 @@ impl From<Transform> for Similarity3<f32> {
             value.rotation.0[2].to_radians(),
         );
 
-        Similarity3::from_parts(translation, rotation, value.scale)
+        Self::from_parts(translation, rotation, value.scale)
     }
 }
 
-fn one_f32() -> f32 {
+const fn one_f32() -> f32 {
     1.0
 }

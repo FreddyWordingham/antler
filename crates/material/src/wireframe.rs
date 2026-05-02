@@ -10,6 +10,7 @@ pub struct Wireframe {
 }
 
 impl Wireframe {
+    #[must_use] 
     pub const fn new(transparency: f32, line_width: f32) -> Self {
         Self {
             transparency: transparency.clamp(0.0, 1.0),

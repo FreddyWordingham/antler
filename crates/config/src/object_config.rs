@@ -23,7 +23,7 @@ impl ObjectConfig {
         let geometry_id = resources.add_geometry(self.geometry.build()?);
         let shader_id = resources.add_shader(self.shader.build()?);
         let material_id = resources.add_material(self.material.build());
-        let emissive = self.emissive.map(|e| e.build());
+        let emissive = self.emissive.map(super::emissive_config::EmissiveConfig::build);
 
         Ok(Object::new(
             geometry_id,

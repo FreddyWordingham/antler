@@ -1,6 +1,7 @@
 use antler_colour::Rgb;
 use antler_geometry::{Contact, Ray};
 use antler_light::LightSample;
+use nalgebra::{Unit, Vector3};
 
 use crate::Appearance;
 
@@ -23,14 +24,8 @@ impl Wireframe {
 
 impl Appearance for Wireframe {
     #[inline]
-    fn emitted(&self, _contact: &Contact) -> Rgb {
-        Rgb::BLACK
-    }
-
-    #[inline]
-
-    fn shade(&self, _ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
-        let colour = match contact.barycentric {
+    fn colour(&self, _direction: &Unit<Vector3<f32>>, contact: &Contact) -> Rgb {
+        match contact.barycentric {
             Some(bary) => {
                 let edge = bary.x.min(bary.y).min(bary.z);
 
@@ -42,9 +37,17 @@ impl Appearance for Wireframe {
             }
 
             None => self.surface_colour,
-        };
+        }
+    }
 
+    #[inline]
+    fn emitted(&self, _contact: &Contact) -> Rgb {
+        Rgb::BLACK
+    }
+
+    #[inline]
+    fn shade(&self, ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
         let n_dot_l = contact.normal.dot(&light.direction).max(0.0);
-        colour * light.radiance * n_dot_l
+        self.colour(&ray.direction, contact) * light.radiance * n_dot_l
     }
 }

@@ -11,7 +11,7 @@ pub struct ProbeConfig {
 }
 
 impl ProbeConfig {
-    pub fn build(self) -> ProbeSettings {
+    pub const fn build(self) -> ProbeSettings {
         ProbeSettings {
             max_generation: self.max_generation,
             min_weight: self.min_weight,
@@ -28,10 +28,10 @@ impl Default for ProbeConfig {
     }
 }
 
-fn default_max_generation() -> u32 {
+const fn default_max_generation() -> u32 {
     5
 }
 
-fn default_min_weight() -> f32 {
+const fn default_min_weight() -> f32 {
     0.01
 }

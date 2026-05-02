@@ -15,7 +15,7 @@ pub struct LightingConfig {
 }
 
 impl LightingConfig {
-    pub fn build(self) -> LightingSettings {
+    pub const fn build(self) -> LightingSettings {
         LightingSettings {
             emitted: self.emitted,
             ambient: self.ambient,
@@ -36,18 +36,18 @@ impl Default for LightingConfig {
     }
 }
 
-fn default_emitted() -> f32 {
+const fn default_emitted() -> f32 {
     1.0
 }
 
-fn default_ambient() -> f32 {
+const fn default_ambient() -> f32 {
     0.1
 }
 
-fn default_direct() -> f32 {
+const fn default_direct() -> f32 {
     1.0
 }
 
-fn default_indirect() -> f32 {
+const fn default_indirect() -> f32 {
     1.0
 }

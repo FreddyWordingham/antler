@@ -238,8 +238,8 @@ impl<'de> Deserialize<'de> for Rgba {
         }
 
         match RgbaRepr::deserialize(deserializer)? {
-            RgbaRepr::Int(value) => Ok(Rgba::from_u32(value)),
-            RgbaRepr::Hex(hex) => Rgba::from_hex(&hex).map_err(Error::custom),
+            RgbaRepr::Int(value) => Ok(Self::from_u32(value)),
+            RgbaRepr::Hex(hex) => Self::from_hex(&hex).map_err(Error::custom),
         }
     }
 }

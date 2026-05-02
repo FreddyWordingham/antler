@@ -5,6 +5,7 @@ use std::{
 };
 
 use antler_parameters::SimulationParameters;
+use antler_scene::Resources;
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -38,7 +39,7 @@ impl Manifest {
     }
 
     pub fn build(self) -> Result<SimulationParameters, ConfigError> {
-        let mut resources = Default::default();
+        let mut resources = Resources::default();
 
         let scenes = self
             .scenes

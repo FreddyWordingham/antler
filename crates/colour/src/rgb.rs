@@ -41,7 +41,7 @@ impl Rgb {
     #[must_use]
     #[inline]
     pub fn luminance(&self) -> f32 {
-        0.2126 * self.red + 0.7152 * self.green + 0.0722 * self.blue
+        0.0722f32.mul_add(self.blue, 0.2126f32.mul_add(self.red, 0.7152 * self.green))
     }
 }
 
@@ -232,8 +232,8 @@ impl<'de> Deserialize<'de> for Rgb {
         }
 
         match RgbRepr::deserialize(deserializer)? {
-            RgbRepr::Int(value) => Ok(Rgb::from_u32(value)),
-            RgbRepr::Hex(hex) => Rgb::from_hex(&hex).map_err(Error::custom),
+            RgbRepr::Int(value) => Ok(Self::from_u32(value)),
+            RgbRepr::Hex(hex) => Self::from_hex(&hex).map_err(Error::custom),
         }
     }
 }

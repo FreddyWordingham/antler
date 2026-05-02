@@ -35,10 +35,10 @@ impl Torus {
 
     #[inline]
     fn signed_distance(&self, p: Vector3<f32>) -> f32 {
-        let qx = (p.x * p.x + p.z * p.z).sqrt() - self.major_radius;
+        let qx = p.x.hypot(p.z) - self.major_radius;
         let qy = p.y;
 
-        (qx * qx + qy * qy).sqrt() - self.minor_radius
+        qx.hypot(qy) - self.minor_radius
     }
 
     fn bounding_sphere_interval(&self, ray: &Ray, max_distance: f32) -> Option<(f32, f32)> {
@@ -104,7 +104,7 @@ impl Torus {
         let local = position - self.centre;
 
         let major_angle = local.z.atan2(local.x);
-        let ring_x = (local.x * local.x + local.z * local.z).sqrt() - self.major_radius;
+        let ring_x = local.x.hypot(local.z) - self.major_radius;
         let minor_angle = local.y.atan2(ring_x);
 
         Point2::new((major_angle + PI) / TAU, (minor_angle + PI) / TAU)
@@ -165,7 +165,7 @@ impl Sampleable for Torus {
         let minor_angle = loop {
             let candidate = TAU * rng.random::<f32>();
             let accept =
-                (self.major_radius + self.minor_radius * candidate.cos()) / (self.major_radius + self.minor_radius);
+                self.minor_radius.mul_add(candidate.cos(), self.major_radius) / (self.major_radius + self.minor_radius);
 
             if rng.random::<f32>() <= accept {
                 break candidate;
@@ -177,12 +177,12 @@ impl Sampleable for Torus {
         let minor_cos = minor_angle.cos();
         let minor_sin = minor_angle.sin();
 
-        let ring_radius = self.major_radius + self.minor_radius * minor_cos;
+        let ring_radius = self.minor_radius.mul_add(minor_cos, self.major_radius);
 
         let position = Point3::new(
-            self.centre.x + ring_radius * major_cos,
-            self.centre.y + self.minor_radius * minor_sin,
-            self.centre.z + ring_radius * major_sin,
+            ring_radius.mul_add(major_cos, self.centre.x),
+            self.minor_radius.mul_add(minor_sin, self.centre.y),
+            ring_radius.mul_add(major_sin, self.centre.z),
         );
 
         let normal = Unit::new_normalize(Vector3::new(minor_cos * major_cos, minor_sin, minor_cos * major_sin));

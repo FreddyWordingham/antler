@@ -1,6 +1,7 @@
 use antler_colour::Rgb;
 use antler_geometry::{Contact, Ray};
 use antler_light::LightSample;
+use nalgebra::{Unit, Vector3};
 
 use crate::{
     angular::Angular, appearance::Appearance, block::Block, checkerboard::Checkerboard, gradient::Gradient,
@@ -21,6 +22,22 @@ pub enum Shader {
 }
 
 impl Appearance for Shader {
+    #[inline]
+    fn colour(&self, direction: &Unit<Vector3<f32>>, contact: &Contact) -> Rgb {
+        match self {
+            Self::Angular(angular) => angular.colour(direction, contact),
+            Self::Block(block) => block.colour(direction, contact),
+            Self::Checkerboard(checkerboard) => checkerboard.colour(direction, contact),
+            Self::Gradient(gradient) => gradient.colour(direction, contact),
+            Self::Iridescent(iridescent) => iridescent.colour(direction, contact),
+            Self::Luminous(luminous) => luminous.colour(direction, contact),
+            Self::Normal(normal) => normal.colour(direction, contact),
+            Self::Solid(solid) => solid.colour(direction, contact),
+            Self::Textured(textured) => textured.colour(direction, contact),
+            Self::Wireframe(wireframe) => wireframe.colour(direction, contact),
+        }
+    }
+
     #[inline]
     fn emitted(&self, contact: &Contact) -> Rgb {
         match self {

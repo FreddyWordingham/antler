@@ -45,18 +45,18 @@ impl CameraConfig {
     }
 }
 
-fn default_look_at() -> Vec3 {
+const fn default_look_at() -> Vec3 {
     Vec3::new(0.0, 0.0, 0.0)
 }
 
-fn default_up() -> Vec3 {
+const fn default_up() -> Vec3 {
     Vec3::new(0.0, 0.0, 1.0)
 }
 
-fn default_size() -> [f32; 2] {
+const fn default_size() -> [f32; 2] {
     [10.0, 10.0]
 }
 
-fn default_vertical_fov() -> f32 {
+const fn default_vertical_fov() -> f32 {
     45.0
 }

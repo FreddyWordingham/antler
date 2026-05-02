@@ -5,26 +5,26 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub struct Vec2(pub [f32; 2]);
 
 impl Vec2 {
-    pub fn new(x: f32, y: f32) -> Self {
+    pub const fn new(x: f32, y: f32) -> Self {
         Self([x, y])
     }
 }
 
 impl From<Vec2> for Point2<f32> {
     fn from(value: Vec2) -> Self {
-        Point2::new(value.0[0], value.0[1])
+        Self::new(value.0[0], value.0[1])
     }
 }
 
 impl From<Vec2> for Vector2<f32> {
     fn from(value: Vec2) -> Self {
-        Vector2::new(value.0[0], value.0[1])
+        Self::new(value.0[0], value.0[1])
     }
 }
 
 impl From<Vec2> for Unit<Vector2<f32>> {
     fn from(value: Vec2) -> Self {
-        Unit::new_normalize(value.into())
+        Self::new_normalize(value.into())
     }
 }
 
@@ -42,6 +42,6 @@ impl<'de> Deserialize<'de> for Vec2 {
     where
         D: Deserializer<'de>,
     {
-        Ok(Vec2(<[f32; 2]>::deserialize(deserializer)?))
+        Ok(Self(<[f32; 2]>::deserialize(deserializer)?))
     }
 }

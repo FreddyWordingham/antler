@@ -13,11 +13,13 @@ pub type RgbGradient = Gradient<Rgb>;
 pub type RgbaGradient = Gradient<Rgba>;
 
 impl<C> Gradient<C> {
+    #[must_use] 
     pub fn new(stops: Vec<C>) -> Self {
         assert!(!stops.is_empty(), "Gradient must have at least one stop.");
         Self { stops }
     }
 
+    #[must_use] 
     pub fn stops(&self) -> &[C] {
         &self.stops
     }
@@ -28,6 +30,7 @@ where
     C: Copy + Add<Output = C> + Mul<f32, Output = C>,
 {
     #[inline]
+    #[must_use] 
     pub fn sample(&self, t: f32) -> C {
         assert!(!self.stops.is_empty(), "Cannot sample an empty gradient.");
 

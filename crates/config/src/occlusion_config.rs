@@ -15,7 +15,7 @@ pub struct OcclusionConfig {
 }
 
 impl OcclusionConfig {
-    pub fn build(self) -> OcclusionSettings {
+    pub const fn build(self) -> OcclusionSettings {
         OcclusionSettings {
             samples: self.samples,
             distance: self.distance,
@@ -36,18 +36,18 @@ impl Default for OcclusionConfig {
     }
 }
 
-fn default_samples() -> usize {
+const fn default_samples() -> usize {
     16
 }
 
-fn default_distance() -> f32 {
+const fn default_distance() -> f32 {
     1.0
 }
 
-fn default_strength() -> f32 {
+const fn default_strength() -> f32 {
     0.5
 }
 
-fn default_falloff() -> f32 {
+const fn default_falloff() -> f32 {
     1.0
 }

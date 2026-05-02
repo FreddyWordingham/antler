@@ -1,6 +1,7 @@
 use antler_colour::Rgb;
 use antler_geometry::{Contact, Ray};
 use antler_light::LightSample;
+use nalgebra::{Unit, Vector3};
 
 use crate::appearance::Appearance;
 
@@ -23,25 +24,27 @@ impl Checkerboard {
 
 impl Appearance for Checkerboard {
     #[inline]
-    fn emitted(&self, _contact: &Contact) -> Rgb {
-        Rgb::BLACK
-    }
-
-    #[inline]
-    fn shade(&self, _ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
+    fn colour(&self, _direction: &Unit<Vector3<f32>>, contact: &Contact) -> Rgb {
         let position = contact.position;
-        let colour = if ((position.x / self.size).floor()
-            + (position.y / self.size).floor()
-            + (position.z / self.size).floor()) as i32
+        if ((position.x / self.size).floor() + (position.y / self.size).floor() + (position.z / self.size).floor())
+            as i32
             % 2
             == 0
         {
             self.colour_a
         } else {
             self.colour_b
-        };
+        }
+    }
 
+    #[inline]
+    fn emitted(&self, _contact: &Contact) -> Rgb {
+        Rgb::BLACK
+    }
+
+    #[inline]
+    fn shade(&self, ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
         let n_dot_l = contact.normal.dot(&light.direction).max(0.0);
-        colour * light.radiance * n_dot_l
+        self.colour(&ray.direction, contact) * light.radiance * n_dot_l
     }
 }

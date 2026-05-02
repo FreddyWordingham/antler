@@ -241,7 +241,7 @@ impl AabbFace {
 impl Sampleable for Aabb {
     #[inline]
     fn area(&self) -> f32 {
-        Aabb::area(self)
+        Self::area(self)
     }
 
     #[inline]
@@ -281,12 +281,12 @@ impl Sampleable for Aabb {
         let v = rng.random::<f32>();
 
         let position = match face {
-            AabbFace::MinX => Point3::new(self.min.x, self.min.y + v * extent.y, self.min.z + u * extent.z),
-            AabbFace::MaxX => Point3::new(self.max.x, self.min.y + v * extent.y, self.min.z + u * extent.z),
-            AabbFace::MinY => Point3::new(self.min.x + u * extent.x, self.min.y, self.min.z + v * extent.z),
-            AabbFace::MaxY => Point3::new(self.min.x + u * extent.x, self.max.y, self.min.z + v * extent.z),
-            AabbFace::MinZ => Point3::new(self.min.x + u * extent.x, self.min.y + v * extent.y, self.min.z),
-            AabbFace::MaxZ => Point3::new(self.min.x + u * extent.x, self.min.y + v * extent.y, self.max.z),
+            AabbFace::MinX => Point3::new(self.min.x, v.mul_add(extent.y, self.min.y), u.mul_add(extent.z, self.min.z)),
+            AabbFace::MaxX => Point3::new(self.max.x, v.mul_add(extent.y, self.min.y), u.mul_add(extent.z, self.min.z)),
+            AabbFace::MinY => Point3::new(u.mul_add(extent.x, self.min.x), self.min.y, v.mul_add(extent.z, self.min.z)),
+            AabbFace::MaxY => Point3::new(u.mul_add(extent.x, self.min.x), self.max.y, v.mul_add(extent.z, self.min.z)),
+            AabbFace::MinZ => Point3::new(u.mul_add(extent.x, self.min.x), v.mul_add(extent.y, self.min.y), self.min.z),
+            AabbFace::MaxZ => Point3::new(u.mul_add(extent.x, self.min.x), v.mul_add(extent.y, self.min.y), self.max.z),
         };
 
         Sample {
