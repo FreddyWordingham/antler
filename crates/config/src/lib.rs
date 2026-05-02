@@ -14,6 +14,7 @@ mod probe_config;
 mod scene_config;
 mod shader_config;
 mod transform;
+mod utils;
 mod vec2;
 mod vec3;
 

@@ -9,6 +9,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     errors::ConfigError, lighting_config::LightingConfig, probe_config::ProbeConfig, scene_config::SceneConfig,
+    utils::expand_includes,
 };
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -28,7 +29,11 @@ pub struct Manifest {
 impl Manifest {
     pub fn load<P: AsRef<Path>>(path: P) -> Result<Self, ConfigError> {
         let contents = read_to_string(&path)?;
-        let manifest = ron::from_str(&contents)?;
+
+        let cwd = std::env::current_dir()?;
+        let manifest_ron = expand_includes(&contents, cwd)?;
+
+        let manifest = ron::from_str(&manifest_ron)?;
         Ok(manifest)
     }
 

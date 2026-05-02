@@ -1,0 +1,648 @@
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xF0249E, 0xF09F24], power: 1.0 ),
+          transform: (
+            translation: (50.12, 26.50, 12.40),
+            scale: 3.52
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0xDE074F, 0xDEC207], power: 1.0 ),
+          transform: (
+            translation: (-32.34, -1.82, 50.78),
+            scale: 4.61
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x650BF6, 0xF60B6D], power: 1.0 ),
+          transform: (
+            translation: (1.81, -54.62, 6.96),
+            scale: 2.05
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0xD4384D, 0xC9D438], power: 1.0 ),
+          transform: (
+            translation: (16.75, 53.46, 4.58),
+            scale: 2.60
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xFBF734, 0x34FB57], power: 1.0 ),
+          transform: (
+            translation: (55.70, 17.84, 2.24),
+            scale: 3.77
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x1087E9, 0x9E10E9], power: 1.0 ),
+          transform: (
+            translation: (16.10, -37.63, 44.81),
+            scale: 4.84
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xCF2330, 0xBACF23], power: 1.0 ),
+          transform: (
+            translation: (-27.40, 50.23, 14.40),
+            scale: 4.00
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0xEDA042, 0x6EED42], power: 1.0 ),
+          transform: (
+            translation: (21.31, -51.27, 27.63),
+            scale: 5.51
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xFC714B, 0xB2FC4B], power: 1.0 ),
+          transform: (
+            translation: (-16.87, 49.77, 21.90),
+            scale: 2.97
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xE61AC2, 0xE6671A], power: 1.0 ),
+          transform: (
+            translation: (53.64, -16.76, 31.74),
+            scale: 6.77
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xC0E60A, 0x0AE65B], power: 1.0 ),
+          transform: (
+            translation: (8.85, 56.97, 23.41),
+            scale: 5.61
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x87CD3D, 0x3DCDA0], power: 1.0 ),
+          transform: (
+            translation: (18.77, -38.72, 36.43),
+            scale: 2.69
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x1CFB02, 0x02E3FB], power: 1.0 ),
+          transform: (
+            translation: (-12.99, -8.59, 60.85),
+            scale: 5.90
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x42F063, 0x42ABF0], power: 1.0 ),
+          transform: (
+            translation: (46.53, 26.84, 18.04),
+            scale: 2.83
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x06DFC8, 0x1B06DF], power: 1.0 ),
+          transform: (
+            translation: (9.29, 36.92, 47.46),
+            scale: 4.92
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xF00D08, 0xBDF008], power: 1.0 ),
+          transform: (
+            translation: (14.48, 3.21, 54.86),
+            scale: 2.91
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x1AFE03, 0x03E2FE], power: 1.0 ),
+          transform: (
+            translation: (5.20, -51.73, 21.19),
+            scale: 2.57
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xD8110B, 0xA8D80B], power: 1.0 ),
+          transform: (
+            translation: (-53.45, 20.30, 28.86),
+            scale: 6.52
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x02F3F8, 0x3702F8], power: 1.0 ),
+          transform: (
+            translation: (43.80, 46.12, 5.37),
+            scale: 6.42
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x3BD2D5, 0x5D3BD5], power: 1.0 ),
+          transform: (
+            translation: (46.79, 23.71, 38.26),
+            scale: 6.96
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x541FD5, 0xD51F7C], power: 1.0 ),
+          transform: (
+            translation: (55.79, -8.18, 14.37),
+            scale: 3.59
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0x0FC8D5, 0x430FD5], power: 1.0 ),
+          transform: (
+            translation: (-37.32, -35.36, 20.16),
+            scale: 2.11
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x19E6C5, 0x2019E6], power: 1.0 ),
+          transform: (
+            translation: (-3.72, -22.68, 54.09),
+            scale: 3.88
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xD78427, 0x56D727], power: 1.0 ),
+          transform: (
+            translation: (-8.69, 55.07, 11.74),
+            scale: 2.99
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x7EE93B, 0x3BE9C9], power: 1.0 ),
+          transform: (
+            translation: (-7.42, 15.26, 60.79),
+            scale: 6.06
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x8824D9, 0xD92450], power: 1.0 ),
+          transform: (
+            translation: (-58.41, -13.06, 7.43),
+            scale: 4.66
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xD32523, 0xADD323], power: 1.0 ),
+          transform: (
+            translation: (-1.71, 5.75, 61.60),
+            scale: 5.44
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0xBE1BE8, 0xE81B1C], power: 1.0 ),
+          transform: (
+            translation: (-56.53, 30.62, 5.52),
+            scale: 6.76
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x20CCC2, 0x3820CC], power: 1.0 ),
+          transform: (
+            translation: (57.09, -6.30, 18.18),
+            scale: 4.62
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xFA15D5, 0xFA6715], power: 1.0 ),
+          transform: (
+            translation: (-58.41, 2.76, 25.02),
+            scale: 6.30
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xAF12EC, 0xEC1223], power: 1.0 ),
+          transform: (
+            translation: (45.25, 35.00, 21.22),
+            scale: 5.01
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x2DA2CF, 0x7B2DCF], power: 1.0 ),
+          transform: (
+            translation: (-22.71, -39.00, 31.70),
+            scale: 2.08
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x174FF8, 0xEE17F8], power: 1.0 ),
+          transform: (
+            translation: (31.99, -49.79, 17.44),
+            scale: 5.35
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x14D474, 0x144ED4], power: 1.0 ),
+          transform: (
+            translation: (40.39, 22.05, 36.09),
+            scale: 3.74
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0x5C2BF3, 0xF32B99], power: 1.0 ),
+          transform: (
+            translation: (58.62, -23.96, 4.86),
+            scale: 6.26
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xE1E23B, 0x3BE25D], power: 1.0 ),
+          transform: (
+            translation: (2.25, 3.59, 61.07),
+            scale: 5.11
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x21FCAD, 0x2143FC], power: 1.0 ),
+          transform: (
+            translation: (60.16, -3.86, 11.42),
+            scale: 5.18
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xF7B712, 0x25F712], power: 1.0 ),
+          transform: (
+            translation: (20.07, -33.82, 42.19),
+            scale: 3.34
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x24D13F, 0x2494D1], power: 1.0 ),
+          transform: (
+            translation: (33.19, 39.15, 34.25),
+            scale: 5.35
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xB4D622, 0x22D668], power: 1.0 ),
+          transform: (
+            translation: (6.33, 36.13, 42.60),
+            scale: 2.61
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xEF8A22, 0x5EEF22], power: 1.0 ),
+          transform: (
+            translation: (-4.89, -58.73, 14.18),
+            scale: 4.81
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x3CE187, 0x3C76E1], power: 1.0 ),
+          transform: (
+            translation: (21.26, 53.67, 1.74),
+            scale: 3.38
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x5528F6, 0xF628A0], power: 1.0 ),
+          transform: (
+            translation: (44.40, 18.91, 42.88),
+            scale: 6.78
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xDC0F55, 0xDCBF0F], power: 1.0 ),
+          transform: (
+            translation: (18.32, -5.98, 59.62),
+            scale: 5.83
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x38CE50, 0x3898CE], power: 1.0 ),
+          transform: (
+            translation: (-40.90, 3.33, 40.55),
+            scale: 3.35
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0x02D756, 0x0257D7], power: 1.0 ),
+          transform: (
+            translation: (32.72, -45.93, 3.41),
+            scale: 2.75
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0x3F3CD5, 0xD53CB3], power: 1.0 ),
+          transform: (
+            translation: (49.27, 15.63, 18.95),
+            scale: 2.03
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xCEEC36, 0x36EC78], power: 1.0 ),
+          transform: (
+            translation: (-7.12, 55.97, 5.01),
+            scale: 2.82
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xF003D3, 0xF05003], power: 1.0 ),
+          transform: (
+            translation: (16.88, 61.37, 0.77),
+            scale: 6.33
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x04D66F, 0x0441D6], power: 1.0 ),
+          transform: (
+            translation: (-27.45, 51.39, 11.58),
+            scale: 4.20
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xE6663A, 0x98E63A], power: 1.0 ),
+          transform: (
+            translation: (-5.55, -45.68, 40.25),
+            scale: 5.07
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xCCB70D, 0x0DCC1E], power: 1.0 ),
+          transform: (
+            translation: (34.38, -8.26, 44.92),
+            scale: 3.08
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xEC963F, 0x72EC3F], power: 1.0 ),
+          transform: (
+            translation: (43.46, 26.33, 38.01),
+            scale: 6.23
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x9225CC, 0xCC253D], power: 1.0 ),
+          transform: (
+            translation: (55.49, 3.60, 29.48),
+            scale: 5.97
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x2484E8, 0xAE24E8], power: 1.0 ),
+          transform: (
+            translation: (-53.83, -12.54, 25.72),
+            scale: 4.98
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xAE33E1, 0xE13343], power: 1.0 ),
+          transform: (
+            translation: (4.59, -33.46, 43.69),
+            scale: 2.11
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xE3A230, 0x4DE330], power: 1.0 ),
+          transform: (
+            translation: (-19.56, 50.99, 23.71),
+            scale: 4.27
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xE8128C, 0xE89912], power: 1.0 ),
+          transform: (
+            translation: (-59.37, -11.33, 4.18),
+            scale: 4.79
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x9AF335, 0x35F3B3], power: 1.0 ),
+          transform: (
+            translation: (-43.82, 41.22, 10.81),
+            scale: 5.06
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x071EF1, 0xF107DA], power: 1.0 ),
+          transform: (
+            translation: (27.75, 54.16, 13.53),
+            scale: 5.67
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xD8378B, 0xD8A437], power: 1.0 ),
+          transform: (
+            translation: (-8.86, -28.78, 56.27),
+            scale: 6.41
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0xCCEF2A, 0x2AEF74], power: 1.0 ),
+          transform: (
+            translation: (17.69, -39.92, 41.99),
+            scale: 4.79
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xDB1F59, 0xDBC71F], power: 1.0 ),
+          transform: (
+            translation: (35.13, -28.76, 45.02),
+            scale: 6.47
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0x5AF123, 0x23F1E3], power: 1.0 ),
+          transform: (
+            translation: (-45.84, 3.54, 34.93),
+            scale: 3.37
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x0C9BE1, 0x7C0CE1], power: 1.0 ),
+          transform: (
+            translation: (37.17, -26.46, 38.99),
+            scale: 4.51
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x75DE17, 0x17DEA8], power: 1.0 ),
+          transform: (
+            translation: (44.16, 28.22, 18.59),
+            scale: 2.30
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xFA0B2A, 0xEAFA0B], power: 1.0 ),
+          transform: (
+            translation: (-30.74, 6.02, 47.71),
+            scale: 3.04
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xF3275C, 0xF3E627], power: 1.0 ),
+          transform: (
+            translation: (-62.24, -7.31, 9.81),
+            scale: 6.22
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xE7CE27, 0x27E734], power: 1.0 ),
+          transform: (
+            translation: (3.25, -25.49, 55.88),
+            scale: 5.25
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x12EC33, 0x129FEC], power: 1.0 ),
+          transform: (
+            translation: (-14.50, -50.77, 18.29),
+            scale: 2.44
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xE1A436, 0x50E136], power: 1.0 ),
+          transform: (
+            translation: (-40.20, 22.37, 43.77),
+            scale: 6.25
+          )
+        ),
+        (
+          geometry: Sphere ( ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xE25026, 0x93E226], power: 1.0 ),
+          transform: (
+            translation: (22.77, 48.72, 17.05),
+            scale: 2.71
+          )
+        )

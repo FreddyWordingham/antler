@@ -1,0 +1,720 @@
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xC2F934, 0x34F993], power: 1.0 ),
+          transform: (
+            translation: (27.32, 0.00, 0.0),
+            rotation: (0.0, 0.0, 178.7),
+            scale: 2.39
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x0ADAE6, 0x420AE6], power: 1.0 ),
+          transform: (
+            translation: (27.90, 2.44, 0.0),
+            rotation: (0.0, 0.0, 340.1),
+            scale: 2.50
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xD2100F, 0xAAD20F], power: 1.0 ),
+          transform: (
+            translation: (35.58, 6.27, 0.0),
+            rotation: (0.0, 0.0, 3.4),
+            scale: 3.85
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xD602D2, 0xD63102], power: 1.0 ),
+          transform: (
+            translation: (48.57, 13.01, 0.0),
+            rotation: (0.0, 0.0, 29.3),
+            scale: 6.21
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0xCD9A33, 0x47CD33], power: 1.0 ),
+          transform: (
+            translation: (51.06, 18.58, 0.0),
+            rotation: (0.0, 0.0, 17.8),
+            scale: 6.89
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xFBF734, 0x34FB57], power: 1.0 ),
+          transform: (
+            translation: (32.26, 15.04, 0.0),
+            rotation: (0.0, 0.0, 60.3),
+            scale: 3.77
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x1E9BF3, 0xA01EF3], power: 1.0 ),
+          transform: (
+            translation: (40.83, 23.58, 0.0),
+            rotation: (0.0, 0.0, 211.4),
+            scale: 5.69
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0x9DFE2D, 0x2DFEB8], power: 1.0 ),
+          transform: (
+            translation: (28.58, 20.01, 0.0),
+            rotation: (0.0, 0.0, 153.6),
+            scale: 3.65
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0xD727EF, 0xEF3727], power: 1.0 ),
+          transform: (
+            translation: (30.11, 25.26, 0.0),
+            rotation: (0.0, 0.0, 32.7),
+            scale: 4.38
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0xDF622E, 0x89DF2E], power: 1.0 ),
+          transform: (
+            translation: (31.72, 31.72, 0.0),
+            rotation: (0.0, 0.0, 69.7),
+            scale: 5.31
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xFC175A, 0xFCE717], power: 1.0 ),
+          transform: (
+            translation: (16.20, 19.31, 0.0),
+            rotation: (0.0, 0.0, 177.0),
+            scale: 2.03
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x205AE5, 0xD320E5], power: 1.0 ),
+          transform: (
+            translation: (29.18, 41.68, 0.0),
+            rotation: (0.0, 0.0, 81.2),
+            scale: 6.31
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xC0E60A, 0x0AE65B], power: 1.0 ),
+          transform: (
+            translation: (23.34, 40.43, 0.0),
+            rotation: (0.0, 0.0, 217.5),
+            scale: 5.61
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xCCB02E, 0x2ECC32], power: 1.0 ),
+          transform: (
+            translation: (18.76, 40.23, 0.0),
+            rotation: (0.0, 0.0, 9.9),
+            scale: 5.23
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xDC0E35, 0xD9DC0E], power: 1.0 ),
+          transform: (
+            translation: (14.63, 40.21, 0.0),
+            rotation: (0.0, 0.0, 348.2),
+            scale: 4.96
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0xD47F2B, 0x5ED42B], power: 1.0 ),
+          transform: (
+            translation: (10.01, 37.37, 0.0),
+            rotation: (0.0, 0.0, 131.6),
+            scale: 4.28
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xF33950, 0xE5F339], power: 1.0 ),
+          transform: (
+            translation: (8.06, 45.69, 0.0),
+            rotation: (0.0, 0.0, 210.4),
+            scale: 5.57
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x0BCD3E, 0x0B73CD], power: 1.0 ),
+          transform: (
+            translation: (4.55, 52.02, 0.0),
+            rotation: (0.0, 0.0, 347.5),
+            scale: 6.54
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xEE13AF, 0xEE7E13], power: 1.0 ),
+          transform: (
+            translation: (0.00, 25.11, 0.0),
+            rotation: (0.0, 0.0, 275.7),
+            scale: 2.02
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x1AFE03, 0x03E2FE], power: 1.0 ),
+          transform: (
+            translation: (-2.48, 28.32, 0.0),
+            rotation: (0.0, 0.0, 82.8),
+            scale: 2.57
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xF649AC, 0xF6B549], power: 1.0 ),
+          transform: (
+            translation: (-6.69, 37.93, 0.0),
+            rotation: (0.0, 0.0, 91.2),
+            scale: 4.25
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xE57708, 0x49E508], power: 1.0 ),
+          transform: (
+            translation: (-7.47, 27.89, 0.0),
+            rotation: (0.0, 0.0, 349.9),
+            scale: 2.65
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0xFE831F, 0x6DFE1F], power: 1.0 ),
+          transform: (
+            translation: (-16.27, 44.70, 0.0),
+            rotation: (0.0, 0.0, 181.1),
+            scale: 5.76
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xD80111, 0xBDD801], power: 1.0 ),
+          transform: (
+            translation: (-12.91, 27.68, 0.0),
+            rotation: (0.0, 0.0, 114.6),
+            scale: 2.92
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0xD1EB01, 0x01EB4A], power: 1.0 ),
+          transform: (
+            translation: (-20.11, 34.84, 0.0),
+            rotation: (0.0, 0.0, 131.5),
+            scale: 4.54
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x8333D0, 0xD03360], power: 1.0 ),
+          transform: (
+            translation: (-23.12, 33.02, 0.0),
+            rotation: (0.0, 0.0, 260.7),
+            scale: 4.55
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x19E6C5, 0x2019E6], power: 1.0 ),
+          transform: (
+            translation: (-23.34, 27.81, 0.0),
+            rotation: (0.0, 0.0, 46.2),
+            scale: 3.88
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xC2DF3D, 0x3DDF7B], power: 1.0 ),
+          transform: (
+            translation: (-22.05, 22.05, 0.0),
+            rotation: (0.0, 0.0, 78.9),
+            scale: 3.03
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xD90C39, 0xD9D50C], power: 1.0 ),
+          transform: (
+            translation: (-26.55, 22.28, 0.0),
+            rotation: (0.0, 0.0, 55.5),
+            scale: 3.61
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x3CC3E7, 0x823CE7], power: 1.0 ),
+          transform: (
+            translation: (-32.13, 22.50, 0.0),
+            rotation: (0.0, 0.0, 273.3),
+            scale: 4.37
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0xFE3593, 0xFEC935], power: 1.0 ),
+          transform: (
+            translation: (-28.28, 16.33, 0.0),
+            rotation: (0.0, 0.0, 247.9),
+            scale: 3.28
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xE1CB0E, 0x0EE122], power: 1.0 ),
+          transform: (
+            translation: (-34.82, 16.24, 0.0),
+            rotation: (0.0, 0.0, 30.8),
+            scale: 4.24
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x1A5ACF, 0xB31ACF], power: 1.0 ),
+          transform: (
+            translation: (-46.02, 16.75, 0.0),
+            rotation: (0.0, 0.0, 353.7),
+            scale: 6.00
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x20CCC2, 0x3820CC], power: 1.0 ),
+          transform: (
+            translation: (-39.33, 10.54, 0.0),
+            rotation: (0.0, 0.0, 321.5),
+            scale: 4.62
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xF00ACA, 0xF05E0A], power: 1.0 ),
+          transform: (
+            translation: (-36.24, 6.39, 0.0),
+            rotation: (0.0, 0.0, 326.7),
+            scale: 3.97
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x1DF42F, 0x1DB6F4], power: 1.0 ),
+          transform: (
+            translation: (-28.04, 2.45, 0.0),
+            rotation: (0.0, 0.0, 264.4),
+            scale: 2.52
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x1A1ACC, 0xCC1AA9], power: 1.0 ),
+          transform: (
+            translation: (-43.03, 0.00, 0.0),
+            rotation: (0.0, 0.0, 196.8),
+            scale: 5.00
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x0A4EDA, 0xC00ADA], power: 1.0 ),
+          transform: (
+            translation: (-27.07, -2.37, 0.0),
+            rotation: (0.0, 0.0, 241.2),
+            scale: 2.36
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xD012A4, 0xD06412], power: 1.0 ),
+          transform: (
+            translation: (-44.75, -7.89, 0.0),
+            rotation: (0.0, 0.0, 222.2),
+            scale: 5.41
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0x433AEB, 0xEB3ABF], power: 1.0 ),
+          transform: (
+            translation: (-36.22, -9.71, 0.0),
+            rotation: (0.0, 0.0, 337.8),
+            scale: 4.08
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x5C2BF3, 0xF32B99], power: 1.0 ),
+          transform: (
+            translation: (-47.50, -17.29, 0.0),
+            rotation: (0.0, 0.0, 28.6),
+            scale: 6.26
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x345FD2, 0xC734D2], power: 1.0 ),
+          transform: (
+            translation: (-49.78, -23.21, 0.0),
+            rotation: (0.0, 0.0, 160.9),
+            scale: 6.99
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xCAE218, 0x18E258], power: 1.0 ),
+          transform: (
+            translation: (-47.37, -27.35, 0.0),
+            rotation: (0.0, 0.0, 200.6),
+            scale: 6.95
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xD911D7, 0xD93B11], power: 1.0 ),
+          transform: (
+            translation: (-23.39, -16.38, 0.0),
+            rotation: (0.0, 0.0, 43.2),
+            scale: 2.59
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x3CE848, 0x3CB9E8], power: 1.0 ),
+          transform: (
+            translation: (-38.76, -32.52, 0.0),
+            rotation: (0.0, 0.0, 241.4),
+            scale: 6.27
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xD79937, 0x55D737], power: 1.0 ),
+          transform: (
+            translation: (-26.39, -26.39, 0.0),
+            rotation: (0.0, 0.0, 272.8),
+            scale: 4.05
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x33D8B4, 0x3335D8], power: 1.0 ),
+          transform: (
+            translation: (-19.89, -23.70, 0.0),
+            rotation: (0.0, 0.0, 265.2),
+            scale: 2.99
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xEF8A22, 0x5EEF22], power: 1.0 ),
+          transform: (
+            translation: (-24.00, -34.28, 0.0),
+            rotation: (0.0, 0.0, 161.1),
+            scale: 4.81
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x61D125, 0x25D1B7], power: 1.0 ),
+          transform: (
+            translation: (-12.95, -22.44, 0.0),
+            rotation: (0.0, 0.0, 153.5),
+            scale: 2.15
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x0306EF, 0xEF03C3], power: 1.0 ),
+          transform: (
+            translation: (-11.38, -24.40, 0.0),
+            rotation: (0.0, 0.0, 161.8),
+            scale: 2.32
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xF3034B, 0xF3DA03], power: 1.0 ),
+          transform: (
+            translation: (-18.25, -50.13, 0.0),
+            rotation: (0.0, 0.0, 339.6),
+            scale: 6.72
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xEFC824, 0x24EF26], power: 1.0 ),
+          transform: (
+            translation: (-8.99, -33.56, 0.0),
+            rotation: (0.0, 0.0, 96.9),
+            scale: 3.62
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xF76636, 0xA1F736], power: 1.0 ),
+          transform: (
+            translation: (-4.77, -27.05, 0.0),
+            rotation: (0.0, 0.0, 21.7),
+            scale: 2.41
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xCE304E, 0xCCCE30], power: 1.0 ),
+          transform: (
+            translation: (-3.22, -36.84, 0.0),
+            rotation: (0.0, 0.0, 17.6),
+            scale: 4.00
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x3F3CD5, 0xD53CB3], power: 1.0 ),
+          transform: (
+            translation: (-0.00, -25.17, 0.0),
+            rotation: (0.0, 0.0, 27.6),
+            scale: 2.03
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xD7D534, 0x34D752], power: 1.0 ),
+          transform: (
+            translation: (2.41, -27.55, 0.0),
+            rotation: (0.0, 0.0, 228.4),
+            scale: 2.44
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xF71B0A, 0xB6F70A], power: 1.0 ),
+          transform: (
+            translation: (5.42, -30.74, 0.0),
+            rotation: (0.0, 0.0, 341.3),
+            scale: 3.04
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x3CE236, 0x36C5E2], power: 1.0 ),
+          transform: (
+            translation: (9.83, -36.68, 0.0),
+            rotation: (0.0, 0.0, 150.6),
+            scale: 4.16
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0x3D13ED, 0xED1397], power: 1.0 ),
+          transform: (
+            translation: (10.61, -29.14, 0.0),
+            rotation: (0.0, 0.0, 220.8),
+            scale: 3.00
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x1EE4FD, 0x631EFD], power: 1.0 ),
+          transform: (
+            translation: (12.43, -26.65, 0.0),
+            rotation: (0.0, 0.0, 282.9),
+            scale: 2.73
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xBB4AFA, 0xFA4A66], power: 1.0 ),
+          transform: (
+            translation: (14.72, -25.50, 0.0),
+            rotation: (0.0, 0.0, 31.2),
+            scale: 2.74
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Mirror,
+          shader: Gradient ( gradient: [0xEC963F, 0x72EC3F], power: 1.0 ),
+          transform: (
+            translation: (28.89, -41.26, 0.0),
+            rotation: (0.0, 0.0, 259.2),
+            scale: 6.23
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xAE0FE0, 0xE00F16], power: 1.0 ),
+          transform: (
+            translation: (25.10, -29.92, 0.0),
+            rotation: (0.0, 0.0, 2.9),
+            scale: 4.34
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x1CE989, 0x1C53E9], power: 1.0 ),
+          transform: (
+            translation: (29.06, -29.06, 0.0),
+            rotation: (0.0, 0.0, 173.3),
+            scale: 4.68
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x850CCD, 0xCD0C2D], power: 1.0 ),
+          transform: (
+            translation: (32.06, -26.90, 0.0),
+            rotation: (0.0, 0.0, 282.4),
+            scale: 4.81
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xAAE02E, 0x2EE088], power: 1.0 ),
+          transform: (
+            translation: (30.85, -21.60, 0.0),
+            rotation: (0.0, 0.0, 163.4),
+            scale: 4.11
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x2AE7B6, 0x2A35E7], power: 1.0 ),
+          transform: (
+            translation: (29.29, -16.91, 0.0),
+            rotation: (0.0, 0.0, 24.8),
+            scale: 3.47
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x7C20F5, 0xF5206E], power: 1.0 ),
+          transform: (
+            translation: (47.27, -22.04, 0.0),
+            rotation: (0.0, 0.0, 136.7),
+            scale: 6.53
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x9AF335, 0x35F3B3], power: 1.0 ),
+          transform: (
+            translation: (40.76, -14.83, 0.0),
+            rotation: (0.0, 0.0, 183.4),
+            scale: 5.06
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0x741AF9, 0xF91A72], power: 1.0 ),
+          transform: (
+            translation: (30.44, -8.16, 0.0),
+            rotation: (0.0, 0.0, 266.0),
+            scale: 3.09
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xFA08B4, 0xFA7F08], power: 1.0 ),
+          transform: (
+            translation: (45.37, -8.00, 0.0),
+            rotation: (0.0, 0.0, 52.2),
+            scale: 5.51
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/pyramid.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xD215E8, 0xE82A15], power: 1.0 ),
+          transform: (
+            translation: (30.08, -2.63, 0.0),
+            rotation: (0.0, 0.0, 70.7),
+            scale: 2.87
+          )
+        )

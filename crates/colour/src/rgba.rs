@@ -91,7 +91,7 @@ impl Pixel for Rgba {
             red: reinhard(self.red),
             green: reinhard(self.green),
             blue: reinhard(self.blue),
-            alpha: reinhard(self.alpha),
+            alpha: self.alpha,
         }
     }
 }
