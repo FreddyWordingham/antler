@@ -1,6 +1,10 @@
 use nalgebra::{Point2, Point3, Unit, Vector3};
+use rand::{Rng, RngExt};
 
-use crate::{aabb::Aabb, bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, traceable::Traceable};
+use crate::{
+    aabb::Aabb, bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, sample::Sample,
+    sampleable::Sampleable, traceable::Traceable,
+};
 
 const BOUNDS_PADDING: f32 = 1.0e-6;
 const CONTACT_EPSILON: f32 = 1.0e-8;
@@ -161,5 +165,34 @@ impl Traceable for Triangle {
             self.interpolate_uv(bary),
             Some(bary),
         ))
+    }
+}
+
+impl Sampleable for Triangle {
+    #[inline]
+    fn area(&self) -> f32 {
+        let ab = self.vertices[1] - self.vertices[0];
+        let ac = self.vertices[2] - self.vertices[0];
+
+        0.5 * ab.cross(&ac).norm()
+    }
+
+    #[inline]
+    fn sample<R: Rng>(&self, rng: &mut R) -> Sample {
+        let u = rng.random::<f32>();
+        let v = rng.random::<f32>();
+
+        let su = u.sqrt();
+
+        let bary = Vector3::new(1.0 - su, su * (1.0 - v), su * v);
+
+        let position = self.interpolate_position(bary);
+        let normal = self.interpolate_normal(bary);
+
+        Sample {
+            position,
+            normal,
+            pdf_area: 1.0 / self.area(),
+        }
     }
 }

@@ -85,6 +85,7 @@ impl Sampleable for Geometry {
             Self::Circle(circle) => circle.area(),
             Self::Quad(quad) => quad.area(),
             Self::Torus(torus) => torus.area(),
+            Self::Triangle(triangle) => triangle.area(),
             _ => unimplemented!("Area not implemented for this geometry type"),
         }
     }
@@ -97,6 +98,7 @@ impl Sampleable for Geometry {
             Self::Circle(circle) => circle.sample(rng),
             Self::Quad(quad) => quad.sample(rng),
             Self::Torus(torus) => torus.sample(rng),
+            Self::Triangle(triangle) => triangle.sample(rng),
             _ => unimplemented!("Sampling not implemented for this geometry type"),
         }
     }
