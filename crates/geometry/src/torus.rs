@@ -1,8 +1,12 @@
 use std::f32::consts::{PI, TAU};
 
 use nalgebra::{Point2, Point3, Unit, Vector3};
+use rand::{Rng, RngExt};
 
-use crate::{aabb::Aabb, bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, traceable::Traceable};
+use crate::{
+    aabb::Aabb, bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, sample::Sample,
+    sampleable::Sampleable, traceable::Traceable,
+};
 
 const TORUS_MAX_STEPS: usize = 256;
 const TORUS_HIT_EPSILON: f32 = 1.0e-4;
@@ -145,5 +149,48 @@ impl Traceable for Torus {
         }
 
         Some(Contact::new(distance, position, normal, self.uv(position), None))
+    }
+}
+
+impl Sampleable for Torus {
+    #[inline]
+    fn area(&self) -> f32 {
+        4.0 * std::f32::consts::PI * std::f32::consts::PI * self.major_radius * self.minor_radius
+    }
+
+    #[inline]
+    fn sample<R: Rng>(&self, rng: &mut R) -> Sample {
+        let major_angle = TAU * rng.random::<f32>();
+
+        let minor_angle = loop {
+            let candidate = TAU * rng.random::<f32>();
+            let accept =
+                (self.major_radius + self.minor_radius * candidate.cos()) / (self.major_radius + self.minor_radius);
+
+            if rng.random::<f32>() <= accept {
+                break candidate;
+            }
+        };
+
+        let major_cos = major_angle.cos();
+        let major_sin = major_angle.sin();
+        let minor_cos = minor_angle.cos();
+        let minor_sin = minor_angle.sin();
+
+        let ring_radius = self.major_radius + self.minor_radius * minor_cos;
+
+        let position = Point3::new(
+            self.centre.x + ring_radius * major_cos,
+            self.centre.y + self.minor_radius * minor_sin,
+            self.centre.z + ring_radius * major_sin,
+        );
+
+        let normal = Unit::new_normalize(Vector3::new(minor_cos * major_cos, minor_sin, minor_cos * major_sin));
+
+        Sample {
+            position,
+            normal,
+            pdf_area: 1.0 / self.area(),
+        }
     }
 }

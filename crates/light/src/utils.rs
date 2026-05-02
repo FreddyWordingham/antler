@@ -1,3 +1,5 @@
+use std::f32::consts::TAU;
+
 use nalgebra::{Unit, Vector3};
 use rand::{Rng, RngExt};
 
@@ -8,7 +10,7 @@ pub fn cone_direction(axis: Unit<Vector3<f32>>, angle: f32, rng: &mut impl Rng) 
     let cos_max = angle.cos();
     let cos_theta = u.mul_add(-(1.0 - cos_max), 1.0);
     let sin_theta = (1.0 - cos_theta * cos_theta).sqrt();
-    let phi = std::f32::consts::TAU * v;
+    let phi = TAU * v;
 
     let n = axis.into_inner();
 

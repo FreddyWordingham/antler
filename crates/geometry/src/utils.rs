@@ -1,4 +1,4 @@
-use std::f32::consts::PI;
+use std::f32::consts::{PI, TAU};
 
 use nalgebra::{Point3, Unit, Vector3};
 use rand::{Rng, RngExt};
@@ -61,7 +61,7 @@ pub fn hemisphere_direction<R: Rng>(
     let v: f32 = rng.random();
 
     let r = u.sqrt();
-    let theta = std::f32::consts::TAU * v;
+    let theta = TAU * v;
 
     Unit::new_unchecked(*tangent * (r * theta.cos()) + *bi_tangent * (r * theta.sin()) + *normal * (1.0 - u).sqrt())
 }

@@ -24,20 +24,20 @@
       ],
       objects: [
         (
-          geometry: Capsule (
-            a: (-1.0, -1.0, -1.0),
-            b: (1.0, 1.0, 1.0),
-            radius: 0.5
+          geometry: Torus (
+            centre: (0.0, 0.0, 0.0),
+            major_radius: 7.0,
+            minor_radius: 0.5
           ),
           material: Opaque,
           shader: Solid ( colour: 0xFFFFFF ),
           emissive: Some((
             colour: 0xFFFFFF,
-            samples: 64
+            samples: 256
           )),
           transform: (
-            translation: (1.0, 4.0, 4.0),
-            rotation: (0.0, 180.0, 0.0),
+            translation: (0.0, 0.0, 3.5),
+            rotation: (90.0, 0.0, 0.0),
             scale: 0.5
           )
         ),
@@ -91,7 +91,7 @@
       captures: {
         "my_capture": (
           camera: Perspective (
-            position: (1.0e1, 1.0e1, 4.0),
+            position: (1.0e1, 1.0e1, 7.0),
             look_at: (0.0, 0.0, 2.5),
             vertical_fov: 55.0
           ),
