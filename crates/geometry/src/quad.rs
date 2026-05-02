@@ -1,6 +1,10 @@
 use nalgebra::{Point2, Point3, Unit, Vector2, Vector3};
+use rand::{Rng, RngExt};
 
-use crate::{aabb::Aabb, bounded::Bounded, contact::Contact, plane::Plane, ray::Ray, traceable::Traceable};
+use crate::{
+    aabb::Aabb, bounded::Bounded, contact::Contact, plane::Plane, ray::Ray, sample::Sample, sampleable::Sampleable,
+    traceable::Traceable,
+};
 
 pub struct Quad {
     plane: Plane,
@@ -94,5 +98,27 @@ impl Traceable for Quad {
             uv,
             None,
         ))
+    }
+}
+
+impl Sampleable for Quad {
+    #[inline]
+    fn area(&self) -> f32 {
+        self.size.x * self.size.y
+    }
+
+    #[inline]
+    fn sample<R: Rng>(&self, rng: &mut R) -> Sample {
+        let u = rng.random::<f32>() - 0.5;
+        let v = rng.random::<f32>() - 0.5;
+
+        let position =
+            self.plane.position + *self.plane.tangent * (u * self.size.x) + *self.plane.bi_tangent * (v * self.size.y);
+
+        Sample {
+            position,
+            normal: self.plane.normal,
+            pdf_area: 1.0 / self.area(),
+        }
     }
 }

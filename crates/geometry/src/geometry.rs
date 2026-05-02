@@ -1,6 +1,8 @@
+use rand::Rng;
+
 use crate::{
     aabb::Aabb, bounded::Bounded, capsule::Capsule, circle::Circle, contact::Contact, mesh::Mesh, quad::Quad, ray::Ray,
-    sphere::Sphere, torus::Torus, traceable::Traceable, triangle::Triangle,
+    sample::Sample, sampleable::Sampleable, sphere::Sphere, torus::Torus, traceable::Traceable, triangle::Triangle,
 };
 
 pub enum Geometry {
@@ -70,6 +72,24 @@ impl Traceable for Geometry {
             Self::Sphere(sphere) => sphere.intersection(ray, max_distance),
             Self::Torus(torus) => torus.intersection(ray, max_distance),
             Self::Triangle(triangle) => triangle.intersection(ray, max_distance),
+        }
+    }
+}
+
+impl Sampleable for Geometry {
+    #[inline]
+    fn area(&self) -> f32 {
+        match self {
+            Self::Quad(quad) => quad.area(),
+            _ => unimplemented!("Area not implemented for this geometry type"),
+        }
+    }
+
+    #[inline]
+    fn sample<R: Rng>(&self, rng: &mut R) -> Sample {
+        match self {
+            Self::Quad(quad) => quad.sample(rng),
+            _ => unimplemented!("Sampling not implemented for this geometry type"),
         }
     }
 }

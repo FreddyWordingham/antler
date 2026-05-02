@@ -1,5 +1,6 @@
 mod camera_config;
 mod capture_config;
+mod emissive_config;
 pub mod errors;
 mod geometry_config;
 mod gradient_config;

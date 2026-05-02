@@ -1,0 +1,36 @@
+        (
+          geometry: Mesh ( path: "assets/meshes/puddle.obj" ),
+          material: Reflective (
+            reflectance: 0.5
+          ),
+          shader: Solid ( colour: 0x00FFCC ),
+          transform: (
+            translation: (15.0, 12.0, 0.01),
+            rotation: (0.0, 0.0, 140.0),
+            scale: 7.0
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/puddle.obj" ),
+          material: Reflective (
+            reflectance: 0.5
+          ),
+          shader: Solid ( colour: 0x00FFCC ),
+          transform: (
+            translation: (-15.0, 8.0, 0.01),
+            rotation: (0.0, 0.0, 210.0),
+            scale: 5.0
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/puddle.obj" ),
+          material: Reflective (
+            reflectance: 0.5
+          ),
+          shader: Solid ( colour: 0x00FFCC ),
+          transform: (
+            translation: (0.0, -16.0, 0.01),
+            rotation: (0.0, 0.0, 290.0),
+            scale: 6.0
+          )
+        ),

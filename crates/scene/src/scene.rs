@@ -1,9 +1,10 @@
 use antler_colour::Rgb;
-use antler_geometry::{Bounded, Bvh, Contact, Ray, Traceable, utils::hemisphere_direction};
+use antler_geometry::{Bounded, Bvh, Contact, Ray, Sample, Sampleable, Traceable, utils::hemisphere_direction};
 use antler_id::ObjectId;
 use antler_light::{Emissive, Light, LightSample};
 use antler_settings::OcclusionSettings;
 use antler_shader::Appearance;
+use nalgebra::Unit;
 use rand::Rng;
 
 use crate::{object::Object, resources::Resources};
@@ -13,6 +14,7 @@ pub struct Scene {
     occlusion: Option<OcclusionSettings>,
     lights: Vec<Light>,
     objects: Vec<Object>,
+    emissive_objects: Vec<ObjectId>,
     bvh: Option<Bvh<ObjectId>>,
 }
 
@@ -30,6 +32,7 @@ impl Scene {
             occlusion: None,
             lights: Vec::new(),
             objects: Vec::new(),
+            emissive_objects: Vec::new(),
             bvh: None,
         }
     }
@@ -51,6 +54,12 @@ impl Scene {
 
     #[inline]
     pub fn add_object(&mut self, object: Object) {
+        let object_id = ObjectId::new(self.objects.len());
+
+        if object.emissive.is_some() {
+            self.emissive_objects.push(object_id);
+        }
+
         self.objects.push(object);
         self.bvh = None;
     }
@@ -231,6 +240,7 @@ impl Scene {
 
         let mut total = Rgb::BLACK;
 
+        // Analytic lights
         for light in &self.lights {
             let mut light_total = Rgb::BLACK;
             let mut sample_count = 0usize;
@@ -253,6 +263,50 @@ impl Scene {
 
             if sample_count > 0 {
                 total += light_total / sample_count as f32;
+            }
+        }
+
+        // Emissive objects
+        for &emissive_object_id in &self.emissive_objects {
+            if emissive_object_id == object_id {
+                continue;
+            }
+
+            let emissive_object = self.get_object(emissive_object_id);
+
+            let Some(emissive) = &emissive_object.emissive else {
+                continue;
+            };
+
+            let geometry = resources.get_geometry(emissive_object.geometry_id);
+
+            let samples = emissive.samples.max(1);
+            let mut light_total = Rgb::BLACK;
+            let mut accepted_samples = 0;
+
+            for _ in 0..samples {
+                let surface_sample = geometry.sample(rng).transform(&emissive_object.transform);
+
+                let Some(light_sample) = area_light_sample(contact, &surface_sample, emissive.colour) else {
+                    continue;
+                };
+
+                if contact.normal.dot(&light_sample.direction) <= 0.0 {
+                    continue;
+                }
+
+                let shadow_ray = Ray::from_offset(contact.position, contact.normal, light_sample.direction);
+                let shadow_distance = light_sample.distance - (shadow_ray.origin - contact.position).norm() - 1.0e-4;
+
+                if shadow_distance > 0.0 && self.hit(resources, &shadow_ray, shadow_distance).is_none() {
+                    light_total += shader.shade(world_ray, contact, &light_sample);
+                }
+
+                accepted_samples += 1;
+            }
+
+            if accepted_samples > 0 {
+                total += light_total / samples as f32;
             }
         }
 
@@ -286,4 +340,32 @@ impl Scene {
 
         ao.strength.mul_add(-occlusion, 1.0).clamp(0.0, 1.0)
     }
+}
+
+#[must_use]
+#[inline]
+fn area_light_sample(contact: &Contact, sample: &Sample, emission: Rgb) -> Option<LightSample> {
+    let to_light = sample.position - contact.position;
+    let distance_squared = to_light.norm_squared();
+
+    if distance_squared <= 1.0e-8 {
+        return None;
+    }
+
+    let distance = distance_squared.sqrt();
+    let direction = Unit::new_normalize(to_light);
+
+    let cos_light = sample.normal.dot(&-direction).max(0.0);
+
+    if cos_light <= 0.0 {
+        return None;
+    }
+
+    let pdf_solid_angle = sample.pdf_area * distance_squared / cos_light;
+
+    Some(LightSample {
+        direction,
+        distance,
+        radiance: emission / pdf_solid_angle,
+    })
 }
