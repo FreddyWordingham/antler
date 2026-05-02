@@ -155,7 +155,7 @@ impl Traceable for Torus {
 impl Sampleable for Torus {
     #[inline]
     fn area(&self) -> f32 {
-        4.0 * std::f32::consts::PI * std::f32::consts::PI * self.major_radius * self.minor_radius
+        4.0 * PI * PI * self.major_radius * self.minor_radius
     }
 
     #[inline]

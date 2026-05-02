@@ -25,12 +25,10 @@
         //   direction: (0.0, 0.0, -1.0),
         //   colour: 0x333333
         // ),
-        Point (
-          position: (-5.0, 2.0, 6.0),
-          colour: 0xFFFF00,
-          intensity: 1.0e1,
-          angular_radius: Some(10.0),
-          samples: Some(16)
+        Environment (
+          zenith: 0xFFFFFF,
+          horizon: 0x00FFFF,
+          samples: Some(64)
         ),
       ],
       objects: [
@@ -90,7 +88,7 @@
           images: {
             "my_image": (
               resolution: (1080, 1080),
-              super_samples: 1
+              super_samples: 2
             )
           }
         )
