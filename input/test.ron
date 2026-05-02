@@ -22,7 +22,7 @@
       )),
       lights: [
         Directional (
-          direction: (2.0, -2.5, -1.0),
+          direction: (0.0, -2.5, -1.0),
           radiance: 0xFFFFFF,
           angular_radius: Some(5.0),
           samples: Some(64)
@@ -71,9 +71,7 @@
 
         (
           geometry: Mesh ( path: "assets/meshes/leaves.obj" ),
-          material: Transparent (
-            transparency: 0.5
-          ),
+          material: Opaque,
           shader: Gradient ( gradient: [
             0xFF0000,
             0xFF4000,
