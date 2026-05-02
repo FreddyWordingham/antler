@@ -1,16 +1,19 @@
 use std::{fmt::Debug, path::Path};
 
 use nalgebra::{Point2, Point3, Unit, Vector3};
+use rand::{Rng, RngExt};
 use tobj::{LoadOptions, load_obj};
 
 use crate::{
-    aabb::Aabb, bounded::Bounded, bvh::Bvh, contact::Contact, errors::MeshLoadError, ray::Ray, traceable::Traceable,
-    triangle::Triangle,
+    aabb::Aabb, bounded::Bounded, bvh::Bvh, contact::Contact, errors::MeshLoadError, ray::Ray, sample::Sample,
+    sampleable::Sampleable, traceable::Traceable, triangle::Triangle,
 };
 
 pub struct Mesh {
     triangles: Vec<Triangle>,
     bvh: Bvh<usize>,
+    total_area: f32,
+    area_cdf: Vec<f32>,
 }
 
 impl Mesh {
@@ -26,7 +29,19 @@ impl Mesh {
                 .collect(),
         );
 
-        Self { triangles, bvh }
+        let mut total_area = 0.0;
+        let mut area_cdf = Vec::with_capacity(triangles.len());
+        for triangle in &triangles {
+            total_area += triangle.area();
+            area_cdf.push(total_area);
+        }
+
+        Self {
+            triangles,
+            bvh,
+            total_area,
+            area_cdf,
+        }
     }
 
     #[must_use]
@@ -178,6 +193,25 @@ impl Traceable for Mesh {
             });
 
         nearest
+    }
+}
+
+impl Sampleable for Mesh {
+    #[inline]
+    fn area(&self) -> f32 {
+        self.total_area
+    }
+
+    #[inline]
+    fn sample<R: Rng>(&self, rng: &mut R) -> Sample {
+        let target = rng.random::<f32>() * self.total_area;
+
+        let index = self
+            .area_cdf
+            .partition_point(|&area| area < target)
+            .min(self.triangles.len() - 1);
+
+        self.triangles[index].sample(rng)
     }
 }
 
