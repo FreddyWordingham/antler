@@ -1,6 +1,10 @@
 use nalgebra::{Point2, Point3, Similarity3, Unit, Vector3};
+use rand::{Rng, RngExt};
 
-use crate::{bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, traceable::Traceable};
+use crate::{
+    bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, sample::Sample, sampleable::Sampleable,
+    traceable::Traceable,
+};
 
 const PARALLEL_THRESHOLD: f32 = 1e-8;
 
@@ -230,6 +234,65 @@ impl AabbFace {
                 safe(position.x - aabb.min.x, size.x),
                 safe(position.y - aabb.min.y, size.y),
             ),
+        }
+    }
+}
+
+impl Sampleable for Aabb {
+    #[inline]
+    fn area(&self) -> f32 {
+        Aabb::area(self)
+    }
+
+    #[inline]
+    fn sample<R: Rng>(&self, rng: &mut R) -> Sample {
+        let extent = self.max - self.min;
+
+        let xy = extent.x * extent.y;
+        let xz = extent.x * extent.z;
+        let yz = extent.y * extent.z;
+
+        let total = 2.0 * (xy + xz + yz);
+        let mut pick = rng.random::<f32>() * total;
+
+        let face = if pick < yz {
+            AabbFace::MinX
+        } else {
+            pick -= yz;
+            if pick < yz {
+                AabbFace::MaxX
+            } else {
+                pick -= yz;
+                if pick < xz {
+                    AabbFace::MinY
+                } else {
+                    pick -= xz;
+                    if pick < xz {
+                        AabbFace::MaxY
+                    } else {
+                        pick -= xz;
+                        if pick < xy { AabbFace::MinZ } else { AabbFace::MaxZ }
+                    }
+                }
+            }
+        };
+
+        let u = rng.random::<f32>();
+        let v = rng.random::<f32>();
+
+        let position = match face {
+            AabbFace::MinX => Point3::new(self.min.x, self.min.y + v * extent.y, self.min.z + u * extent.z),
+            AabbFace::MaxX => Point3::new(self.max.x, self.min.y + v * extent.y, self.min.z + u * extent.z),
+            AabbFace::MinY => Point3::new(self.min.x + u * extent.x, self.min.y, self.min.z + v * extent.z),
+            AabbFace::MaxY => Point3::new(self.min.x + u * extent.x, self.max.y, self.min.z + v * extent.z),
+            AabbFace::MinZ => Point3::new(self.min.x + u * extent.x, self.min.y + v * extent.y, self.min.z),
+            AabbFace::MaxZ => Point3::new(self.min.x + u * extent.x, self.min.y + v * extent.y, self.max.z),
+        };
+
+        Sample {
+            position,
+            normal: face.normal(),
+            pdf_area: 1.0 / total,
         }
     }
 }

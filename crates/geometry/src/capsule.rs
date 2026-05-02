@@ -1,8 +1,12 @@
 use std::f32::consts::{PI, TAU};
 
 use nalgebra::{Point2, Point3, Unit, Vector3};
+use rand::{Rng, RngExt};
 
-use crate::{aabb::Aabb, bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, traceable::Traceable};
+use crate::{
+    aabb::Aabb, bounded::Bounded, config::MIN_RAY_DISTANCE, contact::Contact, ray::Ray, sample::Sample,
+    sampleable::Sampleable, traceable::Traceable,
+};
 
 pub struct Capsule {
     a: Point3<f32>,
@@ -140,5 +144,69 @@ impl Traceable for Capsule {
 
         let uv = self.uv(position);
         Some(Contact::new(distance, position, normal, uv, None))
+    }
+}
+
+impl Sampleable for Capsule {
+    #[inline]
+    fn area(&self) -> f32 {
+        let length = (self.b - self.a).norm();
+
+        let cylinder_area = TAU * self.radius * length;
+        let sphere_area = 4.0 * PI * self.radius * self.radius;
+
+        cylinder_area + sphere_area
+    }
+
+    #[inline]
+    fn sample<R: Rng>(&self, rng: &mut R) -> Sample {
+        let axis = self.b - self.a;
+        let length = axis.norm();
+        let axis_dir = Unit::new_normalize(axis);
+
+        let cylinder_area = TAU * self.radius * length;
+        let sphere_area = 4.0 * PI * self.radius * self.radius;
+        let total_area = cylinder_area + sphere_area;
+
+        let helper = if axis_dir.x.abs() < 0.9 {
+            Vector3::x()
+        } else {
+            Vector3::y()
+        };
+
+        let tangent = Unit::new_normalize(helper.cross(&axis_dir));
+        let bitangent = Unit::new_normalize(axis_dir.cross(&tangent));
+
+        let pick = rng.random::<f32>() * total_area;
+
+        let (position, normal) = if pick < cylinder_area {
+            let h = rng.random::<f32>() * length;
+            let theta = TAU * rng.random::<f32>();
+
+            let radial = Unit::new_normalize(*tangent * theta.cos() + *bitangent * theta.sin());
+
+            let centre = self.a + *axis_dir * h;
+
+            (centre + *radial * self.radius, radial)
+        } else {
+            let hemisphere_pick = rng.random::<f32>() < 0.5;
+            let cap_centre = if hemisphere_pick { self.a } else { self.b };
+            let cap_axis = if hemisphere_pick { -*axis_dir } else { *axis_dir };
+
+            let z = rng.random::<f32>();
+            let r = (1.0 - z * z).sqrt();
+            let theta = TAU * rng.random::<f32>();
+
+            let normal =
+                Unit::new_normalize(*tangent * (r * theta.cos()) + *bitangent * (r * theta.sin()) + cap_axis * z);
+
+            (cap_centre + *normal * self.radius, normal)
+        };
+
+        Sample {
+            position,
+            normal,
+            pdf_area: 1.0 / total_area,
+        }
     }
 }

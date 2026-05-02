@@ -24,7 +24,11 @@
       ],
       objects: [
         (
-          geometry: Circle ( ),
+          geometry: Capsule (
+            a: (-1.0, -1.0, -1.0),
+            b: (1.0, 1.0, 1.0),
+            radius: 0.5
+          ),
           material: Opaque,
           shader: Solid ( colour: 0xFFFFFF ),
           emissive: Some((
@@ -32,9 +36,9 @@
             samples: 64
           )),
           transform: (
-            translation: (0.0, 0.0, 7.0),
+            translation: (1.0, 4.0, 4.0),
             rotation: (0.0, 180.0, 0.0),
-            scale: 5.0
+            scale: 0.5
           )
         ),
 
