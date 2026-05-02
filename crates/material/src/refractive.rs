@@ -1,3 +1,4 @@
+use antler_colour::Rgb;
 use antler_geometry::{Contact, Ray, utils::offset_origin};
 use rand::Rng;
 
@@ -20,6 +21,11 @@ impl Refractive {
 }
 
 impl Bsdf for Refractive {
+    #[inline]
+    fn visibility(&self) -> Rgb {
+        Rgb::WHITE
+    }
+
     fn scatter<R: Rng, F: FnMut(Ray, f32)>(
         &self,
         _rng: &mut R,

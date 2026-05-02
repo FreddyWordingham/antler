@@ -7,7 +7,7 @@ use crate::{emissive::Emissive, light_sample::LightSample, utils::cone_direction
 
 pub struct Directional {
     pub direction: Unit<Vector3<f32>>,
-    pub radiance: Rgb,
+    pub colour: Rgb,
     angular_radius: Option<f32>,
     samples: Option<usize>,
 }
@@ -16,13 +16,13 @@ impl Directional {
     #[must_use]
     pub const fn new(
         direction: Unit<Vector3<f32>>,
-        radiance: Rgb,
+        colour: Rgb,
         angular_radius: Option<f32>,
         samples: Option<usize>,
     ) -> Self {
         Self {
             direction,
-            radiance,
+            colour,
             angular_radius,
             samples,
         }
@@ -38,7 +38,7 @@ impl Emissive for Directional {
             f(LightSample {
                 direction: -self.direction,
                 distance: f32::INFINITY,
-                radiance: self.radiance,
+                radiance: self.colour,
             });
             return;
         }
@@ -47,7 +47,7 @@ impl Emissive for Directional {
             f(LightSample {
                 direction: cone_direction(-self.direction, angular_radius, rng),
                 distance: f32::INFINITY,
-                radiance: self.radiance,
+                radiance: self.colour,
             });
         }
     }

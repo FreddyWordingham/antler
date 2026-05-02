@@ -115,6 +115,7 @@ dependencies = [
 name = "antler-material"
 version = "2.0.0"
 dependencies = [
+ "antler-colour",
  "antler-geometry",
  "nalgebra",
  "rand",

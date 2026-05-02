@@ -21,31 +21,15 @@
         falloff: 2.0,
       )),
       lights: [
+        Directional (
+          direction: (0.0, 0.0, -1.0),
+          colour: 0xFFFFFF
+        ),
       ],
       objects: [
         (
-          geometry: Torus (
-            centre: (0.0, 0.0, 0.0),
-            major_radius: 7.0,
-            minor_radius: 0.5
-          ),
-          material: Opaque,
-          shader: Solid ( colour: 0xFFFFFF ),
-          emissive: Some((
-            colour: 0xFFFFFF,
-            intensity: 4.0,
-            samples: 256
-          )),
-          transform: (
-            translation: (0.0, 0.0, 3.5),
-            rotation: (90.0, 0.0, 0.0),
-            scale: 0.5
-          )
-        ),
-
-        (
           geometry: Mesh ( path: "assets/meshes/leaves.obj" ),
-          material: Opaque,
+          material: Transparent ( transparency: 0.5 ),
           shader: Gradient ( gradient: [
             0xFF0000,
             0xFF4000,
@@ -84,8 +68,8 @@
           material: Opaque,
           shader: Checkerboard (
             size: 1.0,
-            colour_a: 0x00DD00,
-            colour_b: 0x00AA00
+            colour_a: 0xDDDDDD,
+            colour_b: 0xAAAAAA
           )
         )
       ],

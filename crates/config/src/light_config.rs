@@ -9,7 +9,7 @@ use crate::vec3::Vec3;
 pub enum LightConfig {
     Directional {
         direction: Vec3,
-        radiance: Rgb,
+        colour: Rgb,
         #[serde(default)]
         angular_radius: Option<f32>,
         #[serde(default)]
@@ -22,7 +22,7 @@ impl LightConfig {
         match self {
             Self::Directional {
                 direction,
-                radiance,
+                colour: radiance,
                 angular_radius,
                 samples,
             } => Directional::new(

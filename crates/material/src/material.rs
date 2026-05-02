@@ -1,3 +1,4 @@
+use antler_colour::Rgb;
 use antler_geometry::{Contact, Ray};
 use rand::Rng;
 
@@ -18,6 +19,19 @@ pub enum Material {
 }
 
 impl Bsdf for Material {
+    fn visibility(&self) -> Rgb {
+        match self {
+            Self::Ggx(inner) => inner.visibility(),
+            Self::Lambertian(inner) => inner.visibility(),
+            Self::Mirror(inner) => inner.visibility(),
+            Self::Opaque(inner) => inner.visibility(),
+            Self::Reflective(inner) => inner.visibility(),
+            Self::Refractive(inner) => inner.visibility(),
+            Self::Transparent(inner) => inner.visibility(),
+            Self::Wireframe(inner) => inner.visibility(),
+        }
+    }
+
     fn scatter<R: Rng, F: FnMut(Ray, f32)>(&self, rng: &mut R, ray: &Ray, contact: &Contact, emit_child: F) -> f32 {
         match self {
             Self::Ggx(inner) => inner.scatter(rng, ray, contact, emit_child),

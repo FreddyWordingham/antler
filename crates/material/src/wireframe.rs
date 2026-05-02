@@ -1,3 +1,4 @@
+use antler_colour::Rgb;
 use antler_geometry::{Contact, Ray, utils::offset_origin};
 use rand::Rng;
 
@@ -18,6 +19,11 @@ impl Wireframe {
 }
 
 impl Bsdf for Wireframe {
+    #[inline]
+    fn visibility(&self) -> Rgb {
+        Rgb::WHITE * self.transparency
+    }
+
     fn scatter<R: Rng, F: FnMut(Ray, f32)>(
         &self,
         _rng: &mut R,
@@ -33,16 +39,16 @@ impl Bsdf for Wireframe {
             return 1.0;
         }
 
-        if self.transparency < 1.0 {
+        if self.transparency > 0.0 {
             emit_child(
                 Ray {
                     origin: offset_origin(contact.position, -contact.normal, ray.direction),
                     direction: ray.direction,
                 },
-                1.0 - self.transparency,
+                self.transparency,
             );
         }
 
-        self.transparency
+        1.0 - self.transparency
     }
 }

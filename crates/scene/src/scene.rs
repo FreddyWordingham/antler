@@ -2,12 +2,16 @@ use antler_colour::Rgb;
 use antler_geometry::{Bounded, Bvh, Contact, Ray, Sample, Sampleable, Traceable, utils::hemisphere_direction};
 use antler_id::ObjectId;
 use antler_light::{Emissive, Light, LightSample};
+use antler_material::Bsdf;
 use antler_settings::OcclusionSettings;
 use antler_shader::Appearance;
 use nalgebra::Unit;
 use rand::Rng;
 
 use crate::{object::Object, resources::Resources};
+
+const MAX_VISIBILITY_HITS: usize = 16;
+const VISIBILITY_EPSILON: f32 = 1.0e-3;
 
 pub struct Scene {
     ambient: Rgb,
@@ -140,6 +144,39 @@ impl Scene {
 
     #[must_use]
     #[inline]
+    pub fn visibility(&self, resources: &Resources, world_ray: &Ray, max_distance: f32) -> Rgb {
+        let mut visibility = Rgb::WHITE;
+        let mut ray = *world_ray;
+        let mut remaining_distance = max_distance;
+
+        for _ in 0..MAX_VISIBILITY_HITS {
+            let Some((object_id, contact)) = self.intersection(resources, &ray, remaining_distance) else {
+                break;
+            };
+
+            let object = self.get_object(object_id);
+            let material = resources.get_material(object.material_id);
+
+            visibility *= material.visibility();
+
+            if visibility.luminance() <= VISIBILITY_EPSILON {
+                return Rgb::BLACK;
+            }
+
+            remaining_distance -= contact.distance;
+
+            if remaining_distance <= 0.0 {
+                break;
+            }
+
+            ray = Ray::from_offset(contact.position, contact.normal, ray.direction);
+        }
+
+        visibility
+    }
+
+    #[must_use]
+    #[inline]
     pub fn intersection(
         &self,
         resources: &Resources,
@@ -256,8 +293,12 @@ impl Scene {
                 let shadow_ray = Ray::from_offset(contact.position, contact.normal, sample.direction);
                 let shadow_distance = sample.distance - (shadow_ray.origin - contact.position).norm();
 
-                if shadow_distance > 0.0 && self.hit(resources, &shadow_ray, shadow_distance).is_none() {
-                    light_total += shader.shade(world_ray, contact, &sample);
+                if shadow_distance > 0.0 {
+                    let visibility = self.visibility(resources, &shadow_ray, shadow_distance);
+
+                    if visibility.luminance() > VISIBILITY_EPSILON {
+                        light_total += shader.shade(world_ray, contact, &sample) * visibility;
+                    }
                 }
             });
 
@@ -298,8 +339,12 @@ impl Scene {
                 let shadow_ray = Ray::from_offset(contact.position, contact.normal, light_sample.direction);
                 let shadow_distance = light_sample.distance - (shadow_ray.origin - contact.position).norm() - 1.0e-4;
 
-                if shadow_distance > 0.0 && self.hit(resources, &shadow_ray, shadow_distance).is_none() {
-                    light_total += shader.shade(world_ray, contact, &light_sample);
+                if shadow_distance > 0.0 {
+                    let visibility = self.visibility(resources, &shadow_ray, shadow_distance);
+
+                    if visibility.luminance() > VISIBILITY_EPSILON {
+                        light_total += shader.shade(world_ray, contact, &light_sample) * visibility;
+                    }
                 }
             }
 

@@ -37,6 +37,12 @@ impl Rgb {
     pub const fn to_rgba(&self) -> crate::Rgba {
         Rgba::new(self.red, self.green, self.blue, 1.0)
     }
+
+    #[must_use]
+    #[inline]
+    pub fn luminance(&self) -> f32 {
+        0.2126 * self.red + 0.7152 * self.green + 0.0722 * self.blue
+    }
 }
 
 impl Pixel for Rgb {

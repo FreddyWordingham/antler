@@ -1,3 +1,4 @@
+use antler_colour::Rgb;
 use antler_geometry::{Contact, Ray, utils::offset_origin};
 use rand::Rng;
 
@@ -17,6 +18,12 @@ impl Transparent {
 }
 
 impl Bsdf for Transparent {
+    #[inline]
+    fn visibility(&self) -> Rgb {
+        Rgb::WHITE * self.transparency
+    }
+
+    #[inline]
     fn scatter<R: Rng, F: FnMut(Ray, f32)>(
         &self,
         _rng: &mut R,
