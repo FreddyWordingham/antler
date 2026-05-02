@@ -4,14 +4,14 @@ use rand::Rng;
 use crate::bsdf::Bsdf;
 
 pub struct Wireframe {
-    surface_alpha: f32,
+    transparency: f32,
     line_width: f32,
 }
 
 impl Wireframe {
-    pub const fn new(surface_alpha: f32, line_width: f32) -> Self {
+    pub const fn new(transparency: f32, line_width: f32) -> Self {
         Self {
-            surface_alpha,
+            transparency: transparency.clamp(0.0, 1.0),
             line_width,
         }
     }
@@ -33,18 +33,16 @@ impl Bsdf for Wireframe {
             return 1.0;
         }
 
-        let surface_alpha = self.surface_alpha.clamp(0.0, 1.0);
-
-        if surface_alpha < 1.0 {
+        if self.transparency < 1.0 {
             emit_child(
                 Ray {
                     origin: offset_origin(contact.position, -contact.normal, ray.direction),
                     direction: ray.direction,
                 },
-                1.0 - surface_alpha,
+                1.0 - self.transparency,
             );
         }
 
-        surface_alpha
+        self.transparency
     }
 }

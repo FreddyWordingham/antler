@@ -5,12 +5,6 @@ use crate::{bsdf::Bsdf, utils::reflect};
 
 pub struct Mirror;
 
-impl Default for Mirror {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
 impl Mirror {
     #[must_use]
     pub const fn new() -> Self {

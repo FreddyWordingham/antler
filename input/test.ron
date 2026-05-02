@@ -70,15 +70,50 @@
         ),
 
         (
-          geometry: Mesh ( path: "assets/meshes/golem.obj" ),
-          material: Opaque,
-          shader: Gradient ( gradient: [0xFF0000, 0xFFFF00], power: 1.0 ),
+          geometry: Mesh ( path: "assets/meshes/leaves.obj" ),
+          material: Transparent (
+            transparency: 0.5
+          ),
+          shader: Gradient ( gradient: [
+            0xFF0000,
+            0xFF4000,
+            0xFF8000,
+            0xFFBF00,
+            0xFFFF00,
+            0x80FF00,
+            0x00FF00,
+            0x00FF80,
+            0x00FFFF,
+            0x0080FF,
+            0x0000FF,
+            0x8000FF,
+          ], power: 1.0 ),
           transform: (
-            scale: 4.0,
+            scale: 1.0,
             translation: (0.0, 0.0, 0.0),
-            rotation: (0.0, 0.0, 150.0)
+            rotation: (0.0, 0.0, 0.0)
           )
         ),
+        (
+          geometry: Mesh ( path: "assets/meshes/tree.obj" ),
+          material: Opaque,
+          shader: Gradient ( gradient: [0xB5651D, 0x673400], power: 1.0 ),
+          transform: (
+            scale: 1.0,
+            translation: (0.0, 0.0, 0.0),
+            rotation: (0.0, 0.0, 0.0)
+          )
+        ),
+        // (
+        //   geometry: Mesh ( path: "assets/meshes/golem.obj" ),
+        //   material: Opaque,
+        //   shader: Gradient ( gradient: [0xFF0000, 0xFFFF00], power: 1.0 ),
+        //   transform: (
+        //     scale: 4.0,
+        //     translation: (0.0, 0.0, 0.0),
+        //     rotation: (0.0, 0.0, 150.0)
+        //   )
+        // ),
         (
           geometry: Circle (
             centre: (0.0, 0.0, -1.0e-3),
@@ -101,7 +136,7 @@
           ),
           images: {
             "my_image": (
-              resolution: (5120, 1440),
+              resolution: (1080, 1080),
               super_samples: 1
             )
           }
