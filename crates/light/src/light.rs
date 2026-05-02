@@ -1,9 +1,10 @@
 use rand::Rng;
 
-use crate::{directional::Directional, emissive::Emissive};
+use crate::{directional::Directional, emissive::Emissive, point::Point};
 
 pub enum Light {
     Directional(Directional),
+    Point(Point),
 }
 
 impl Emissive for Light {
@@ -15,6 +16,7 @@ impl Emissive for Light {
     ) {
         match self {
             Self::Directional(directional) => directional.for_each_sample(rng, contact, f),
+            Self::Point(point) => point.for_each_sample(rng, contact, f),
         }
     }
 }
@@ -23,5 +25,12 @@ impl From<Directional> for Light {
     #[inline]
     fn from(val: Directional) -> Self {
         Self::Directional(val)
+    }
+}
+
+impl From<Point> for Light {
+    #[inline]
+    fn from(val: Point) -> Self {
+        Self::Point(val)
     }
 }

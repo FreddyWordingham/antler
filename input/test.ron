@@ -21,9 +21,16 @@
         falloff: 2.0,
       )),
       lights: [
-        Directional (
-          direction: (0.0, 0.0, -1.0),
-          colour: 0xFFFFFF
+        // Directional (
+        //   direction: (0.0, 0.0, -1.0),
+        //   colour: 0x333333
+        // ),
+        Point (
+          position: (-5.0, 2.0, 6.0),
+          colour: 0xFFFF00,
+          intensity: 1.0e1,
+          angular_radius: Some(10.0),
+          samples: Some(16)
         ),
       ],
       objects: [
@@ -76,7 +83,7 @@
       captures: {
         "my_capture": (
           camera: Perspective (
-            position: (1.0e1, 1.0e1, 17.0),
+            position: (1.0e1, 1.0e1, 7.0),
             look_at: (0.0, 0.0, 2.5),
             vertical_fov: 55.0
           ),
