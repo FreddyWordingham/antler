@@ -6,12 +6,13 @@ use antler_image::{RgbaImage, Tile};
 use antler_material::Bsdf;
 use antler_scene::{Resources, Scene};
 use antler_settings::{ImageSettings, LightingSettings, ProbeSettings};
-use antler_skybox::Sky;
 use nalgebra::Point2;
 use rand::{Rng, SeedableRng, rngs::SmallRng};
 use rayon::prelude::*;
 
 use crate::{probe::Probe, utils::progress_bar};
+
+const SKYBOX_IS_VISIBLE_TO_CAMERA: bool = true;
 
 pub fn render_probe<R: Rng + SeedableRng>(
     rng: &mut R,
@@ -26,7 +27,10 @@ pub fn render_probe<R: Rng + SeedableRng>(
     }
 
     let Some((object_id, mut contact)) = scene.intersection(resources, &probe.ray, f32::INFINITY) else {
-        return Some(scene.get_skybox().sample(&probe.ray.direction) * probe.weight);
+        if probe.generation == 0 && !SKYBOX_IS_VISIBLE_TO_CAMERA {
+            return None;
+        }
+        return Some(scene.environment_radiance(probe.ray.direction) * probe.weight);
     };
 
     let object = scene.get_object(object_id);

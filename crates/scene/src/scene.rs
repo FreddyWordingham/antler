@@ -5,8 +5,8 @@ use antler_light::{Emissive, Light, LightSample};
 use antler_material::Bsdf;
 use antler_settings::OcclusionSettings;
 use antler_shader::Appearance;
-use antler_skybox::{Constant, Skybox};
-use nalgebra::Unit;
+use antler_skybox::{Constant, Sky, Skybox};
+use nalgebra::{Unit, Vector3};
 use rand::Rng;
 
 use crate::{object::Object, resources::Resources};
@@ -77,11 +77,6 @@ impl Scene {
     }
 
     #[must_use]
-    pub fn get_skybox(&self) -> &Skybox {
-        &self.skybox
-    }
-
-    #[must_use]
     #[inline]
     pub fn get_light(&self, light_id: ObjectId) -> &Light {
         &self.lights[light_id.index()]
@@ -115,6 +110,12 @@ impl Scene {
             .collect();
 
         self.bvh = Some(Bvh::new(items));
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn environment_radiance(&self, direction: Unit<Vector3<f32>>) -> Rgb {
+        self.skybox.sample(&direction)
     }
 
     #[must_use]
