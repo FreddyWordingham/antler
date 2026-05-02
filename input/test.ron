@@ -24,7 +24,7 @@
       ],
       objects: [
         (
-          geometry: Quad ( ),
+          geometry: Circle ( ),
           material: Opaque,
           shader: Solid ( colour: 0xFFFFFF ),
           emissive: Some((

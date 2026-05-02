@@ -81,6 +81,7 @@ impl Sampleable for Geometry {
     fn area(&self) -> f32 {
         match self {
             Self::Quad(quad) => quad.area(),
+            Self::Circle(circle) => circle.area(),
             _ => unimplemented!("Area not implemented for this geometry type"),
         }
     }
@@ -89,6 +90,7 @@ impl Sampleable for Geometry {
     fn sample<R: Rng>(&self, rng: &mut R) -> Sample {
         match self {
             Self::Quad(quad) => quad.sample(rng),
+            Self::Circle(circle) => circle.sample(rng),
             _ => unimplemented!("Sampling not implemented for this geometry type"),
         }
     }

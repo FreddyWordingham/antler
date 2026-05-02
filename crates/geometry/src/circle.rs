@@ -1,6 +1,12 @@
-use nalgebra::{Point2, Point3, Unit, Vector3};
+use std::f32::consts::{PI, TAU};
 
-use crate::{aabb::Aabb, bounded::Bounded, contact::Contact, plane::Plane, ray::Ray, traceable::Traceable};
+use nalgebra::{Point2, Point3, Unit, Vector3};
+use rand::{Rng, RngExt};
+
+use crate::{
+    aabb::Aabb, bounded::Bounded, contact::Contact, plane::Plane, ray::Ray, sample::Sample, sampleable::Sampleable,
+    traceable::Traceable,
+};
 
 pub struct Circle {
     plane: Plane,
@@ -72,5 +78,29 @@ impl Traceable for Circle {
             uv,
             None,
         ))
+    }
+}
+
+impl Sampleable for Circle {
+    #[inline]
+    fn area(&self) -> f32 {
+        PI * self.radius * self.radius
+    }
+
+    #[inline]
+    fn sample<R: Rng>(&self, rng: &mut R) -> Sample {
+        let r = self.radius * rng.random::<f32>().sqrt();
+        let theta = TAU * rng.random::<f32>();
+
+        let local_x = r * theta.cos();
+        let local_y = r * theta.sin();
+
+        let position = self.plane.position + *self.plane.tangent * local_x + *self.plane.bi_tangent * local_y;
+
+        Sample {
+            position,
+            normal: self.plane.normal,
+            pdf_area: 1.0 / self.area(),
+        }
     }
 }

@@ -282,7 +282,6 @@ impl Scene {
 
             let samples = emissive.samples.max(1);
             let mut light_total = Rgb::BLACK;
-            let mut accepted_samples = 0;
 
             for _ in 0..samples {
                 let surface_sample = geometry.sample(rng).transform(&emissive_object.transform);
@@ -301,11 +300,9 @@ impl Scene {
                 if shadow_distance > 0.0 && self.hit(resources, &shadow_ray, shadow_distance).is_none() {
                     light_total += shader.shade(world_ray, contact, &light_sample);
                 }
-
-                accepted_samples += 1;
             }
 
-            if accepted_samples > 0 {
+            if samples > 0 {
                 total += light_total / samples as f32;
             }
         }
