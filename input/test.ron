@@ -13,7 +13,7 @@
   ),
   scenes: {
     "my_scene": (
-      ambient: 0x333333,
+      ambient: 0x666666,
       skybox: Gradient (
         gradient: [
           0x99BFFF,
@@ -28,73 +28,71 @@
       occlusion: Some((
         samples: 64,
         distance: 1.0,
-        strength: 1.0e1,
+        strength: 1.0,
         falloff: 2.0,
       )),
       lights: [
         Directional (
-          direction: (0.0, 0.0, -1.0),
-          colour: 0x333333
+          direction: (-0.4, -0.3, -1.0),
+          colour: 0xcccccc
         ),
       ],
       objects: [
-        (
-          geometry: Mesh ( path: "assets/meshes/leaves.obj" ),
-          material: Transparent ( transparency: 0.5 ),
-          shader: Iridescent ( gradient: [
-            0xFF0000,
-            0xFF4000,
-            0xFF8000,
-            0xFFBF00,
-            0xFFFF00,
-            0x80FF00,
-            0x00FF00,
-            0x00FF80,
-            0x00FFFF,
-            0x0080FF,
-            0x0000FF,
-            0x8000FF,
-          ], power: 1.0 ),
-          transform: (
-            scale: 1.0,
-            translation: (0.0, 0.0, 0.0),
-            rotation: (0.0, 0.0, 0.0)
-          )
-        ),
-        (
-          geometry: Sphere ( ),
-          material: Mirror,
-          shader: Gradient ( gradient: [0xB5651D, 0x673400], power: 1.0 ),
-          transform: (
-            scale: 1.0,
-            translation: (0.0, 0.0, 0.0),
-            rotation: (0.0, 0.0, 0.0)
-          )
-        ),
-        (
-          geometry: Circle (
-            centre: (0.0, 0.0, -1.0e-3),
-            radius: 6.0e1
-          ),
-          material: Opaque,
-          shader: Checkerboard (
-            size: 1.0,
-            colour_a: 0xDDDDDD,
-            colour_b: 0xAAAAAA
-          )
-        )
+        // @include("input/platform.ron"),
+        @include("input/moltres.ron"),
       ],
       captures: {
-        "my_capture": (
+        "perspective": (
           camera: Perspective (
-            position: (1.0e1, 1.0e1, 7.0),
-            look_at: (0.0, 0.0, 2.5),
+            position: (2.0, 2.0e1, 7.0),
+            look_at: (0.0, 0.0, 3.5),
             vertical_fov: 55.0
           ),
           images: {
             "my_image": (
-              resolution: (1080, 1080),
-              super_samples: 2
+              resolution: (128, 128),
+              super_samples: 1,
+              art_config: (
+                skybox_is_visible_to_camera: false,
+                resolve_mode: PaletteAware (
+                  palette: [
+                    0x99BFFF,
+                    0xFFCC4D,
+                    0xFF8019,
+                    0xCC3319,
+                    0x33084D,
+                    0x050514,
+                  ],
+                  dither: true
+                )
+              ),
+            )
+          }
+        ),
+        "orthographic": (
+          camera: Orthographic (
+            position: (1.0e1, 1.0e1, 1.0e1),
+            look_at: (0.0, 0.0, 3.5),
+            size: (15.0, 15.0)
+          ),
+          images: {
+            "my_image": (
+              resolution: (128, 128),
+              super_samples: 1,
+              art_config: (
+                skybox_is_visible_to_camera: false,
+                resolve_mode: PaletteAware (
+                  palette: [
+                    0x99BFFF,
+                    0xFFCC4D,
+                    0xFF8019,
+                    0xCC3319,
+                    0x33084D,
+                    0x050514,
+                  ],
+                  dither: true
+                )
+              ),
             )
           }
         )

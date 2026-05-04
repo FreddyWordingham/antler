@@ -27,6 +27,6 @@ impl SkyboxConfig {
     }
 }
 
-fn default_up() -> Vec3 {
+const fn default_up() -> Vec3 {
     Vec3::new(0.0, 0.0, 1.0)
 }

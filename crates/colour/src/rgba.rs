@@ -11,6 +11,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer, de::Error};
 use crate::{
     errors::ParseHexError,
     pixel::Pixel,
+    rgb::Rgb,
     utils::{parse_hex, reinhard},
 };
 
@@ -36,6 +37,12 @@ impl Rgba {
             blue,
             alpha,
         }
+    }
+
+    #[must_use]
+    #[inline]
+    pub const fn to_rgb(&self) -> crate::Rgb {
+        Rgb::new(self.red, self.green, self.blue)
     }
 }
 

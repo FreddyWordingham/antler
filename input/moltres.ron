@@ -1,0 +1,100 @@
+        (
+          geometry: Mesh ( path: "assets/meshes/moltres/body.obj"),
+          material: Opaque,
+          shader: Gradient (
+            gradient: [
+              0xf5dc48,
+              0xe3ac3d
+            ],
+            power: 1.0
+          ),
+          transform: (
+            scale: 1.0
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/moltres/feet.obj"),
+          material: Opaque,
+          shader: Gradient (
+            gradient: [
+              0xa99695,
+              0x7c6861
+            ],
+            power: 1.0
+          ),
+          transform: (
+            scale: 1.0
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/moltres/beak.obj"),
+          material: Opaque,
+          shader: Gradient (
+            gradient: [
+              0xa99695,
+              0x7c6861
+            ],
+            power: 1.0
+          ),
+          transform: (
+            scale: 1.0
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/moltres/eyes.obj"),
+          material: Opaque,
+          shader: Solid (
+            colour: 0x000000
+          ),
+          transform: (
+            scale: 1.0
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/moltres/wings.obj"),
+          material: Transparent (
+            transparency: 0.5
+          ),
+          shader: Gradient (
+            gradient: [
+              0xFF0000,
+              0xFFFF00
+            ],
+            power: 1.0
+          ),
+          transform: (
+            scale: 1.0
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/moltres/tail.obj"),
+          material: Transparent (
+            transparency: 0.5
+          ),
+          shader: Gradient (
+            gradient: [
+              0xFF0000,
+              0xFFFF00
+            ],
+            power: 1.0
+          ),
+          transform: (
+            scale: 1.0
+          )
+        ),
+        (
+          geometry: Mesh ( path: "assets/meshes/moltres/crest.obj"),
+          material: Transparent (
+            transparency: 0.5
+          ),
+          shader: Gradient (
+            gradient: [
+              0xFF0000,
+              0xFFFF00
+            ],
+            power: 1.0
+          ),
+          transform: (
+            scale: 1.0
+          )
+        )

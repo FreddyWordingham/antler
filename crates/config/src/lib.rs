@@ -1,3 +1,4 @@
+mod art_config;
 mod camera_config;
 mod capture_config;
 mod emissive_config;

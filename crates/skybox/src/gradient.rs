@@ -10,7 +10,8 @@ pub struct Gradient {
 }
 
 impl Gradient {
-    pub fn new(gradient: RgbGradient, power: f32, up: Unit<Vector3<f32>>) -> Self {
+    #[must_use] 
+    pub const fn new(gradient: RgbGradient, power: f32, up: Unit<Vector3<f32>>) -> Self {
         Self { gradient, power, up }
     }
 }

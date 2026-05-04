@@ -15,7 +15,7 @@ pub struct Point {
 
 impl Point {
     #[must_use]
-    pub fn new(
+    pub const fn new(
         position: Point3<f32>,
         colour: Rgb,
         intensity: f32,

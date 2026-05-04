@@ -1,0 +1,15 @@
+        (
+          geometry: Circle (
+            centre: (0.0, 0.0, -1.0e-3),
+            radius: 6.0e1
+          ),
+          material: Opaque,
+        //   shader: Checkerboard (
+        //     size: 1.0,
+        //     colour_a: 0xDDDDDD,
+        //     colour_b: 0xAAAAAA
+        //   )
+          shader: Solid (
+            colour: 0xDDDDDD
+          )
+        )

@@ -8,6 +8,7 @@ pub struct Constant {
 }
 
 impl Constant {
+    #[must_use] 
     pub const fn new(colour: Rgb) -> Self {
         Self { colour }
     }
