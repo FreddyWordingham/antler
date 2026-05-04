@@ -17,7 +17,7 @@ pub struct ImageConfig {
 }
 
 impl ImageConfig {
-    pub fn build(self) -> ImageSettings {
+    pub const fn build(self) -> ImageSettings {
         ImageSettings {
             background: self.background,
             skybox_is_visible: self.skybox_is_visible,

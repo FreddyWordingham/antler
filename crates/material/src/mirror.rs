@@ -3,6 +3,7 @@ use rand::Rng;
 
 use crate::{bsdf::Bsdf, utils::reflect};
 
+#[derive(Default)]
 pub struct Mirror;
 
 impl Mirror {

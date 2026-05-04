@@ -25,19 +25,15 @@ impl Wireframe {
 impl Appearance for Wireframe {
     #[inline]
     fn colour(&self, _direction: &Unit<Vector3<f32>>, contact: &Contact) -> Rgb {
-        match contact.barycentric {
-            Some(bary) => {
-                let edge = bary.x.min(bary.y).min(bary.z);
+        contact.barycentric.map_or(self.surface_colour, |bary| {
+            let edge = bary.x.min(bary.y).min(bary.z);
 
-                if edge <= self.width {
-                    self.line_colour
-                } else {
-                    self.surface_colour
-                }
+            if edge <= self.width {
+                self.line_colour
+            } else {
+                self.surface_colour
             }
-
-            None => self.surface_colour,
-        }
+        })
     }
 
     #[inline]

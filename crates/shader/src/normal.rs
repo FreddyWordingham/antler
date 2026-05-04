@@ -5,6 +5,7 @@ use nalgebra::{Unit, Vector3};
 
 use crate::appearance::Appearance;
 
+#[derive(Default)]
 pub struct Normal;
 
 impl Normal {
@@ -26,7 +27,7 @@ impl Appearance for Normal {
     }
 
     #[inline]
-    fn shade(&self, _ray: &Ray, contact: &Contact, _light: &LightSample) -> Rgb {
-        self.colour(&_ray.direction, contact)
+    fn shade(&self, ray: &Ray, contact: &Contact, _light: &LightSample) -> Rgb {
+        self.colour(&ray.direction, contact)
     }
 }

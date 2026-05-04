@@ -12,6 +12,7 @@ pub enum SkyboxConfig {
     },
     Gradient {
         gradient: GradientConfig,
+        #[serde(default = "default_power")]
         power: f32,
         #[serde(default = "default_up")]
         up: Vec3,
@@ -25,6 +26,10 @@ impl SkyboxConfig {
             Self::Gradient { gradient, power, up } => Gradient::new(gradient.into(), power, up.into()).into(),
         }
     }
+}
+
+const fn default_power() -> f32 {
+    1.0
 }
 
 const fn default_up() -> Vec3 {

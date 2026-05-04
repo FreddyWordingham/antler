@@ -3,6 +3,7 @@ use rand::Rng;
 
 use crate::bsdf::Bsdf;
 
+#[derive(Default)]
 pub struct Opaque;
 
 impl Opaque {

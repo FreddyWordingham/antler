@@ -29,8 +29,8 @@ impl Appearance for Textured {
     }
 
     #[inline]
-    fn shade(&self, _ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
-        let colour = self.colour(&_ray.direction, contact);
+    fn shade(&self, ray: &Ray, contact: &Contact, light: &LightSample) -> Rgb {
+        let colour = self.colour(&ray.direction, contact);
         let n_dot_l = contact.normal.dot(&light.direction).max(0.0);
         colour * light.radiance * n_dot_l
     }

@@ -4,15 +4,15 @@ use nalgebra::{Unit, Vector3};
 use crate::sky::Sky;
 
 pub struct Gradient {
-    gradient: RgbGradient,
+    colours: RgbGradient,
     power: f32,
     up: Unit<Vector3<f32>>,
 }
 
 impl Gradient {
-    #[must_use] 
-    pub const fn new(gradient: RgbGradient, power: f32, up: Unit<Vector3<f32>>) -> Self {
-        Self { gradient, power, up }
+    #[must_use]
+    pub const fn new(colours: RgbGradient, power: f32, up: Unit<Vector3<f32>>) -> Self {
+        Self { colours, power, up }
     }
 }
 
@@ -24,6 +24,6 @@ impl Sky for Gradient {
             .mul_add(0.5, 0.5)
             .clamp(0.0, 1.0)
             .powf(self.power);
-        self.gradient.sample(t)
+        self.colours.sample(t)
     }
 }

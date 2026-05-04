@@ -6,7 +6,6 @@
       ambient: 0x666666,
       skybox: Gradient (
         gradient: [
-          0x99BFFF,
           0xFFCC4D,
           0xFF8019,
           0xCC3319,
@@ -26,7 +25,7 @@
         // @include("input/moltres.ron"),
         (
           geometry: Sphere (),
-          material: Opaque,
+          material: Mirror,
           shader: Gradient (
             gradient: [
               0xFFCC4D,
@@ -49,8 +48,8 @@
           renders: {
             "my_image": (
               image: (
-                resolution: (128, 128),
-                super_samples: 4,
+                resolution: (1280, 1280),
+                super_samples: 1,
                 skybox_is_visible: false
               ),
               occlusion: (

@@ -57,7 +57,7 @@ impl Rgb {
         let delta_green = self.green - other.green;
         let delta_blue = self.blue - other.blue;
 
-        delta_red * delta_red + delta_green * delta_green + delta_blue * delta_blue
+        delta_blue.mul_add(delta_blue, delta_red.mul_add(delta_red, delta_green * delta_green))
     }
 
     #[must_use]
