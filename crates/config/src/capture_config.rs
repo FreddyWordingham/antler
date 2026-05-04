@@ -3,23 +3,23 @@ use std::collections::BTreeMap;
 use antler_parameters::CaptureParameters;
 use serde::{Deserialize, Serialize};
 
-use crate::{camera_config::CameraConfig, image_config::ImageConfig};
+use crate::{camera_config::CameraConfig, render_config::RenderConfig};
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct CaptureConfig {
     pub camera: CameraConfig,
-    pub images: BTreeMap<String, ImageConfig>,
+    pub renders: BTreeMap<String, RenderConfig>,
 }
 
 impl CaptureConfig {
     pub fn build(self) -> CaptureParameters {
         CaptureParameters {
             camera: self.camera.build(),
-            images: self
-                .images
+            renders: self
+                .renders
                 .into_iter()
-                .map(|(name, image)| (name, image.build()))
+                .map(|(name, render)| (name, render.build()))
                 .collect(),
         }
     }

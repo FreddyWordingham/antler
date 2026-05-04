@@ -1,16 +1,6 @@
 (
   assets_dir: "assets",
   output_dir: "output",
-  lighting_settings: (
-    emitted: 1.0,
-    ambient: 1.0,
-    direct: 1.0,
-    indirect: 1.0
-  ),
-  probe_settings: (
-    max_generation: 5,
-    min_weight: 1.0e-2
-  ),
   scenes: {
     "my_scene": (
       ambient: 0x666666,
@@ -25,12 +15,6 @@
         ],
         power: 1.0
       ),
-      occlusion: Some((
-        samples: 64,
-        distance: 1.0,
-        strength: 1.0,
-        falloff: 2.0,
-      )),
       lights: [
         Directional (
           direction: (-0.4, -0.3, -1.0),
@@ -39,60 +23,57 @@
       ],
       objects: [
         // @include("input/platform.ron"),
-        @include("input/moltres.ron"),
+        // @include("input/moltres.ron"),
+        (
+          geometry: Sphere (),
+          material: Opaque,
+          shader: Gradient (
+            gradient: [
+              0xFFCC4D,
+              0xFF8019,
+              0xCC3319,
+              0x33084D,
+              0x050514,
+            ],
+            power: 1.0
+          )
+        )
       ],
       captures: {
         "perspective": (
           camera: Perspective (
             position: (2.0, 2.0e1, 7.0),
-            look_at: (0.0, 0.0, 3.5),
-            vertical_fov: 55.0
+            look_at: (0.0, 0.0, 0.0),
+            vertical_fov: 8.0
           ),
-          images: {
+          renders: {
             "my_image": (
-              resolution: (128, 128),
-              super_samples: 1,
-              art_config: (
-                skybox_is_visible_to_camera: false,
-                resolve_mode: PaletteAware (
-                  palette: [
-                    0x99BFFF,
-                    0xFFCC4D,
-                    0xFF8019,
-                    0xCC3319,
-                    0x33084D,
-                    0x050514,
-                  ],
-                  dither: true
-                )
+              image: (
+                resolution: (128, 128),
+                super_samples: 4,
+                skybox_is_visible: false
               ),
-            )
-          }
-        ),
-        "orthographic": (
-          camera: Orthographic (
-            position: (1.0e1, 1.0e1, 1.0e1),
-            look_at: (0.0, 0.0, 3.5),
-            size: (15.0, 15.0)
-          ),
-          images: {
-            "my_image": (
-              resolution: (128, 128),
-              super_samples: 1,
-              art_config: (
-                skybox_is_visible_to_camera: false,
-                resolve_mode: PaletteAware (
-                  palette: [
-                    0x99BFFF,
-                    0xFFCC4D,
-                    0xFF8019,
-                    0xCC3319,
-                    0x33084D,
-                    0x050514,
-                  ],
-                  dither: true
-                )
+              occlusion: (
+                samples: 64,
+                distance: 1.0,
+                strength: 1.0,
+                falloff: 2.0,
               ),
+              lighting: (
+                emitted: 1.0,
+                ambient: 1.0,
+                direct: 1.0,
+                indirect: 1.0
+              ),
+              style: Banded (
+                palette: [
+                  0xFFCC4D,
+                  0xFF8019,
+                  0xCC3319,
+                  0x33084D,
+                  0x050514,
+                ]
+              )
             )
           }
         )

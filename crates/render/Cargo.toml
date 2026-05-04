@@ -9,8 +9,8 @@ antler-colour = { path = "../colour" }
 antler-geometry = { path = "../geometry" }
 antler-image = { path = "../image" }
 antler-material = { path = "../material" }
+antler-parameters = { path = "../parameters" }
 antler-scene = { path = "../scene" }
-antler-settings = { path = "../settings" }
 antler-shader = { path = "../shader" }
 antler-skybox = { path = "../skybox" }
 indicatif = { workspace = true }

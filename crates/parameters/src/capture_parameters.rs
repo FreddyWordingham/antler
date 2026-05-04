@@ -1,9 +1,10 @@
 use std::collections::BTreeMap;
 
 use antler_camera::Camera;
-use antler_settings::ImageSettings;
+
+use crate::render_parameters::RenderParameters;
 
 pub struct CaptureParameters {
     pub camera: Camera,
-    pub images: BTreeMap<String, ImageSettings>,
+    pub renders: BTreeMap<String, RenderParameters>,
 }

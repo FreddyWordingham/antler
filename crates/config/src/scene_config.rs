@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     capture_config::CaptureConfig, errors::ConfigError, light_config::LightConfig, object_config::ObjectConfig,
-    occlusion_config::OcclusionConfig, skybox_config::SkyboxConfig,
+    skybox_config::SkyboxConfig,
 };
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -15,7 +15,6 @@ use crate::{
 pub struct SceneConfig {
     pub ambient: Rgb,
     pub skybox: SkyboxConfig,
-    pub occlusion: Option<OcclusionConfig>,
     pub lights: Vec<LightConfig>,
     pub objects: Vec<ObjectConfig>,
     pub captures: BTreeMap<String, CaptureConfig>,
@@ -28,10 +27,6 @@ impl SceneConfig {
         scene.set_ambient(self.ambient);
 
         scene.set_skybox(self.skybox.build());
-
-        if let Some(occlusion) = self.occlusion {
-            scene.set_occlusion(Some(occlusion.build()));
-        }
 
         for light in self.lights {
             scene.add_light(light.build());

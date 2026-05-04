@@ -1,4 +1,3 @@
-mod art_config;
 mod camera_config;
 mod capture_config;
 mod emissive_config;
@@ -13,9 +12,11 @@ mod material_config;
 mod object_config;
 mod occlusion_config;
 mod probe_config;
+mod render_config;
 mod scene_config;
 mod shader_config;
 mod skybox_config;
+mod style_config;
 mod transform;
 mod utils;
 mod vec2;

@@ -14,17 +14,6 @@ pub struct OcclusionConfig {
     pub falloff: f32,
 }
 
-impl OcclusionConfig {
-    pub const fn build(self) -> OcclusionSettings {
-        OcclusionSettings {
-            samples: self.samples,
-            distance: self.distance,
-            strength: self.strength,
-            falloff: self.falloff,
-        }
-    }
-}
-
 impl Default for OcclusionConfig {
     fn default() -> Self {
         Self {
@@ -32,6 +21,17 @@ impl Default for OcclusionConfig {
             distance: default_distance(),
             strength: default_strength(),
             falloff: default_falloff(),
+        }
+    }
+}
+
+impl OcclusionConfig {
+    pub const fn build(self) -> OcclusionSettings {
+        OcclusionSettings {
+            samples: self.samples,
+            distance: self.distance,
+            strength: self.strength,
+            falloff: self.falloff,
         }
     }
 }

@@ -43,6 +43,44 @@ impl Rgb {
     pub fn luminance(&self) -> f32 {
         0.0722f32.mul_add(self.blue, 0.2126f32.mul_add(self.red, 0.7152 * self.green))
     }
+
+    #[must_use]
+    #[inline]
+    pub fn distance(&self, other: Self) -> f32 {
+        self.distance_sq(other).sqrt()
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn distance_sq(&self, other: Self) -> f32 {
+        let delta_red = self.red - other.red;
+        let delta_green = self.green - other.green;
+        let delta_blue = self.blue - other.blue;
+
+        delta_red * delta_red + delta_green * delta_green + delta_blue * delta_blue
+    }
+
+    #[must_use]
+    pub fn nearest<const N: usize>(&self, palette: &[Self]) -> [(usize, f32); N] {
+        assert!(N > 0, "Must ask for at least one nearest colour");
+        assert!(palette.len() >= N, "Palette must contain at least N colours");
+
+        let mut nearest = [(usize::MAX, f32::INFINITY); N];
+
+        for (index, colour) in palette.iter().copied().enumerate() {
+            let distance = self.distance_sq(colour);
+
+            for i in 0..N {
+                if distance < nearest[i].1 {
+                    nearest.copy_within(i..N - 1, i + 1);
+                    nearest[i] = (index, distance);
+                    break;
+                }
+            }
+        }
+
+        nearest
+    }
 }
 
 impl Pixel for Rgb {
