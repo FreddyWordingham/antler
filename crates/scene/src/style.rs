@@ -1,16 +1,26 @@
 use antler_colour::{Rgb, Rgba};
 
-const BAYER_4X4: [[f32; 4]; 4] = [
-    [0.0, 8.0, 2.0, 10.0],
-    [12.0, 4.0, 14.0, 6.0],
-    [3.0, 11.0, 1.0, 9.0],
-    [15.0, 7.0, 13.0, 5.0],
+const BAYER_2X2: [f32; 4] = [0.125, 0.625, 0.875, 0.375];
+const BAYER_4X4: [f32; 16] = [
+    0.03125, 0.53125, 0.15625, 0.65625, 0.78125, 0.28125, 0.90625, 0.40625, 0.21875, 0.71875, 0.09375, 0.59375,
+    0.96875, 0.46875, 0.84375, 0.34375,
+];
+const CHECKER_2X2: [f32; 4] = [0.25, 0.75, 0.75, 0.25];
+const STRIPE_4X4: [f32; 16] = [
+    0.125, 0.375, 0.625, 0.875, 0.125, 0.375, 0.625, 0.875, 0.125, 0.375, 0.625, 0.875, 0.125, 0.375, 0.625, 0.875,
+];
+const DIAGONAL_4X4: [f32; 16] = [
+    0.125, 0.375, 0.625, 0.875, 0.875, 0.125, 0.375, 0.625, 0.625, 0.875, 0.125, 0.375, 0.375, 0.625, 0.875, 0.125,
 ];
 
 #[derive(Clone)]
 pub enum DitherMode {
     None,
-    Bayer,
+    Bayer2x2,
+    Bayer4x4,
+    Checker2x2,
+    Stripe4x4,
+    Diagonal4x4,
     Custom { values: Vec<f32>, size: [usize; 2] },
 }
 
@@ -34,14 +44,21 @@ impl DitherMode {
     pub fn sample(&self, pixel: [usize; 2]) -> f32 {
         match self {
             Self::None => 1.0,
-            Self::Bayer => (BAYER_4X4[pixel[1] % 4][pixel[0] % 4] + 0.5) / 16.0,
-            Self::Custom { values, size } => {
-                let x = pixel[0] % size[0];
-                let y = pixel[1] % size[1];
-
-                values[y * size[0] + x].clamp(0.0, 1.0)
-            }
+            Self::Bayer2x2 => Self::sample_matrix(pixel, &BAYER_2X2, [2, 2]),
+            Self::Bayer4x4 => Self::sample_matrix(pixel, &BAYER_4X4, [4, 4]),
+            Self::Checker2x2 => Self::sample_matrix(pixel, &CHECKER_2X2, [2, 2]),
+            Self::Stripe4x4 => Self::sample_matrix(pixel, &STRIPE_4X4, [4, 4]),
+            Self::Diagonal4x4 => Self::sample_matrix(pixel, &DIAGONAL_4X4, [4, 4]),
+            Self::Custom { values, size } => Self::sample_matrix(pixel, values, *size),
         }
+    }
+
+    #[must_use]
+    #[inline]
+    fn sample_matrix(pixel: [usize; 2], values: &[f32], size: [usize; 2]) -> f32 {
+        let x = pixel[0] % size[0];
+        let y = pixel[1] % size[1];
+        values[y * size[0] + x].clamp(0.0, 1.0)
     }
 }
 
